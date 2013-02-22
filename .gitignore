@@ -1,0 +1,6 @@
+*.svn
+*.sdf
+*.obj
+*.tlog
+*.pdb
+*.psess
