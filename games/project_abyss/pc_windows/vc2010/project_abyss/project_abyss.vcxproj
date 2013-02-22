@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{84A95CBB-6E9C-4220-B97D-0A92764F02A0}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>project_abyss</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>..\..\..\..\..\mkengine\generic\tmxparser\zlib;..\..\..\..\..\mkengine\generic\tmxparser\base64;..\..\..\..\..\mkengine\generic\xml;..\..\..\..\..\mkengine\SFML-2.0-rc\include;..\..\..\..\..\mkengine\glew-1.9.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\..\mkengine\SFML-2.0-rc\lib;..\..\..\..\..\mkengine\glew-1.9.0\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>..\..\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>..\..\..\..\..\mkengine\generic\tmxparser\zlib;..\..\..\..\..\mkengine\generic\tmxparser\base64;..\..\..\..\..\mkengine\generic\xml;..\..\..\..\..\mkengine\SFML\lib\include;..\..\..\..\..\mkengine\glew-1.9.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\extlibs\angelscript_2.25.2\sdk\angelscript\lib;..\..\..\..\..\mkengine\SFML\lib\lib;..\..\..\..\..\mkengine\glew-1.9.0\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>..\..\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\games\project_abyss\src;..\..\..\..\..\mkengine\pc;..\..\..\..\..\mkengine\generic;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>sfml-system-s-d.lib;sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;opengl32.lib;glu32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>ABYSS_DEBUG;WIN32;NDEBUG;_CONSOLE;SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\games\project_abyss\extlibs\angelscript_2.25.2\sdk\angelscript\include;..\..\..\..\..\games\project_abyss\src;..\..\..\..\..\mkengine\pc;..\..\..\..\..\mkengine\generic;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>sfml-system-s.lib;sfml-audio-s.lib;sfml-graphics-s.lib;sfml-window-s.lib;opengl32.lib;glu32.lib;glew32.lib;angelscript.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\AsciiFile.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\AssetsPreprocessing.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Color.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Core.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\crc32.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Drawable.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\DrawableBatch.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\DrawableMesh.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\ExtendedSprite.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\ExtendedSpriteRessource.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Font.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Macros.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Map.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\MathTools.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Matrix.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\MeshBone.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\MeshBoneAnim.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\mkengine.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\ModelBone.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Point.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\PostFX.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Ressource.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\RessourceManager.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Scene.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\singleton.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Spinor.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Sprite.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Text.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\Tmx.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxImage.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxLayer.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxMap.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxMapTile.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxObject.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxObjectGroup.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxPoint.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxPolygon.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxPolyline.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxPropertySet.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxTile.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxTileset.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxUtil.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Vertex.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\xml\tinystr.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\xml\tinyxml.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\FBO.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\gctypes.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\Image.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\Input.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\lowDisplay.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\lowSystem.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\pstdint.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\Shader.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\Sound.h" />
+    <ClInclude Include="..\..\..\src\ChapterState.h" />
+    <ClInclude Include="..\..\..\src\components\AnimatedGraphicsComponent.h" />
+    <ClInclude Include="..\..\..\src\components\Component.h" />
+    <ClInclude Include="..\..\..\src\components\ComponentsIncludes.h" />
+    <ClInclude Include="..\..\..\src\components\DoorComponent.h" />
+    <ClInclude Include="..\..\..\src\components\GraphicsComponent.h" />
+    <ClInclude Include="..\..\..\src\components\LightComponent.h" />
+    <ClInclude Include="..\..\..\src\components\ParticleGeneratorComponent.h" />
+    <ClInclude Include="..\..\..\src\components\PlayerBodyComponent.h" />
+    <ClInclude Include="..\..\..\src\components\PlayerInputComponent.h" />
+    <ClInclude Include="..\..\..\src\components\PlayerMovementComponent.h" />
+    <ClInclude Include="..\..\..\src\components\ShipDisplayComponent.h" />
+    <ClInclude Include="..\..\..\src\ConfigurationManager.h" />
+    <ClInclude Include="..\..\..\src\DebugState.h" />
+    <ClInclude Include="..\..\..\src\debug_tools\DebugItems.h" />
+    <ClInclude Include="..\..\..\src\debug_tools\DebugMenu.h" />
+    <ClInclude Include="..\..\..\src\debug_tools\FileLister.h" />
+    <ClInclude Include="..\..\..\src\effects\Effect.h" />
+    <ClInclude Include="..\..\..\src\effects\ScrollFadeEffect.h" />
+    <ClInclude Include="..\..\..\src\entities\EntitiesIncludes.h" />
+    <ClInclude Include="..\..\..\src\entities\Entity.h" />
+    <ClInclude Include="..\..\..\src\entities\EntityFactory.h" />
+    <ClInclude Include="..\..\..\src\entities\EntityManager.h" />
+    <ClInclude Include="..\..\..\src\entities\Messages.h" />
+    <ClInclude Include="..\..\..\src\entities\MoveableEntity.h" />
+    <ClInclude Include="..\..\..\src\entities\Parameters.h" />
+    <ClInclude Include="..\..\..\src\entities\StaticEntity.h" />
+    <ClInclude Include="..\..\..\src\gamestate.h" />
+    <ClInclude Include="..\..\..\src\LanguageManager.h" />
+    <ClInclude Include="..\..\..\src\LevelState.h" />
+    <ClInclude Include="..\..\..\src\level_manager\Cutscene.h" />
+    <ClInclude Include="..\..\..\src\level_manager\cutscene_events\CutsceneEvent.h" />
+    <ClInclude Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventChangeValue.h" />
+    <ClInclude Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventFx.h" />
+    <ClInclude Include="..\..\..\src\level_manager\GameCamera.h" />
+    <ClInclude Include="..\..\..\src\level_manager\GameMap.h" />
+    <ClInclude Include="..\..\..\src\level_manager\GameMapLayer.h" />
+    <ClInclude Include="..\..\..\src\level_manager\LevelManager.h" />
+    <ClInclude Include="..\..\..\src\loc_header.h" />
+    <ClInclude Include="..\..\..\src\MenuState.h" />
+    <ClInclude Include="..\..\..\src\physics\Body.h" />
+    <ClInclude Include="..\..\..\src\physics\BodyDef.h" />
+    <ClInclude Include="..\..\..\src\physics\Matrix.h" />
+    <ClInclude Include="..\..\..\src\physics\Polygon.h" />
+    <ClInclude Include="..\..\..\src\physics\Vector.h" />
+    <ClInclude Include="..\..\..\src\SimpleMaths.h" />
+    <ClInclude Include="..\..\..\src\SplashState.h" />
+    <ClInclude Include="..\..\..\src\StateManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\AsciiFile.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\AssetsPreprocessing.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Core.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\crc32_mkengine.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Drawable.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\DrawableBatch.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\DrawableMesh.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\ExtendedSprite.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\ExtendedSpriteRessource.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Font.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Map.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\MathTools.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Matrix.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\MeshBone.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\MeshBoneAnim.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\ModelBone.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\PostFX.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\RessourceManager.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Scene.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Spinor.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Sprite.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Text.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\base64\base64.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxImage.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxLayer.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxMap.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxObject.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxObjectGroup.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxPolygon.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxPolyline.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxPropertySet.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxTile.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxTileset.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxUtil.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\adler32.c" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\compress.c" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\crc32.c" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\deflate.c" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\gzclose.c" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\gzlib.c" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\gzread.c" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\gzwrite.c" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\infback.c" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\inffast.c" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\inflate.c" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\inftrees.c" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\trees.c" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\uncompr.c" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\zutil.c" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\xml\tinystr.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\xml\tinyxml.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\xml\tinyxmlerror.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\xml\tinyxmlparser.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\FBO.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\Image.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\Input.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\lowDisplay.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\lowSystem.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\Shader.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\Sound.cpp" />
+    <ClCompile Include="..\..\..\src\ChapterState.cpp" />
+    <ClCompile Include="..\..\..\src\components\AnimatedGraphicsComponent.cpp" />
+    <ClCompile Include="..\..\..\src\components\DoorComponent.cpp" />
+    <ClCompile Include="..\..\..\src\components\GraphicsComponent.cpp" />
+    <ClCompile Include="..\..\..\src\components\LightComponent.cpp" />
+    <ClCompile Include="..\..\..\src\components\ParticleGeneratorComponent.cpp" />
+    <ClCompile Include="..\..\..\src\components\PlayerBodyComponent.cpp" />
+    <ClCompile Include="..\..\..\src\components\PlayerInputComponent.cpp" />
+    <ClCompile Include="..\..\..\src\components\PlayerMovementComponent.cpp" />
+    <ClCompile Include="..\..\..\src\components\ShipDisplayComponent.cpp" />
+    <ClCompile Include="..\..\..\src\ConfigurationManager.cpp" />
+    <ClCompile Include="..\..\..\src\DebugState.cpp" />
+    <ClCompile Include="..\..\..\src\debug_tools\DebugItems.cpp" />
+    <ClCompile Include="..\..\..\src\debug_tools\DebugMenu.cpp" />
+    <ClCompile Include="..\..\..\src\debug_tools\FileLister.cpp" />
+    <ClCompile Include="..\..\..\src\effects\ScrollFadeEffect.cpp" />
+    <ClCompile Include="..\..\..\src\entities\Entity.cpp" />
+    <ClCompile Include="..\..\..\src\entities\EntityFactory.cpp" />
+    <ClCompile Include="..\..\..\src\entities\EntityManager.cpp" />
+    <ClCompile Include="..\..\..\src\entities\MoveableEntity.cpp" />
+    <ClCompile Include="..\..\..\src\entities\StaticEntity.cpp" />
+    <ClCompile Include="..\..\..\src\LanguageManager.cpp" />
+    <ClCompile Include="..\..\..\src\LevelState.cpp" />
+    <ClCompile Include="..\..\..\src\level_manager\Cutscene.cpp" />
+    <ClCompile Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventChangeValue.cpp" />
+    <ClCompile Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventFx.cpp" />
+    <ClCompile Include="..\..\..\src\level_manager\GameCamera.cpp" />
+    <ClCompile Include="..\..\..\src\level_manager\GameMap.cpp" />
+    <ClCompile Include="..\..\..\src\level_manager\GameMapLayer.cpp" />
+    <ClCompile Include="..\..\..\src\level_manager\LevelManager.cpp" />
+    <ClCompile Include="..\..\..\src\main.cpp" />
+    <ClCompile Include="..\..\..\src\MenuState.cpp" />
+    <ClCompile Include="..\..\..\src\physics\Body.cpp" />
+    <ClCompile Include="..\..\..\src\physics\Polygon.cpp" />
+    <ClCompile Include="..\..\..\src\physics\Vector.cpp" />
+    <ClCompile Include="..\..\..\src\SimpleMaths.cpp" />
+    <ClCompile Include="..\..\..\src\SplashState.cpp" />
+    <ClCompile Include="..\..\..\src\StateManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UML_Game.cd" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

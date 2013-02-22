@@ -4,3 +4,8 @@
 *.tlog
 *.pdb
 *.psess
+*.ncb
+/mkengine/filepacker/src/Release
+/mkengine/filepacker/src/_UpgradeReport_Files
+/mkengine/filepacker/src/Debug
+/mkengine/filepacker/src/ipch

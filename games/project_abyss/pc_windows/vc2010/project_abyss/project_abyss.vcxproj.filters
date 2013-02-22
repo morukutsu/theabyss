@@ -1,0 +1,701 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fichiers sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game">
+      <UniqueIdentifier>{5f610b05-5678-4561-b731-bb74b742fa38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\mkengine">
+      <UniqueIdentifier>{33931079-e470-441f-83ce-199e222f5501}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\mkengine\generic">
+      <UniqueIdentifier>{69bea588-7cf4-47a4-bae3-44c6fbe51369}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\xml">
+      <UniqueIdentifier>{2ec09902-17f1-4432-9b4e-84f6fcc81a0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game">
+      <UniqueIdentifier>{47f497a4-1c7f-4f3d-aabd-134fa71c2448}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\mkengine">
+      <UniqueIdentifier>{9fb64db6-3c93-425e-b89e-1b005fcd43f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\mkengine\generic">
+      <UniqueIdentifier>{2ee0949d-e691-410b-911d-337504f3d1af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\gamestates">
+      <UniqueIdentifier>{edb916f3-28e5-41d4-bd23-77bdbee657fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\gamestates">
+      <UniqueIdentifier>{d96bfe66-b12c-4855-93e8-cd10df05a689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\xml">
+      <UniqueIdentifier>{883b9aef-8a7d-4469-aa37-74f35625c978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\mkengine\generic\tmxparser">
+      <UniqueIdentifier>{10784a42-3b28-43fd-a5b2-70341b87efcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\mkengine\generic\tmxparser">
+      <UniqueIdentifier>{d9615db9-c9c1-4335-8298-26c3bc57a6d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\debug_tools">
+      <UniqueIdentifier>{10cd675c-c3ba-4ff6-8f82-c33cf8b96dd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\debug_tools">
+      <UniqueIdentifier>{4c2e516d-9695-44bd-86a4-f6cba9460222}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\level_manager">
+      <UniqueIdentifier>{a23f8169-e189-465a-9142-580a4f801d1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\level_manager">
+      <UniqueIdentifier>{db6fde03-955b-4cc2-a625-3be5d44cad06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\entities">
+      <UniqueIdentifier>{8d468d0e-0c59-4a6b-b517-b4f2713b1608}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\entites">
+      <UniqueIdentifier>{ccee82e8-d922-42d1-9114-4267ce67d941}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\physics">
+      <UniqueIdentifier>{47bc1565-38a1-4761-8f08-624643d984b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\physics">
+      <UniqueIdentifier>{a2b5f8eb-6176-4754-9608-a9fbbbee2d69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\components">
+      <UniqueIdentifier>{0b48c00d-cf93-47ba-b12f-4954cd908ff6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\components">
+      <UniqueIdentifier>{be6e2b6c-7d9d-4cec-b397-5479d659fb31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\mkengine\generic\tmxparser\zlib">
+      <UniqueIdentifier>{6ded9c18-293e-41fe-b8f4-5d084fe1a0c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\level_manager\cutscene_events">
+      <UniqueIdentifier>{a32079f0-aa13-4713-9072-098306235f39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\level_manager\cutscene_events">
+      <UniqueIdentifier>{4b9d2049-9ecc-4fad-a2da-dcaa2d61e5a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\effects">
+      <UniqueIdentifier>{ce704002-09a9-4d98-8d2a-2cb8c837bad9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\effects">
+      <UniqueIdentifier>{85e80fdf-6ca0-461c-9b15-af98b5e854e8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\AsciiFile.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Core.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Drawable.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\DrawableBatch.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Font.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\MathTools.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\MeshBone.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\MeshBoneAnim.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\mkengine.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\ModelBone.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\PostFX.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Ressource.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\RessourceManager.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\singleton.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Sprite.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Text.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\gctypes.h">
+      <Filter>Fichiers d%27en-tête\mkengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\Image.h">
+      <Filter>Fichiers d%27en-tête\mkengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\Input.h">
+      <Filter>Fichiers d%27en-tête\mkengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\lowDisplay.h">
+      <Filter>Fichiers d%27en-tête\mkengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\lowSystem.h">
+      <Filter>Fichiers d%27en-tête\mkengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\pstdint.h">
+      <Filter>Fichiers d%27en-tête\mkengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\Sound.h">
+      <Filter>Fichiers d%27en-tête\mkengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\gamestate.h">
+      <Filter>Fichiers d%27en-tête\game\gamestates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SplashState.h">
+      <Filter>Fichiers d%27en-tête\game\gamestates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\StateManager.h">
+      <Filter>Fichiers d%27en-tête\game\gamestates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ConfigurationManager.h">
+      <Filter>Fichiers d%27en-tête\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\ExtendedSpriteRessource.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\xml\tinystr.h">
+      <Filter>Fichiers d%27en-tête\game\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\xml\tinyxml.h">
+      <Filter>Fichiers d%27en-tête\game\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\ExtendedSprite.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Matrix.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Spinor.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Scene.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\MenuState.h">
+      <Filter>Fichiers d%27en-tête\game\gamestates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\crc32.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\Tmx.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\tmxparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxImage.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\tmxparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxLayer.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\tmxparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxMap.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\tmxparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxMapTile.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\tmxparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxObject.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\tmxparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxObjectGroup.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\tmxparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxPoint.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\tmxparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxPolygon.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\tmxparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxPolyline.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\tmxparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxPropertySet.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\tmxparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxTile.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\tmxparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxTileset.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\tmxparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxUtil.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\tmxparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\DebugState.h">
+      <Filter>Fichiers d%27en-tête\game\gamestates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Macros.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\debug_tools\DebugMenu.h">
+      <Filter>Fichiers d%27en-tête\game\debug_tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\debug_tools\DebugItems.h">
+      <Filter>Fichiers d%27en-tête\game\debug_tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\LevelState.h">
+      <Filter>Fichiers d%27en-tête\game\gamestates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\level_manager\LevelManager.h">
+      <Filter>Fichiers d%27en-tête\game\level_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\level_manager\GameMap.h">
+      <Filter>Fichiers d%27en-tête\game\level_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\level_manager\GameCamera.h">
+      <Filter>Fichiers d%27en-tête\game\level_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\entities\Entity.h">
+      <Filter>Fichiers d%27en-tête\game\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\level_manager\GameMapLayer.h">
+      <Filter>Fichiers d%27en-tête\game\level_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\physics\Body.h">
+      <Filter>Fichiers d%27en-tête\game\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\physics\Polygon.h">
+      <Filter>Fichiers d%27en-tête\game\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\physics\Vector.h">
+      <Filter>Fichiers d%27en-tête\game\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\physics\Matrix.h">
+      <Filter>Fichiers d%27en-tête\game\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\entities\EntityManager.h">
+      <Filter>Fichiers d%27en-tête\game\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\entities\EntityFactory.h">
+      <Filter>Fichiers d%27en-tête\game\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\components\Component.h">
+      <Filter>Fichiers d%27en-tête\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\entities\StaticEntity.h">
+      <Filter>Fichiers d%27en-tête\game\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\components\ComponentsIncludes.h">
+      <Filter>Fichiers d%27en-tête\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\entities\EntitiesIncludes.h">
+      <Filter>Fichiers d%27en-tête\game\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\DrawableMesh.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Point.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Color.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Vertex.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\FBO.h">
+      <Filter>Fichiers d%27en-tête\mkengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\components\LightComponent.h">
+      <Filter>Fichiers d%27en-tête\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\entities\Parameters.h">
+      <Filter>Fichiers d%27en-tête\game\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\entities\MoveableEntity.h">
+      <Filter>Fichiers d%27en-tête\game\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\components\GraphicsComponent.h">
+      <Filter>Fichiers d%27en-tête\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\components\PlayerInputComponent.h">
+      <Filter>Fichiers d%27en-tête\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\Map.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\components\ParticleGeneratorComponent.h">
+      <Filter>Fichiers d%27en-tête\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SimpleMaths.h">
+      <Filter>Fichiers d%27en-tête\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\components\ShipDisplayComponent.h">
+      <Filter>Fichiers d%27en-tête\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\components\PlayerMovementComponent.h">
+      <Filter>Fichiers d%27en-tête\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\components\AnimatedGraphicsComponent.h">
+      <Filter>Fichiers d%27en-tête\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\AssetsPreprocessing.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\components\PlayerBodyComponent.h">
+      <Filter>Fichiers d%27en-tête\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\Shader.h">
+      <Filter>Fichiers d%27en-tête\mkengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\debug_tools\FileLister.h">
+      <Filter>Fichiers d%27en-tête\game\debug_tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ChapterState.h">
+      <Filter>Fichiers d%27en-tête\game\gamestates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\loc_header.h">
+      <Filter>Fichiers d%27en-tête\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\LanguageManager.h">
+      <Filter>Fichiers d%27en-tête\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\level_manager\Cutscene.h">
+      <Filter>Fichiers d%27en-tête\game\level_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\level_manager\cutscene_events\CutsceneEvent.h">
+      <Filter>Fichiers d%27en-tête\game\level_manager\cutscene_events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventFx.h">
+      <Filter>Fichiers d%27en-tête\game\level_manager\cutscene_events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventChangeValue.h">
+      <Filter>Fichiers d%27en-tête\game\level_manager\cutscene_events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\components\DoorComponent.h">
+      <Filter>Fichiers d%27en-tête\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\physics\BodyDef.h">
+      <Filter>Fichiers d%27en-tête\game\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\entities\Messages.h">
+      <Filter>Fichiers d%27en-tête\game\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\effects\Effect.h">
+      <Filter>Fichiers d%27en-tête\game\effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\effects\ScrollFadeEffect.h">
+      <Filter>Fichiers d%27en-tête\game\effects</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\AsciiFile.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Core.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\DrawableBatch.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Font.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\MathTools.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\MeshBone.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\MeshBoneAnim.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\ModelBone.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\PostFX.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\RessourceManager.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Sprite.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Text.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\Image.cpp">
+      <Filter>Fichiers sources\mkengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\Input.cpp">
+      <Filter>Fichiers sources\mkengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\lowDisplay.cpp">
+      <Filter>Fichiers sources\mkengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\lowSystem.cpp">
+      <Filter>Fichiers sources\mkengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\Sound.cpp">
+      <Filter>Fichiers sources\mkengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\main.cpp">
+      <Filter>Fichiers sources\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SplashState.cpp">
+      <Filter>Fichiers sources\game\gamestates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\StateManager.cpp">
+      <Filter>Fichiers sources\game\gamestates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ConfigurationManager.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\ExtendedSpriteRessource.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\xml\tinystr.cpp">
+      <Filter>Fichiers sources\game\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\xml\tinyxml.cpp">
+      <Filter>Fichiers sources\game\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\xml\tinyxmlerror.cpp">
+      <Filter>Fichiers sources\game\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\xml\tinyxmlparser.cpp">
+      <Filter>Fichiers sources\game\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\ExtendedSprite.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Matrix.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Spinor.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Scene.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\MenuState.cpp">
+      <Filter>Fichiers sources\game\gamestates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Map.cpp">
+      <Filter>Fichiers sources\mkengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxImage.cpp">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxLayer.cpp">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxMap.cpp">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxObject.cpp">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxObjectGroup.cpp">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxPolygon.cpp">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxPolyline.cpp">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxPropertySet.cpp">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxTile.cpp">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxTileset.cpp">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxUtil.cpp">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\base64\base64.cpp">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\DebugState.cpp">
+      <Filter>Fichiers sources\game\gamestates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\debug_tools\DebugMenu.cpp">
+      <Filter>Fichiers sources\game\debug_tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\debug_tools\DebugItems.cpp">
+      <Filter>Fichiers sources\game\debug_tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\LevelState.cpp">
+      <Filter>Fichiers sources\game\gamestates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\level_manager\LevelManager.cpp">
+      <Filter>Fichiers sources\game\level_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\level_manager\GameMap.cpp">
+      <Filter>Fichiers sources\game\level_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\level_manager\GameCamera.cpp">
+      <Filter>Fichiers sources\game\level_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\level_manager\GameMapLayer.cpp">
+      <Filter>Fichiers sources\game\level_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\entities\EntityManager.cpp">
+      <Filter>Fichiers sources\game\entites</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\physics\Body.cpp">
+      <Filter>Fichiers sources\game\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\physics\Polygon.cpp">
+      <Filter>Fichiers sources\game\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\physics\Vector.cpp">
+      <Filter>Fichiers sources\game\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\entities\EntityFactory.cpp">
+      <Filter>Fichiers sources\game\entites</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\entities\StaticEntity.cpp">
+      <Filter>Fichiers sources\game\entites</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\entities\Entity.cpp">
+      <Filter>Fichiers sources\game\entites</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\components\LightComponent.cpp">
+      <Filter>Fichiers sources\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\DrawableMesh.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\FBO.cpp">
+      <Filter>Fichiers sources\mkengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\adler32.c">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\compress.c">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\crc32.c">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\deflate.c">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\gzclose.c">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\gzlib.c">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\gzread.c">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\gzwrite.c">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\infback.c">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\inffast.c">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\inflate.c">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\inftrees.c">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\trees.c">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\uncompr.c">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\zlib\zutil.c">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\crc32_mkengine.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\entities\MoveableEntity.cpp">
+      <Filter>Fichiers sources\game\entites</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\components\GraphicsComponent.cpp">
+      <Filter>Fichiers sources\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\components\PlayerInputComponent.cpp">
+      <Filter>Fichiers sources\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\components\ParticleGeneratorComponent.cpp">
+      <Filter>Fichiers sources\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SimpleMaths.cpp">
+      <Filter>Fichiers sources\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\components\ShipDisplayComponent.cpp">
+      <Filter>Fichiers sources\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\components\PlayerMovementComponent.cpp">
+      <Filter>Fichiers sources\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\components\AnimatedGraphicsComponent.cpp">
+      <Filter>Fichiers sources\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\Drawable.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\AssetsPreprocessing.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\components\PlayerBodyComponent.cpp">
+      <Filter>Fichiers sources\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\Shader.cpp">
+      <Filter>Fichiers sources\mkengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\debug_tools\FileLister.cpp">
+      <Filter>Fichiers sources\game\debug_tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ChapterState.cpp">
+      <Filter>Fichiers sources\game\gamestates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\LanguageManager.cpp">
+      <Filter>Fichiers sources\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\level_manager\Cutscene.cpp">
+      <Filter>Fichiers sources\game\level_manager\cutscene_events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventFx.cpp">
+      <Filter>Fichiers sources\game\level_manager\cutscene_events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventChangeValue.cpp">
+      <Filter>Fichiers sources\game\level_manager\cutscene_events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\components\DoorComponent.cpp">
+      <Filter>Fichiers sources\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\effects\ScrollFadeEffect.cpp">
+      <Filter>Fichiers sources\game\effects</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UML_Game.cd" />
+  </ItemGroup>
+</Project>
