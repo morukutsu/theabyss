@@ -57,8 +57,17 @@ void GameMap::LoadGameMap(std::string filename, mk::Scene* scene)
 	entityManager->SetScene(scene);
 	entityManager->SetGameMap(this);
 
+	// Setting des paramètres à la scene
+	scene->ToggleLighting(isLighting);
+	if(backgroundImage != NULL)
+		backgroundImage->Scale(textureScale, textureScale);
+	scene->SetBackground(backgroundImage);
+
+	// Chargement des entités
+
 	// Création héros
-	CreateHeroEntity(); // initialise heroEntity
+	if(!isNoEntities)
+		CreateHeroEntity(); // initialise heroEntity
 
 	const std::vector<Tmx::ObjectGroup*>& groups = map.GetObjectGroups();
 	
@@ -67,6 +76,10 @@ void GameMap::LoadGameMap(std::string filename, mk::Scene* scene)
 	{
 		// Objets
 		const std::vector<Tmx::Object*>& objects = groups[k]->GetObjects();
+
+		// On skip le calque si on est en mode no entites
+		if(groups[k]->GetName() == "entities" && isNoEntities)
+			continue;
 
 		// Calque d'entités
 		if(groups[k]->GetName() == "entities" || groups[k]->GetName() == "gfx") 
@@ -156,18 +169,13 @@ void GameMap::LoadGameMap(std::string filename, mk::Scene* scene)
 	}
 
 	// Finalisation création héros
-	
-	heroEntity->SetScene(scene);
-	entityManager->Add(heroEntity);
-	heroEntity->mPos.x = startHeroX;
-	heroEntity->mPos.y = startHeroY;
-	heroEntity->Init();
-
-	// Setting des paramètres à la scene
-	scene->ToggleLighting(isLighting);
-	if(backgroundImage != NULL)
-		backgroundImage->Scale(textureScale, textureScale);
-	scene->SetBackground(backgroundImage);
+	if(!isNoEntities) {
+		heroEntity->SetScene(scene);
+		entityManager->Add(heroEntity);
+		heroEntity->mPos.x = startHeroX;
+		heroEntity->mPos.y = startHeroY;
+		heroEntity->Init();
+	}
 }
 
 void GameMap::AddMapLayersToScene(mk::Scene* scene)
@@ -199,6 +207,10 @@ void GameMap::SpecialCases(std::string name, std::string type, Entity* entity)
 			startHeroX = entity->mPos.x + entity->mWidth / 2.0f;
 			startHeroY = entity->mPos.y + entity->mHeight / 2.0f;
 		}
+	}
+	else if(type == "cam")
+	{
+		camEntity = entity;
 	}
 }
 

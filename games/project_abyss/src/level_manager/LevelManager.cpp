@@ -174,7 +174,11 @@ void LevelManager::LoadMap(std::string filename)
 	gameMap->AddMapLayersToScene(scene);
 
 	ResetCameraDepth();
-	SetScrollEntity(gameMap->heroEntity);
+
+	if(!gameMap->GetIsNoEntities() )
+		SetScrollEntity(gameMap->heroEntity);
+	else
+		SetScrollEntity(gameMap->camEntity);
 
 	loadedMap = filename;
 	isMapLoaded = true;

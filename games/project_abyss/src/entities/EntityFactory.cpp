@@ -85,6 +85,10 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 		ent = new StaticEntity();
 		ent->AddComponent(new DoorComponent(properties["sens"], w, h, properties["target_map"], properties["target_door"]));
 	}
+	else if(type == "cam")
+	{
+		ent = new StaticEntity();
+	}
 
 	// Parametres de base
 	ent->mPos.x = x;

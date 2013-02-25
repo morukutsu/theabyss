@@ -15,6 +15,7 @@ namespace mk
 		backgroundImage = new Sprite();
 		isBgImage = false;
 		isBgColor = false;
+		isNoEntities = false;
 	}
 
 	Map::~Map()
@@ -137,6 +138,14 @@ namespace mk
 		{
 			isLighting = false;
 		}
+
+		// Mode no entities
+		isNoEntities = false;
+		std::string noEntitiesStr = map.GetProperties().GetLiteralProperty("no_entities");
+		if(noEntitiesStr == "1") 
+			isNoEntities = true;
+		else
+			isNoEntities = false;
 
 		// Débug de certaines informations sur la map
 		std::cout << "[Load] : map : " << filename << "(" << map.GetWidth() << " x " << map.GetHeight() << ") layers : " << map.GetNumLayers() << std::endl;

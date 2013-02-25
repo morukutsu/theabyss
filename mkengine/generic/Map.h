@@ -43,6 +43,8 @@ namespace mk
 			
 			float GetLayerDepth(int id);
 
+			bool GetIsNoEntities() { return isNoEntities; };
+
 			// Attributs
 			Tmx::Map map;
 			std::vector<mk::Sprite*> tilesets_spr;
@@ -60,7 +62,7 @@ namespace mk
 			int cx, cy, cw, ch;
 
 			// Triggers
-			bool isBgImage, isBgColor, isLighting;
+			bool isBgImage, isBgColor, isLighting, isNoEntities;
 	};
 };
 

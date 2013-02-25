@@ -36,7 +36,7 @@ public:
 	EntityManager* entityManager;
 
 	// Cas particuliers d'entités
-	Entity* heroEntity;
+	Entity* heroEntity, *camEntity;
 
 	// Gestion scrolling
 	float borderX, borderY, borderW, borderH;
