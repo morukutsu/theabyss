@@ -17,6 +17,7 @@ namespace mk
 	bool Core::mWideScreenSupport;
 	bool Core::isFullscreen;
 	std::string Core::mWindowName;
+	bool Core::isDebugVisible;
 
 	Core::Core(int width, int height, const char* name, int renderflags)
 	{
@@ -30,6 +31,7 @@ namespace mk
 		mPeakVramUsage = 0;
 
 		isPointerVisible = false;
+		isDebugVisible = false;
 
 		//Déteciton des paramètres de rendu
 		int viewportw, viewporth;

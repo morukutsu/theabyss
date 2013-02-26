@@ -76,7 +76,7 @@ public:
 
 	// Debug
 	DebugMenu *debugMenuTitle, *debugMenuFull, *debugMenuShader;
-	bool isShowLightMask, isShowAABB, isShowDebugCollisions;
+	bool isShowLightMask, isShowAABB, isShowDebugCollisions, isDebugMenuVisible;
 };
 
 #endif

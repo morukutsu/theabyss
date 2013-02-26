@@ -27,6 +27,8 @@ int main(int argc, char **argv )
 
 	mk::Core* mCore = new mk::Core(winW, winH, "project_abyss", RENDERMODE_NONE);
 
+	
+
 	//mk::RessourceManager::getInstance()->LoadTableOfContents("ressource.bin");
 	//mk::InputManager::Init();
 
@@ -38,7 +40,23 @@ int main(int argc, char **argv )
 	stman->RegisterAvaiableState("LevelState", LevelState::Instance() );
 	stman->RegisterAvaiableState("ChapterState", ChapterState::Instance() );
 
-    stman->ChangeState(DebugState::Instance() );
+	// Si on est en debug mode, on charge la DebugState, sinon, SplashState
+	std::string isDebugMode = ConfigurationManager::getInstance()->GetAttributeString("Debug_Mode");
+	if(isDebugMode == "true")
+	{
+		stman->ChangeState(DebugState::Instance() );
+		mCore->SetDebugVisible(true);
+	}
+	else
+		stman->ChangeState(SplashState::Instance() );
+
+	// Affichage ou pas du DebugDraw
+	std::string isDebugDraw = ConfigurationManager::getInstance()->GetAttributeString("Debug_Draw");
+	if(isDebugDraw == "true") {
+		mCore->SetDebugVisible(true);
+	} else {
+		mCore->SetDebugVisible(false);
+	}
 
 	//Chagement d'une police de débug
 	mk::Font* fnt;
@@ -92,7 +110,8 @@ int main(int argc, char **argv )
 		// Affichage 2D (par dessus la scene 3D)
 		mCore->StartDrawing(mk::MODE_2D);
 		stman->Draw(mk::MODE_2D, interpolation);
-		mCore->ShowEngineDebug(fnt);
+		if(mk::Core::GetDebugVisible() )
+			mCore->ShowEngineDebug(fnt);
 		mCore->EndDrawing(mk::MODE_2D);
 
 		//draw on the screen

@@ -105,7 +105,7 @@ void LevelManager::Update()
 	gameMap->GetEntityManager()->Update();
 
 	// Debug
-	gameCamera.DebugMove();
+	//gameCamera.DebugMove();
 
 	// Scrolling
 	ComputeScrolling();
@@ -148,7 +148,8 @@ void LevelManager::Draw(int mode, float interpolation)
 			scrollFadeEffect->Draw(interpolation);
 
 		// Affichage du GUI
-		ShowDebug();
+		if(mk::Core::GetDebugVisible() )
+			ShowDebug();
 	}
 	else if(mode == mk::MODE_2D_BACKGROUND) 
 	{

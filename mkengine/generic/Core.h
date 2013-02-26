@@ -41,6 +41,8 @@ namespace mk
 			void ShowEngineDebug(mk::Font* fnt);
 			void SetPointer(mk::Image* img);
 			void TogglePointer(bool visible);
+			static void SetDebugVisible(bool v) { isDebugVisible = v; };
+			static bool GetDebugVisible() { return isDebugVisible; };
 
 			bool getRunStatus();
 			static int getWindowWidth();
@@ -62,6 +64,7 @@ namespace mk
 			static bool isFullscreen;
 			static bool isRunning;
 			static std::string mWindowName;
+			static bool isDebugVisible;
 
 			int mCurrentFPS;
 			float mEllapsedTimeFPS;

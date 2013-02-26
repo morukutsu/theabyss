@@ -129,10 +129,11 @@ void ShipDisplayComponent::Update()
 
 	// Effets graphiques
 	UpdateReactorsPower();
-	UpdateReactorsAngle();
-
+	
 	Mirror(mirrorH);
 	PositionSprites(mirrorH);
+
+	UpdateReactorsAngle();
 
 	// Affichage des différentes parties
 	for(int i = 0; i < 2; i++)
@@ -170,8 +171,8 @@ void ShipDisplayComponent::Update()
 	parts_sprites[SHIP_FX_LUEUR].Alpha(1.0f);
 	parts_sprites[SHIP_FX_LUEUR].SavePositions();
 
-	parts_sprites[SHIP_FX_FLASHLIGHT].MoveTo((parent->mPos.x + parts_positions[SHIP_FX_FLASHLIGHT].x)/32, 
-		(parent->mPos.y + parts_positions[SHIP_FX_FLASHLIGHT].y)/32);
+	/*parts_sprites[SHIP_FX_FLASHLIGHT].MoveTo((parent->mPos.x + parts_positions[SHIP_FX_FLASHLIGHT].x)/32, 
+		(parent->mPos.y + parts_positions[SHIP_FX_FLASHLIGHT].y)/32);*/
 	parts_sprites[SHIP_FX_FLASHLIGHT].Alpha(0.7f);
 	parts_sprites[SHIP_FX_FLASHLIGHT].SetSize(parts[SHIP_FX_FLASHLIGHT]->getImageWidth() / 32.0f, parts[SHIP_FX_FLASHLIGHT]->getImageHeight() / 32.0f);
 	parts_sprites[SHIP_FX_FLASHLIGHT].SetDepth(parent->mDepth);
@@ -270,6 +271,7 @@ void ShipDisplayComponent::Init()
 	parent->AddComponent(reactorLight[1]);
 
 	parts_sprites[SHIP_FX_FLASHLIGHT].SetPriority(-3 + prioShift);
+	parts_sprites[SHIP_FX_FLASHLIGHT].ignoreLightPipeline = true;
 }
 
 void ShipDisplayComponent::Mirror(bool v)
@@ -429,8 +431,17 @@ void ShipDisplayComponent::UpdateReactorsAngle()
 	reactorLight[1]->spr.Rotate(reactorsAngle * mx);
 
 	// Rotation lampe torche
-	//NVector posFlashlight = NVector(parts_positions[SHIP_FX_FLASHLIGHT].x, 
+	NVector posFlashlight = NVector((parts_positions[SHIP_FX_FLASHLIGHT].x)/32.0f, (parts_positions[SHIP_FX_FLASHLIGHT].y)/32.0f);
+	posFlashlight.Rotate(NVector(0, 0), DegreesToRadians(reactorsAngle * mx / 180.0f * 5.0f));
+	posFlashlight += parent->mPos/32.0f;
+
+	parts_sprites[SHIP_FX_FLASHLIGHT].MoveTo(posFlashlight.x, posFlashlight.y);
+
 	parts_sprites[SHIP_FX_FLASHLIGHT].Rotate(reactorsAngle * mx / 180.0f * 20.0f);
+
+	// Pour la lightpass
+	flashLight->spr.SetRotCenter((partsPositionsXML[SHIP_PARTS_COUNT + FLASHLIGHT_MASK].rx * mx)/32.0f, partsPositionsXML[SHIP_PARTS_COUNT + FLASHLIGHT_MASK].ry/32.0f);
+	flashLight->spr.Rotate(reactorsAngle * mx / 180.0f * 20.0f);
 }
 
 void ShipDisplayComponent::UpdateReactorsPower()
@@ -513,6 +524,7 @@ void ShipDisplayComponent::ReadPositionsFromXML()
 		PartPosition part;
 
 		std::string e_name = elem->Attribute("name");
+
 		double x, y, rx, ry;
 
 		elem->Attribute("x", &x);
