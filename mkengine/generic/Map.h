@@ -10,6 +10,7 @@
 #include "tmxparser\Tmx.h"
 #include <map>
 #include <vector>
+#include <list>
 
 namespace mk
 {
@@ -33,7 +34,10 @@ namespace mk
 			void DrawLayer(int id, int opaque);
 			void SetCullArea(int cx, int cy, int cw, int ch);
 
-			void Load(std::string filename);
+			void ParseMap(std::string filename);
+			void Load();
+			std::list<std::string> GetResourcesToLoad();
+
 			void LoadTilesetMeta(std::string filename, mk::Sprite* spr);
 
 			float GetMapScale() { return mapScale; };
@@ -63,6 +67,9 @@ namespace mk
 
 			// Triggers
 			bool isBgImage, isBgColor, isLighting, isNoEntities;
+
+			// Chargement des textures
+			std::string racine;
 	};
 };
 

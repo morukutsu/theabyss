@@ -171,7 +171,8 @@ void LevelManager::LoadMap(std::string filename)
 	scene->Clear();
 
 	gameMap = new GameMap();
-	gameMap->LoadGameMap(filename, scene);
+	gameMap->ParseMap(filename);
+	gameMap->LoadGameMap(scene);
 	gameMap->AddMapLayersToScene(scene);
 
 	ResetCameraDepth();
@@ -205,6 +206,9 @@ void LevelManager::UnloadMap()
 
 void LevelManager::SwitchMap(std::string filename, std::string door_idf)
 {
+	// On récupère la liste des tilesets/textures courantes
+	std::list<std::string> previousTextures = gameMap->GetResourcesToLoad();
+
 	UnloadMap();
 	Init();
 	
@@ -218,7 +222,38 @@ void LevelManager::SwitchMap(std::string filename, std::string door_idf)
 	gameMap->GetEntityManager()->GetCommonStateVariables()[C_STATE_EXITING_DOOR] = 1;
 	gameMap->mSwitchMapDoorIdf = door_idf;
 
-	gameMap->LoadGameMap(filename, scene);
+	gameMap->ParseMap(filename);
+
+	// On récupère la liste des textures courantes
+	std::list<std::string> currentTextures = gameMap->GetResourcesToLoad();
+
+	// On libère de la mémoires les textures qui ne seront pas utilisées dans la prochaine map
+	// Phase de recherche
+	std::list<std::string> notFoundResources;
+	for(std::list<std::string>::iterator it = previousTextures.begin(); it != previousTextures.end(); it++)
+	{
+		bool found = false;
+		for(std::list<std::string>::iterator it2 = currentTextures.begin(); it2 != currentTextures.end(); it2++)
+		{
+			if((*it) == (*it2))
+			{
+				found = true;
+				break;
+			}
+		}
+
+		if(!found)
+			notFoundResources.push_back((*it));
+	}
+
+	// Libération
+	for(std::list<std::string>::iterator it = notFoundResources.begin(); it != notFoundResources.end(); it++)
+	{
+		std::cout << "[Free] Deleting unused tileset/texture " << (*it) << std::endl;
+		mk::RessourceManager::getInstance()->DeleteRessource((*it));
+	}
+
+	gameMap->LoadGameMap(scene);
 	gameMap->AddMapLayersToScene(scene);
 
 	ResetCameraDepth();

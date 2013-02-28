@@ -48,10 +48,10 @@ void GameMap::CreateHeroEntity()
 	heroEntity = entity;
 }
 
-void GameMap::LoadGameMap(std::string filename, mk::Scene* scene)
+void GameMap::LoadGameMap(mk::Scene* scene)
 {
-	// Chargement de la partie GFX de la map 
-	Load(filename);
+	// Chargement de la partie GFX de la map
+	Load();
 	
 	// Chargement des entités
 	entityManager->SetScene(scene);

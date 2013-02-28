@@ -48,17 +48,25 @@ namespace mk
 		}
 	}
 
-	void Map::Load(std::string filename)
+	void Map::ParseMap(std::string filename)
 	{
 		// Chargement du fichier en mémoire
 		mk::AsciiFile * f = (mk::AsciiFile*)mk::RessourceManager::getInstance()->LoadRessource(filename);
 		map.ParseText(f->getString() );
+		// Suppression de la map en cache dans le Ressource Manager
+		mk::RessourceManager::getInstance()->DeleteRessource(f);
 
 		// Récupération du dossier ou se trouve la map (pour la gestion des liens en relatif)
-		std::string racine = "";
+		racine = "";
 		size_t pos = filename.find_last_of('/');
 		racine = filename.substr(0, pos+1);
 
+		// Débug de certaines informations sur la map
+		std::cout << "[Load] Parsing map : " << filename << "(" << map.GetWidth() << " x " << map.GetHeight() << ") layers : " << map.GetNumLayers() << std::endl;
+	}
+
+	void Map::Load()
+	{
 		// Chargement des sprites correspondant aux tilesets dans une hashmap
 		for(int k = 0; k < map.GetNumTilesets(); k++) {
 			mk::Sprite* spr = new mk::Sprite();
@@ -94,17 +102,6 @@ namespace mk
 			LoadTilesetMeta(metafilename, spr);
 		}
 
-		// Propriétés générales de la map
-		// BG Color
-		std::string bgColorStr = map.GetProperties().GetLiteralProperty("bgcolor");
-		if(bgColorStr != "No such property!") {
-			std::stringstream ss;
-			ss << std::hex << bgColorStr;
-			ss >> bgColor;
-			bgColor = bgColor << 8 | 0xFF;
-			isBgColor = true;
-		}
-
 		// BG Image
 		std::string bgImageStr = map.GetProperties().GetLiteralProperty("bgimage");
 		if(bgImageStr != "No such property!") {
@@ -127,6 +124,17 @@ namespace mk
 			isBgImage = true;
 		}
 
+		// Propriétés générales de la map
+		// BG Color
+		std::string bgColorStr = map.GetProperties().GetLiteralProperty("bgcolor");
+		if(bgColorStr != "No such property!") {
+			std::stringstream ss;
+			ss << std::hex << bgColorStr;
+			ss >> bgColor;
+			bgColor = bgColor << 8 | 0xFF;
+			isBgColor = true;
+		}
+
 		// Lighting
 		isLighting = false;
 		std::string lightingStr = map.GetProperties().GetLiteralProperty("lighting");
@@ -147,14 +155,52 @@ namespace mk
 		else
 			isNoEntities = false;
 
-		// Débug de certaines informations sur la map
-		std::cout << "[Load] : map : " << filename << "(" << map.GetWidth() << " x " << map.GetHeight() << ") layers : " << map.GetNumLayers() << std::endl;
-
-		// Suppression de la map en cache dans le Ressource Manager
-		mk::RessourceManager::getInstance()->DeleteRessource(f);
-
 		// Culling par défaut
 		SetCullArea(0, 0, map.GetWidth(), map.GetHeight() );
+
+		std::cout << "[Load] Map base loaded.\n";
+	}
+
+	std::list<std::string> Map::GetResourcesToLoad() 
+	{
+		std::list<std::string> resourcesToLoad;
+
+		// Chargement des sprites correspondant aux tilesets dans une hashmap
+		for(int k = 0; k < map.GetNumTilesets(); k++) {
+			std::string tfilename = racine + map.GetTileset(k)->GetImage()->GetSource();
+			std::string real_texture_filename = tfilename;
+			if(textureQuality == 1)
+			{
+				real_texture_filename = real_texture_filename.substr(0, real_texture_filename.size() - 4);
+				real_texture_filename = real_texture_filename + "_low.png";
+			} 
+			else if(textureQuality == 0)
+			{
+				real_texture_filename = real_texture_filename.substr(0, real_texture_filename.size() - 4);
+				real_texture_filename = real_texture_filename + "_verylow.png";
+			}
+
+			resourcesToLoad.push_back(real_texture_filename);
+		}
+
+		std::string bgImageStr = map.GetProperties().GetLiteralProperty("bgimage");
+		if(bgImageStr != "No such property!") {
+			std::string real_texture_filename = racine + bgImageStr;
+			if(textureQuality == 1)
+			{
+				real_texture_filename = real_texture_filename.substr(0, real_texture_filename.size() - 4);
+				real_texture_filename = real_texture_filename + "_low.png";
+			} 
+			else if(textureQuality == 0)
+			{
+				real_texture_filename = real_texture_filename.substr(0, real_texture_filename.size() - 4);
+				real_texture_filename = real_texture_filename + "_verylow.png";
+			}
+
+			resourcesToLoad.push_back(real_texture_filename);
+		}
+
+		return resourcesToLoad;
 	}
 
 	void Map::MoveTo(float x, float y)

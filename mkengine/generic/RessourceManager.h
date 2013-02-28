@@ -50,6 +50,7 @@ namespace mk
 
         Ressource* LoadRessource(string filename);	 //Fonction de chargement de ressource
 		void DeleteRessource(Ressource* res);		 //Suppression de ressource  
+		void DeleteRessource(string filename);
 		void Free();                                 //On vide tout le manager
 
 		void LoadRessourceAsync(string filename);	//Fonction de chargement de ressource threadée

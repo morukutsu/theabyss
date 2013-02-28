@@ -187,107 +187,7 @@ namespace mk
 		return recording;
 	}
 
-	/*MD2Entity* CRessourceManager::LoadModel(SFile ffilename, int widthheight, float scale)
-    {
-		string filename = ffilename.filename;
-        //Verification de l'existance possible de l'image
-        //Iterateur
-        for (ModelList::iterator i = modList.begin(); i!=modList.end(); ++i)
-        {
-            if (i->first == filename)
-            {
-                //ulDebug("[Notif] Modèle deja chargé (%s)", filename.c_str() );
-                return i->second;
-            }
-        }
-
-        //Chargement depuis le fichier
-        MD2Entity* model;
-        model = new MD2Entity;
-
-        //On charge un modèle depuis le fichier
-        bool texturereverse = false;
-
-		LowLevel::VirtualFile fp;
-        fp.open(ffilename);
-
-        //
-        fp.read(&model->header, sizeof (md2_header_t));
-		IntLittleToBigTab(&model->header, 4, 64);
-
-        if ((model->header.ident != IntLittleToBig(844121161)) || (model->header.version != 8))
-        {
-            // error!
-            //iprintf("error: bad version!");
-            while (1==1)
-            {
-                //Can't go on so lets hang arround
-            }
-        }
-
-        // memory allocation
-        model->texcoords = (md2_texCoord_t *)malloc (sizeof (md2_texCoord_t) * model->header.num_st);
-        model->triangles = (md2_triangle_t *)malloc (sizeof (md2_triangle_t) * model->header.num_tris);
-        model->frames = (md2_frame_t *)malloc (sizeof(md2_frame_t) * model->header.num_frames);
-
-        //Read float textcoords
-        fp.seekg (model->header.offset_st, VF_BEG);
-        fp.read (model->texcoords, sizeof (md2_texCoord_t)*model->header.num_st);
-		for(int k = 0; k < model->header.num_st; k++)
-		{
-			//fp.read (&model->texcoords[k], sizeof (md2_texCoord_t));
-			model->texcoords[k].s = ShortLittleToBig(model->texcoords[k].s);
-			model->texcoords[k].t = ShortLittleToBig(model->texcoords[k].t);
-		}
-
-        //read that float triangles
-        fp.seekg (model->header.offset_tris, VF_BEG);
-        fp.read (model->triangles, sizeof (md2_triangle_t)*model->header.num_tris);
-		for(int k = 0; k < model->header.num_tris; k++)
-		{
-			//fp.read (&model->triangles[k], sizeof (md2_triangle_t));
-			for(int i = 0; i < 3; i++)
-			{
-				model->triangles[k].vertex[i] = ShortLittleToBig(model->triangles[k].vertex[i]);
-				model->triangles[k].st[i] = ShortLittleToBig(model->triangles[k].st[i]);
-			}
-		}
-
-        // read frames 
-        fp.seekg ( model->header.offset_frames, VF_BEG);
-
-        for (int i = 0; i < model->header.num_frames; ++i)
-        {
-            // memory allocation for vertices of this frame 
-            model->frames[i].verts = (md2_vertex_t *)
-                                     malloc (sizeof (md2_vertex_t) * model->header.num_vertices);
-
-            // read frame data
-            fp.read (model->frames[i].scale, sizeof (vec3_t));
-			for(int j = 0; j < 3; j++)
-			{
-				model->frames[i].scale[j] = FloatLittleToBig(model->frames[i].scale[j])*scale;
-			}
-
-            fp.read (model->frames[i].translate, sizeof (vec3_t));
-			for(int j = 0; j < 3; j++)
-			{
-				model->frames[i].translate[j] = FloatLittleToBig(model->frames[i].translate[j])*scale;
-			}
-
-            fp.read (model->frames[i].name, sizeof (char)*16);
-
-            fp.read (model->frames[i].verts, sizeof (md2_vertex_t)*model->header.num_vertices);
-        }
-
-        fp.close();
-
-        modList[filename] = model;
-        mod_num++;
-		
-        return modList[filename];
-    }*/
-
+	
     void RessourceManager::DeleteRessource(Ressource* res)
     {
         //Iterateur
@@ -303,29 +203,23 @@ namespace mk
 		}
     }
 
-	/*void CRessourceManager::DeleteModel(MD2Entity* model)
-    {
-        //Iterateur
-        for (ModelList::iterator i = modList.begin(); i!=modList.end(); ++i)
-        {
-            if (i->second == model)
-            {
-				int N;
-				for (N = 0; N < model->header.num_frames; ++N)
-					free(model->frames[N].verts);
+	void RessourceManager::DeleteRessource(string filename)
+	{
+		// Récupération de la ressource
+		unsigned int hash = chksum_crc32((unsigned char*)filename.c_str(), strlen(filename.c_str()));
 
-				free(model->frames);
-				free(model->texcoords);
-				free(model->triangles);
-
-				mod_num--;
-                modList.erase(i->first);
-				delete model;
-                break;
-            }
-        }
-    }*/
-
+		// Iterateur
+		for (RessourceList::iterator i = resList.begin(); i!=resList.end(); ++i)
+		{
+			if (i->first == hash)
+			{
+				std::cout << "Deleted : " << i->first << std::endl;
+				delete i->second;
+				resList.erase(i);
+				break;
+			}
+		}
+	}
 
     void RessourceManager::Free()
     {

@@ -19,7 +19,7 @@ public:
 	~GameMap();
 
 	void Init();
-	void LoadGameMap(std::string filename, mk::Scene* scene);
+	void LoadGameMap(mk::Scene* scene);
 	void AddMapLayersToScene(mk::Scene* scene);
 	EntityManager* GetEntityManager() { return entityManager; };
 	void SpecialCases(std::string name, std::string type, Entity* entity);
