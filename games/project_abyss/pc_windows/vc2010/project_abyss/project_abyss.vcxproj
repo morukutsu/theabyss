@@ -170,6 +170,7 @@
     <ClInclude Include="..\..\..\src\gamestate.h" />
     <ClInclude Include="..\..\..\src\LanguageManager.h" />
     <ClInclude Include="..\..\..\src\LevelState.h" />
+    <ClInclude Include="..\..\..\src\level_manager\BulletManager.h" />
     <ClInclude Include="..\..\..\src\level_manager\Cutscene.h" />
     <ClInclude Include="..\..\..\src\level_manager\cutscene_events\CutsceneEvent.h" />
     <ClInclude Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventChangeValue.h" />
