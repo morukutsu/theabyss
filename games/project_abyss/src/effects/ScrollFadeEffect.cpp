@@ -32,7 +32,7 @@ void ScrollFadeEffect::Init()
 			mXDir = -1.0f;
 			mYDir = 0.0f;
 			break;
-		/*case SCROLL_UP:
+		case SCROLL_UP:
 			mOriginX = mScrollX = mk::Core::getBaseWidth();
 			mOriginY = mScrollY = -mk::Core::getBaseHeight();
 			mXDir = 0.0f;
@@ -43,7 +43,7 @@ void ScrollFadeEffect::Init()
 			mOriginY = mScrollY = mk::Core::getBaseHeight();
 			mXDir = 0.0f;
 			mYDir = -1.0f;
-			break;*/
+			break;
 	};
 }
 
@@ -102,14 +102,16 @@ void ScrollFadeEffect::Draw(float interp)
 				lowDisplayGradientRect(interpScrollX, 0, interpScrollX + GRADIENT_SIZE, mk::Core::getBaseHeight(),
 					0x00000000, 0x00000000, 0x000000FF, 0x000000FF);
 				break;
-			/*case SCROLL_UP:
-				diffInOut = !mInOut ? 0 : mk::Core::getBaseHeight();
-				lowDisplayFillRect(0, interpScrollY + diffInOut, mk::Core::getBaseWidth(), interpScrollY + diffInOut + mk::Core::getBaseHeight(), 0x000000FF);
+			case SCROLL_UP:
+				lowDisplayFillRect(0, interpScrollY - GRADIENT_SIZE, mk::Core::getBaseWidth(), interpScrollY + mk::Core::getBaseHeight() - GRADIENT_SIZE, 0x000000FF);
+				lowDisplayGradientRect(0, interpScrollY + mk::Core::getBaseHeight() - GRADIENT_SIZE, mk::Core::getBaseWidth(), interpScrollY + mk::Core::getBaseHeight(), 
+					0x000000FF, 0x000000FF, 0x00000000, 0x00000000);
 				break;
 			case SCROLL_DOWN:
-				diffInOut = !mInOut ? 0 : -mk::Core::getBaseHeight();
-				lowDisplayFillRect(0, interpScrollY + diffInOut, mk::Core::getBaseWidth(), interpScrollY + diffInOut + mk::Core::getBaseHeight(), 0x000000FF);
-				break;*/
+				lowDisplayFillRect(0, interpScrollY + GRADIENT_SIZE, mk::Core::getBaseWidth(), interpScrollY + mk::Core::getBaseHeight() + GRADIENT_SIZE, 0x000000FF);
+				lowDisplayGradientRect(0, interpScrollY, mk::Core::getBaseWidth(), interpScrollY + GRADIENT_SIZE,
+					0x00000000, 0x00000000, 0x000000FF, 0x000000FF);
+				break;
 		};
 	}
 	else
@@ -126,14 +128,16 @@ void ScrollFadeEffect::Draw(float interp)
 				lowDisplayGradientRect(interpScrollX, 0, interpScrollX + GRADIENT_SIZE, mk::Core::getBaseHeight(), 
 					0x000000FF, 0x000000FF, 0x00000000, 0x00000000);
 				break;
-			/*case SCROLL_UP:
-				diffInOut = !mInOut ? 0 : mk::Core::getBaseHeight();
-				lowDisplayFillRect(0, interpScrollY + diffInOut, mk::Core::getBaseWidth(), interpScrollY + diffInOut + mk::Core::getBaseHeight(), 0x000000FF);
+			case SCROLL_UP:
+				lowDisplayFillRect(0, interpScrollY + mk::Core::getBaseHeight(), mk::Core::getBaseWidth(), interpScrollY + mk::Core::getBaseHeight()*2, 0x000000FF);
+				lowDisplayGradientRect(0, interpScrollY + mk::Core::getBaseHeight() - GRADIENT_SIZE, mk::Core::getBaseWidth(), interpScrollY + mk::Core::getBaseHeight(),
+					0x00000000, 0x00000000, 0x000000FF, 0x000000FF);
 				break;
 			case SCROLL_DOWN:
-				diffInOut = !mInOut ? 0 : -mk::Core::getBaseHeight();
-				lowDisplayFillRect(0, interpScrollY + diffInOut, mk::Core::getBaseWidth(), interpScrollY + diffInOut + mk::Core::getBaseHeight(), 0x000000FF);
-				break;*/
+				lowDisplayFillRect(0, interpScrollY -mk::Core::getBaseHeight(), mk::Core::getBaseWidth(), interpScrollY, 0x000000FF);
+				lowDisplayGradientRect(0, interpScrollX, mk::Core::getBaseWidth(), interpScrollY + GRADIENT_SIZE, 
+					0x000000FF, 0x000000FF, 0x00000000, 0x00000000);
+				break;
 		};
 	}
 }
