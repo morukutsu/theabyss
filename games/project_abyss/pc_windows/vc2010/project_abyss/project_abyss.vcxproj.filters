@@ -697,6 +697,9 @@
     <ClCompile Include="..\..\..\src\effects\ScrollFadeEffect.cpp">
       <Filter>Fichiers sources\game\effects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\level_manager\BulletManager.cpp">
+      <Filter>Fichiers sources\game\level_manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="UML_Game.cd" />

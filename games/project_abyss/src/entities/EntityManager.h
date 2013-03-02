@@ -7,6 +7,8 @@
 #include <list>
 #include "mkengine.h"
 
+#include "../level_manager/BulletManager.h"
+
 #define COMMON_STATE_VAR_SIZE 16
 
 enum {
@@ -41,6 +43,9 @@ class EntityManager
 		// Entités
 		std::list<Entity*> entities;
 		int mNextAvailableId;
+
+		// Bullet Manager instance
+		BulletManager bulletManager;
 
 		// pointeur sur la scene parente
 		mk::Scene* parentScene;

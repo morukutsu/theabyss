@@ -274,6 +274,7 @@
     <ClCompile Include="..\..\..\src\entities\StaticEntity.cpp" />
     <ClCompile Include="..\..\..\src\LanguageManager.cpp" />
     <ClCompile Include="..\..\..\src\LevelState.cpp" />
+    <ClCompile Include="..\..\..\src\level_manager\BulletManager.cpp" />
     <ClCompile Include="..\..\..\src\level_manager\Cutscene.cpp" />
     <ClCompile Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventChangeValue.cpp" />
     <ClCompile Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventFx.cpp" />

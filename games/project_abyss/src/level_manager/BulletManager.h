@@ -18,10 +18,21 @@ class Bullet
 		Bullet();
 		~Bullet();
 
+		void Init();		// Initialise la bullet
+
+		void PreUpdate();
+		void PostUpdate();
+
 	public:
+		bool isActive, toDelete;
+		float life;			// Temps de vie de la particule
+
+		// Union permettant de gérer le cas ou la particule est libre/occupee
 		NVector pos;
-		CBody* body;		// Adresse vers un Body déjà alloué
-		bool isActive;
+		CBody body;		// Adresse vers un Body déjà alloué
+
+		// Quand la bullet est inactive
+		Bullet *next;	
 };
 
 class BulletManager 
@@ -39,9 +50,15 @@ class BulletManager
 		// Mise à jour des bullets (appel des visiteurs sur chaque bullet)
 		void Update();
 
+	private:
+		void HandleBulletDelete(Bullet* b);
+
 	public:
 		// Tableau de bullets
 		std::vector<Bullet> bullets;
+
+		// Accès au bullets libres
+		Bullet* firstAvailable;
 };
 
 #endif
