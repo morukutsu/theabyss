@@ -56,6 +56,7 @@ void GameMap::LoadGameMap(mk::Scene* scene)
 	// Chargement des entités
 	entityManager->SetScene(scene);
 	entityManager->SetGameMap(this);
+	entityManager->GetBulletManager()->AllocateBullets();
 
 	// Setting des paramètres à la scene
 	scene->ToggleLighting(isLighting);
@@ -231,6 +232,9 @@ void GameMap::UpdatePhysics()
 	{
 		for(std::list<CBody*>::iterator body_b = bodies.begin(); body_b != bodies.end(); body_b++)
 		{
+			if((*body_a)->isSleeping || (*body_b)->isSleeping)
+				continue;
+
 			if((*body_a) != (*body_b))
 			{
 				// On ignore les collisions entre body statiques
@@ -261,6 +265,9 @@ void GameMap::DebugCollisions()
 
 	for(std::list<CBody*>::iterator it = bodies.begin(); it != bodies.end(); it++)
 	{
+		if((*it)->isSleeping)
+			continue;
+
 		NVector center = (*it)->GetPosition();
 
 		glPushMatrix( );

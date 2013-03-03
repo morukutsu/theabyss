@@ -401,6 +401,12 @@
     <ClInclude Include="..\..\..\src\level_manager\BulletManager.h">
       <Filter>Fichiers d%27en-tête\game\level_manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\level_manager\BulletFactory.h">
+      <Filter>Fichiers d%27en-tête\game\level_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\level_manager\BulletUpdater.h">
+      <Filter>Fichiers d%27en-tête\game\level_manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\AsciiFile.cpp">
@@ -698,6 +704,12 @@
       <Filter>Fichiers sources\game\effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\level_manager\BulletManager.cpp">
+      <Filter>Fichiers sources\game\level_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\level_manager\BulletFactory.cpp">
+      <Filter>Fichiers sources\game\level_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\level_manager\BulletUpdater.cpp">
       <Filter>Fichiers sources\game\level_manager</Filter>
     </ClCompile>
   </ItemGroup>

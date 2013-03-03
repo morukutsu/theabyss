@@ -2,6 +2,11 @@
 // LittleSpace Studio 2012
 
 #include "BulletManager.h"
+#include "BulletFactory.h"
+#include "BulletUpdater.h"
+
+#include "../entities/EntityManager.h"
+#include "../level_manager/GameMap.h"
 
 // Bullet
 Bullet::Bullet()
@@ -9,16 +14,18 @@ Bullet::Bullet()
 	isActive = false;
 	life = 0.0f;
 	toDelete = false;
+	body = new CBody();
 }
 
 Bullet::~Bullet()
 {
-
+	// body sera supprimé par GameMap
 }
 
-void Bullet::Init()
+void Bullet::Init(int k)
 {
-
+	kind = k;
+	BulletFactory::Init(kind, this);
 }
 
 void Bullet::PreUpdate()
@@ -34,7 +41,7 @@ void Bullet::PostUpdate()
 // BulletManager
 BulletManager::BulletManager()
 {
-	AllocateBullets(MAX_BULLETS);
+	
 }
 
 BulletManager::~BulletManager()
@@ -42,16 +49,25 @@ BulletManager::~BulletManager()
 	FreeBullets();
 }
 
-void BulletManager::AllocateBullets(int max_bullets)
+void BulletManager::AllocateBullets()
 {
-	bullets.reserve(max_bullets);
+	bullets.reserve(MAX_BULLETS);
+	bullets.resize(MAX_BULLETS);
 
 	firstAvailable = &bullets[0];
-	for(int i = 0; i < max_bullets - 1; i++)
+	for(int i = 0; i < MAX_BULLETS - 1; i++)
 	{
+		// Initialisation des paramètres de la bullet
+		entityManager->GetScene()->Add(&bullets[i].spr);
+		bullets[i].spr.Hide();
+		
+		entityManager->GetGameMap()->AddBody(bullets[i].body);
+		bullets[i].body->isSleeping = true;
+
+		// Linking
 		bullets[i].next = &bullets[i + 1];
 	}
-	bullets[max_bullets-1].next = NULL;
+	bullets[MAX_BULLETS-1].next = NULL;
 }
 
 void BulletManager::FreeBullets()
@@ -68,7 +84,11 @@ int BulletManager::Emit(float x, float y, int kind)
 	Bullet* newBullet = firstAvailable;
 	firstAvailable = newBullet->next;
 
-	newBullet->Init();
+	newBullet->originX = x, newBullet->originY = y;
+	newBullet->Init(kind);
+
+	// Paramètres généraux
+	newBullet->body->isSleeping = false;
 }
 
 void BulletManager::Update()
@@ -81,8 +101,11 @@ void BulletManager::Update()
 			// On check s'il faut liberer la bullet
 			if(bullets[i].toDelete)
 				HandleBulletDelete(&bullets[i]);
-
-			// Mise à jour
+			else
+			{
+				// Mise à jour
+				BulletUpdater::Update(&bullets[i]);
+			}
 		}
 	}
 }

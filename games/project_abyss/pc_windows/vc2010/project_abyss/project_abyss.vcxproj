@@ -170,7 +170,9 @@
     <ClInclude Include="..\..\..\src\gamestate.h" />
     <ClInclude Include="..\..\..\src\LanguageManager.h" />
     <ClInclude Include="..\..\..\src\LevelState.h" />
+    <ClInclude Include="..\..\..\src\level_manager\BulletFactory.h" />
     <ClInclude Include="..\..\..\src\level_manager\BulletManager.h" />
+    <ClInclude Include="..\..\..\src\level_manager\BulletUpdater.h" />
     <ClInclude Include="..\..\..\src\level_manager\Cutscene.h" />
     <ClInclude Include="..\..\..\src\level_manager\cutscene_events\CutsceneEvent.h" />
     <ClInclude Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventChangeValue.h" />
@@ -274,7 +276,9 @@
     <ClCompile Include="..\..\..\src\entities\StaticEntity.cpp" />
     <ClCompile Include="..\..\..\src\LanguageManager.cpp" />
     <ClCompile Include="..\..\..\src\LevelState.cpp" />
+    <ClCompile Include="..\..\..\src\level_manager\BulletFactory.cpp" />
     <ClCompile Include="..\..\..\src\level_manager\BulletManager.cpp" />
+    <ClCompile Include="..\..\..\src\level_manager\BulletUpdater.cpp" />
     <ClCompile Include="..\..\..\src\level_manager\Cutscene.cpp" />
     <ClCompile Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventChangeValue.cpp" />
     <ClCompile Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventFx.cpp" />

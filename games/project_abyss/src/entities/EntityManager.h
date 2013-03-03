@@ -34,10 +34,12 @@ class EntityManager
 
 		void SetGameMap(GameMap* map) { parentMap = map; };
 		GameMap* GetGameMap() { return parentMap; };
+		BulletManager* GetBulletManager() { return &bulletManager; };
 
 		void Receive(int message, void* data);
 
 		int* GetCommonStateVariables() { return commonStateVariables; };
+		mk::Scene* GetScene() { return parentScene; };
 
 	private:
 		// Entités

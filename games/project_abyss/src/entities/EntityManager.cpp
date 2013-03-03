@@ -9,6 +9,7 @@ EntityManager::EntityManager()
 {
 	mNextAvailableId = 0;
 	InitCommonVariables();
+	bulletManager.SetEntityManager(this);
 }
 
 EntityManager::~EntityManager()

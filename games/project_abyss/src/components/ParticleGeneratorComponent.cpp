@@ -11,6 +11,8 @@ RangeFunc* createFunc(std::string name)
 		return new RangeFuncSin();
 	else if(name == "random")
 		return new RangeFuncRandom();
+	else
+		return NULL;
 }
 
 ParticleGeneratorComponent::ParticleGeneratorComponent(std::string filename)
