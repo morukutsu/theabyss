@@ -105,12 +105,12 @@ void ScrollFadeEffect::Draw(float interp)
 			case SCROLL_UP:
 				lowDisplayFillRect(0, interpScrollY - GRADIENT_SIZE, mk::Core::getBaseWidth(), interpScrollY + mk::Core::getBaseHeight() - GRADIENT_SIZE, 0x000000FF);
 				lowDisplayGradientRect(0, interpScrollY + mk::Core::getBaseHeight() - GRADIENT_SIZE, mk::Core::getBaseWidth(), interpScrollY + mk::Core::getBaseHeight(), 
-					0x000000FF, 0x000000FF, 0x00000000, 0x00000000);
+					0x000000FF, 0x00000000, 0x00000000, 0x000000FF);
 				break;
 			case SCROLL_DOWN:
 				lowDisplayFillRect(0, interpScrollY + GRADIENT_SIZE, mk::Core::getBaseWidth(), interpScrollY + mk::Core::getBaseHeight() + GRADIENT_SIZE, 0x000000FF);
 				lowDisplayGradientRect(0, interpScrollY, mk::Core::getBaseWidth(), interpScrollY + GRADIENT_SIZE,
-					0x00000000, 0x00000000, 0x000000FF, 0x000000FF);
+					0x00000000, 0x000000FF, 0x000000FF, 0x00000000);
 				break;
 		};
 	}
@@ -131,12 +131,12 @@ void ScrollFadeEffect::Draw(float interp)
 			case SCROLL_UP:
 				lowDisplayFillRect(0, interpScrollY + mk::Core::getBaseHeight(), mk::Core::getBaseWidth(), interpScrollY + mk::Core::getBaseHeight()*2, 0x000000FF);
 				lowDisplayGradientRect(0, interpScrollY + mk::Core::getBaseHeight() - GRADIENT_SIZE, mk::Core::getBaseWidth(), interpScrollY + mk::Core::getBaseHeight(),
-					0x00000000, 0x00000000, 0x000000FF, 0x000000FF);
+					0x00000000, 0x000000FF, 0x000000FF, 0x00000000);
 				break;
 			case SCROLL_DOWN:
 				lowDisplayFillRect(0, interpScrollY -mk::Core::getBaseHeight(), mk::Core::getBaseWidth(), interpScrollY, 0x000000FF);
-				lowDisplayGradientRect(0, interpScrollX, mk::Core::getBaseWidth(), interpScrollY + GRADIENT_SIZE, 
-					0x000000FF, 0x000000FF, 0x00000000, 0x00000000);
+				lowDisplayGradientRect(0, interpScrollY, mk::Core::getBaseWidth(), interpScrollY + GRADIENT_SIZE, 
+					0x000000FF, 0x00000000, 0x00000000, 0x000000FF);
 				break;
 		};
 	}

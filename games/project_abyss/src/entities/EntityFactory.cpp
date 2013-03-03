@@ -11,7 +11,10 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 	float x, float y, float z, float w, float h, std::map<std::string, std::string>& properties)
 {
 	// Vérifications
-	if(type == "" || name == "")
+	if(name == "")
+		lowError("Une entité dans la map n'a pas de nom.");
+
+	if(type == "")
 		lowError("L'entite " + name + " a son type qui n'est pas rempli.");
 
 	// Types d'entités
