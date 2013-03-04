@@ -427,8 +427,8 @@ void ShipDisplayComponent::UpdateReactorsAngle()
 	reactorLight[0]->spr.SetRotCenter(-28/32.0f * mx, 0.0f);
 	reactorLight[1]->spr.SetRotCenter(-28/32.0f * mx, 0.0f);
 
-	reactorLight[0]->spr.Rotate(reactorsAngle * mx);
-	reactorLight[1]->spr.Rotate(reactorsAngle * mx);
+	reactorLight[0]->SetAngle(reactorsAngle * mx);
+	reactorLight[1]->SetAngle(reactorsAngle * mx);
 
 	// Rotation lampe torche
 	NVector posFlashlight = NVector((parts_positions[SHIP_FX_FLASHLIGHT].x)/32.0f, (parts_positions[SHIP_FX_FLASHLIGHT].y)/32.0f);
@@ -441,7 +441,7 @@ void ShipDisplayComponent::UpdateReactorsAngle()
 
 	// Pour la lightpass
 	flashLight->spr.SetRotCenter((partsPositionsXML[SHIP_PARTS_COUNT + FLASHLIGHT_MASK].rx * mx)/32.0f, partsPositionsXML[SHIP_PARTS_COUNT + FLASHLIGHT_MASK].ry/32.0f);
-	flashLight->spr.Rotate(reactorsAngle * mx / 180.0f * 20.0f);
+	flashLight->SetAngle(reactorsAngle * mx / 180.0f * 20.0f);
 }
 
 void ShipDisplayComponent::UpdateReactorsPower()
