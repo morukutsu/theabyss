@@ -22,6 +22,7 @@ class LightComponent : public Component
 
 		void Init();
 
+		void SetAngle(float _angle) { angle = _angle; };
 		void Mirror(bool v, bool h) { mirrorV = v, mirrorH = h; };
 		void Offset(float x, float y) { offsetX = x, offsetY = y; };
 
@@ -35,6 +36,7 @@ class LightComponent : public Component
 
 		bool mirrorH, mirrorV;
 		float offsetX, offsetY;
+		float angle;
 };
 
 #endif

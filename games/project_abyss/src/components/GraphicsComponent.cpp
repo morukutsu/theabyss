@@ -6,13 +6,16 @@
 #include "../entities/Entity.h"
 #include "RessourceManager.h"
 
-GraphicsComponent::GraphicsComponent(std::string filename, float _scale, int _prio)
+GraphicsComponent::GraphicsComponent(std::string filename, float _scale, int _prio, float _angle, bool _mirrorX, bool _mirrorY)
 {
 	spr.Assign((mk::Image*)mk::RessourceManager::getInstance()->LoadRessource(filename.c_str() ) );
 	spr.Set3DMode(true);
 
 	scale = _scale;
 	prio = _prio;
+	angle = _angle;
+	mirrorX = _mirrorX;
+	mirrorY = _mirrorY;
 }
 
 void GraphicsComponent::Init()
@@ -27,6 +30,8 @@ void GraphicsComponent::Update()
 	spr.SetSize(spr.image->getImageWidth()/32.0f, spr.image->getImageHeight()/32.0f);
 	spr.MoveTo(parent->mPos.x/32, parent->mPos.y/32);
 	spr.Scale(scale, scale);
+	spr.Rotate(angle);
+	spr.Mirror(mirrorX, mirrorY);
 	spr.SetPriority(prio);
 	spr.Alpha(1.0f);
 	spr.SavePositions();

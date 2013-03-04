@@ -10,7 +10,7 @@
 class GraphicsComponent : public Component
 {
 	public:
-		GraphicsComponent(std::string filename, float scale = 1.0f, int prio = 0);
+		GraphicsComponent(std::string filename, float scale = 1.0f, int prio = 0, float _angle = 0.0f, bool _mirrorX = false, bool _mirrorY = false);
 
 		void Receive(int message, void* data);
 
@@ -22,7 +22,8 @@ class GraphicsComponent : public Component
 		mk::Sprite spr;
 		float scale;
 		int prio;
-
+		float angle;
+		bool mirrorX, mirrorY;
 };
 
 #endif

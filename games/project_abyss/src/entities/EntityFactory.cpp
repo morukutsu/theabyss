@@ -25,13 +25,48 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 
 	if(type == "light")
 	{
+		float angle = 0.0f;
+		bool mirrorX = false;
+		bool mirrorY = false;
+
+		if(properties.find("angle") != properties.end() )
+			angle = toFloat(properties["angle"]);
+
+		if(properties.find("mirror_x") != properties.end() )
+			mirrorX = toInt(properties["mirror_x"]) == 1;
+
+		if(properties.find("mirror_y") != properties.end() )
+			mirrorY = toInt(properties["mirror_y"]) == 1;
+
 		ent = new StaticEntity();
-		ent->AddComponent(new LightComponent(toFloat(properties["radius"]) ) );
+		LightComponent* c = new LightComponent(toFloat(properties["radius"]) );
+		c->Mirror(mirrorX, mirrorY);
+		c->SetAngle(angle);
+
+		ent->AddComponent(c);
 	}
 	else if(type == "lightimg")
 	{
+		float angle = 0.0f;
+		bool mirrorX = false;
+		bool mirrorY = false;
+
+		if(properties.find("angle") != properties.end() )
+			angle = toFloat(properties["angle"]);
+
+		if(properties.find("mirror_x") != properties.end() )
+			mirrorX = toInt(properties["mirror_x"]) == 1;
+
+		if(properties.find("mirror_y") != properties.end() )
+			mirrorY = toInt(properties["mirror_y"]) == 1;
+
 		ent = new StaticEntity();
-		ent->AddComponent(new LightComponent(properties["image"]) );
+
+		LightComponent* c = new LightComponent(properties["image"]);
+		c->Mirror(mirrorX, mirrorY);
+		c->SetAngle(angle);
+
+		ent->AddComponent(c);
 	}
 	else if(type == "hero")
 	{
@@ -56,9 +91,15 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 		float scale = 1.0f;
 		int prio = 0;
 		std::string defaultanim = "idle";
+		float angle = 0.0f;
+		bool mirrorX = false;
+		bool mirrorY = false;
 
 		if(properties.find("scale") != properties.end() )
 			scale = toFloat(properties["scale"]);
+
+		if(properties.find("angle") != properties.end() )
+			angle = toFloat(properties["angle"]);
 
 		if(properties.find("prio") != properties.end() )
 			prio = toInt(properties["prio"]);
@@ -66,13 +107,22 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 		if(properties.find("defaultanim") != properties.end() )
 			defaultanim = properties["defaultanim"];
 
+		if(properties.find("mirror_x") != properties.end() )
+			mirrorX = toInt(properties["mirror_x"]) == 1;
+
+		if(properties.find("mirror_y") != properties.end() )
+			mirrorY = toInt(properties["mirror_y"]) == 1;
+
 		ent = new StaticEntity();
-		ent->AddComponent(new AnimatedGraphicsComponent(properties["model"], scale, prio, defaultanim) );
+		ent->AddComponent(new AnimatedGraphicsComponent(properties["model"], scale, prio, defaultanim, angle, mirrorX, mirrorY) );
 	}
 	else if(type == "gfx")
 	{
 		float scale = 1.0f;
 		int prio = 0;
+		float angle = 0.0f;
+		bool mirrorX = false;
+		bool mirrorY = false;
 
 		if(properties.find("scale") != properties.end() )
 			scale = toFloat(properties["scale"]);
@@ -80,8 +130,17 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 		if(properties.find("prio") != properties.end() )
 			prio = toInt(properties["prio"]);
 
+		if(properties.find("angle") != properties.end() )
+			angle = toFloat(properties["angle"]);
+
+		if(properties.find("mirror_x") != properties.end() )
+			mirrorX = toInt(properties["mirror_x"]) == 1;
+
+		if(properties.find("mirror_y") != properties.end() )
+			mirrorY = toInt(properties["mirror_y"]) == 1;
+
 		ent = new StaticEntity();
-		ent->AddComponent(new GraphicsComponent(properties["image"], scale, prio) );
+		ent->AddComponent(new GraphicsComponent(properties["image"], scale, prio, angle, mirrorX, mirrorY) );
 	}
 	else if(type == "door_free") 
 	{

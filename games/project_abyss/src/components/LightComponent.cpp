@@ -41,7 +41,7 @@ LightComponent::LightComponent(float r)
 
 	offsetX = offsetY = 0;
 	mirrorH = mirrorV = false;
-
+	angle = 0;
 	mesh.SetPriority(-1);
 }
 
@@ -55,6 +55,7 @@ LightComponent::LightComponent(std::string filename)
 
 	offsetX = offsetY = 0;
 	mirrorH = mirrorV = false;
+	angle = 0;
 }
 
 LightComponent::~LightComponent()
@@ -84,6 +85,7 @@ void LightComponent::Update()
 		spr.SetSize(spr.image->getImageWidth()/32.0f, spr.image->getImageHeight()/32.0f);
 		spr.MoveTo((parent->mPos.x + offsetX)/32, (parent->mPos.y + offsetY)/32);
 		spr.SetDepth(parent->mDepth);
+		spr.Rotate(angle);
 		spr.SavePositions();
 	}
 	
