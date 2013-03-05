@@ -61,6 +61,7 @@ namespace mk
 			void Pause();
 			void Restart();
 			void Stop();
+			void SetAnimFrame(int frameNo);
 
 			void Interpolate(float dt);
 			void SavePositions();

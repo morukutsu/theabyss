@@ -299,6 +299,22 @@ namespace mk
 		}
 	}
 
+	void ModelBone::SetAnimFrame(int frameNo)
+	{
+		const struct md5_anim_t *anim = &mAnim->md5anim;
+		int maxFrames = animations[currentAnim].frmEnd;
+
+		animInfo.curr_frame = frameNo;
+		animInfo.next_frame = frameNo + 1;
+		animInfo.last_time = 0.0;
+
+		if (animInfo.curr_frame > maxFrames)
+			animInfo.curr_frame = animations[currentAnim].frmStart;
+
+		if (animInfo.next_frame > maxFrames)
+			animInfo.next_frame = animations[currentAnim].frmStart;
+	}
+
 	void ModelBone::DrawSkeleton (const struct md5_joint_t *skeleton, int num_joints)
 	{
 		glPushMatrix();

@@ -10,7 +10,7 @@
 class AnimatedGraphicsComponent : public Component
 {
 	public:
-		AnimatedGraphicsComponent(std::string model, float scale, int prio, std::string defaultAnim, float angle, bool mirrorX, bool mirrorY);
+		AnimatedGraphicsComponent(std::string model, float scale, int prio, std::string defaultAnim, float angle, bool mirrorX, bool mirrorY, int anim_offset);
 
 		void Receive(int message, void* data);
 
@@ -28,6 +28,7 @@ class AnimatedGraphicsComponent : public Component
 		int prio;
 		float angle;
 		bool mirrorX, mirrorY;
+		int anim_offset;
 };
 
 #endif

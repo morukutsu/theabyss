@@ -6,7 +6,7 @@
 #include "../entities/Entity.h"
 #include "RessourceManager.h"
 
-AnimatedGraphicsComponent::AnimatedGraphicsComponent(std::string modelf, float _scale, int _prio, std::string defaultAnim, float _angle, bool _mirrorX, bool _mirrorY)
+AnimatedGraphicsComponent::AnimatedGraphicsComponent(std::string modelf, float _scale, int _prio, std::string defaultAnim, float _angle, bool _mirrorX, bool _mirrorY, int _anim_offset)
 {
 	// Chargement des ressources
 	model.Scale(scale, scale);
@@ -16,11 +16,14 @@ AnimatedGraphicsComponent::AnimatedGraphicsComponent(std::string modelf, float _
 
 	model.Mirror(false, true);
 
+	model.SetAnimFrame(_anim_offset);
+
 	scale = _scale;
 	prio = _prio;
 	angle = _angle;
 	mirrorX = _mirrorX;
 	mirrorY = !_mirrorY;
+	anim_offset = _anim_offset;
 }
 
 void AnimatedGraphicsComponent::Init()

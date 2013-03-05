@@ -27,7 +27,10 @@ int main(int argc, char **argv )
 
 	mk::Core* mCore = new mk::Core(winW, winH, "project_abyss", RENDERMODE_NONE);
 
-	
+	// Acivation du fullscreen
+	std::string isFullscreen = ConfigurationManager::getInstance()->GetAttributeString("Graphics_Fullscreen");
+	if(isFullscreen == "true")
+		mk::Core::ToggleFullscreenMode();
 
 	//mk::RessourceManager::getInstance()->LoadTableOfContents("ressource.bin");
 	//mk::InputManager::Init();
