@@ -34,6 +34,9 @@ void PlayerMovementComponent::Receive(int message, void* data)
 
 void PlayerMovementComponent::Update()
 {
+	// Reinitialisation statut mouvements
+	parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MOVED] = -1;
+
 	// Lock de l'user input
 	if(parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_LOCK_USER_INPUT] == 1)
 		input->commands.clear();
@@ -96,6 +99,8 @@ void PlayerMovementComponent::HandleMovement(int command)
 	{
 		curVel += NVector(ACCELERATION, 0);
 	}
+
+	parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MOVED] = command;
 
 	isPlayerAccelerated = true;
 	

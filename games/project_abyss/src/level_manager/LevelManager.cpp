@@ -8,6 +8,7 @@
 #include "../entities/EntityManager.h"
 #include "../entities/Entity.h"
 #include "../effects/ScrollFadeEffect.h"
+#include "../components/PlayerInputComponent.h"
 
 LevelManager::LevelManager()
 {
@@ -86,6 +87,8 @@ void LevelManager::Init()
 
 	// Cutscene
 	cutscene = NULL;
+
+	scrollDiffX = scrollDiffY = 0;
 }
 
 // Calcule une frame du jeu
@@ -366,10 +369,70 @@ void LevelManager::SetScrollEntity(Entity* ent)
 
 void LevelManager::ComputeScrolling()
 {
+	// Différence dynamique
+	// Pour les X
+	if(scrollEntity->mVel.x < 0 && gameMap->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MOVED] == CMD_ACCEL_LEFT)
+	{
+		scrollDiffX -= DYNAMIC_SCROLLING_SPEED;
+	}
+	else if(scrollEntity->mVel.x > 0 && gameMap->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MOVED] == CMD_ACCEL_RIGHT)
+	{
+		scrollDiffX += DYNAMIC_SCROLLING_SPEED;
+	}
+	else
+	{
+		if(fabs(scrollDiffX) > DYNAMIC_SCROLLING_SPEED) 
+		{
+			if(scrollDiffX > 0)
+				scrollDiffX -= DYNAMIC_SCROLLING_SPEED;
+			else if(scrollDiffX < 0)
+				scrollDiffX += DYNAMIC_SCROLLING_SPEED;
+		}
+		else
+		{
+			scrollDiffX = 0;
+		}
+	}
+
+	// Pour les Y
+	if(scrollEntity->mVel.y < 0 && gameMap->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MOVED] == CMD_ACCEL_UP)
+	{
+		scrollDiffY -= DYNAMIC_SCROLLING_SPEED;
+	}
+	else if(scrollEntity->mVel.y > 0 && gameMap->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MOVED] == CMD_ACCEL_DOWN)
+	{
+		scrollDiffY += DYNAMIC_SCROLLING_SPEED;
+	}
+	else
+	{
+		if(fabs(scrollDiffY) > DYNAMIC_SCROLLING_SPEED) 
+		{
+			if(scrollDiffY > 0)
+				scrollDiffY -= DYNAMIC_SCROLLING_SPEED;
+			else if(scrollDiffY < 0)
+				scrollDiffY += DYNAMIC_SCROLLING_SPEED;
+		}
+		else
+		{
+			scrollDiffY = 0;
+		}
+	}
+
+	if(scrollDiffX >= 200/32.0f)
+		scrollDiffX = 200/32.0f; 
+	if(scrollDiffX <= -200/32.0f)
+		scrollDiffX = -200/32.0f;
+
+	if(scrollDiffY >= 200/32.0f * 9.0f/16.0f)
+		scrollDiffY = 200/32.0f * 9.0f/16.0f; 
+	if(scrollDiffY <= -200/32.0f * 9.0f/16.0f)
+		scrollDiffY = -200/32.0f * 9.0f/16.0f;
+
+	// Setting scrolling
 	prevScrollX = scrollX;
 	prevScrollY = scrollY;
-	scrollX = scrollEntity->mPos.x/32.0f;
-	scrollY = scrollEntity->mPos.y/32.0f;
+	scrollX = scrollEntity->mPos.x/32.0f + scrollDiffX;
+	scrollY = scrollEntity->mPos.y/32.0f + scrollDiffY;
 	
 	float bX = gameMap->borderX/32.0f;
 	float bY = gameMap->borderY/32.0f;

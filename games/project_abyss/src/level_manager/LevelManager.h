@@ -12,6 +12,8 @@
 #include "debug_tools\FileLister.h"
 #include "Cutscene.h"
 
+#define DYNAMIC_SCROLLING_SPEED 0.15F
+
 class Entity;
 class ScrollFadeEffect;
 class LevelManager 
@@ -64,7 +66,7 @@ public:
 
 	// Scrolling
 	Entity* scrollEntity;
-	float scrollX, scrollY, prevScrollX, prevScrollY;
+	float scrollX, scrollY, prevScrollX, prevScrollY, scrollDiffX, scrollDiffY;
 
 	// Cutscenes
 	Cutscene* cutscene;
