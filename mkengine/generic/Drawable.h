@@ -38,6 +38,7 @@ namespace mk
 		return true;
 	}
 
+	class Shader;
 	class Drawable
 	{
 		public:
@@ -60,6 +61,9 @@ namespace mk
 
 				isStencilClipped = false;
 
+				currentShader = 0;
+				isShader = false;
+
 				InitState(prevPos);
 				InitState(curPos);
 			}
@@ -75,7 +79,7 @@ namespace mk
 			void SetBlending(int mode) { blending = mode; };
 			void SetType(int type) { mType = type; };
 			void SetStencilClipped(bool v) { isStencilClipped = v; };
-
+			void SetShader(Shader* shader, bool toggle) { currentShader = shader; isShader = toggle; };
 			BoundingBox GetTransformedBoundingBox();
 
 			void InitState(State& s)
@@ -115,6 +119,8 @@ namespace mk
 			bool ignoreLightPipeline;
 			int blending;
 			bool isOpaque;
+			Shader* currentShader;
+			bool isShader;
 	};
 };
 

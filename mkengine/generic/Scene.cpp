@@ -68,6 +68,17 @@ namespace mk
 
 		isBlackBandsActivated = false;
 		isBlackBandsDisplayed = false;
+
+		// Chargement du shader fix lights
+		mk::AsciiFile* shaderFile = (mk::AsciiFile*)mk::RessourceManager::getInstance()->LoadRessource("shaders/light_alpha_fix.fx");
+
+		std::string tmp = shaderFile->getString();
+		tmp = tmp.substr(0, shaderFile->getSize());
+		light_alpha_fix.Load(tmp);
+
+		light_alpha_fix.shader.setParameter("texture", sf::Shader::CurrentTexture);
+
+		mk::RessourceManager::getInstance()->DeleteRessource(shaderFile);
 	}
 
 	Scene::~Scene()
@@ -329,11 +340,18 @@ namespace mk
 				if((*it)->isVisible && (*it)->ignoreLightPipeline == false && !(*it)->isCulled)
 				{
 					lowSetBlendMode(MK_BLEND_ALPHA);
+
+					if((*it)->posZ >= 0.0f)
+						light_alpha_fix.Bind();
+
 					unsigned char r, g, b;
 					r = (*it)->r, g = (*it)->g, b = (*it)->b;
 					(*it)->r = (*it)->g = (*it)->b = 0;
 					(*it)->Draw();
 					(*it)->r = r, (*it)->g = g, (*it)->b = b;
+
+					if((*it)->posZ >= 0.0f)
+						light_alpha_fix.Unbind();
 				}
 			}
 			else if((*it)->mType == DRAWABLE_TYPE_LIGHT)
@@ -399,6 +417,7 @@ namespace mk
 			lowSetBlendMode(MK_BLEND_ALPHA);
 
 		lowDisplayFBO(mWorkFBO, 0);
+
 		lowSetBlendMode(MK_BLEND_ALPHA);
 			
 		mk::Core::ConfigureViewport();

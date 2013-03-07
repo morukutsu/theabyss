@@ -95,6 +95,7 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 		bool mirrorX = false;
 		bool mirrorY = false;
 		int anim_offset = 0;
+		bool no_shadow = false;
 
 		if(properties.find("scale") != properties.end() )
 			scale = toFloat(properties["scale"]);
@@ -117,8 +118,11 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 		if(properties.find("anim_offset") != properties.end() )
 			anim_offset = toInt(properties["anim_offset"]);
 
+		if(properties.find("no_shadow") != properties.end() )
+			no_shadow = toInt(properties["no_shadow"]) == 1;
+
 		ent = new StaticEntity();
-		ent->AddComponent(new AnimatedGraphicsComponent(properties["model"], scale, prio, defaultanim, angle, mirrorX, mirrorY, anim_offset) );
+		ent->AddComponent(new AnimatedGraphicsComponent(properties["model"], scale, prio, defaultanim, angle, mirrorX, mirrorY, anim_offset, no_shadow) );
 	}
 	else if(type == "gfx")
 	{
@@ -127,6 +131,7 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 		float angle = 0.0f;
 		bool mirrorX = false;
 		bool mirrorY = false;
+		bool no_shadow = false;
 
 		if(properties.find("scale") != properties.end() )
 			scale = toFloat(properties["scale"]);
@@ -143,8 +148,11 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 		if(properties.find("mirror_y") != properties.end() )
 			mirrorY = toInt(properties["mirror_y"]) == 1;
 
+		if(properties.find("no_shadow") != properties.end() )
+			no_shadow = toInt(properties["no_shadow"]) == 1;
+
 		ent = new StaticEntity();
-		ent->AddComponent(new GraphicsComponent(properties["image"], scale, prio, angle, mirrorX, mirrorY) );
+		ent->AddComponent(new GraphicsComponent(properties["image"], scale, prio, angle, mirrorX, mirrorY, no_shadow) );
 	}
 	else if(type == "door_free") 
 	{

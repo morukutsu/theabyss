@@ -19,6 +19,7 @@ namespace mk
     };
 	
 	class Image;
+	class Shader;
     class Sprite : public Drawable
     {
 		public:

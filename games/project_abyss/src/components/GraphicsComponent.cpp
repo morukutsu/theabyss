@@ -6,7 +6,7 @@
 #include "../entities/Entity.h"
 #include "RessourceManager.h"
 
-GraphicsComponent::GraphicsComponent(std::string filename, float _scale, int _prio, float _angle, bool _mirrorX, bool _mirrorY)
+GraphicsComponent::GraphicsComponent(std::string filename, float _scale, int _prio, float _angle, bool _mirrorX, bool _mirrorY, bool _no_shadow)
 {
 	spr.Assign((mk::Image*)mk::RessourceManager::getInstance()->LoadRessource(filename.c_str() ) );
 	spr.Set3DMode(true);
@@ -16,11 +16,14 @@ GraphicsComponent::GraphicsComponent(std::string filename, float _scale, int _pr
 	angle = _angle;
 	mirrorX = _mirrorX;
 	mirrorY = _mirrorY;
+
+	no_shadow = _no_shadow;
 }
 
 void GraphicsComponent::Init()
 {
 	parent->GetScene()->Add(&spr);
+	spr.ignoreLightPipeline = no_shadow;
 }
 
 

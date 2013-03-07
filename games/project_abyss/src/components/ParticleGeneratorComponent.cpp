@@ -32,6 +32,7 @@ ParticleGeneratorComponent::ParticleGeneratorComponent(std::string filename)
 	rotCenterX = 0;
 	rotCenterY = 0;
 	rotAngle = 0;
+	ignoreLightPipeline = true;
 
 	// Initialisations range funcs
 	for(int i = 0; i < MAX_PARAMETERS; i++)

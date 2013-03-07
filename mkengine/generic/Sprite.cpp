@@ -4,6 +4,7 @@
 #include "Image.h"
 #include "Sprite.h"
 #include <iostream>
+#include "../pc/Shader.h"
 
 namespace mk
 {

@@ -6,7 +6,7 @@
 #include "../entities/Entity.h"
 #include "RessourceManager.h"
 
-AnimatedGraphicsComponent::AnimatedGraphicsComponent(std::string modelf, float _scale, int _prio, std::string defaultAnim, float _angle, bool _mirrorX, bool _mirrorY, int _anim_offset)
+AnimatedGraphicsComponent::AnimatedGraphicsComponent(std::string modelf, float _scale, int _prio, std::string defaultAnim, float _angle, bool _mirrorX, bool _mirrorY, int _anim_offset, bool _no_shadow)
 {
 	// Chargement des ressources
 	model.Scale(scale, scale);
@@ -24,11 +24,14 @@ AnimatedGraphicsComponent::AnimatedGraphicsComponent(std::string modelf, float _
 	mirrorX = _mirrorX;
 	mirrorY = !_mirrorY;
 	anim_offset = _anim_offset;
+
+	no_shadow = _no_shadow;
 }
 
 void AnimatedGraphicsComponent::Init()
 {
 	parent->GetScene()->Add(&model);
+	model.ignoreLightPipeline = no_shadow;
 }
 
 

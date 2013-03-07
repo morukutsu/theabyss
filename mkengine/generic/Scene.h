@@ -77,6 +77,7 @@ namespace mk
 			bool isLighting, isPostFXShader;
 			FBO *mWorkFBO;
 			Shader postfx;
+			Shader light_alpha_fix;
 
 			// Frustum culling
 			mk::BoundingBox windowAABB;
