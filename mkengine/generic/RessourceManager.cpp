@@ -147,7 +147,7 @@ namespace mk
 				tmpRes = new MeshBone();
 			else if(ext == "md5anim")
 				tmpRes = new MeshBoneAnim();
-			else if(ext == "xml" || ext == "tmx" || ext == "ogg" || ext == "txt" || ext == "fx")
+			else if(ext == "xml" || ext == "tmx" || ext == "ogg" || ext == "txt" || ext == "fx" || ext == "json" || ext == "atlas")
 				tmpRes = new AsciiFile();
 			else if(ext == "raw")
 				tmpRes = new Sound();

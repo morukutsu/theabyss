@@ -38,6 +38,10 @@ private:
 	mk::ExtendedSpriteRessource* sprRes;
 	mk::ExtendedSprite spr;
 
+	spine::Skeleton *skeleton;
+	spine::SkeletonData *skeletonData;
+	spine::Animation *animation;
+
 	//Effets
 	float alpha;
 	float elapsedTime;

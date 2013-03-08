@@ -90,6 +90,15 @@
     <Filter Include="Fichiers sources\game\effects">
       <UniqueIdentifier>{85e80fdf-6ca0-461c-9b15-af98b5e854e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers sources\mkengine\spine">
+      <UniqueIdentifier>{d2c5a003-b062-4e04-b729-4820ecf88903}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\mkengine\generic\spine">
+      <UniqueIdentifier>{99d6bae8-94fb-4f19-a479-34199246c55a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\mkengine\generic\spine">
+      <UniqueIdentifier>{ef817169-9b9b-4d86-8d95-d741155fd2a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\mkengine\generic\AsciiFile.h">
@@ -407,6 +416,24 @@
     <ClInclude Include="..\..\..\src\level_manager\BulletUpdater.h">
       <Filter>Fichiers d%27en-tête\game\level_manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_batchallocator.h">
+      <Filter>Fichiers sources\mkengine\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Atlas.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\AtlasAttachmentLoader.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\RegionAttachment.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Skeleton.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\SkeletonJson.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\AsciiFile.cpp">
@@ -712,8 +739,68 @@
     <ClCompile Include="..\..\..\src\level_manager\BulletUpdater.cpp">
       <Filter>Fichiers sources\game\level_manager</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\Animation.cpp">
+      <Filter>Fichiers sources\mkengine\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\BaseAtlas.cpp">
+      <Filter>Fichiers sources\mkengine\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\BaseRegionAttachment.cpp">
+      <Filter>Fichiers sources\mkengine\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\BaseSkeleton.cpp">
+      <Filter>Fichiers sources\mkengine\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\BaseSkeletonJson.cpp">
+      <Filter>Fichiers sources\mkengine\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\Bone.cpp">
+      <Filter>Fichiers sources\mkengine\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\SkeletonData.cpp">
+      <Filter>Fichiers sources\mkengine\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\Skin.cpp">
+      <Filter>Fichiers sources\mkengine\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\Slot.cpp">
+      <Filter>Fichiers sources\mkengine\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_reader.cpp">
+      <Filter>Fichiers sources\mkengine\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_value.cpp">
+      <Filter>Fichiers sources\mkengine\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_writer.cpp">
+      <Filter>Fichiers sources\mkengine\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Atlas.cpp">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\AtlasAttachmentLoader.cpp">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\RegionAttachment.cpp">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Skeleton.cpp">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\SkeletonJson.cpp">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="UML_Game.cd" />
+    <None Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_internalarray.inl">
+      <Filter>Fichiers sources\mkengine\spine</Filter>
+    </None>
+    <None Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_internalmap.inl">
+      <Filter>Fichiers sources\mkengine\spine</Filter>
+    </None>
+    <None Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_valueiterator.inl">
+      <Filter>Fichiers sources\mkengine\spine</Filter>
+    </None>
   </ItemGroup>
 </Project>

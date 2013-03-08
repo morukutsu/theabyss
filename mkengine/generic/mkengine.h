@@ -32,4 +32,19 @@
 #include "AssetsPreprocessing.h"
 #include "Shader.h"
 
+#include <spine/SkeletonData.h>
+#include <spine/BoneData.h>
+#include <spine/SlotData.h>
+#include <spine/Skin.h>
+#include <spine/Attachment.h>
+#include <spine/Animation.h>
+#include <spine/Slot.h>
+#include <spine/Bone.h>
+
+#include "spine\Skeleton.h"
+#include "spine\Atlas.h"
+#include "spine\SkeletonJson.h"
+#include "spine\AtlasAttachmentLoader.h"
+#include "spine\RegionAttachment.h"
+
 #endif

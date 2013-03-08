@@ -524,6 +524,49 @@ void lowDisplayFBO(mk::FBO* fbo, int id)
 	glPopMatrix();
 }
 
+void lowDisplayVtxArray(sf::VertexArray& vtxArray, mk::Image* img)
+{
+	glPushMatrix();
+
+	glTranslatef(500, 500, mAutoDepth);
+	glScalef(1.0f, 1.0f, 1.0f);
+
+	
+
+	glEnable (GL_DEPTH_TEST);
+	glEnable (GL_BLEND);
+	glEnable (GL_TEXTURE_2D);
+
+	img->Bind();
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glBegin(GL_QUADS);
+	for(int i = 0; i < vtxArray.getVertexCount(); ++i)
+	{
+		
+		
+
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+		sf::Vector2f vtx = vtxArray[i].position;
+		sf::Vector2f vnm = vtxArray[i].texCoords;
+
+		glTexCoord2f(vnm.x / img->getImageWidth(), vnm.y / img->getImageHeight() );
+		glVertex3f(vtx.x, vtx.y, 0);
+	
+		
+	}
+	glEnd();
+
+	glDisable (GL_BLEND);
+	glDisable (GL_DEPTH_TEST);
+	glDisable (GL_TEXTURE_2D);
+
+	glPopMatrix();
+}
+
 // Color
 void lowSetCurrentColor(float r, float g, float b, float a)
 {
