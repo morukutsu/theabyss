@@ -51,7 +51,7 @@ void lowDisplayText(mk::Font* fnt, float x, float y, const char* text, u32 color
 void lowDisplayModelBone(mk::ModelBone* mb);
 void lowDisplayExtendedSprite(mk::ExtendedSprite* spr);
 void lowDisplayFBO(mk::FBO* fbo, int id);
-void lowDisplayVtxArray(sf::VertexArray& vtxArray, mk::Image* img);
+void lowDisplayVtxArray(sf::VertexArray& vtxArray, mk::Image* img, float x, float y, float z, float sx, float sy, float angle, bool mx, bool my);
 
 // Color
 void lowSetCurrentColor(float r, float g, float b, float a);

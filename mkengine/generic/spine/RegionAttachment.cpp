@@ -34,15 +34,22 @@ RegionAttachment::RegionAttachment (AtlasRegion *region) {
 		vertices[3].texCoords.x = u2;
 		vertices[3].texCoords.y = v2;
 	}
+
+	// Scaling des texcoord
+	for(int i = 0; i < 4; i++) 
+	{
+		vertices[i].texCoords.x /= texture->getImageWidth();
+		vertices[i].texCoords.y /= texture->getImageHeight();
+	}
 }
 
 void RegionAttachment::draw (Slot *slot) {
-	Skeleton* skeleton = (Skeleton*)slot->skeleton;
+	BaseSkeleton* skeleton = slot->skeleton;
 
-	sf::Uint8 r = skeleton->BaseSkeleton::r * slot->r * 255;
-	sf::Uint8 g = skeleton->BaseSkeleton::g * slot->g * 255;
-	sf::Uint8 b = skeleton->BaseSkeleton::b * slot->b * 255;
-	sf::Uint8 a = skeleton->BaseSkeleton::a * slot->a * 255;
+	sf::Uint8 r = skeleton->r * slot->r * 255;
+	sf::Uint8 g = skeleton->g * slot->g * 255;
+	sf::Uint8 b = skeleton->b * slot->b * 255;
+	sf::Uint8 a = skeleton->a * slot->a * 255;
 	vertices[0].color.r = r;
 	vertices[0].color.g = g;
 	vertices[0].color.b = b;
@@ -62,12 +69,6 @@ void RegionAttachment::draw (Slot *slot) {
 
 	updateOffset(); // BOZO - Move to resolve()?
 	updateWorldVertices(slot->bone);
-
-	skeleton->texture = texture;
-	skeleton->vertexArray.append(vertices[0]);
-	skeleton->vertexArray.append(vertices[1]);
-	skeleton->vertexArray.append(vertices[2]);
-	skeleton->vertexArray.append(vertices[3]);
 }
 
 void RegionAttachment::updateWorldVertices (spine::Bone *bone) {
@@ -85,6 +86,16 @@ void RegionAttachment::updateWorldVertices (spine::Bone *bone) {
 	vertices[2].position.y = offset[4] * m10 + offset[5] * m11 + y;
 	vertices[3].position.x = offset[6] * m00 + offset[7] * m01 + x;
 	vertices[3].position.y = offset[6] * m10 + offset[7] * m11 + y;
+}
+
+void RegionAttachment::finish(sf::VertexArray& vtxArray, mk::Image** texture_ptr)
+{
+	vtxArray.append(vertices[0]);
+	vtxArray.append(vertices[1]);
+	vtxArray.append(vertices[2]);
+	vtxArray.append(vertices[3]);
+
+	(*texture_ptr) = texture;
 }
 
 } /* namespace spine */

@@ -8,19 +8,47 @@
 #include <SFML/Graphics/VertexArray.hpp>
 #include "Image.h"
 #include "Drawable.h"
+#include <map>
 
-namespace spine {
+namespace spine 
+{
+	class Atlas;
+	class Animation;
+	class Skeleton: public mk::Drawable 
+	{
+		public:
+			Skeleton ();
+			~Skeleton();
 
-class Skeleton: public BaseSkeleton, public mk::Drawable {
-public:
-	sf::VertexArray vertexArray; // à changer
-	mk::Image* texture; // BOZO - This is ugly. Support multiple textures?
+			void LoadModelDescriptorFile(std::string filename);
+			void PlayAnim(std::string anim);
 
-	Skeleton (SkeletonData *skeletonData);
+			void Draw();
+			void Play();
 
-	void Draw();
-	void Interpolate(float dt);
-};
+			void MoveTo(float x, float y) { posX = x, posY = y; };
+			void Scale(float w, float h)  { scaleX = w, scaleY = h; };
+			void Rotate(float Angle) { angle = Angle; };
+			void SetDepth(float z) { posZ = z; };
+
+			void Interpolate(float dt);
+			void SavePositions();
+
+		public:
+			sf::VertexArray vertexArray;
+			mk::Image* texture;
+
+			Atlas* atlas_file;
+			SkeletonData* skeletonData;
+			BaseSkeleton* baseSkel;
+
+			Animation* currentAnim;
+
+			// Liste des animations
+			std::map<std::string, Animation*> animations;
+
+			float animationTime;
+	};
 
 } /* namespace spine */
 #endif /* SPINE_SKELETON_H_ */

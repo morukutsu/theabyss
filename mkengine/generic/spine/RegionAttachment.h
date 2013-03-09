@@ -23,6 +23,8 @@ public:
 
 	virtual void updateWorldVertices (Bone *bone);
 	virtual void draw (Slot *slot);
+	
+	void finish(sf::VertexArray& vtxArray, mk::Image** texture); 
 };
 
 } /* namespace spine */
