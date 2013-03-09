@@ -89,6 +89,7 @@ void LevelManager::Init()
 	cutscene = NULL;
 
 	scrollDiffX = scrollDiffY = 0;
+	scrollingResumeTime = 0;
 }
 
 // Calcule une frame du jeu
@@ -370,6 +371,13 @@ void LevelManager::SetScrollEntity(Entity* ent)
 void LevelManager::ComputeScrolling()
 {
 	// Différence dynamique
+
+	// Détection de mouvement
+	if(gameMap->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MOVED] != -1)
+		scrollingResumeTime = 0;
+	else
+		scrollingResumeTime += 1.0f/30.0f;
+
 	// Pour les X
 	if(scrollEntity->mVel.x < 0 && gameMap->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MOVED] == CMD_ACCEL_LEFT)
 	{
@@ -381,16 +389,19 @@ void LevelManager::ComputeScrolling()
 	}
 	else
 	{
-		if(fabs(scrollDiffX) > DYNAMIC_SCROLLING_SPEED) 
+		if(scrollingResumeTime > 1.5f)
 		{
-			if(scrollDiffX > 0)
-				scrollDiffX -= DYNAMIC_SCROLLING_SPEED;
-			else if(scrollDiffX < 0)
-				scrollDiffX += DYNAMIC_SCROLLING_SPEED;
-		}
-		else
-		{
-			scrollDiffX = 0;
+			if(fabs(scrollDiffX) > DYNAMIC_SCROLLING_SPEED) 
+			{
+				if(scrollDiffX > 0)
+					scrollDiffX -= DYNAMIC_SCROLLING_SPEED;
+				else if(scrollDiffX < 0)
+					scrollDiffX += DYNAMIC_SCROLLING_SPEED;
+			}
+			else
+			{
+				scrollDiffX = 0;
+			}
 		}
 	}
 
@@ -405,16 +416,19 @@ void LevelManager::ComputeScrolling()
 	}
 	else
 	{
-		if(fabs(scrollDiffY) > DYNAMIC_SCROLLING_SPEED) 
+		if(scrollingResumeTime > 1.5f)
 		{
-			if(scrollDiffY > 0)
-				scrollDiffY -= DYNAMIC_SCROLLING_SPEED;
-			else if(scrollDiffY < 0)
-				scrollDiffY += DYNAMIC_SCROLLING_SPEED;
-		}
-		else
-		{
-			scrollDiffY = 0;
+			if(fabs(scrollDiffY) > DYNAMIC_SCROLLING_SPEED) 
+			{
+				if(scrollDiffY > 0)
+					scrollDiffY -= DYNAMIC_SCROLLING_SPEED;
+				else if(scrollDiffY < 0)
+					scrollDiffY += DYNAMIC_SCROLLING_SPEED;
+			}
+			else
+			{
+				scrollDiffY = 0;
+			}
 		}
 	}
 
