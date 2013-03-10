@@ -195,6 +195,8 @@ void LevelManager::LoadMap(std::string filename)
 	// TEMP, TODO
 	cutscene = new Cutscene(this);
 	cutscene->Load("cutscenes/intro_chapitre_2.xml");
+
+	mk::Core::SetLoadingFrame(true);
 }
 
 // Décharge la map
@@ -292,6 +294,8 @@ void LevelManager::SwitchMap(std::string filename, std::string door_idf)
 	scrollFadeEffect->StartEffect();
 
 	gameMap->GetEntityManager()->GetCommonStateVariables()[C_STATE_LOCK_USER_INPUT] = 1;
+
+	mk::Core::SetLoadingFrame(true);
 
 	// Debug
 	std::cout << "Map " << filename << " loaded." << std::endl;

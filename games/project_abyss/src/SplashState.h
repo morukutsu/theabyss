@@ -33,10 +33,7 @@ private:
     static SplashState m_SplashState;
 
 	//Sprites & Images
-	mk::Image* imgSplash;
-	mk::Sprite sprSplash;
-
-	spine::Skeleton *skeleton;
+	spine::Skeleton *littlespace_splash;
 
 	//Effets
 	float alpha;

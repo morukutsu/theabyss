@@ -57,6 +57,9 @@ namespace mk
 			static void ConfigureViewportFBO();
 			static void Screenshot();
 
+			static bool GetLoadingFrame() { return isLoadingFrame; };
+			static void SetLoadingFrame(bool val) { isLoadingFrame = val; };
+
 		private:
 			static int mWindowWidth, mWindowHeight;
 			static int mBaseWidth, mBaseHeight;
@@ -65,6 +68,7 @@ namespace mk
 			static bool isRunning;
 			static std::string mWindowName;
 			static bool isDebugVisible;
+			static bool isLoadingFrame;
 
 			int mCurrentFPS;
 			float mEllapsedTimeFPS;

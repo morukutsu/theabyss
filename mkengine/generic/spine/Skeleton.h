@@ -21,7 +21,7 @@ namespace spine
 			~Skeleton();
 
 			void LoadModelDescriptorFile(std::string filename);
-			void PlayAnim(std::string anim);
+			void PlayAnim(std::string anim, int mode);
 
 			void Draw();
 			void Play();
@@ -48,6 +48,7 @@ namespace spine
 			std::map<std::string, Animation*> animations;
 
 			float animationTime;
+			int anim_mode;
 	};
 
 } /* namespace spine */

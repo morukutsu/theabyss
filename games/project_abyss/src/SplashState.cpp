@@ -11,22 +11,22 @@ SplashState SplashState::m_SplashState;
 
 void SplashState::Init()
 {
-	imgSplash = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("gui/LittleSpaceStudio.png");
-	sprSplash.Assign(imgSplash);
-
 	alpha = 0.0f;
 	elapsedTime = 0.0f;
 
-	skeleton = new spine::Skeleton();
-	skeleton->LoadModelDescriptorFile("test/spineboy.xml");
-	skeleton->PlayAnim("jump");
-	skeleton->posX = 500;
-	skeleton->posY = 500;
+	littlespace_splash = new spine::Skeleton();
+	littlespace_splash->LoadModelDescriptorFile("test/littlespace_logo.xml");
+	littlespace_splash->PlayAnim("animation", ANIM_ONCE);
+
+	littlespace_splash->posX = mk::Core::getBaseWidth()/2.0f;
+	littlespace_splash->posY = mk::Core::getBaseHeight()/2.0f;
+
+	mk::Core::SetLoadingFrame(true);
 }
 
 void SplashState::Cleanup()
 {
-	delete skeleton;
+	delete littlespace_splash;
 }
 
 void SplashState::Pause()
@@ -46,22 +46,22 @@ void SplashState::HandleEvents(StateManager* game)
 
 void SplashState::Update(StateManager* game)
 {
-	elapsedTime += lowGetFrameTime();
+	elapsedTime += 1.0f/30.0f;
 
 	if(elapsedTime > 4)
 	{
-		alpha += 0.5f*lowGetFrameTime();
+		alpha += 0.1f;
 	}
 
-	/*if(elapsedTime > 6)
-		game->ChangeState(DebugState::Instance() );*/
+	if(elapsedTime > 6)
+		game->ChangeState(DebugState::Instance() );
 
 	if(alpha >= 1.0f)
 		alpha = 1.0f;
 	if(alpha <= 0)
 		alpha = 0.0f;
 
-	skeleton->Play();
+	littlespace_splash->Play();
 }
 
 void SplashState::Draw(StateManager* game, int mode, float interpolation)
@@ -71,14 +71,11 @@ void SplashState::Draw(StateManager* game, int mode, float interpolation)
 		//Affichage d'un fond blanc
 		lowDisplayFillRect(0, 0, mk::Core::getBaseWidth(), mk::Core::getBaseHeight(), 0xFFFFFFFF);
 	
-		/*spr.MoveTo(mk::Core::getBaseWidth()/2, mk::Core::getBaseHeight()/2);
-		spr.Draw();*/
-
-		skeleton->Interpolate(interpolation);
-		skeleton->Draw();
+		littlespace_splash->Interpolate(interpolation);
+		littlespace_splash->Draw();
 		
 		
 		// Fade
-		//lowDisplayFillRect(0, 0, mk::Core::getBaseWidth(), mk::Core::getBaseHeight(), MK_MAKE_RGBA(255, 255, 255, 255*alpha));
+		lowDisplayFillRect(0, 0, mk::Core::getBaseWidth(), mk::Core::getBaseHeight(), MK_MAKE_RGBA(255, 255, 255, 255*alpha));
 	}
 }

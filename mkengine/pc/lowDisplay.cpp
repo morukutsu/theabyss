@@ -494,17 +494,27 @@ void lowDisplayVtxArray(sf::VertexArray& vtxArray, mk::Image* img, float x, floa
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
 
+	// Vertex
 	glVertexPointer (2, GL_FLOAT, sizeof(sf::Vertex), &vtxArray[0]);
 
+	// Texcoord
 	char *evilPointer = (char *)&vtxArray[0];
 	evilPointer+=sizeof(sf::Vector2f) + sizeof(sf::Color);
 	glTexCoordPointer(2, GL_FLOAT, sizeof(sf::Vertex), evilPointer);
 
+	// Color
+	evilPointer = (char *)&vtxArray[0];
+	evilPointer+=sizeof(sf::Vector2f);
+	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(sf::Vertex), evilPointer);
+	
+	// Affichage
 	glDrawArrays(GL_QUADS, 0, vtxArray.getVertexCount());
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 
 	glDisable (GL_BLEND);
 	glDisable (GL_DEPTH_TEST);

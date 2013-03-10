@@ -45,18 +45,31 @@ void Skeleton::Draw ()
 
 void Skeleton::Interpolate(float dt)
 {
-	currentAnim->apply(baseSkel, animationTime + (1.0f/30.0f)*dt, true);
+	if(anim_mode == ANIM_LOOP)
+	{
+		currentAnim->apply(baseSkel, animationTime + (1.0f/30.0f)*dt, true);
+	}
+	else if(anim_mode == ANIM_ONCE && animationTime < currentAnim->duration)
+	{
+		currentAnim->apply(baseSkel, animationTime + (1.0f/30.0f)*dt, true);
+	}
 }
 
-void Skeleton::PlayAnim(std::string anim)
+void Skeleton::PlayAnim(std::string anim, int mode)
 {
 	currentAnim = animations[anim];
 	animationTime = 0;
+	anim_mode = mode;
 }
 
 void Skeleton::Play()
 {
 	animationTime += 1.0f/30.0f;
+
+	if(anim_mode == ANIM_ONCE && animationTime > currentAnim->duration)
+	{
+		animationTime = currentAnim->duration;
+	}
 }
 
 

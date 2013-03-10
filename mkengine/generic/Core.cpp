@@ -18,6 +18,7 @@ namespace mk
 	bool Core::isFullscreen;
 	std::string Core::mWindowName;
 	bool Core::isDebugVisible;
+	bool Core::isLoadingFrame;
 
 	Core::Core(int width, int height, const char* name, int renderflags)
 	{

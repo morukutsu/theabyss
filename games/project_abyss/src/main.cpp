@@ -75,6 +75,7 @@ int main(int argc, char **argv )
 	float nextGameUpdateTime = lowGetTime();
 	int   loops = 0;
 
+	mk::Core::SetLoadingFrame(false);
 	lowResetFrameTimeClock();
 	while (mCore->getRunStatus() ) 
 	{
@@ -91,7 +92,19 @@ int main(int argc, char **argv )
 			stman->Update();
 
 			loops++;
-			nextGameUpdateTime += 1.0f/FIXED_FRAMERATE;
+
+			if(!mk::Core::GetLoadingFrame())
+				nextGameUpdateTime += 1.0f/FIXED_FRAMERATE;
+			else
+			{
+				// Pendant les frames de loading, on évite de recalculer trop de frames
+				currentTime = lowGetTime();
+				nextGameUpdateTime = currentTime + 1.0f/FIXED_FRAMERATE;
+				mk::Core::SetLoadingFrame(false);
+				break;
+			}
+
+			mk::Core::SetLoadingFrame(false);
 		}
 
 		// Calcul du facteur d'interpolation
