@@ -19,6 +19,12 @@ namespace mk
 	std::string Core::mWindowName;
 	bool Core::isDebugVisible;
 	bool Core::isLoadingFrame;
+	mk::Sprite Core::mMousePointer;
+	bool Core::isPointerVisible;
+	float Core::oldPointerX;
+	float Core::oldPointerY;
+	float Core::pointerX;
+	float Core::pointerY;
 
 	Core::Core(int width, int height, const char* name, int renderflags)
 	{
@@ -132,18 +138,24 @@ namespace mk
 	void Core::EndDrawing(int mode)
 	{
 		if(mode == MODE_2D) {
-			// Affichage du pointeur de souris
-			if(isPointerVisible) 
-			{
-				mk::Input *input = mk::InputManager::GetInput(0, CNT_KEYBOARD);
-				mMousePointer.MoveTo(input->pointer.x, input->pointer.y);
-				mMousePointer.Draw();
-			}
+			
 		}
 
 		lowPopMatrix();
 	}
 	
+	void Core::DisplayPointer(float interpolation)
+	{
+		// Affichage du pointeur de souris
+		if(isPointerVisible) 
+		{
+			mMousePointer.MoveTo(Lerp(interpolation, 0.0f, 1.0f, oldPointerX, pointerX), 
+				Lerp(interpolation, 0.0f, 1.0f, oldPointerY, pointerY));
+
+			mMousePointer.Draw();
+		}
+	}
+
 	void Core::Display()
 	{
 		// Refresh
@@ -222,6 +234,16 @@ namespace mk
 	void Core::TogglePointer(bool visible)
 	{
 		isPointerVisible = visible;
+	}
+
+	void Core::UpdatePointer()
+	{
+		mk::Input *input = mk::InputManager::GetInput(0, CNT_KEYBOARD);
+		oldPointerX = pointerX;
+		oldPointerY = pointerY; 
+
+		pointerX = input->pointer.x;
+		pointerY = input->pointer.y;
 	}
 
 	bool Core::getRunStatus()

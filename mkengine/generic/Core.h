@@ -39,8 +39,8 @@ namespace mk
 
 			void ShowFPS(mk::Font* fnt, float x, float y, float size = 1.0f, u32 color = 0xFF0000FF);
 			void ShowEngineDebug(mk::Font* fnt);
-			void SetPointer(mk::Image* img);
-			void TogglePointer(bool visible);
+			static void SetPointer(mk::Image* img);
+			static void TogglePointer(bool visible);
 			static void SetDebugVisible(bool v) { isDebugVisible = v; };
 			static bool GetDebugVisible() { return isDebugVisible; };
 
@@ -60,6 +60,9 @@ namespace mk
 			static bool GetLoadingFrame() { return isLoadingFrame; };
 			static void SetLoadingFrame(bool val) { isLoadingFrame = val; };
 
+			static void UpdatePointer();
+			static void DisplayPointer(float interpolation);
+
 		private:
 			static int mWindowWidth, mWindowHeight;
 			static int mBaseWidth, mBaseHeight;
@@ -75,8 +78,10 @@ namespace mk
 			int mPeakVramUsage;
 		
 			// Mouse pointer
-			mk::Sprite mMousePointer;
-			bool isPointerVisible;
+			static mk::Sprite mMousePointer;
+
+			static bool isPointerVisible;
+			static float oldPointerX, oldPointerY, pointerX, pointerY;
 	};
 };
 

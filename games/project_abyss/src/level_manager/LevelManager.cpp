@@ -90,6 +90,10 @@ void LevelManager::Init()
 
 	scrollDiffX = scrollDiffY = 0;
 	scrollingResumeTime = 0;
+
+	// changement de pointeur de souris
+	mk::Core::SetPointer((mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("gui/aim_cursor.png") );
+	mk::Core::TogglePointer(true);
 }
 
 // Calcule une frame du jeu

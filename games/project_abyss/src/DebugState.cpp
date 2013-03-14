@@ -44,6 +44,10 @@ void DebugState::Init()
 	chaptersSubMenu->ToggleFocus(false);
 
 	isFirstLoad = true;
+
+	
+	mk::Core::SetPointer((mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("gui/MousePointer.png") );
+	mk::Core::TogglePointer(true);
 }
 
 void DebugState::Cleanup()

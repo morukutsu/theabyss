@@ -88,6 +88,7 @@ int main(int argc, char **argv )
 		while (currentTime > nextGameUpdateTime && loops < FIXED_FRAMERATE)
 		{
 			mk::InputManager::Update();
+			mCore->UpdatePointer();
 			stman->HandleEvents();
 			stman->Update();
 
@@ -128,6 +129,7 @@ int main(int argc, char **argv )
 		stman->Draw(mk::MODE_2D, interpolation);
 		if(mk::Core::GetDebugVisible() )
 			mCore->ShowEngineDebug(fnt);
+		mCore->DisplayPointer(interpolation);
 		mCore->EndDrawing(mk::MODE_2D);
 
 		//draw on the screen

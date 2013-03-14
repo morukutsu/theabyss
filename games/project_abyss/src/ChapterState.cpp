@@ -22,6 +22,9 @@ void ChapterState::Init()
 	letterAnimFinished = subtitleAnimFinished = false;
 	fadeOutAlpha = 0.0f;
 	fadeOutTime = 0.0f;
+
+	// Chargement d'un pointeur de souris
+	mk::Core::TogglePointer(false);
 }
 
 void ChapterState::SetChapter(std::string filename)

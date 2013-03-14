@@ -23,6 +23,11 @@ void MenuState::Init()
 	elapsedTime = 0.0f;
 	
 	//scene.Add(&sprSplash);
+
+	mk::Core::SetPointer((mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("gui/MousePointer.png") );
+	mk::Core::TogglePointer(true);
+
+	std::cout << "Init" << std::endl;
 }
 
 void MenuState::Cleanup()
