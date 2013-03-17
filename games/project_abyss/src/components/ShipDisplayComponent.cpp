@@ -28,6 +28,7 @@ ShipDisplayComponent::ShipDisplayComponent(PlayerMovementComponent* pmov)
 	parts[SHIP_PART_REACTEUR_BACK_HURT] = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("sprites/vaisseau/hurt/reacteur_back.png");
 	parts[SHIP_FX_LUEUR] = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("sprites/vaisseau/lueur.png");
 	parts[SHIP_FX_FLASHLIGHT] = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("sprites/vaisseau/torchlight.png");
+	parts[SHIP_PART_TORCHE] = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("sprites/vaisseau/armes/lamp.png");
 
 	partsLookup["SHIP_PART_COCKPIT"] = SHIP_PART_COCKPIT;
 	partsLookup["SHIP_PART_VIS"] = SHIP_PART_VIS;
@@ -35,6 +36,7 @@ ShipDisplayComponent::ShipDisplayComponent(PlayerMovementComponent* pmov)
 	partsLookup["SHIP_PART_REACTEUR_BACK"] = SHIP_PART_REACTEUR_BACK;
 	partsLookup["SHIP_FX_LUEUR"] = SHIP_FX_LUEUR;
 	partsLookup["SHIP_FX_FLASHLIGHT"] = SHIP_FX_FLASHLIGHT;
+	partsLookup["SHIP_PART_TORCHE"] = SHIP_PART_TORCHE;
 
 	partsLookup["REACTOR_LIGHT_0"] = SHIP_PARTS_COUNT + REACTOR_LIGHT_0;
 	partsLookup["REACTOR_LIGHT_1"] = SHIP_PARTS_COUNT + REACTOR_LIGHT_1;
@@ -74,6 +76,8 @@ void ShipDisplayComponent::PositionSprites(bool v)
 
 	parts_centers[SHIP_FX_FLASHLIGHT] = NVector(partsPositionsXML[SHIP_FX_FLASHLIGHT].rx * mx, partsPositionsXML[SHIP_FX_FLASHLIGHT].ry);
 
+	parts_centers[SHIP_PART_TORCHE] = NVector(partsPositionsXML[SHIP_PART_TORCHE].rx * mx, partsPositionsXML[SHIP_PART_TORCHE].ry);
+
 	// Positions des parties du vaisseau par rapport au centre
 	parts_positions[SHIP_PART_COCKPIT] = NVector(partsPositionsXML[SHIP_PART_COCKPIT].x, partsPositionsXML[SHIP_PART_COCKPIT].y);
 	parts_positions[SHIP_PART_COCKPIT_HURT] = parts_positions[SHIP_PART_COCKPIT];
@@ -90,6 +94,8 @@ void ShipDisplayComponent::PositionSprites(bool v)
 	parts_positions[SHIP_FX_LUEUR] = NVector(partsPositionsXML[SHIP_FX_LUEUR].x, partsPositionsXML[SHIP_FX_LUEUR].y);
 
 	parts_positions[SHIP_FX_FLASHLIGHT] = NVector(partsPositionsXML[SHIP_FX_FLASHLIGHT].x * -mx, partsPositionsXML[SHIP_FX_FLASHLIGHT].y);
+
+	parts_positions[SHIP_PART_TORCHE] = NVector(partsPositionsXML[SHIP_PART_TORCHE].x * -mx, partsPositionsXML[SHIP_PART_TORCHE].y);
 
 	generators[GEN_REACT_A_FRONT]->offsetX = 66 * mx/32.0f + parent->mPos.x/32.0f;
 	generators[GEN_REACT_A_FRONT]->offsetY = 38/32.0f + parent->mPos.y/32.0f;
@@ -146,6 +152,7 @@ void ShipDisplayComponent::Update()
 	}
 	parts_sprites[SHIP_FX_LUEUR].Show();
 	parts_sprites[SHIP_FX_FLASHLIGHT].Show();
+	parts_sprites[SHIP_PART_TORCHE].Show();
 
 	for(int k = 0; k < SHIP_MAIN_PARTS_COUNT; k+=2)
 	{
@@ -171,12 +178,16 @@ void ShipDisplayComponent::Update()
 	parts_sprites[SHIP_FX_LUEUR].Alpha(1.0f);
 	parts_sprites[SHIP_FX_LUEUR].SavePositions();
 
-	/*parts_sprites[SHIP_FX_FLASHLIGHT].MoveTo((parent->mPos.x + parts_positions[SHIP_FX_FLASHLIGHT].x)/32, 
-		(parent->mPos.y + parts_positions[SHIP_FX_FLASHLIGHT].y)/32);*/
 	parts_sprites[SHIP_FX_FLASHLIGHT].Alpha(0.7f);
 	parts_sprites[SHIP_FX_FLASHLIGHT].SetSize(parts[SHIP_FX_FLASHLIGHT]->getImageWidth() / 32.0f, parts[SHIP_FX_FLASHLIGHT]->getImageHeight() / 32.0f);
 	parts_sprites[SHIP_FX_FLASHLIGHT].SetDepth(parent->mDepth);
 	parts_sprites[SHIP_FX_FLASHLIGHT].SavePositions();
+
+	// Image lampe torche
+	parts_sprites[SHIP_PART_TORCHE].SetSize(parts[SHIP_PART_TORCHE]->getImageWidth() / 32.0f, parts[SHIP_PART_TORCHE]->getImageHeight() / 32.0f);
+	parts_sprites[SHIP_PART_TORCHE].SetDepth(parent->mDepth);
+	parts_sprites[SHIP_PART_TORCHE].Alpha(1.0f);
+	parts_sprites[SHIP_PART_TORCHE].SavePositions();
 }
 
 void ShipDisplayComponent::UpdateShadowSprites()
@@ -226,6 +237,8 @@ void ShipDisplayComponent::Init()
 	parts_sprites[SHIP_PART_COCKPIT_HURT].SetPriority(3 + prioShift);
 	parts_sprites[SHIP_PART_REACTEUR_FRONT_HURT].SetPriority(2 + prioShift);
 	parts_sprites[SHIP_PART_VIS_HURT].SetPriority(1 + prioShift);
+
+	parts_sprites[SHIP_PART_TORCHE].SetPriority(4 + prioShift);
 
 	parts_sprites[SHIP_FX_LUEUR].SetPriority(9 + prioShift);
 	parts_sprites[SHIP_FX_LUEUR].SetBlending(MK_BLEND_ALPHA);
@@ -304,6 +317,8 @@ void ShipDisplayComponent::Mirror(bool v)
 	reactorLight[1]->Mirror(v, false);
 
 	parts_sprites[SHIP_FX_FLASHLIGHT].Mirror(!v, false);
+
+	parts_sprites[SHIP_PART_TORCHE].Mirror(!v, false);
 }
 
 void ShipDisplayComponent::UpdateReactorsAngle()
@@ -329,6 +344,8 @@ void ShipDisplayComponent::UpdateReactorsAngle()
 		reactorsAngle += speed;
 	else if(reactorsAngle > targetAngle)
 		reactorsAngle -= speed;
+
+	//reactorsAngle += 100.0f;
 
 	/*// Activation de l'interpolation de l'angle quand on arrete d'accélérer
 	if(!playerMovementComponent->isPlayerAccelerated && oldIsPlayerAccelerated)
@@ -430,14 +447,22 @@ void ShipDisplayComponent::UpdateReactorsAngle()
 	reactorLight[0]->SetAngle(reactorsAngle * mx);
 	reactorLight[1]->SetAngle(reactorsAngle * mx);
 
-	// Rotation lampe torche
-	NVector posFlashlight = NVector((parts_positions[SHIP_FX_FLASHLIGHT].x)/32.0f, (parts_positions[SHIP_FX_FLASHLIGHT].y)/32.0f);
-	posFlashlight.Rotate(NVector(0, 0), DegreesToRadians(reactorsAngle * mx / 180.0f * 5.0f));
-	posFlashlight += parent->mPos/32.0f;
+	// Rotation lampe torche (Lumière)
+	NVector posFlashlight = NVector((parts_positions[SHIP_PART_TORCHE].x)/32.0f, (parts_positions[SHIP_PART_TORCHE].y)/32.0f);
+
+	posFlashlight.Rotate(NVector(27/32.0f * mx, 34/32.0f), DegreesToRadians(reactorsAngle * mx / 180.0f * 20.0f) );
+	posFlashlight += parent->mPos/32.0f + NVector((parts_positions[SHIP_FX_FLASHLIGHT].x)/32, (parts_positions[SHIP_FX_FLASHLIGHT].y)/32);
 
 	parts_sprites[SHIP_FX_FLASHLIGHT].MoveTo(posFlashlight.x, posFlashlight.y);
-
 	parts_sprites[SHIP_FX_FLASHLIGHT].Rotate(reactorsAngle * mx / 180.0f * 20.0f);
+
+	// Rotation lampe torche (lampe)
+	NVector posLamp = NVector((parts_positions[SHIP_PART_TORCHE].x)/32, (parts_positions[SHIP_PART_TORCHE].y)/32);
+	posLamp.Rotate(NVector(27/32.0f * mx, 34/32.0f), DegreesToRadians(reactorsAngle * mx / 180.0f * 20.0f));
+	posLamp += parent->mPos/32.0f;
+
+	parts_sprites[SHIP_PART_TORCHE].MoveTo(posLamp.x, posLamp.y);
+	parts_sprites[SHIP_PART_TORCHE].Rotate(reactorsAngle * mx / 180.0f * 20.0f);
 
 	// Pour la lightpass
 	flashLight->spr.SetRotCenter((partsPositionsXML[SHIP_PARTS_COUNT + FLASHLIGHT_MASK].rx * mx)/32.0f, partsPositionsXML[SHIP_PARTS_COUNT + FLASHLIGHT_MASK].ry/32.0f);

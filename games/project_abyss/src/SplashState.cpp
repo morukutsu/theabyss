@@ -74,7 +74,6 @@ void SplashState::Draw(StateManager* game, int mode, float interpolation)
 		littlespace_splash->Interpolate(interpolation);
 		littlespace_splash->Draw();
 		
-		
 		// Fade
 		lowDisplayFillRect(0, 0, mk::Core::getBaseWidth(), mk::Core::getBaseHeight(), MK_MAKE_RGBA(255, 255, 255, 255*alpha));
 	}
