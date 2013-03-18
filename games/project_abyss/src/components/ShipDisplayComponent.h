@@ -14,6 +14,8 @@
 #define SHIP_MAIN_PARTS_COUNT			8
 #define SHIP_PARTS_COUNT				11
 #define GEN_COUNT						4
+#define WPN_ARM_COUNT					1
+#define WPN_COUNT						1
 
 enum 
 { 
@@ -36,8 +38,20 @@ enum
 	GEN_REACT_A_BACK, GEN_REACT_B_BACK
 };
 
+enum 
+{
+	WPN_PRIMARY_LASER
+};
+
 struct PartPosition {
 	float x, y, rx, ry;
+};
+
+struct WpnDisplay {
+	std::string wpn_name;
+	mk::Sprite* spr_arm, *spr_cannon;
+	PartPosition arm_position, cannon_position;
+	bool isArmRotationFixed, isCannonRotationFixed;
 };
 
 class ParticleGeneratorComponent;
@@ -64,13 +78,14 @@ class ShipDisplayComponent : public Component
 		void UpdateReactorsPower();
 
 		void ReadPositionsFromXML();
+		void ReadWeaponsFromXML();
 
 		void UpdateShadowSprites();
 
 	public:
 		// Images
-		mk::Image* parts[SHIP_PARTS_COUNT];
-
+		mk::Image *parts[SHIP_PARTS_COUNT];
+		
 		// Sprites
 		mk::Sprite parts_sprites[SHIP_PARTS_COUNT];
 		mk::Sprite parts_shadow[SHIP_PARTS_COUNT];
@@ -102,6 +117,12 @@ class ShipDisplayComponent : public Component
 		// Chargement des positions des sprites depuis le fichier
 		std::map<std::string, int> partsLookup;
 		std::vector<PartPosition> partsPositionsXML;
+
+		// Armes
+		std::map<std::string, int> wpnsLookup;
+		std::vector<WpnDisplay> wpns;
+		int currentWeapon;
+		
 };
 
 #endif

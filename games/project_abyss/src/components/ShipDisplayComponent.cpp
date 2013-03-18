@@ -51,6 +51,12 @@ ShipDisplayComponent::ShipDisplayComponent(PlayerMovementComponent* pmov)
 ShipDisplayComponent::~ShipDisplayComponent()
 {
 	partsPositionsXML.swap(partsPositionsXML);
+
+	for(int i = 0; i < wpns.size(); i++)
+	{
+		delete wpns[i].spr_arm;
+		delete wpns[i].spr_cannon;
+	}
 }
 
 void ShipDisplayComponent::PositionSprites(bool v)
@@ -188,6 +194,40 @@ void ShipDisplayComponent::Update()
 	parts_sprites[SHIP_PART_TORCHE].SetDepth(parent->mDepth);
 	parts_sprites[SHIP_PART_TORCHE].Alpha(1.0f);
 	parts_sprites[SHIP_PART_TORCHE].SavePositions();
+
+	// Update de l'arme courante
+	// TODO :
+	currentWeapon = 0;
+	wpns[currentWeapon].spr_arm->Show();
+	wpns[currentWeapon].spr_cannon->Show();
+
+	wpns[currentWeapon].spr_arm->MoveTo((parent->mPos.x + wpns[currentWeapon].arm_position.x) / 32.0f, (parent->mPos.y + wpns[currentWeapon].arm_position.y) / 32.0f);
+	wpns[currentWeapon].spr_arm->Alpha(1.0f);
+	wpns[currentWeapon].spr_arm->SetDepth(parent->mDepth);
+	wpns[currentWeapon].spr_arm->SetSize(wpns[currentWeapon].spr_arm->image->getImageWidth() / 32.0f, wpns[currentWeapon].spr_arm->image->getImageHeight() / 32.0f); 
+
+	if(!wpns[currentWeapon].isArmRotationFixed)
+		wpns[currentWeapon].spr_arm->Rotate(0.0f);
+
+	wpns[currentWeapon].spr_arm->SavePositions();
+	
+	// Rotation du cannon
+	NVector cannon_position = NVector(wpns[currentWeapon].cannon_position.x / 32.0f + wpns[currentWeapon].arm_position.x / 32.0f, 
+		wpns[currentWeapon].cannon_position.y / 32.0f + wpns[currentWeapon].arm_position.y / 32.0f);
+
+	if(!wpns[currentWeapon].isCannonRotationFixed)
+	{
+		cannon_position.Rotate(parts_positions[SHIP_PART_VIS], 0.0f);
+		wpns[currentWeapon].spr_cannon->Rotate(0.0f);
+	}
+
+	cannon_position += parent->mPos / 32.0f;
+
+	wpns[currentWeapon].spr_cannon->MoveTo(cannon_position.x, cannon_position.y);
+	wpns[currentWeapon].spr_cannon->Alpha(1.0f);
+	wpns[currentWeapon].spr_cannon->SetDepth(parent->mDepth);
+	wpns[currentWeapon].spr_cannon->SetSize(wpns[currentWeapon].spr_cannon->image->getImageWidth() / 32.0f, wpns[currentWeapon].spr_cannon->image->getImageHeight() / 32.0f); 
+	wpns[currentWeapon].spr_cannon->SavePositions();
 }
 
 void ShipDisplayComponent::UpdateShadowSprites()
@@ -285,6 +325,8 @@ void ShipDisplayComponent::Init()
 
 	parts_sprites[SHIP_FX_FLASHLIGHT].SetPriority(-3 + prioShift);
 	parts_sprites[SHIP_FX_FLASHLIGHT].ignoreLightPipeline = true;
+
+	ReadWeaponsFromXML();
 }
 
 void ShipDisplayComponent::Mirror(bool v)
@@ -567,6 +609,95 @@ void ShipDisplayComponent::ReadPositionsFromXML()
 		elem = elem->NextSiblingElement();
 	}
 
+
+	mk::RessourceManager::getInstance()->DeleteRessource(f);
+}
+
+void ShipDisplayComponent::ReadWeaponsFromXML()
+{
+	mk::AsciiFile *f = (mk::AsciiFile*)mk::RessourceManager::getInstance()->LoadRessource("sprites/vaisseau/wpn_config.xml");
+	TiXmlDocument doc;
+
+	doc.Parse(f->getString() );
+
+	TiXmlElement *root = doc.FirstChildElement("ShipWeapons");
+
+	TiXmlElement *elem = root->FirstChildElement("Weapon");
+	while(elem)
+	{
+		WpnDisplay w;
+
+		// Name
+		TiXmlElement *tag = elem->FirstChildElement("Name");
+		w.wpn_name = tag->GetText();
+
+		// Arm
+		tag = elem->FirstChildElement("Arm");
+		std::string arm_filename = tag->Attribute("filename");
+		if(arm_filename != "")
+		{
+			mk::Image* img = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource(arm_filename);
+			double rx, ry, px, py;
+			int rotation;
+
+			tag->Attribute("rx", &rx);
+			tag->Attribute("ry", &ry);
+			tag->Attribute("x", &px);
+			tag->Attribute("y", &py);
+			tag->Attribute("rotation", &rotation);
+
+			w.isArmRotationFixed = (rotation != 1);
+
+			w.arm_position.x = px, w.arm_position.y = py, w.arm_position.rx = rx, w.arm_position.ry = ry;
+
+			w.spr_arm = new mk::Sprite;
+			w.spr_arm->Assign(img);
+			w.spr_arm->SetSize(img->getImageWidth() / 32.0f, img->getImageHeight() / 32.0f);
+			w.spr_arm->SetRotCenter(w.arm_position.rx/ 32.0f, w.arm_position.ry/ 32.0f);
+
+		}
+
+		// Cannon
+		tag = elem->FirstChildElement("Cannon");
+		std::string cannon_filename = tag->Attribute("filename");
+		if(cannon_filename != "")
+		{
+			mk::Image* img = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource(cannon_filename);
+			double rx, ry, px, py;
+			int rotation;
+
+			tag->Attribute("rx", &rx);
+			tag->Attribute("ry", &ry);
+			tag->Attribute("x", &px);
+			tag->Attribute("y", &py);
+			tag->Attribute("rotation", &rotation);
+
+			w.isCannonRotationFixed = (rotation != 1);
+
+			w.cannon_position.x = px, w.cannon_position.y = py, w.cannon_position.rx = rx, w.cannon_position.ry = ry;
+
+			w.spr_cannon = new mk::Sprite;
+			w.spr_cannon->Assign(img);
+			w.spr_cannon->SetSize(img->getImageWidth() / 32.0f, img->getImageHeight() / 32.0f);
+			w.spr_cannon->SetRotCenter(w.cannon_position.rx/ 32.0f, w.cannon_position.ry/ 32.0f);
+		}
+		
+		w.spr_cannon->Set3DMode(true);
+		w.spr_arm->Set3DMode(true);
+
+		w.spr_arm->SetPriority(1); // + prioShift ...
+		w.spr_cannon->SetPriority(2);
+
+		wpns.push_back(w);
+
+		// Ajout des sprites à la scène
+		parent->GetScene()->Add(wpns[wpns.size()-1].spr_arm);
+		parent->GetScene()->Add(wpns[wpns.size()-1].spr_cannon);
+		wpns[wpns.size()-1].spr_cannon->Hide();
+		wpns[wpns.size()-1].spr_arm->Hide();
+
+		elem = elem->NextSiblingElement();
+	}
 
 	mk::RessourceManager::getInstance()->DeleteRessource(f);
 }
