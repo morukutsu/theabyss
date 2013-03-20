@@ -196,15 +196,21 @@ void ShipDisplayComponent::Update()
 	parts_sprites[SHIP_PART_TORCHE].SavePositions();
 
 	// Update de l'arme courante
-	// TODO :
+	// TODO : Deplacer ce bout de code dans une fonction
+	// Gesiton du mirroring
+	float mx = 1.0f;
+	if(mirrorH)
+		mx = -mx;
+
 	currentWeapon = 0;
 	wpns[currentWeapon].spr_arm->Show();
 	wpns[currentWeapon].spr_cannon->Show();
 
-	wpns[currentWeapon].spr_arm->MoveTo((parent->mPos.x + wpns[currentWeapon].arm_position.x) / 32.0f, (parent->mPos.y + wpns[currentWeapon].arm_position.y) / 32.0f);
+	wpns[currentWeapon].spr_arm->MoveTo((parent->mPos.x + wpns[currentWeapon].arm_position.x * mx) / 32.0f, (parent->mPos.y + wpns[currentWeapon].arm_position.y) / 32.0f);
 	wpns[currentWeapon].spr_arm->Alpha(1.0f);
 	wpns[currentWeapon].spr_arm->SetDepth(parent->mDepth);
 	wpns[currentWeapon].spr_arm->SetSize(wpns[currentWeapon].spr_arm->image->getImageWidth() / 32.0f, wpns[currentWeapon].spr_arm->image->getImageHeight() / 32.0f); 
+	wpns[currentWeapon].spr_arm->Mirror(mirrorH, false);
 
 	if(!wpns[currentWeapon].isArmRotationFixed)
 		wpns[currentWeapon].spr_arm->Rotate(0.0f);
@@ -212,7 +218,7 @@ void ShipDisplayComponent::Update()
 	wpns[currentWeapon].spr_arm->SavePositions();
 	
 	// Rotation du cannon
-	NVector cannon_position = NVector(wpns[currentWeapon].cannon_position.x / 32.0f + wpns[currentWeapon].arm_position.x / 32.0f, 
+	NVector cannon_position = NVector(wpns[currentWeapon].cannon_position.x * mx / 32.0f + wpns[currentWeapon].arm_position.x * mx / 32.0f, 
 		wpns[currentWeapon].cannon_position.y / 32.0f + wpns[currentWeapon].arm_position.y / 32.0f);
 
 	if(!wpns[currentWeapon].isCannonRotationFixed)
@@ -227,6 +233,7 @@ void ShipDisplayComponent::Update()
 	wpns[currentWeapon].spr_cannon->Alpha(1.0f);
 	wpns[currentWeapon].spr_cannon->SetDepth(parent->mDepth);
 	wpns[currentWeapon].spr_cannon->SetSize(wpns[currentWeapon].spr_cannon->image->getImageWidth() / 32.0f, wpns[currentWeapon].spr_cannon->image->getImageHeight() / 32.0f); 
+	wpns[currentWeapon].spr_cannon->Mirror(mirrorH, false);
 	wpns[currentWeapon].spr_cannon->SavePositions();
 }
 
@@ -685,8 +692,8 @@ void ShipDisplayComponent::ReadWeaponsFromXML()
 		w.spr_cannon->Set3DMode(true);
 		w.spr_arm->Set3DMode(true);
 
-		w.spr_arm->SetPriority(1); // + prioShift ...
-		w.spr_cannon->SetPriority(2);
+		w.spr_arm->SetPriority(2); // + prioShift ...
+		w.spr_cannon->SetPriority(3);
 
 		wpns.push_back(w);
 
