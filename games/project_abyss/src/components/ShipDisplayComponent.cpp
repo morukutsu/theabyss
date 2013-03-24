@@ -196,7 +196,11 @@ void ShipDisplayComponent::Update()
 	parts_sprites[SHIP_PART_TORCHE].SavePositions();
 
 	// Update de l'arme courante
-	// TODO : Deplacer ce bout de code dans une fonction
+	UpdateWeapon();
+}
+
+void ShipDisplayComponent::UpdateWeapon()
+{
 	// Gesiton du mirroring
 	float mx = 1.0f;
 	if(mirrorH)
@@ -394,55 +398,6 @@ void ShipDisplayComponent::UpdateReactorsAngle()
 	else if(reactorsAngle > targetAngle)
 		reactorsAngle -= speed;
 
-	//reactorsAngle += 100.0f;
-
-	/*// Activation de l'interpolation de l'angle quand on arrete d'accélérer
-	if(!playerMovementComponent->isPlayerAccelerated && oldIsPlayerAccelerated)
-	{
-		targetAngleInterp = 0.0f;
-		sourceAngle = targetAngle;
-		isAngleInterpolatingToNeutral = true;
-	}
-
-	// Et quand on accélère
-	if(playerMovementComponent->isPlayerAccelerated && !oldIsPlayerAccelerated)
-	{
-		targetAngleInterp = 0.0f;
-		sourceAngle = 0.0f;
-		isAngleInterpolatingToMoving = true;
-	}
-
-	if(parent->mVel.Length() < 0.001f)
-	{
-		targetAngle = 0.0f;
-	}
-
-	if(isAngleInterpolatingToNeutral)
-	{
-		targetAngleReact = RadiansToDegrees(Slerp2D(targetAngleInterp, 0.0f, 1.0f, DegreesToRadians(sourceAngle), 0.0f));
-	}
-	else if(isAngleInterpolatingToMoving)
-	{
-		targetAngleReact = RadiansToDegrees(Slerp2D(targetAngleInterp, 0.0f, 1.0f, DegreesToRadians(sourceAngle), targetAngle));
-	}
-	else
-	{
-		if(playerMovementComponent->isPlayerAccelerated)
-			targetAngleReact = targetAngle;
-		else
-			targetAngleReact = 0.0f;
-	}
-
-	oldIsPlayerAccelerated = playerMovementComponent->isPlayerAccelerated;
-	targetAngleInterp += (1.0f/30.0f) * 4.0f;
-	
-	if(targetAngleInterp > 1.0f)
-	{
-		targetAngleInterp = 1.0f;
-		isAngleInterpolatingToNeutral = false;
-		isAngleInterpolatingToMoving = false;
-	}*/
-
 	for(int i = 0; i < 2; i++)
 	{
 		bool shadow = i == 1;
@@ -458,20 +413,6 @@ void ShipDisplayComponent::UpdateReactorsAngle()
 	generators[GEN_REACT_A_BACK]->RotateLocal(-48/32.0f, -6/32.0f, reactorsAngle);
 	generators[GEN_REACT_B_FRONT]->RotateLocal(-48/32.0f, -6/32.0f, reactorsAngle);
 	generators[GEN_REACT_B_BACK]->RotateLocal(-48/32.0f, -6/32.0f, reactorsAngle);
-
-	/*static float tmprx = 0;
-	static float tmpry = 0;
-
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num0) )
-		tmprx--;
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1) )
-		tmprx++;
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num2) )
-		tmpry--;
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num3) )
-		tmpry++;
-
-	printf("%f %f\n", tmprx, tmpry);*/
 
 	NVector posLightReactorFront = NVector(partsPositionsXML[SHIP_PARTS_COUNT + REACTOR_LIGHT_0].x * mx, 
 										   partsPositionsXML[SHIP_PARTS_COUNT + REACTOR_LIGHT_0].y);
@@ -615,9 +556,6 @@ void ShipDisplayComponent::ReadPositionsFromXML()
 
 		elem = elem->NextSiblingElement();
 	}
-
-
-	mk::RessourceManager::getInstance()->DeleteRessource(f);
 }
 
 void ShipDisplayComponent::ReadWeaponsFromXML()
@@ -705,6 +643,4 @@ void ShipDisplayComponent::ReadWeaponsFromXML()
 
 		elem = elem->NextSiblingElement();
 	}
-
-	mk::RessourceManager::getInstance()->DeleteRessource(f);
 }

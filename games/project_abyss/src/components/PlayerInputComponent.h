@@ -9,7 +9,8 @@
 
 enum
 {
-	CMD_ACCEL_UP, CMD_ACCEL_DOWN, CMD_ACCEL_LEFT, CMD_ACCEL_RIGHT
+	CMD_ACCEL_UP, CMD_ACCEL_DOWN, CMD_ACCEL_LEFT, CMD_ACCEL_RIGHT,
+	CMD_SHOOT
 };
 
 class PlayerInputComponent : public Component

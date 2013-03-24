@@ -434,6 +434,9 @@
     <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\SkeletonJson.h">
       <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\components\PlayerWeaponComponent.h">
+      <Filter>Fichiers d%27en-tête\game\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\AsciiFile.cpp">
@@ -789,6 +792,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\SkeletonJson.cpp">
       <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\components\PlayerWeaponComponent.cpp">
+      <Filter>Fichiers sources\game\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

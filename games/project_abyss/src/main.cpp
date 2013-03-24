@@ -33,7 +33,7 @@ int main(int argc, char **argv )
 		mk::Core::ToggleFullscreenMode();
 
 	//mk::RessourceManager::getInstance()->LoadTableOfContents("ressource.bin");
-	//mk::InputManager::Init();
+	mk::InputManager::Init();
 
 	//Statemanager initialisation
 	StateManager* stman = StateManager::getInstance();
@@ -60,6 +60,13 @@ int main(int argc, char **argv )
 	} else {
 		mCore->SetDebugVisible(false);
 	}
+
+	// Chargement mapping contrôles
+	mk::InputManager::setControlKeyboardMapping(0, mk::ButtonName::Up, mk::InputManager::toKeyboardKey(ConfigurationManager::getInstance()->GetAttributeString("CtrlMap_Keyb_Up")));
+	mk::InputManager::setControlKeyboardMapping(0, mk::ButtonName::Down, mk::InputManager::toKeyboardKey(ConfigurationManager::getInstance()->GetAttributeString("CtrlMap_Keyb_Down")));
+	mk::InputManager::setControlKeyboardMapping(0, mk::ButtonName::Left, mk::InputManager::toKeyboardKey(ConfigurationManager::getInstance()->GetAttributeString("CtrlMap_Keyb_Left")));
+	mk::InputManager::setControlKeyboardMapping(0, mk::ButtonName::Right, mk::InputManager::toKeyboardKey(ConfigurationManager::getInstance()->GetAttributeString("CtrlMap_Keyb_Right")));
+	mk::InputManager::setControlKeyboardMapping(0, mk::ButtonName::RT, mk::InputManager::toKeyboardKey(ConfigurationManager::getInstance()->GetAttributeString("CtrlMap_Keyb_Shoot")));
 
 	//Chagement d'une police de débug
 	mk::Font* fnt;

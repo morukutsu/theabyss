@@ -81,6 +81,7 @@ class ShipDisplayComponent : public Component
 		void ReadWeaponsFromXML();
 
 		void UpdateShadowSprites();
+		void UpdateWeapon();
 
 	public:
 		// Images

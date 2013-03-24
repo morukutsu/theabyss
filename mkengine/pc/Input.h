@@ -5,6 +5,7 @@
 #define MK_INPUT
 
 #include "lowSystem.h"
+#include <string>
 
 #define BUT_NONE          -1
 #define BUT_PUSHED         0
@@ -65,12 +66,74 @@ namespace mk
 		Pointer pointer;
 	};
 
+	// Map pour stocker la correspondance touche / string
+	template <typename T>
+	class StringBimap
+	{
+		static_assert(!std::is_same<T, std::string>::value, "Type different from std::string expected");
+
+		public:
+			explicit StringBimap(unsigned int valueCount, unsigned int specialValueCount = 0)
+			: mStringVector(valueCount + specialValueCount)
+			, mTMap()
+			, mSpecialValueCount(specialValueCount)
+			{
+			}
+
+			void insert(T t, const std::string& string)
+			{
+				mStringVector[t + mSpecialValueCount] = string;
+				mTMap[string] = t;
+			}
+
+			const std::string& at(T t) const
+			{
+				std::size_t index = static_cast<std::size_t>(t + mSpecialValueCount);
+				// Gérer ce cas ...
+				/*if (index >= mStringVector.size() + mSpecialValueCount)
+					return "";
+				else*/
+
+
+					return mStringVector[index];
+			}
+
+			T at(const std::string& string) const
+			{
+				auto itr = mTMap.find(string);
+				
+				// Gestion erreurs
+				return itr->second;
+			}
+
+		private:
+			std::vector<std::string>	mStringVector;
+			std::map<std::string, T>	mTMap;
+			unsigned int				mSpecialValueCount;
+	};
+
 	class InputManager
 	{
 		public:
 			static void Init();
 			static void Update();
 			static Input* GetInput(int player, int device);
+
+			// String to key conversion
+			static std::string toString(sf::Keyboard::Key key)
+			{
+				return mKeybMap->at(key);
+			}
+
+			static sf::Keyboard::Key toKeyboardKey(const std::string& string)
+			{
+				return mKeybMap->at(string);
+			}
+
+			static void setControlKeyboardMapping(int player, ButtonName name, sf::Keyboard::Key key)
+			{
+				mKeybMapping[player][name] = key;
+			}
 
 		private:
 			static Input _in[MAX_PLAYERS];
@@ -89,6 +152,11 @@ namespace mk
 					input->buttons[k].released = false;
 				}
 			}
+
+			static void InitMaps();
+			static StringBimap<sf::Keyboard::Key> *mKeybMap;
+
+			static sf::Keyboard::Key mKeybMapping[MAX_PLAYERS][MAX_BUTTONS];
 	};
 };
 

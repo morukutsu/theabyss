@@ -11,3 +11,4 @@
 #include "AnimatedGraphicsComponent.h"
 #include "PlayerBodyComponent.h"
 #include "DoorComponent.h"
+#include "PlayerWeaponComponent.h"

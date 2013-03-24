@@ -44,6 +44,9 @@ void EntityManager::Update()
 	{
 		(*it)->Update();
 	}
+
+	// Update bullet manager
+	bulletManager.Update();
 }
 
 void EntityManager::Receive(int message, void* data)
