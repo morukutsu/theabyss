@@ -74,9 +74,7 @@ void PlayerMovementComponent::ProcessCommands()
 				HandleMovement(command);
 			break;
 		}
-	}
-
-	input->commands.clear();
+	}	
 }
 
 void PlayerMovementComponent::HandleMovement(int command)

@@ -2,6 +2,11 @@
 // LittleSpace Studio 2012
 
 #include "PlayerWeaponComponent.h"
+#include "PlayerInputComponent.h"
+#include "../entities/Entity.h"
+#include "../level_manager/BulletManager.h"
+#include "../entities/EntityManager.h"
+#include "../level_manager/BulletFactory.h"
 
 PlayerWeaponComponent::PlayerWeaponComponent(PlayerInputComponent* _in)
 {
@@ -16,12 +21,29 @@ void PlayerWeaponComponent::Receive(int message, void* data)
 
 void PlayerWeaponComponent::Update()
 {
-
+	// Tir d'une bullet
+	// Traite toutes les commandes reçues depuis l'input à cette frame
+	for(std::list<int>::iterator it = in->commands.begin(); it != in->commands.end(); it++)
+	{
+		int command = (*it);
+		switch(command)
+		{
+			case CMD_SHOOT:
+				Shoot();
+			break;
+		}
+	}	
 }
 
 void PlayerWeaponComponent::Init()
 {
 
+}
+
+void PlayerWeaponComponent::Shoot()
+{
+	BulletManager* bman = parent->GetEntityManager()->GetBulletManager();
+	bman->Emit(parent->mPos.x, parent->mPos.y, BULLET_PULSE_LASER);
 }
 
 void PlayerWeaponComponent::ReadWeaponsFromXML()

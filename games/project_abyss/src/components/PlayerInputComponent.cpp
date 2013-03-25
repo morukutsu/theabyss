@@ -20,6 +20,7 @@ void PlayerInputComponent::Init()
 void PlayerInputComponent::Update()
 {
 	mk::Input *input = mk::InputManager::GetInput(0, CNT_KEYBOARD);
+	commands.clear();
 
 	// Déplacement du vaisseau
 	if(input->buttons[mk::ButtonNames::Up].held)
@@ -32,7 +33,7 @@ void PlayerInputComponent::Update()
 		PushCommand(CMD_ACCEL_RIGHT);
 
 	// Tir
-	if(input->buttons[mk::ButtonNames::RT].held)
+	if(input->buttons[mk::ButtonNames::RT].pressed)
 		PushCommand(CMD_SHOOT);
 }
 

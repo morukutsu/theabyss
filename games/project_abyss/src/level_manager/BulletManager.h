@@ -31,6 +31,7 @@ class Bullet
 		// Quand la ubllet est utilisée
 		float originX, originY;
 		CBody* body;
+		NVector* vertices;
 		mk::Sprite spr;
 
 		// Quand la bullet est inactive
@@ -67,6 +68,9 @@ class BulletManager
 
 		// Ptr vers l'entity manager
 		EntityManager* entityManager;
+
+		// Used bullets
+		int mUsedBullets;
 };
 
 #endif

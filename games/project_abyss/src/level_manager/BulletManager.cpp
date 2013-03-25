@@ -15,6 +15,9 @@ Bullet::Bullet()
 	life = 0.0f;
 	toDelete = false;
 	body = new CBody();
+
+	int numV = 4;
+	vertices = PolyColl::BuildBox(numV, 32.0f, 32.0f); // Temporaire
 }
 
 Bullet::~Bullet()
@@ -41,7 +44,7 @@ void Bullet::PostUpdate()
 // BulletManager
 BulletManager::BulletManager()
 {
-	
+	mUsedBullets = 0;
 }
 
 BulletManager::~BulletManager()
@@ -55,19 +58,21 @@ void BulletManager::AllocateBullets()
 	bullets.resize(MAX_BULLETS);
 
 	firstAvailable = &bullets[0];
-	for(int i = 0; i < MAX_BULLETS - 1; i++)
+	for(int i = 0; i < MAX_BULLETS; i++)
 	{
 		// Initialisation des paramètres de la bullet
 		entityManager->GetScene()->Add(&bullets[i].spr);
 		bullets[i].spr.Hide();
 		
-		entityManager->GetGameMap()->AddBody(bullets[i].body);
+		//entityManager->GetGameMap()->AddBody(bullets[i].body);
 		bullets[i].body->isSleeping = true;
 
 		// Linking
-		bullets[i].next = &bullets[i + 1];
+		if(i == MAX_BULLETS-1)
+			bullets[i].next = NULL;
+		else
+			bullets[i].next = &bullets[i + 1];
 	}
-	bullets[MAX_BULLETS-1].next = NULL;
 }
 
 void BulletManager::FreeBullets()
@@ -84,11 +89,17 @@ int BulletManager::Emit(float x, float y, int kind)
 	Bullet* newBullet = firstAvailable;
 	firstAvailable = newBullet->next;
 
-	newBullet->originX = x, newBullet->originY = y;
+ 	newBullet->originX = x, newBullet->originY = y;
+	newBullet->kind = kind;
 	newBullet->Init(kind);
 
 	// Paramètres généraux
 	newBullet->body->isSleeping = false;
+	entityManager->GetGameMap()->AddBody(newBullet->body);
+
+	mUsedBullets++;
+
+	return 0;
 }
 
 void BulletManager::Update()
@@ -114,4 +125,5 @@ void BulletManager::HandleBulletDelete(Bullet* b)
 {
 	b->next = firstAvailable;
 	firstAvailable = b;
+	mUsedBullets--;
 }

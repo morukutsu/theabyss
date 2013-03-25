@@ -25,6 +25,8 @@ class PlayerWeaponComponent : public Component
 
 		void Init();
 
+		void Shoot();
+
 		void ReadWeaponsFromXML();
 
 	public:
