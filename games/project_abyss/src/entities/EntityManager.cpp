@@ -26,6 +26,7 @@ void EntityManager::InitCommonVariables()
 	commonStateVariables[C_STATE_GOING_TROUGH_DOOR] = 0;
 	commonStateVariables[C_STATE_EXITING_DOOR] = 0;
 	commonStateVariables[C_STATE_LOCK_USER_INPUT] = 0;
+	//commonStateVariables[C_STATE_PLAYER_MIRROR] = 0;
 }
 
 void EntityManager::Add(Entity* ent)

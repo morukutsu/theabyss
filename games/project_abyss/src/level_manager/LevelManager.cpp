@@ -219,6 +219,9 @@ void LevelManager::SwitchMap(std::string filename, std::string door_idf)
 	// On récupère la liste des tilesets/textures courantes
 	std::list<std::string> previousTextures = gameMap->GetResourcesToLoad();
 
+	// Sauvegarde du mirroring du héros
+	int heroMirrorH = gameMap->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MIRROR];
+
 	UnloadMap();
 	Init();
 	
@@ -227,6 +230,9 @@ void LevelManager::SwitchMap(std::string filename, std::string door_idf)
 	scene->Clear();
 
 	gameMap = new GameMap();
+
+	// Resetting du mirroring du héros
+	gameMap->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MIRROR] = heroMirrorH;
 
 	// On positionne le héros sur la bonne porte
 	gameMap->GetEntityManager()->GetCommonStateVariables()[C_STATE_EXITING_DOOR] = 1;

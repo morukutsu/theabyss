@@ -7,6 +7,7 @@
 #include "ComponentsIncludes.h"
 #include "../SimpleMaths.h"
 #include "PlayerMovementComponent.h"
+#include "../entities/EntityManager.h"
 
 ShipDisplayComponent::ShipDisplayComponent(PlayerMovementComponent* pmov)
 {
@@ -138,6 +139,7 @@ void ShipDisplayComponent::Update()
 	bool oldMirrorH = mirrorH;
 	if(parent->mVel.x < -1.0f || parent->mVel.x > 1.0f)
 		mirrorH = parent->mVel.x > 0;
+	parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MIRROR] = mirrorH ? 1 : 0;
 
 	// Effets graphiques
 	UpdateReactorsPower();
@@ -338,6 +340,8 @@ void ShipDisplayComponent::Init()
 	parts_sprites[SHIP_FX_FLASHLIGHT].ignoreLightPipeline = true;
 
 	ReadWeaponsFromXML();
+
+	mirrorH = parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MIRROR] == 1;
 }
 
 void ShipDisplayComponent::Mirror(bool v)
