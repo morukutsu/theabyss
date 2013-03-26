@@ -64,7 +64,7 @@ void BulletManager::AllocateBullets()
 		entityManager->GetScene()->Add(&bullets[i].spr);
 		bullets[i].spr.Hide();
 		
-		//entityManager->GetGameMap()->AddBody(bullets[i].body);
+		entityManager->GetGameMap()->AddBody(bullets[i].body);
 		bullets[i].body->isSleeping = true;
 
 		// Linking
@@ -84,7 +84,9 @@ void BulletManager::FreeBullets()
 int BulletManager::Emit(float x, float y, float vx, float vy, int kind)
 {
 	// TODO : Voir ce qu'on fait dans ce cas là ...
-	assert(firstAvailable != NULL);
+	//assert(firstAvailable != NULL);
+	if(firstAvailable == NULL)
+		lowError("Il n'y a plus de place pour stocker une Bullet (BulletManager.cpp, fonction 'Emit'), comme ce cas n'est pas encore gere, on quitte.");
 
 	Bullet* newBullet = firstAvailable;
 	firstAvailable = newBullet->next;
@@ -99,7 +101,7 @@ int BulletManager::Emit(float x, float y, float vx, float vy, int kind)
 	newBullet->isActive = true;
 
 	// Ajout du body à la scène
-	entityManager->GetGameMap()->AddBody(newBullet->body);
+	//entityManager->GetGameMap()->AddBody(newBullet->body);
 
 	// Ajout du sprite
 
@@ -131,6 +133,9 @@ void BulletManager::Update()
 void BulletManager::HandleBulletDelete(Bullet* b)
 {
 	b->isActive = false;
+	b->toDelete = false;
+	b->spr.Hide();
+	b->body->isSleeping = true;
 	b->next = firstAvailable;
 	firstAvailable = b;
 	mUsedBullets--;

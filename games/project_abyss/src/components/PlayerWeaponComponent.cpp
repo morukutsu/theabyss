@@ -84,8 +84,6 @@ void PlayerWeaponComponent::ReadWeaponsFromXML()
 		w.shootX = sx;
 		w.shootY = sy;
 
-		std::cout << sx << std::endl;
-
 		wpns.push_back(w);
 
 		elem = elem->NextSiblingElement();

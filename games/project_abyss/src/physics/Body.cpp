@@ -58,7 +58,9 @@ void CBody::Shutdown()
 }
 void CBody::Initialise(const NVector& xPosition, float fMass, NVector* axVertices, int iNumVertices)
 {
-	Shutdown();
+	//Shutdown();
+	m_axVertices = NULL;
+	m_iNumVertices = 0;
 
 	m_xDisplacement	= NVector(0, 0);
 	m_xPosition		= xPosition;

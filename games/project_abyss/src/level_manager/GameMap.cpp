@@ -162,6 +162,7 @@ void GameMap::LoadGameMap(mk::Scene* scene)
 					body->Initialise(center, 0.0f, points, 2);
 					body->SetFriction(0.1f);
 					body->SetGlue(0.0f);
+					body->bodykind = BODY_WORLD_BOUNDS;
 
 					bodies.push_back(body);
 				}
@@ -224,6 +225,8 @@ void GameMap::UpdatePhysics()
 		(*it)->Update(1.0f/30.0f);
 
 		(*it)->ClearCollisionBodies();
+
+		(*it)->isCollision = false;
 	}
 
 	// Gestion des collisions
@@ -245,6 +248,9 @@ void GameMap::UpdatePhysics()
 						// Enregistrement de la collision
 						(*body_a)->AddCollisionWithBody((*body_b));
 						(*body_b)->AddCollisionWithBody((*body_a));
+
+						(*body_a)->isCollision = true;
+						(*body_b)->isCollision = true;
 					}
 				}
 			}
