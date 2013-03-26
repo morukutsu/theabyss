@@ -81,7 +81,7 @@ void BulletManager::FreeBullets()
 	bullets.clear();
 }
 
-int BulletManager::Emit(float x, float y, int kind)
+int BulletManager::Emit(float x, float y, float vx, float vy, int kind)
 {
 	// TODO : Voir ce qu'on fait dans ce cas là ...
 	assert(firstAvailable != NULL);
@@ -90,12 +90,19 @@ int BulletManager::Emit(float x, float y, int kind)
 	firstAvailable = newBullet->next;
 
  	newBullet->originX = x, newBullet->originY = y;
+	newBullet->originVx = vx, newBullet->originVy = vy;
 	newBullet->kind = kind;
 	newBullet->Init(kind);
 
 	// Paramètres généraux
 	newBullet->body->isSleeping = false;
+	newBullet->isActive = true;
+
+	// Ajout du body à la scène
 	entityManager->GetGameMap()->AddBody(newBullet->body);
+
+	// Ajout du sprite
+
 
 	mUsedBullets++;
 
@@ -123,6 +130,7 @@ void BulletManager::Update()
 
 void BulletManager::HandleBulletDelete(Bullet* b)
 {
+	b->isActive = false;
 	b->next = firstAvailable;
 	firstAvailable = b;
 	mUsedBullets--;

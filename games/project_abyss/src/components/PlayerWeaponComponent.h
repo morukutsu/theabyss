@@ -7,6 +7,9 @@
 #include "Component.h"
 #include "mkengine.h"
 
+#define PULSE_LASER_VELOCITY		40.0F
+
+
 struct WpnInfo {
 	std::string wpn_name;
 	float shootX, shootY;

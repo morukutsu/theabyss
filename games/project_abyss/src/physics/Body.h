@@ -77,7 +77,7 @@ public:
 	void SetRestitution(float fCoR) { s_fRestitution = fCoR; }
 	void SetGlue		 (float fCoS) { s_fGlue  = fCoS; }
 
-	void SetLinearVelocity		 (const NVector vel, float dt) { m_xDisplacement = vel * (m_fInvMass * dt*dt); }
+	void SetLinearVelocity		 (const NVector vel) { m_xDisplacement = vel; }
 	void SetPosition		 (const NVector pos ) { m_xPosition = pos; }
 	void SetOrientation(float angle) { m_fAngle = angle; m_xOrientation = Matrix(m_fAngle); }
 	void ComputeGravity(const NVector& G, float dt);

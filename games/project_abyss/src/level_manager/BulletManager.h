@@ -29,7 +29,7 @@ class Bullet
 		float life;			// Temps de vie de la particule
 
 		// Quand la ubllet est utilisée
-		float originX, originY;
+		float originX, originY, originVx, originVy;
 		CBody* body;
 		NVector* vertices;
 		mk::Sprite spr;
@@ -51,7 +51,7 @@ class BulletManager
 		void FreeBullets();
 
 		// Création / Destruction de bullets
-		int Emit(float x, float y, int kind);	// Retourne l'ID de la bullet créee, sinon -1
+		int Emit(float x, float y, float vx, float vy, int kind);	// Retourne l'ID de la bullet créee, sinon -1
 
 		// Mise à jour des bullets (appel des visiteurs sur chaque bullet)
 		void Update();

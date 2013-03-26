@@ -42,8 +42,19 @@ void PlayerWeaponComponent::Init()
 
 void PlayerWeaponComponent::Shoot()
 {
+	// Récupération du mirroring du héros
+	bool mirrorH = parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MIRROR] == 1;
+
+	float mx = -1.0f;
+	if(mirrorH)
+		mx = 1.0f;
+
+	// Tir
+	NVector velBullet = parent->mVel + NVector(PULSE_LASER_VELOCITY*mx, 0);
+	NVector posBullet = parent->mPos + NVector(wpns[0].shootX*-mx, wpns[0].shootY);
+
 	BulletManager* bman = parent->GetEntityManager()->GetBulletManager();
-	bman->Emit(parent->mPos.x, parent->mPos.y, BULLET_PULSE_LASER);
+	bman->Emit(posBullet.x, posBullet.y, velBullet.x, 0, BULLET_PULSE_LASER);
 }
 
 void PlayerWeaponComponent::ReadWeaponsFromXML()
@@ -67,11 +78,13 @@ void PlayerWeaponComponent::ReadWeaponsFromXML()
 		// Shoot position
 		tag = elem->FirstChildElement("ShootPosition");
 		double sx, sy;
-		elem->Attribute("x", &sx);
-		elem->Attribute("y", &sy);
+		tag->Attribute("x", &sx);
+		tag->Attribute("y", &sy);
 
 		w.shootX = sx;
 		w.shootY = sy;
+
+		std::cout << sx << std::endl;
 
 		wpns.push_back(w);
 

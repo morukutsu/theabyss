@@ -13,8 +13,13 @@ void BulletFactory::Init(int bullet_type, Bullet* bullet)
 			// TODO : a optimiser
 			bullet->spr.Assign((mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("sprites/vaisseau/projectiles/tir_sans_trainee.png") );
 			int numV = 4;
-			bullet->body->Initialise(NVector(bullet->originX, bullet->originY), 0.0f, bullet->vertices, numV);
+			bullet->body->Initialise(NVector(bullet->originX, bullet->originY), 1.0f, bullet->vertices, numV);
 			bullet->body->isSensor = true;
+			bullet->spr.ignoreLightPipeline = true;
+			bullet->spr.SetSize(bullet->spr.image->getImageWidth() / 32.0f, bullet->spr.image->getImageHeight() / 32.0f);
+			bullet->spr.Show();
+			bullet->spr.Set3DMode(true);
+			bullet->spr.SavePositions();
 			break;
 	};
 }
