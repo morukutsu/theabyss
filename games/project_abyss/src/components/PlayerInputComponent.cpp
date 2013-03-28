@@ -33,7 +33,7 @@ void PlayerInputComponent::Update()
 		PushCommand(CMD_ACCEL_RIGHT);
 
 	// Tir
-	if(input->buttons[mk::ButtonNames::RT].held)
+	if(input->buttons[mk::ButtonNames::RT].pressed)
 		PushCommand(CMD_SHOOT);
 }
 
