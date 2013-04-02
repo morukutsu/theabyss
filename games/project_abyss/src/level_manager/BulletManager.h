@@ -58,6 +58,7 @@ class BulletManager
 
 	private:
 		void HandleBulletDelete(Bullet* b);
+		void CheckBounds(Bullet* b);
 
 	public:
 		// Tableau de bullets

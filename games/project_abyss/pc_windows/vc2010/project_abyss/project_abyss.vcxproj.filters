@@ -99,6 +99,12 @@
     <Filter Include="Fichiers d%27en-tête\mkengine\generic\spine">
       <UniqueIdentifier>{ef817169-9b9b-4d86-8d95-d741155fd2a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\script">
+      <UniqueIdentifier>{b30263ee-59b9-462f-bfb1-9f3fc0076ccd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\script">
+      <UniqueIdentifier>{9887a46f-ab02-4238-aa53-36eda7640a60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\mkengine\generic\AsciiFile.h">
@@ -436,6 +442,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\components\PlayerWeaponComponent.h">
       <Filter>Fichiers d%27en-tête\game\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\script\ScriptManager.h">
+      <Filter>Fichiers d%27en-tête\game\script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\script\scriptbuilder.h">
+      <Filter>Fichiers d%27en-tête\game\script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\script\scriptstdstring.h">
+      <Filter>Fichiers d%27en-tête\game\script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -795,6 +810,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\components\PlayerWeaponComponent.cpp">
       <Filter>Fichiers sources\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\script\ScriptManager.cpp">
+      <Filter>Fichiers sources\game\script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\script\scriptbuilder.cpp">
+      <Filter>Fichiers sources\game\script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\script\scriptstdstring.cpp">
+      <Filter>Fichiers sources\game\script</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

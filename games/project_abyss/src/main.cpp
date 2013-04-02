@@ -4,6 +4,7 @@
 #include "mkengine.h"
 #include "StateManager.h"
 #include "ConfigurationManager.h"
+#include "script/ScriptManager.h"
 
 #include "SplashState.h"
 #include "MenuState.h"
@@ -79,6 +80,9 @@ int main(int argc, char **argv )
 	//Language Manager (TODO : Charger la langue sauvegardée)
 	LanguageManager::LoadLanguage((mk::AsciiFile*)mk::RessourceManager::getInstance()->LoadRessource("lang/french.xml") );
 	
+	// Script engine
+	//mk::
+
 	float nextGameUpdateTime = lowGetTime();
 	int   loops = 0;
 

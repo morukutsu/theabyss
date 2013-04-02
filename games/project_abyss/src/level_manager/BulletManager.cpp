@@ -118,6 +118,9 @@ void BulletManager::Update()
 	{
 		if(bullets[i].isActive) 
 		{
+			// Check si la bullet est en dehors des limites du niveau
+			CheckBounds(&bullets[i]);
+
 			// On check s'il faut liberer la bullet
 			if(bullets[i].toDelete)
 				HandleBulletDelete(&bullets[i]);
@@ -128,6 +131,19 @@ void BulletManager::Update()
 			}
 		}
 	}
+}
+
+void BulletManager::CheckBounds(Bullet* b)
+{
+	float bx = entityManager->GetGameMap()->borderX;
+	float by = entityManager->GetGameMap()->borderY;
+	float bw = entityManager->GetGameMap()->borderW;
+	float bh = entityManager->GetGameMap()->borderH;
+	float x = b->body->GetPosition().x;
+	float y = b->body->GetPosition().y;
+
+	if(x < bx || y < by || x > bx + bw || y > by + bh)
+		b->toDelete = true;
 }
 
 void BulletManager::HandleBulletDelete(Bullet* b)
