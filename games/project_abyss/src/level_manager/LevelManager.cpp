@@ -9,6 +9,7 @@
 #include "../entities/Entity.h"
 #include "../effects/ScrollFadeEffect.h"
 #include "../components/PlayerInputComponent.h"
+#include "../script/ScriptManager.h"
 
 LevelManager::LevelManager()
 {
@@ -106,6 +107,9 @@ void LevelManager::Update()
 	if(cutscene)
 		cutscene->Update();
 
+	// Update script map
+	ScriptManager::getInstance()->ExecuteScriptFunction("void main()");
+
 	// Update physics
 	gameMap->UpdatePhysics();
 
@@ -182,6 +186,13 @@ void LevelManager::LoadMap(std::string filename)
 	gameMap->ParseMap(filename);
 	gameMap->LoadGameMap(scene);
 	gameMap->AddMapLayersToScene(scene);
+
+	// Try to load map script if exists
+	std::string script = gameMap->GetScriptFilename();
+	if(script != "") 
+	{
+		ScriptManager::getInstance()->LoadScript(script);
+	}
 
 	ResetCameraDepth();
 
@@ -271,6 +282,13 @@ void LevelManager::SwitchMap(std::string filename, std::string door_idf)
 
 	gameMap->LoadGameMap(scene);
 	gameMap->AddMapLayersToScene(scene);
+
+	// Try to load map script if exists
+	std::string script = gameMap->GetScriptFilename();
+	if(script != "") 
+	{
+		ScriptManager::getInstance()->LoadScript(script);
+	}
 
 	ResetCameraDepth();
 	SetScrollEntity(gameMap->heroEntity);

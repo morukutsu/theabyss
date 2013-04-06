@@ -9,6 +9,7 @@
 #include <string>
 
 #include <angelscript.h>
+#include "scriptbuilder.h"
 
 class ScriptManager : public Singleton<ScriptManager>
 {
@@ -16,10 +17,15 @@ class ScriptManager : public Singleton<ScriptManager>
 
 	public:
 		ScriptManager();
+		~ScriptManager();
+
+		// Loading scripts
+		void LoadScript(std::string filename);
+		void ExecuteScriptFunction(std::string decl);
 
 	private:
 		asIScriptEngine *engine;
-		
+		CScriptBuilder builder;
 
 };
 

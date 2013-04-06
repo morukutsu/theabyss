@@ -31,6 +31,8 @@ public:
 
 	void DebugCollisions();
 
+	std::string GetScriptFilename() { return scriptFilename; }
+
 public:
 	// Entités
 	EntityManager* entityManager;
@@ -49,6 +51,10 @@ public:
 	std::string mSwitchMapDoorIdf;
 
 	std::list<GameMapLayer*> layersDrawables;
+
+	// Script
+	std::string scriptFilename;
+
 };
 
 #endif

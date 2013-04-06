@@ -16,6 +16,7 @@ GameMap::GameMap()
 {
 	SetTextureQuality(ConfigurationManager::getInstance()->GetAttributeInt("Graphics_TextureQuality"));
 	entityManager = new EntityManager();
+	scriptFilename = "";
 }
 
 GameMap::~GameMap()
@@ -177,6 +178,12 @@ void GameMap::LoadGameMap(mk::Scene* scene)
 		heroEntity->mPos.x = startHeroX;
 		heroEntity->mPos.y = startHeroY;
 		heroEntity->Init();
+	}
+
+	// Script
+	std::string scriptStr = map.GetProperties().GetLiteralProperty("script");
+	if(scriptStr != "No such property!") {
+		scriptFilename = scriptStr;
 	}
 }
 
