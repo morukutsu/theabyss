@@ -9,6 +9,8 @@
 
 #include "../level_manager/BulletManager.h"
 
+#include <map>
+
 #define COMMON_STATE_VAR_SIZE 16
 
 enum {
@@ -41,10 +43,19 @@ class EntityManager
 		int* GetCommonStateVariables() { return commonStateVariables; };
 		mk::Scene* GetScene() { return parentScene; };
 
+		Entity* GetEntityByName(std::string name);
+		void SendMessageToEntity(std::string entityName, int message, void* data);
+
+		// Pour les scripts
+		int checkCollisionBetweenEntities(std::string ent1, std::string ent2);
+
 	private:
 		// Entités
 		std::list<Entity*> entities;
 		int mNextAvailableId;
+
+		// Hash entities by names
+		std::map<std::string, Entity*> entitiesHashMap;
 
 		// Bullet Manager instance
 		BulletManager bulletManager;

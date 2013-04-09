@@ -44,6 +44,9 @@ public:
 	void CullMap(float dt);
 	void CullScene(float dt);
 
+	// Script
+	void RegisterFunctionsForScript();
+
 private:
 	void ShowDebug();
 

@@ -215,6 +215,9 @@ void DebugState::RefreshMaps()
 	std::vector<std::string>& filenames = listingRecursif("data/maps");
 	for(std::vector<std::string>::iterator it = filenames.begin(); it != filenames.end(); it++) 
 	{
+		if((*it).find("as") != std::string::npos)
+			continue;
+
 		mapsSubMenu->AddItem(new DebugItemButton((*it)));
 	}
 	mapsSubMenu->AddItem(new DebugItemButton("Retour"));

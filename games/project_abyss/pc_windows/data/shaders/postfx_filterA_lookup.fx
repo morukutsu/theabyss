@@ -1,6 +1,8 @@
 uniform sampler2D texture;
 uniform sampler2D lookup;
 
+uniform float intensity;
+
 void main()
 {
 	// Couleur originale
@@ -10,7 +12,7 @@ void main()
 	vec4 color = srcColor;
 	
 	// Visibilite de l'effet
-	float intensity = 1.0;
+	// float intensity = 1.0;
 	
 	// ------------
 	// EFFET

@@ -158,6 +158,7 @@
     <ClInclude Include="..\..\..\src\components\PlayerInputComponent.h" />
     <ClInclude Include="..\..\..\src\components\PlayerMovementComponent.h" />
     <ClInclude Include="..\..\..\src\components\PlayerWeaponComponent.h" />
+    <ClInclude Include="..\..\..\src\components\SensorComponent.h" />
     <ClInclude Include="..\..\..\src\components\ShipDisplayComponent.h" />
     <ClInclude Include="..\..\..\src\ConfigurationManager.h" />
     <ClInclude Include="..\..\..\src\DebugState.h" />
@@ -290,6 +291,7 @@
     <ClCompile Include="..\..\..\src\components\PlayerInputComponent.cpp" />
     <ClCompile Include="..\..\..\src\components\PlayerMovementComponent.cpp" />
     <ClCompile Include="..\..\..\src\components\PlayerWeaponComponent.cpp" />
+    <ClCompile Include="..\..\..\src\components\SensorComponent.cpp" />
     <ClCompile Include="..\..\..\src\components\ShipDisplayComponent.cpp" />
     <ClCompile Include="..\..\..\src\ConfigurationManager.cpp" />
     <ClCompile Include="..\..\..\src\DebugState.cpp" />

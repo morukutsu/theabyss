@@ -23,13 +23,17 @@ void print(std::string &msg)
 
 ScriptManager::ScriptManager()
 {
+	// http://www.angelcode.com/angelscript/sdk/docs/manual/doc_hello_world.html
+
 	engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 	engine->SetMessageCallback(asFUNCTION(MessageCallback), 0, asCALL_CDECL);
 	RegisterStdString(engine);
 
 	engine->RegisterGlobalFunction("void print(const string &in)", asFUNCTION(print), asCALL_CDECL); 
+}
 
-	// http://www.angelcode.com/angelscript/sdk/docs/manual/doc_hello_world.html
+void ScriptManager::Init()
+{
 	builder.StartNewModule(engine, "MainModule"); 
 }
 
@@ -41,13 +45,17 @@ ScriptManager::~ScriptManager()
 void ScriptManager::LoadScript(std::string filename) 
 {
 	builder.AddSectionFromFile(filename.c_str() );
+}
+
+void ScriptManager::Build()
+{
 	int r = builder.BuildModule();
 	if( r < 0 )
 	{
-	  // An error occurred. Instruct the script writer to fix the 
-	  // compilation errors that were listed in the output stream.
-	  printf("Please correct the errors in the script and try again.\n");
-	  return;
+		// An error occurred. Instruct the script writer to fix the 
+		// compilation errors that were listed in the output stream.
+		printf("Please correct the errors in the script and try again.\n");
+		return;
 	}
 }
 
@@ -77,4 +85,9 @@ void ScriptManager::ExecuteScriptFunction(std::string decl)
 			printf("An exception '%s' occurred. Please correct the code and try again.\n", ctx->GetExceptionString());
 		}
 	}
+}
+
+void ScriptManager::Clean()
+{
+	engine->DiscardModule("MainModule");
 }

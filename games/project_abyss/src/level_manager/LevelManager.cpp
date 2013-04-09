@@ -95,6 +95,9 @@ void LevelManager::Init()
 	// changement de pointeur de souris
 	mk::Core::SetPointer((mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("gui/aim_cursor.png") );
 	mk::Core::TogglePointer(true);
+
+	// Scripts
+	ScriptManager::getInstance()->Init();
 }
 
 // Calcule une frame du jeu
@@ -108,7 +111,8 @@ void LevelManager::Update()
 		cutscene->Update();
 
 	// Update script map
-	ScriptManager::getInstance()->ExecuteScriptFunction("void main()");
+	if(gameMap->GetScriptFilename() != "")
+		ScriptManager::getInstance()->ExecuteScriptFunction("void main()");
 
 	// Update physics
 	gameMap->UpdatePhysics();
@@ -178,6 +182,8 @@ void LevelManager::Draw(int mode, float interpolation)
 // Charge une map
 void LevelManager::LoadMap(std::string filename)
 {
+	Init();
+
 	// Scene
 	scene = new mk::Scene();
 	scene->Clear();
@@ -191,7 +197,10 @@ void LevelManager::LoadMap(std::string filename)
 	std::string script = gameMap->GetScriptFilename();
 	if(script != "") 
 	{
+		RegisterFunctionsForScript();
 		ScriptManager::getInstance()->LoadScript(script);
+		ScriptManager::getInstance()->Build();
+		ScriptManager::getInstance()->ExecuteScriptFunction("void init()");
 	}
 
 	ResetCameraDepth();
@@ -223,6 +232,8 @@ void LevelManager::UnloadMap()
 	delete scrollFadeEffect;
 
 	isMapLoaded = false;
+
+	ScriptManager::getInstance()->Clean();
 }
 
 void LevelManager::SwitchMap(std::string filename, std::string door_idf)
@@ -287,7 +298,10 @@ void LevelManager::SwitchMap(std::string filename, std::string door_idf)
 	std::string script = gameMap->GetScriptFilename();
 	if(script != "") 
 	{
+		RegisterFunctionsForScript();
 		ScriptManager::getInstance()->LoadScript(script);
+		ScriptManager::getInstance()->Build();
+		ScriptManager::getInstance()->ExecuteScriptFunction("void init()");
 	}
 
 	ResetCameraDepth();
@@ -532,6 +546,21 @@ void LevelManager::CullScene(float dt)
 	sY = Lerp(dt, 0.0f, 1.0f, prevScrollY, scrollY);
 
 	scene->SetCullOrigin(sX, sY);
+}
+
+void LevelManager::RegisterFunctionsForScript()
+{
+	asIScriptEngine* engine = ScriptManager::getInstance()->GetEngine();
+
+	// Le pointeur void* ne marche pas ... voir dans angelscript 
+	int r;
+	//r = engine->RegisterGlobalFunction("void SendMessageToEntity(std::string, int, void*)", asMETHOD(EntityManager, SendMessageToEntity), asCALL_THISCALL_ASGLOBAL, this);
+	//if(r < 0)
+	//	lowError("error registering function");
+
+	r = engine->RegisterGlobalFunction("int checkCollisionBetweenEntities(string, string)", asMETHOD(EntityManager, checkCollisionBetweenEntities), asCALL_THISCALL_ASGLOBAL, this);
+	if(r < 0)
+		lowError("error registering function");
 }
 
 // Affiche des infos de debug

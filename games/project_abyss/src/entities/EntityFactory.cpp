@@ -166,6 +166,11 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 	{
 		ent = new StaticEntity();
 	}
+	else if(type == "sensor")
+	{
+		ent = new StaticEntity();
+		ent->AddComponent(new SensorComponent(w, h) );
+	}
 
 	// Parametres de base
 	ent->mPos.x = x;

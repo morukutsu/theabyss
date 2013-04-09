@@ -79,6 +79,8 @@ namespace mk
 		light_alpha_fix.shader.setParameter("texture", sf::Shader::CurrentTexture);
 
 		mk::RessourceManager::getInstance()->DeleteRessource(shaderFile);
+
+		effectIntensity = 1.0f;
 	}
 
 	Scene::~Scene()
@@ -227,7 +229,10 @@ namespace mk
 		mWorkFBO->Bind(1);
 		
 		if(isPostFXShader)
+		{
+			postfx.shader.setParameter("intensity", effectIntensity);
 			postfx.Bind();
+		}
 
 		lowDisplayFBO(mWorkFBO, 1);
 

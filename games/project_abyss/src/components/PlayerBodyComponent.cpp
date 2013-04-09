@@ -34,4 +34,6 @@ void PlayerBodyComponent::Init()
 	cockpit->bodytype = BODY_HERO;
 
 	parent->GetEntityManager()->GetGameMap()->AddBody(cockpit);
+
+	parent->SetSensorBody(cockpit);
 }

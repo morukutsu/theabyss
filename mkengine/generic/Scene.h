@@ -65,6 +65,8 @@ namespace mk
 			void ActivateBlackBands(bool toggle);
 			void UpdateBlackBands();
 
+			void SetEffectIntensity(float it) { effectIntensity = it; };
+
 			// Debug rendering pipeline
 			void DebugShowLightMask(bool v) { isShowLightMask = v; };
 			void DebugShowAABB(bool v) { isShowAABB = v; };
@@ -78,6 +80,7 @@ namespace mk
 			FBO *mWorkFBO;
 			Shader postfx;
 			Shader light_alpha_fix;
+			float effectIntensity;
 
 			// Frustum culling
 			mk::BoundingBox windowAABB;

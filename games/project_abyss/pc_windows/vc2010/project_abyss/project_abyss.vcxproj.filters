@@ -452,6 +452,9 @@
     <ClInclude Include="..\..\..\src\script\scriptstdstring.h">
       <Filter>Fichiers d%27en-tête\game\script</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\components\SensorComponent.h">
+      <Filter>Fichiers d%27en-tête\game\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\AsciiFile.cpp">
@@ -819,6 +822,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\script\scriptstdstring.cpp">
       <Filter>Fichiers sources\game\script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\components\SensorComponent.cpp">
+      <Filter>Fichiers sources\game\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

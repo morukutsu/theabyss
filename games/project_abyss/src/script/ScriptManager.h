@@ -20,8 +20,14 @@ class ScriptManager : public Singleton<ScriptManager>
 		~ScriptManager();
 
 		// Loading scripts
+		void Init();
 		void LoadScript(std::string filename);
+		void Build();
+		void Clean();
+
 		void ExecuteScriptFunction(std::string decl);
+		
+		asIScriptEngine* GetEngine() { return engine; }
 
 	private:
 		asIScriptEngine *engine;

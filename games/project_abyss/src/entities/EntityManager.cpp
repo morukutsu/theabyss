@@ -10,6 +10,8 @@ EntityManager::EntityManager()
 	mNextAvailableId = 0;
 	InitCommonVariables();
 	bulletManager.SetEntityManager(this);
+	entitiesHashMap.clear();
+
 }
 
 EntityManager::~EntityManager()
@@ -34,8 +36,11 @@ void EntityManager::Add(Entity* ent)
 	ent->SetId(mNextAvailableId);
 	ent->SetEntityManager(this);
 	entities.push_back(ent);
-	
+		
 	mNextAvailableId++;
+
+	// Add entity to the hashmap
+	entitiesHashMap[ent->mName] = ent;
 }
 
 void EntityManager::Update()
@@ -62,4 +67,60 @@ void EntityManager::Receive(int message, void* data)
 		commonStateVariables[v->idf] = v->value;
 		break;
 	};
+}
+
+Entity* EntityManager::GetEntityByName(std::string name) 
+{ 
+	std::map<std::string, Entity*>::iterator it = entitiesHashMap.find(name);
+	if(it != entitiesHashMap.end() ) 
+	{
+		return entitiesHashMap.find(name)->second;
+	}
+
+	return NULL;
+}
+
+void EntityManager::SendMessageToEntity(std::string entityName, int message, void* data)
+{
+	Entity* ent = GetEntityByName(entityName);
+	if(ent)
+	{
+		ent->Send(message, data);
+	}
+}
+
+// 0 si pas de collision, 1 si oui, 2 la collision vient de se produire
+int EntityManager::checkCollisionBetweenEntities(std::string ent1, std::string ent2)
+{
+	std::cout << ent1 << " " << ent2 << std::endl;
+	// Récupère les deux entités en fct de leur noms
+	Entity* a = GetEntityByName(ent1);
+	Entity* b = GetEntityByName(ent2);
+
+	if(a == NULL || b == NULL)
+		return -1;
+
+	// Récupère les deux bodies parametrés pour cette collision
+	CBody* body_1 = a->sensorBody;
+	CBody* body_2 = b->sensorBody;
+
+	if(body_1 == NULL || body_2 == NULL)
+		return -1;
+
+	// Check si ils sont en collision
+	if(body_1->isCollision && body_2->isCollision) 
+	{
+		// Check s'ils sont en collision entre deux
+		std::vector<CBody*> c = body_1->GetCollisionsBodies();
+		for(int i = 0; i < c.size(); i++) 
+		{
+			// Il y a collision entre les deux body
+			if(body_2 == c[i])
+			{
+				return 1;
+			}
+		}
+	}
+
+	return 0;
 }

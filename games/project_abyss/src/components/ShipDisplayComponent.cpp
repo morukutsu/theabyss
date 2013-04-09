@@ -216,7 +216,7 @@ void ShipDisplayComponent::UpdateWeapon()
 	wpns[currentWeapon].spr_arm->Alpha(1.0f);
 	wpns[currentWeapon].spr_arm->SetDepth(parent->mDepth);
 	wpns[currentWeapon].spr_arm->SetSize(wpns[currentWeapon].spr_arm->image->getImageWidth() / 32.0f, wpns[currentWeapon].spr_arm->image->getImageHeight() / 32.0f); 
-	wpns[currentWeapon].spr_arm->Mirror(mirrorH, false);
+	wpns[currentWeapon].spr_arm->Mirror(!mirrorH, false);
 
 	if(!wpns[currentWeapon].isArmRotationFixed)
 		wpns[currentWeapon].spr_arm->Rotate(0.0f);

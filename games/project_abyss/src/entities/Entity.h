@@ -11,10 +11,11 @@
 class Component;
 class mk::Scene;
 class EntityManager;
+class CBody;
 class Entity
 {
 	public:
-		Entity() { mId = -1; toDelete = false; isActive = true; mDepth = 0.0f; };
+		Entity() { mId = -1; toDelete = false; isActive = true; mDepth = 0.0f; sensorBody = NULL; };
 		~Entity();
 
 		virtual void Init() = 0;								// Loading
@@ -36,6 +37,8 @@ class Entity
 		void InitComponents();
 		void UpdateComponents();
 
+		void SetSensorBody(CBody* s) { sensorBody = s; };
+
 		NVector mPos;											// Position de l'entité dans le monde
 		NVector mVel;											// Vitesse de l'entité
 		float mWidth, mHeight;									// Largeur hauteur de l'entité (lu depuis tiled)
@@ -43,6 +46,9 @@ class Entity
 
 		// Nom et type
 		std::string mName, mType;
+
+		// Collisions
+		CBody* sensorBody;
 
 	protected:
 		int mId;												// Identifiant de l'instance de l'entité

@@ -12,3 +12,4 @@
 #include "PlayerBodyComponent.h"
 #include "DoorComponent.h"
 #include "PlayerWeaponComponent.h"
+#include "SensorComponent.h"
