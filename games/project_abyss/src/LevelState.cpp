@@ -10,12 +10,12 @@ LevelState LevelState::m_LevelState;
 
 void LevelState::Init()
 {
-
+	lvlMan = new LevelManager();
 }
 
 void LevelState::Cleanup()
 {
-	
+	delete lvlMan;
 }
 
 void LevelState::Pause()
@@ -35,16 +35,16 @@ void LevelState::HandleEvents(StateManager* game)
 
 void LevelState::Update(StateManager* game)
 {
-	lvlMan.Update();
+	lvlMan->Update();
 }
 
 void LevelState::Draw(StateManager* game, int mode, float interpolation)
 {	
-	lvlMan.Draw(mode, interpolation);
+	lvlMan->Draw(mode, interpolation);
 }
 
 void LevelState::LoadMap(std::string filename)
 {
-	lvlMan.Init();
-	lvlMan.LoadMap(filename);
+	lvlMan->Init();
+	lvlMan->LoadMap(filename);
 }

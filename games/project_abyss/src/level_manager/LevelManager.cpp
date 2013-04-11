@@ -80,6 +80,7 @@ void LevelManager::Init()
 	isLevelManagerNeutral = true;
 
 	isShowLightMask = isShowAABB = false;
+	isShowDebugCollisions = false;
 
 	// Map change
 	toChangeMap = toFinishChangeMap = false;
@@ -558,7 +559,7 @@ void LevelManager::RegisterFunctionsForScript()
 	//if(r < 0)
 	//	lowError("error registering function");
 
-	r = engine->RegisterGlobalFunction("int checkCollisionBetweenEntities(string, string)", asMETHOD(EntityManager, checkCollisionBetweenEntities), asCALL_THISCALL_ASGLOBAL, this);
+	r = engine->RegisterGlobalFunction("int checkCollisionBetweenEntities(const string &in, const string &in)", asMETHOD(EntityManager, checkCollisionBetweenEntities), asCALL_THISCALL_ASGLOBAL, gameMap->GetEntityManager() );
 	if(r < 0)
 		lowError("error registering function");
 }

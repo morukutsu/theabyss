@@ -4,6 +4,7 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "Messages.h"
+#include <string>
 
 EntityManager::EntityManager()
 {
@@ -11,7 +12,6 @@ EntityManager::EntityManager()
 	InitCommonVariables();
 	bulletManager.SetEntityManager(this);
 	entitiesHashMap.clear();
-
 }
 
 EntityManager::~EntityManager()
@@ -40,7 +40,8 @@ void EntityManager::Add(Entity* ent)
 	mNextAvailableId++;
 
 	// Add entity to the hashmap
-	entitiesHashMap[ent->mName] = ent;
+	//entitiesHashMap[ent->mName] = ent;
+	entitiesHashMap.insert(std::pair<std::string, Entity*>(ent->mName, ent));
 }
 
 void EntityManager::Update()
@@ -90,9 +91,8 @@ void EntityManager::SendMessageToEntity(std::string entityName, int message, voi
 }
 
 // 0 si pas de collision, 1 si oui, 2 la collision vient de se produire
-int EntityManager::checkCollisionBetweenEntities(std::string ent1, std::string ent2)
+int EntityManager::checkCollisionBetweenEntities(std::string &ent1, std::string &ent2)
 {
-	std::cout << ent1 << " " << ent2 << std::endl;
 	// Récupère les deux entités en fct de leur noms
 	Entity* a = GetEntityByName(ent1);
 	Entity* b = GetEntityByName(ent2);

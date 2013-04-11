@@ -10,6 +10,7 @@
 #include "../level_manager/BulletManager.h"
 
 #include <map>
+#include <string>
 
 #define COMMON_STATE_VAR_SIZE 16
 
@@ -47,7 +48,7 @@ class EntityManager
 		void SendMessageToEntity(std::string entityName, int message, void* data);
 
 		// Pour les scripts
-		int checkCollisionBetweenEntities(std::string ent1, std::string ent2);
+		int checkCollisionBetweenEntities(std::string& ent1, std::string& ent2);
 
 	private:
 		// Entités

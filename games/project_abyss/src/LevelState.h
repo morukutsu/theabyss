@@ -36,7 +36,7 @@ protected:
 private:
     static LevelState m_LevelState;
 
-	LevelManager lvlMan;
+	LevelManager* lvlMan;
 };
 
 #endif
