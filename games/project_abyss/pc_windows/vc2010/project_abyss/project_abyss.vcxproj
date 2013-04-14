@@ -169,6 +169,7 @@
     <ClInclude Include="..\..\..\src\debug_tools\DebugMenu.h" />
     <ClInclude Include="..\..\..\src\debug_tools\FileLister.h" />
     <ClInclude Include="..\..\..\src\effects\Effect.h" />
+    <ClInclude Include="..\..\..\src\effects\GlobalShaders.h" />
     <ClInclude Include="..\..\..\src\effects\ScrollFadeEffect.h" />
     <ClInclude Include="..\..\..\src\entities\EntitiesIncludes.h" />
     <ClInclude Include="..\..\..\src\entities\Entity.h" />
@@ -301,6 +302,7 @@
     <ClCompile Include="..\..\..\src\debug_tools\DebugItems.cpp" />
     <ClCompile Include="..\..\..\src\debug_tools\DebugMenu.cpp" />
     <ClCompile Include="..\..\..\src\debug_tools\FileLister.cpp" />
+    <ClCompile Include="..\..\..\src\effects\GlobalShaders.cpp" />
     <ClCompile Include="..\..\..\src\effects\ScrollFadeEffect.cpp" />
     <ClCompile Include="..\..\..\src\entities\Entity.cpp" />
     <ClCompile Include="..\..\..\src\entities\EntityFactory.cpp" />

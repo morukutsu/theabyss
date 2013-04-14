@@ -55,6 +55,7 @@ void ScriptManager::Build()
 		// An error occurred. Instruct the script writer to fix the 
 		// compilation errors that were listed in the output stream.
 		printf("Please correct the errors in the script and try again.\n");
+		lowError("Script error");
 		return;
 	}
 }
@@ -85,6 +86,7 @@ void ScriptManager::ExecuteScriptFunction(std::string decl)
 			printf("An exception '%s' occurred. Please correct the code and try again.\n", ctx->GetExceptionString());
 		}
 	}
+	ctx->Release();
 }
 
 void ScriptManager::Clean()

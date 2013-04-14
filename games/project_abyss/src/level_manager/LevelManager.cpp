@@ -235,6 +235,11 @@ void LevelManager::UnloadMap()
 	isMapLoaded = false;
 
 	ScriptManager::getInstance()->Clean();
+
+	asIScriptEngine* engine = ScriptManager::getInstance()->GetEngine();
+	int r = engine->RemoveConfigGroup("runtime_config");
+	if(r == asCONFIG_GROUP_IS_IN_USE)
+		lowError("cannot remove group");
 }
 
 void LevelManager::SwitchMap(std::string filename, std::string door_idf)
@@ -552,6 +557,7 @@ void LevelManager::CullScene(float dt)
 void LevelManager::RegisterFunctionsForScript()
 {
 	asIScriptEngine* engine = ScriptManager::getInstance()->GetEngine();
+	engine->BeginConfigGroup("runtime_config");
 
 	// Le pointeur void* ne marche pas ... voir dans angelscript 
 	int r;
@@ -561,7 +567,29 @@ void LevelManager::RegisterFunctionsForScript()
 
 	r = engine->RegisterGlobalFunction("int checkCollisionBetweenEntities(const string &in, const string &in)", asMETHOD(EntityManager, checkCollisionBetweenEntities), asCALL_THISCALL_ASGLOBAL, gameMap->GetEntityManager() );
 	if(r < 0)
+	{
+		switch(r)
+		{
+		case asNOT_SUPPORTED:
+			printf("asNOT_SUPPORTED\n");
+			break;
+		case asWRONG_CALLING_CONV:
+			printf("asWRONG_CALLING_CONV\n");
+			break;
+		case asINVALID_DECLARATION:
+			printf("asINVALID_DECLARATION\n");
+			break;
+		case asNAME_TAKEN:
+			printf("asNAME_TAKEN\n");
+			break;
+		case asALREADY_REGISTERED:
+			printf("asALREADY_REGISTERED\n");
+			break;
+		};
 		lowError("error registering function");
+	}
+
+	engine->EndConfigGroup();
 }
 
 // Affiche des infos de debug
