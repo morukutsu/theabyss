@@ -26,6 +26,7 @@ extern bool mFullScreen;
 
 void lowInitVideo(int w, int h, const char* name, bool fullscreen);
 void lowToggleWidescreenMode(int height, bool wide);
+void lowToggleVSync(bool v);
 void lowSetProjectionOrtho(int w, int h);
 void lowSetProjectionPerspective(int w, int h);
 void lowViewport(float x, float y, float w, float h);

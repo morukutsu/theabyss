@@ -232,6 +232,8 @@ void LevelManager::UnloadMap()
 	delete cutscene;
 	delete scrollFadeEffect;
 
+	gameMap = NULL;
+
 	isMapLoaded = false;
 
 	ScriptManager::getInstance()->Clean();
@@ -703,7 +705,10 @@ void LevelManager::ShowDebug()
 			debugMenuTitle->ToggleFocus(true);
 
 			// Retour DebugState
+			UnloadMap();
 			StateManager::getInstance()->ChangeState(DebugState::Instance() );
+			
+			return;
 		}
 		else if(id == debugMenuFull->GetItemCount() - 1) 
 		{

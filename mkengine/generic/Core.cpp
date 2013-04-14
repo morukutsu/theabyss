@@ -25,6 +25,7 @@ namespace mk
 	float Core::oldPointerY;
 	float Core::pointerX;
 	float Core::pointerY;
+	bool Core::isVSync;
 
 	Core::Core(int width, int height, const char* name, int renderflags)
 	{
@@ -79,6 +80,8 @@ namespace mk
 
 		mWindowWidth = viewportw;
 		mWindowHeight = viewporth;
+
+		isVSync = false;
 	}
 	
 	void Core::ToggleWidescreenMode(int h, bool wide)
@@ -91,6 +94,12 @@ namespace mk
 		mWindowHeight = h;
 
 		lowToggleWidescreenMode(h, wide);
+	}
+
+	void Core::ToggleVSync()
+	{
+		isVSync = !isVSync;
+		lowToggleVSync(isVSync);
 	}
 
 	void Core::ToggleFullscreenMode()

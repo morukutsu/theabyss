@@ -29,6 +29,7 @@ namespace mk
 			Core(int width, int height, const char* name, int rendermode);	// Engine initialization
 			static void ToggleWidescreenMode(int h, bool wide);
 			static void ToggleFullscreenMode();
+			static void ToggleVSync();
 
 			~Core();
 			
@@ -68,6 +69,7 @@ namespace mk
 			static int mBaseWidth, mBaseHeight;
 			static bool mWideScreenSupport;
 			static bool isFullscreen;
+			static bool isVSync;
 			static bool isRunning;
 			static std::string mWindowName;
 			static bool isDebugVisible;

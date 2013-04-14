@@ -54,6 +54,10 @@ void lowInitVideo(int viewportw, int viewporth, const char* name, bool fullscree
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
+void lowToggleVSync(bool v)
+{
+	App->setVerticalSyncEnabled(v);
+}
 
 void lowSetProjectionOrtho(int w, int h)
 {

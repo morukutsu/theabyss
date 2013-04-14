@@ -33,6 +33,11 @@ int main(int argc, char **argv )
 	if(isFullscreen == "true")
 		mk::Core::ToggleFullscreenMode();
 
+	// Synchro verticale
+	std::string isVsync = ConfigurationManager::getInstance()->GetAttributeString("Graphics_VSync");
+	if(isVsync == "true")
+		mk::Core::ToggleVSync();
+
 	//mk::RessourceManager::getInstance()->LoadTableOfContents("ressource.bin");
 	mk::InputManager::Init();
 
