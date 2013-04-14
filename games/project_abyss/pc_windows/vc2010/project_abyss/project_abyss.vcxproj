@@ -200,8 +200,10 @@
     <ClInclude Include="..\..\..\src\physics\Matrix.h" />
     <ClInclude Include="..\..\..\src\physics\Polygon.h" />
     <ClInclude Include="..\..\..\src\physics\Vector.h" />
+    <ClInclude Include="..\..\..\src\script\scriptarray.h" />
     <ClInclude Include="..\..\..\src\script\scriptbuilder.h" />
     <ClInclude Include="..\..\..\src\script\ScriptManager.h" />
+    <ClInclude Include="..\..\..\src\script\scriptmath.h" />
     <ClInclude Include="..\..\..\src\script\scriptstdstring.h" />
     <ClInclude Include="..\..\..\src\SimpleMaths.h" />
     <ClInclude Include="..\..\..\src\SplashState.h" />
@@ -326,8 +328,10 @@
     <ClCompile Include="..\..\..\src\physics\Body.cpp" />
     <ClCompile Include="..\..\..\src\physics\Polygon.cpp" />
     <ClCompile Include="..\..\..\src\physics\Vector.cpp" />
+    <ClCompile Include="..\..\..\src\script\scriptarray.cpp" />
     <ClCompile Include="..\..\..\src\script\scriptbuilder.cpp" />
     <ClCompile Include="..\..\..\src\script\ScriptManager.cpp" />
+    <ClCompile Include="..\..\..\src\script\scriptmath.cpp" />
     <ClCompile Include="..\..\..\src\script\scriptstdstring.cpp" />
     <ClCompile Include="..\..\..\src\SimpleMaths.cpp" />
     <ClCompile Include="..\..\..\src\SplashState.cpp" />

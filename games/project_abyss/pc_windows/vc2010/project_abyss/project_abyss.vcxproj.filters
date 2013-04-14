@@ -458,6 +458,12 @@
     <ClInclude Include="..\..\..\src\effects\GlobalShaders.h">
       <Filter>Fichiers d%27en-tête\game\effects</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\script\scriptarray.h">
+      <Filter>Fichiers d%27en-tête\game\script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\script\scriptmath.h">
+      <Filter>Fichiers d%27en-tête\game\script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\AsciiFile.cpp">
@@ -831,6 +837,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\effects\GlobalShaders.cpp">
       <Filter>Fichiers sources\game\effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\script\scriptarray.cpp">
+      <Filter>Fichiers sources\game\script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\script\scriptmath.cpp">
+      <Filter>Fichiers sources\game\script</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

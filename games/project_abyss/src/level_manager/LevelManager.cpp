@@ -566,7 +566,11 @@ void LevelManager::RegisterFunctionsForScript()
 	//	lowError("error registering function");
 
 	r = engine->RegisterGlobalFunction("int checkCollisionBetweenEntities(const string &in, const string &in)", asMETHOD(EntityManager, checkCollisionBetweenEntities), asCALL_THISCALL_ASGLOBAL, gameMap->GetEntityManager() );
-	if(r < 0)
+	r = engine->RegisterGlobalFunction("void setEntityPosition(const string &in, float, float)", asMETHOD(EntityManager, setEntityPosition), asCALL_THISCALL_ASGLOBAL, gameMap->GetEntityManager() );
+	r = engine->RegisterGlobalFunction("float getEntityPositionX(const string &in)", asMETHOD(EntityManager, getEntityPositionX), asCALL_THISCALL_ASGLOBAL, gameMap->GetEntityManager() );
+	r = engine->RegisterGlobalFunction("float getEntityPositionY(const string &in)", asMETHOD(EntityManager, getEntityPositionY), asCALL_THISCALL_ASGLOBAL, gameMap->GetEntityManager() );
+
+	/*if(r < 0)
 	{
 		switch(r)
 		{
@@ -587,7 +591,7 @@ void LevelManager::RegisterFunctionsForScript()
 			break;
 		};
 		lowError("error registering function");
-	}
+	}*/
 
 	engine->EndConfigGroup();
 }

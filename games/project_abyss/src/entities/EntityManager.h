@@ -49,6 +49,9 @@ class EntityManager
 
 		// Pour les scripts
 		int checkCollisionBetweenEntities(std::string& ent1, std::string& ent2);
+		void setEntityPosition(std::string& name, float x, float y);
+		float getEntityPositionX(std::string& name);
+		float getEntityPositionY(std::string& name);
 
 	private:
 		// Entités

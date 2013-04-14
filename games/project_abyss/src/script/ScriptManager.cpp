@@ -28,6 +28,8 @@ ScriptManager::ScriptManager()
 	engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 	engine->SetMessageCallback(asFUNCTION(MessageCallback), 0, asCALL_CDECL);
 	RegisterStdString(engine);
+	RegisterScriptArray(engine, false);
+	RegisterScriptMath(engine);
 
 	engine->RegisterGlobalFunction("void print(const string &in)", asFUNCTION(print), asCALL_CDECL); 
 }

@@ -124,3 +124,28 @@ int EntityManager::checkCollisionBetweenEntities(std::string &ent1, std::string 
 
 	return 0;
 }
+
+void EntityManager::setEntityPosition(std::string& name, float x, float y)
+{
+	Entity* a = GetEntityByName(name);
+	if(a == NULL)
+		lowError("Entity " + name + "does not exist");
+	a->mPos.x = x;
+	a->mPos.y = y;
+}
+
+float EntityManager::getEntityPositionX(std::string& name)
+{
+	Entity* a = GetEntityByName(name);
+	if(a == NULL)
+		lowError("Entity " + name + "does not exist");
+	return a->mPos.x;
+}
+
+float EntityManager::getEntityPositionY(std::string& name)
+{
+	Entity* a = GetEntityByName(name);
+	if(a == NULL)
+		lowError("Entity " + name + "does not exist");
+	return a->mPos.y;
+}

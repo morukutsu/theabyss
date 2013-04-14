@@ -10,6 +10,8 @@
 
 #include <angelscript.h>
 #include "scriptbuilder.h"
+#include "scriptarray.h"
+#include "scriptmath.h"
 
 class ScriptManager : public Singleton<ScriptManager>
 {
