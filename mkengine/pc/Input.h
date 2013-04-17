@@ -53,6 +53,10 @@ namespace mk
 		float x, y;
 	};
 
+	enum {
+		EMU_KEY_JOY_UP, EMU_KEY_JOY_DOWN, EMU_KEY_JOY_LEFT, EMU_KEY_JOY_RIGHT
+	};
+
 	// Input pour un controleur
 	struct Input
     {
@@ -64,6 +68,9 @@ namespace mk
 
 		// Pointer
 		Pointer pointer;
+
+		// Emulation de l'user input du joystick au clavier
+		sf::Keyboard::Key emuKeyJoy[4];
 	};
 
 	// Map pour stocker la correspondance touche / string
@@ -133,6 +140,11 @@ namespace mk
 			static void setControlKeyboardMapping(int player, ButtonName name, sf::Keyboard::Key key)
 			{
 				mKeybMapping[player][name] = key;
+			}
+
+			static void setEmuKey(int player, int key, sf::Keyboard::Key keybkey) 
+			{
+				_in[player].emuKeyJoy[key] = keybkey;
 			}
 
 		private:

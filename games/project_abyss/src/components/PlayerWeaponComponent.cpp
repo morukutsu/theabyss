@@ -30,14 +30,22 @@ void PlayerWeaponComponent::Update()
 		{
 			case CMD_SHOOT:
 				Shoot();
-			break;
+				break;
+			case CMD_ORIENT_SIDE:
+			case CMD_ORIENT_UP:
+			case CMD_ORIENT_DOWN:
+			case CMD_ORIENT_UP_DIAG:
+			case CMD_ORIENT_DOWN_DIAG:
+				Orient(command);
+				std::cout << command << std::endl;
+				break;
 		}
 	}	
 }
 
 void PlayerWeaponComponent::Init()
 {
-
+	
 }
 
 void PlayerWeaponComponent::Shoot()
@@ -45,16 +53,40 @@ void PlayerWeaponComponent::Shoot()
 	// Récupération du mirroring du héros
 	bool mirrorH = parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MIRROR] == 1;
 
-	float mx = -1.0f;
+	float mx = -1.0f;  
 	if(mirrorH)
 		mx = 1.0f;
 
 	// Tir
-	NVector velBullet = parent->mVel + NVector(PULSE_LASER_VELOCITY*mx, 0);
+	std::cout << mWpnAngle << std::endl;
+	NVector velBullet = parent->mVel + NVector(PULSE_LASER_VELOCITY*mx*cosf(mWpnAngle), PULSE_LASER_VELOCITY*sinf(mWpnAngle));
 	NVector posBullet = parent->mPos + NVector(wpns[0].shootX*-mx, wpns[0].shootY);
 
 	BulletManager* bman = parent->GetEntityManager()->GetBulletManager();
 	bman->Emit(posBullet.x, posBullet.y, velBullet.x, 0, BULLET_PULSE_LASER);
+}
+
+
+void PlayerWeaponComponent::Orient(int dir)
+{
+	switch(dir)
+	{
+		case CMD_ORIENT_SIDE:
+			mWpnAngle = PI/2.0f;
+			break;
+		case CMD_ORIENT_UP:
+			mWpnAngle = 0.0f;
+			break;
+		case CMD_ORIENT_DOWN:
+			mWpnAngle = PI;
+			break;
+		case CMD_ORIENT_UP_DIAG:
+			mWpnAngle = PI/4.0f;
+			break;
+		case CMD_ORIENT_DOWN_DIAG:
+			mWpnAngle = (3*PI)/4.0f;
+			break;
+	};
 }
 
 void PlayerWeaponComponent::ReadWeaponsFromXML()

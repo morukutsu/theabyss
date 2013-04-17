@@ -35,6 +35,30 @@ void PlayerInputComponent::Update()
 	// Tir
 	if(input->buttons[mk::ButtonNames::RT].pressed)
 		PushCommand(CMD_SHOOT);
+
+	// Orientation du canon
+	if(input->sticks[mk::StickName::Right].magnitude > 0.5f)
+	{
+		if(input->sticks[mk::StickName::Right].angle > 360 - 20 && input->sticks[mk::StickName::Right].angle < 0 + 20)
+			PushCommand(CMD_ORIENT_UP);
+		else if(input->sticks[mk::StickName::Right].angle > 180 - 20 && input->sticks[mk::StickName::Right].angle < 180 + 20)
+			PushCommand(CMD_ORIENT_UP);
+		else if((input->sticks[mk::StickName::Right].angle > 45 - 20 && input->sticks[mk::StickName::Right].angle < 45 + 20) 
+			|| (input->sticks[mk::StickName::Right].angle > 135 - 20 && input->sticks[mk::StickName::Right].angle < 135 + 20))
+			PushCommand(CMD_ORIENT_UP_DIAG);
+		else if((input->sticks[mk::StickName::Right].angle > 225 - 20 && input->sticks[mk::StickName::Right].angle < 225 + 20) 
+			|| (input->sticks[mk::StickName::Right].angle > 315 - 20 && input->sticks[mk::StickName::Right].angle < 315 + 20))
+			PushCommand(CMD_ORIENT_DOWN_DIAG);
+		else
+			PushCommand(CMD_ORIENT_SIDE);	
+	
+	
+	}
+	else
+	{
+		// De base le canon est orienté sur les côtés
+		PushCommand(CMD_ORIENT_SIDE);
+	}
 }
 
 void PlayerInputComponent::PushCommand(int command)

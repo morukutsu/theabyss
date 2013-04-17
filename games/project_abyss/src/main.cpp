@@ -73,6 +73,10 @@ int main(int argc, char **argv )
 	mk::InputManager::setControlKeyboardMapping(0, mk::ButtonName::Left, mk::InputManager::toKeyboardKey(ConfigurationManager::getInstance()->GetAttributeString("CtrlMap_Keyb_Left")));
 	mk::InputManager::setControlKeyboardMapping(0, mk::ButtonName::Right, mk::InputManager::toKeyboardKey(ConfigurationManager::getInstance()->GetAttributeString("CtrlMap_Keyb_Right")));
 	mk::InputManager::setControlKeyboardMapping(0, mk::ButtonName::RT, mk::InputManager::toKeyboardKey(ConfigurationManager::getInstance()->GetAttributeString("CtrlMap_Keyb_Shoot")));
+	mk::InputManager::setEmuKey(0, mk::EMU_KEY_JOY_UP, mk::InputManager::toKeyboardKey(ConfigurationManager::getInstance()->GetAttributeString("CtrlMap_Keyb_Orient_Up")));
+	mk::InputManager::setEmuKey(0, mk::EMU_KEY_JOY_DOWN, mk::InputManager::toKeyboardKey(ConfigurationManager::getInstance()->GetAttributeString("CtrlMap_Keyb_Orient_Down")));
+	mk::InputManager::setEmuKey(0, mk::EMU_KEY_JOY_LEFT, mk::InputManager::toKeyboardKey(ConfigurationManager::getInstance()->GetAttributeString("CtrlMap_Keyb_Orient_Left")));
+	mk::InputManager::setEmuKey(0, mk::EMU_KEY_JOY_RIGHT, mk::InputManager::toKeyboardKey(ConfigurationManager::getInstance()->GetAttributeString("CtrlMap_Keyb_Orient_Right")));
 
 	//Chagement d'une police de débug
 	mk::Font* fnt;

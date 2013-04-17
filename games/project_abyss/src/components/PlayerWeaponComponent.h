@@ -9,10 +9,13 @@
 
 #define PULSE_LASER_VELOCITY		40.0F
 
-
 struct WpnInfo {
 	std::string wpn_name;
 	float shootX, shootY;
+};
+
+enum {
+	C_POS_NEUTRAL, C_POS_UP, C_POS_DOWN, C_POS_UP_DIAG, C_POS_DOWN_DIAG
 };
 
 class CBody;
@@ -29,12 +32,16 @@ class PlayerWeaponComponent : public Component
 		void Init();
 
 		void Shoot();
+		
+		void Orient(int dir);
 
 		void ReadWeaponsFromXML();
 
 	public:
 		std::vector<WpnInfo> wpns;
 		PlayerInputComponent* in;
+
+		float mWpnAngle;
 };
 
 #endif

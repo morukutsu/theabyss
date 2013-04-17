@@ -63,24 +63,24 @@ namespace mk
 		in.pointer.x = position.x * (1.0f/mk::Core::GetScaleFactor());
 		in.pointer.y = position.y * (1.0f/mk::Core::GetScaleFactor());
 
-		//Nunchuk (émulation avec les touches de direction)
-		/*if(Inputsf.IsKeyDown(sf::Key::Up) )
-			in.magnitude = 1.0f, in.angle = 359;			
-		else if(Inputsf.IsKeyDown(sf::Key::Right) )
-			in.magnitude = 1.0f, in.angle = 90;
-		else if(Inputsf.IsKeyDown(sf::Key::Down) )
-			in.magnitude = 1.0f, in.angle = 180;
-		else if(Inputsf.IsKeyDown(sf::Key::Left) )
-			in.magnitude = 1.0f, in.angle = 270;
+		// Emulation du stick (émulation avec les touches de direction)
+		if(sf::Keyboard::isKeyPressed(in.emuKeyJoy[EMU_KEY_JOY_UP]) )
+			in.sticks[StickName::Right].magnitude = 1.0f, in.sticks[StickName::Right].angle = 359;			
+		else if(sf::Keyboard::isKeyPressed(in.emuKeyJoy[EMU_KEY_JOY_RIGHT]) )
+			in.sticks[StickName::Right].magnitude = 1.0f, in.sticks[StickName::Right].angle = 90;
+		else if(sf::Keyboard::isKeyPressed(in.emuKeyJoy[EMU_KEY_JOY_DOWN]) )
+			in.sticks[StickName::Right].magnitude = 1.0f, in.sticks[StickName::Right].angle = 180;
+		else if(sf::Keyboard::isKeyPressed(in.emuKeyJoy[EMU_KEY_JOY_LEFT]) )
+			in.sticks[StickName::Right].magnitude = 1.0f, in.sticks[StickName::Right].angle = 270;
 
-		if(Inputsf.IsKeyDown(sf::Key::Up) && Inputsf.IsKeyDown(sf::Key::Right))
-			in.magnitude = 1.0f, in.angle = 45;
-		else if(Inputsf.IsKeyDown(sf::Key::Down) && Inputsf.IsKeyDown(sf::Key::Right) )
-			in.magnitude = 1.0f, in.angle = 135;
-		else if(Inputsf.IsKeyDown(sf::Key::Down) && Inputsf.IsKeyDown(sf::Key::Left) )
-			in.magnitude = 1.0f, in.angle = 225;
-		else if(Inputsf.IsKeyDown(sf::Key::Up) && Inputsf.IsKeyDown(sf::Key::Left) )
-			in.magnitude = 1.0f, in.angle = 315;*/
+		if(sf::Keyboard::isKeyPressed(in.emuKeyJoy[EMU_KEY_JOY_UP]) && sf::Keyboard::isKeyPressed(in.emuKeyJoy[EMU_KEY_JOY_RIGHT]))
+			in.sticks[StickName::Right].magnitude = 1.0f, in.sticks[StickName::Right].angle = 45;
+		else if(sf::Keyboard::isKeyPressed(in.emuKeyJoy[EMU_KEY_JOY_DOWN]) && sf::Keyboard::isKeyPressed(in.emuKeyJoy[EMU_KEY_JOY_RIGHT]) )
+			in.sticks[StickName::Right].magnitude = 1.0f, in.sticks[StickName::Right].angle = 135;
+		else if(sf::Keyboard::isKeyPressed(in.emuKeyJoy[EMU_KEY_JOY_DOWN]) && sf::Keyboard::isKeyPressed(in.emuKeyJoy[EMU_KEY_JOY_LEFT]) )
+			in.sticks[StickName::Right].magnitude = 1.0f, in.sticks[StickName::Right].angle = 225;
+		else if(sf::Keyboard::isKeyPressed(in.emuKeyJoy[EMU_KEY_JOY_UP]) && sf::Keyboard::isKeyPressed(in.emuKeyJoy[EMU_KEY_JOY_LEFT]) )
+			in.sticks[StickName::Right].magnitude = 1.0f, in.sticks[StickName::Right].angle = 315;
 
 		_in[0] = in;
 	}
