@@ -37,7 +37,6 @@ void PlayerWeaponComponent::Update()
 			case CMD_ORIENT_UP_DIAG:
 			case CMD_ORIENT_DOWN_DIAG:
 				Orient(command);
-				std::cout << command << std::endl;
 				break;
 		}
 	}	
@@ -72,19 +71,24 @@ void PlayerWeaponComponent::Orient(int dir)
 	switch(dir)
 	{
 		case CMD_ORIENT_SIDE:
-			mWpnAngle = PI/2.0f;
+			mWpnAngle = 0;
+			//std::cout << "Orient SIDE" << std::endl;
 			break;
 		case CMD_ORIENT_UP:
-			mWpnAngle = 0.0f;
+			mWpnAngle = PI/2.0f;
+			//std::cout << "Orient UP" << std::endl;
 			break;
 		case CMD_ORIENT_DOWN:
-			mWpnAngle = PI;
+			mWpnAngle = (3*PI)/4.0f;
+			//std::cout << "Orient DOWN" << std::endl;
 			break;
 		case CMD_ORIENT_UP_DIAG:
-			mWpnAngle = PI/4.0f;
+			mWpnAngle = PI/2.0f + PI/4.0f;
+			//std::cout << "Orient UP DIAG" << std::endl;
 			break;
 		case CMD_ORIENT_DOWN_DIAG:
-			mWpnAngle = (3*PI)/4.0f;
+			mWpnAngle = PI + PI/4.0f;
+			//std::cout << "Orient DOWN DIAG" << std::endl;
 			break;
 	};
 }
