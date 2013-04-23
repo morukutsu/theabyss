@@ -7,11 +7,14 @@
 #include "ComponentsIncludes.h"
 #include "../SimpleMaths.h"
 #include "PlayerMovementComponent.h"
+#include "PlayerWeaponComponent.h"
 #include "../entities/EntityManager.h"
 
-ShipDisplayComponent::ShipDisplayComponent(PlayerMovementComponent* pmov)
+ShipDisplayComponent::ShipDisplayComponent(PlayerMovementComponent* pmov, PlayerWeaponComponent* pwpn)
 {
 	playerMovementComponent = pmov;
+	playerWeaponComponent = pwpn;
+
 	oldIsPlayerAccelerated = false;
 	reactorsAngle = 0.0f;
 
@@ -230,7 +233,11 @@ void ShipDisplayComponent::UpdateWeapon()
 	if(!wpns[currentWeapon].isCannonRotationFixed)
 	{
 		cannon_position.Rotate(parts_positions[SHIP_PART_VIS], 0.0f);
-		wpns[currentWeapon].spr_cannon->Rotate(0.0f);
+
+		// On récupére l'orientation depuis le playerwpn
+		float cannonAngle = -playerWeaponComponent->mWpnAngle + PI;
+
+		wpns[currentWeapon].spr_cannon->Rotate(RadiansToDegrees(cannonAngle)*mx );
 	}
 
 	cannon_position += parent->mPos / 32.0f;

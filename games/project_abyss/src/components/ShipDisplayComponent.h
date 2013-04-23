@@ -56,11 +56,12 @@ struct WpnDisplay {
 
 class ParticleGeneratorComponent;
 class PlayerMovementComponent;
+class PlayerWeaponComponent;
 class LightComponent;
 class ShipDisplayComponent : public Component
 {
 	public:
-		ShipDisplayComponent(PlayerMovementComponent*);
+		ShipDisplayComponent(PlayerMovementComponent*, PlayerWeaponComponent*);
 		~ShipDisplayComponent();
 
 		void Receive(int message, void* data);
@@ -108,6 +109,7 @@ class ShipDisplayComponent : public Component
 
 		// Pointeurs vers les composants utiles
 		PlayerMovementComponent* playerMovementComponent;
+		PlayerWeaponComponent* playerWeaponComponent;
 
 		// Gestion de l'orientation du vaisseau
 		float sourceAngle, reactorsAngle, reactorAngleMovingSpeed, targetAngleInterp;

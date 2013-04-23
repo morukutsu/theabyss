@@ -42,6 +42,8 @@ class PlayerWeaponComponent : public Component
 		PlayerInputComponent* in;
 
 		float mWpnAngle;
+
+		int mCannonOrientation;
 };
 
 #endif

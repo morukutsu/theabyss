@@ -79,10 +79,13 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 
 		PlayerMovementComponent* pmov = new PlayerMovementComponent(input, body);
 		ent->AddComponent(pmov);
-		ent->AddComponent(new ShipDisplayComponent(pmov) );
 
 		PlayerWeaponComponent* pwpn = new PlayerWeaponComponent(input);
 		ent->AddComponent(pwpn);
+
+		ent->AddComponent(new ShipDisplayComponent(pmov, pwpn) );
+
+		
 	}
 	else if(type == "particlegenerator")
 	{

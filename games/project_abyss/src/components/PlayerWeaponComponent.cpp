@@ -57,12 +57,12 @@ void PlayerWeaponComponent::Shoot()
 		mx = 1.0f;
 
 	// Tir
-	std::cout << mWpnAngle << std::endl;
 	NVector velBullet = parent->mVel + NVector(PULSE_LASER_VELOCITY*mx*cosf(mWpnAngle), PULSE_LASER_VELOCITY*sinf(mWpnAngle));
+
 	NVector posBullet = parent->mPos + NVector(wpns[0].shootX*-mx, wpns[0].shootY);
 
 	BulletManager* bman = parent->GetEntityManager()->GetBulletManager();
-	bman->Emit(posBullet.x, posBullet.y, velBullet.x, 0, BULLET_PULSE_LASER);
+	bman->Emit(posBullet.x, posBullet.y, velBullet.x, velBullet.y, BULLET_PULSE_LASER);
 }
 
 
@@ -72,23 +72,23 @@ void PlayerWeaponComponent::Orient(int dir)
 	{
 		case CMD_ORIENT_SIDE:
 			mWpnAngle = 0;
-			//std::cout << "Orient SIDE" << std::endl;
+			mCannonOrientation = C_POS_NEUTRAL;
 			break;
 		case CMD_ORIENT_UP:
-			mWpnAngle = PI/2.0f;
-			//std::cout << "Orient UP" << std::endl;
+			mWpnAngle = -PI/2.0f;
+			mCannonOrientation = C_POS_UP;
 			break;
 		case CMD_ORIENT_DOWN:
-			mWpnAngle = (3*PI)/4.0f;
-			//std::cout << "Orient DOWN" << std::endl;
+			mWpnAngle = PI/2.0f;
+			mCannonOrientation = C_POS_DOWN;
 			break;
 		case CMD_ORIENT_UP_DIAG:
-			mWpnAngle = PI/2.0f + PI/4.0f;
-			//std::cout << "Orient UP DIAG" << std::endl;
+			mWpnAngle = -PI/4.0f;
+			mCannonOrientation = C_POS_UP_DIAG;
 			break;
 		case CMD_ORIENT_DOWN_DIAG:
-			mWpnAngle = PI + PI/4.0f;
-			//std::cout << "Orient DOWN DIAG" << std::endl;
+			mWpnAngle = PI/4.0f;
+			mCannonOrientation = C_POS_DOWN_DIAG;
 			break;
 	};
 }

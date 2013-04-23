@@ -3,6 +3,7 @@
 
 #include "BulletFactory.h"
 #include "BulletManager.h"
+#include "../SimpleMaths.h"
 
 void BulletFactory::Init(int bullet_type, Bullet* bullet)
 {
@@ -19,6 +20,10 @@ void BulletFactory::Init(int bullet_type, Bullet* bullet)
 			bullet->spr.MoveTo(bullet->originX / 32.0f, bullet->originY / 32.0f);
 			bullet->spr.ignoreLightPipeline = true;
 			bullet->spr.SetSize(bullet->spr.image->getImageWidth() / 32.0f, bullet->spr.image->getImageHeight() / 32.0f);
+
+			float angle = SimpleMaths::GetAngle2Points(0, 0, bullet->originVx, bullet->originVy) + 90.0f;
+			bullet->spr.Rotate(angle);
+
 			bullet->spr.Show();
 			bullet->spr.Set3DMode(true);
 			bullet->spr.SavePositions();
