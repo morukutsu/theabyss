@@ -90,9 +90,6 @@
     <Filter Include="Fichiers sources\game\effects">
       <UniqueIdentifier>{85e80fdf-6ca0-461c-9b15-af98b5e854e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers sources\mkengine\spine">
-      <UniqueIdentifier>{d2c5a003-b062-4e04-b729-4820ecf88903}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Fichiers sources\mkengine\generic\spine">
       <UniqueIdentifier>{99d6bae8-94fb-4f19-a479-34199246c55a}</UniqueIdentifier>
     </Filter>
@@ -422,24 +419,6 @@
     <ClInclude Include="..\..\..\src\level_manager\BulletUpdater.h">
       <Filter>Fichiers d%27en-tête\game\level_manager</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_batchallocator.h">
-      <Filter>Fichiers sources\mkengine\spine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Atlas.h">
-      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\AtlasAttachmentLoader.h">
-      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\RegionAttachment.h">
-      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Skeleton.h">
-      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\SkeletonJson.h">
-      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\components\PlayerWeaponComponent.h">
       <Filter>Fichiers d%27en-tête\game\components</Filter>
     </ClInclude>
@@ -463,6 +442,66 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\script\scriptmath.h">
       <Filter>Fichiers d%27en-tête\game\script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Animation.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\AnimationState.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\AnimationStateData.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Atlas.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\AtlasAttachmentLoader.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Attachment.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\AttachmentLoader.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Bone.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\BoneData.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\extension.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Json.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\RegionAttachment.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Skeleton.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\SkeletonData.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\SkeletonJson.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Skin.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Slot.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\SlotData.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\spine.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\SpineModel.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -769,57 +808,6 @@
     <ClCompile Include="..\..\..\src\level_manager\BulletUpdater.cpp">
       <Filter>Fichiers sources\game\level_manager</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\Animation.cpp">
-      <Filter>Fichiers sources\mkengine\spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\BaseAtlas.cpp">
-      <Filter>Fichiers sources\mkengine\spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\BaseRegionAttachment.cpp">
-      <Filter>Fichiers sources\mkengine\spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\BaseSkeleton.cpp">
-      <Filter>Fichiers sources\mkengine\spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\BaseSkeletonJson.cpp">
-      <Filter>Fichiers sources\mkengine\spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\Bone.cpp">
-      <Filter>Fichiers sources\mkengine\spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\SkeletonData.cpp">
-      <Filter>Fichiers sources\mkengine\spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\Skin.cpp">
-      <Filter>Fichiers sources\mkengine\spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\Slot.cpp">
-      <Filter>Fichiers sources\mkengine\spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_reader.cpp">
-      <Filter>Fichiers sources\mkengine\spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_value.cpp">
-      <Filter>Fichiers sources\mkengine\spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_writer.cpp">
-      <Filter>Fichiers sources\mkengine\spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Atlas.cpp">
-      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\AtlasAttachmentLoader.cpp">
-      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\RegionAttachment.cpp">
-      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Skeleton.cpp">
-      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\SkeletonJson.cpp">
-      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\components\PlayerWeaponComponent.cpp">
       <Filter>Fichiers sources\game\components</Filter>
     </ClCompile>
@@ -844,17 +832,65 @@
     <ClCompile Include="..\..\..\src\script\scriptmath.cpp">
       <Filter>Fichiers sources\game\script</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Animation.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\AnimationState.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\AnimationStateData.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Atlas.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\AtlasAttachmentLoader.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Attachment.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\AttachmentLoader.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Bone.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\BoneData.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\extension.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Json.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\RegionAttachment.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Skeleton.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\SkeletonData.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\SkeletonJson.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Skin.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Slot.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\SlotData.c">
+      <Filter>Fichiers sources\mkengine\generic\spine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\SpineModel.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="UML_Game.cd" />
-    <None Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_internalarray.inl">
-      <Filter>Fichiers sources\mkengine\spine</Filter>
-    </None>
-    <None Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_internalmap.inl">
-      <Filter>Fichiers sources\mkengine\spine</Filter>
-    </None>
-    <None Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_valueiterator.inl">
-      <Filter>Fichiers sources\mkengine\spine</Filter>
-    </None>
   </ItemGroup>
 </Project>

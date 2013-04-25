@@ -23,27 +23,33 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#ifndef SPINE_ATLASATTACHMENTLOADER_H_
-#define SPINE_ATLASATTACHMENTLOADER_H_
+#ifndef SPINE_ATTACHMENTLOADER_H_
+#define SPINE_ATTACHMENTLOADER_H_
 
-#include <spine/AttachmentLoader.h>
-#include <spine/Atlas.h>
+#include <spine/Attachment.h>
+#include <spine/Skin.h>
 
 #ifdef __cplusplus
 namespace spine {
 extern "C" {
 #endif
 
-typedef struct {
-	AttachmentLoader super;
-	Atlas* atlas;
-} AtlasAttachmentLoader;
+typedef struct AttachmentLoader AttachmentLoader;
+struct AttachmentLoader {
+	const char* error1;
+	const char* error2;
 
-AtlasAttachmentLoader* AtlasAttachmentLoader_create (Atlas* atlas);
+	const void* const vtable;
+};
+
+void AttachmentLoader_dispose (AttachmentLoader* self);
+
+/* Returns 0 to not load an attachment. If 0 is returned and AttachmentLoader.error1 is set, an error occurred. */
+Attachment* AttachmentLoader_newAttachment (AttachmentLoader* self, Skin* skin, AttachmentType type, const char* name);
 
 #ifdef __cplusplus
 }
 }
 #endif
 
-#endif /* SPINE_ATLASATTACHMENTLOADER_H_ */
+#endif /* SPINE_ATTACHMENTLOADER_H_ */

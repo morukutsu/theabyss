@@ -23,27 +23,48 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#ifndef SPINE_ATLASATTACHMENTLOADER_H_
-#define SPINE_ATLASATTACHMENTLOADER_H_
+#ifndef SPINE_SKELETONDATA_H_
+#define SPINE_SKELETONDATA_H_
 
-#include <spine/AttachmentLoader.h>
-#include <spine/Atlas.h>
+#include <spine/BoneData.h>
+#include <spine/SlotData.h>
+#include <spine/Skin.h>
+#include <spine/Animation.h>
 
 #ifdef __cplusplus
-namespace spine {
-extern "C" {
+namespace spine {extern "C" {
 #endif
 
 typedef struct {
-	AttachmentLoader super;
-	Atlas* atlas;
-} AtlasAttachmentLoader;
+	int boneCount;
+	BoneData** bones;
 
-AtlasAttachmentLoader* AtlasAttachmentLoader_create (Atlas* atlas);
+	int slotCount;
+	SlotData** slots;
+
+	int skinCount;
+	Skin** skins;
+	Skin* defaultSkin;
+
+	int animationCount;
+	Animation** animations;
+} SkeletonData;
+
+SkeletonData* SkeletonData_create ();
+void SkeletonData_dispose (SkeletonData* self);
+
+BoneData* SkeletonData_findBone (const SkeletonData* self, const char* boneName);
+int SkeletonData_findBoneIndex (const SkeletonData* self, const char* boneName);
+
+SlotData* SkeletonData_findSlot (const SkeletonData* self, const char* slotName);
+int SkeletonData_findSlotIndex (const SkeletonData* self, const char* slotName);
+
+Skin* SkeletonData_findSkin (const SkeletonData* self, const char* skinName);
+
+Animation* SkeletonData_findAnimation (const SkeletonData* self, const char* animationName);
 
 #ifdef __cplusplus
-}
-}
+}}
 #endif
 
-#endif /* SPINE_ATLASATTACHMENTLOADER_H_ */
+#endif /* SPINE_SKELETONDATA_H_ */

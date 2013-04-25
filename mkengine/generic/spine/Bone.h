@@ -23,27 +23,43 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#ifndef SPINE_ATLASATTACHMENTLOADER_H_
-#define SPINE_ATLASATTACHMENTLOADER_H_
+#ifndef SPINE_BONE_H_
+#define SPINE_BONE_H_
 
-#include <spine/AttachmentLoader.h>
-#include <spine/Atlas.h>
+#include <spine/BoneData.h>
 
 #ifdef __cplusplus
 namespace spine {
 extern "C" {
 #endif
 
-typedef struct {
-	AttachmentLoader super;
-	Atlas* atlas;
-} AtlasAttachmentLoader;
+typedef struct Bone Bone;
+struct Bone {
+	BoneData* const data;
+	Bone* const parent;
+	float x, y;
+	float rotation;
+	float scaleX, scaleY;
 
-AtlasAttachmentLoader* AtlasAttachmentLoader_create (Atlas* atlas);
+	float const m00, m01, worldX; /* a b x */
+	float const m10, m11, worldY; /* c d y */
+	float const worldRotation;
+	float const worldScaleX, worldScaleY;
+};
+
+void Bone_setYDown (int/*bool*/yDown);
+
+/* @param parent May be 0. */
+Bone* Bone_create (BoneData* data, Bone* parent);
+void Bone_dispose (Bone* self);
+
+void Bone_setToBindPose (Bone* self);
+
+void Bone_updateWorldTransform (Bone* self, int/*bool*/flipX, int/*bool*/flipY);
 
 #ifdef __cplusplus
 }
 }
 #endif
 
-#endif /* SPINE_ATLASATTACHMENTLOADER_H_ */
+#endif /* SPINE_BONE_H_ */

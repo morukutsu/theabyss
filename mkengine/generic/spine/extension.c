@@ -23,27 +23,50 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#ifndef SPINE_ATLASATTACHMENTLOADER_H_
-#define SPINE_ATLASATTACHMENTLOADER_H_
-
-#include <spine/AttachmentLoader.h>
-#include <spine/Atlas.h>
+#include <spine/extension.h>
+#include <stdio.h>
 
 #ifdef __cplusplus
 namespace spine {
-extern "C" {
 #endif
 
-typedef struct {
-	AttachmentLoader super;
-	Atlas* atlas;
-} AtlasAttachmentLoader;
+static void* (*mallocFunc) (size_t size) = malloc;
+static void (*freeFunc) (void* ptr) = free;
 
-AtlasAttachmentLoader* AtlasAttachmentLoader_create (Atlas* atlas);
+void* _malloc (size_t size) {
+	return mallocFunc(size);
+}
+void* _calloc (size_t num, size_t size) {
+	void* ptr = mallocFunc(size);
+	if (ptr) memset(ptr, 0, size);
+	return ptr;
+}
+void _free (void* ptr) {
+	freeFunc(ptr);
+}
+
+void _setMalloc (void* (*malloc) (size_t size)) {
+	mallocFunc = malloc;
+}
+void _setFree (void (*free) (void* ptr)) {
+	freeFunc = free;
+}
+
+char* _readFile (const char* path, int* length) {
+	FILE *file = fopen(path, "rb");
+	if (!file) return 0;
+
+	fseek(file, 0, SEEK_END);
+	*length = ftell(file);
+	fseek(file, 0, SEEK_SET);
+
+	char* data = MALLOC(char, *length);
+	fread(data, 1, *length, file);
+	fclose(file);
+
+	return data;
+}
 
 #ifdef __cplusplus
 }
-}
 #endif
-
-#endif /* SPINE_ATLASATTACHMENTLOADER_H_ */

@@ -23,27 +23,37 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#ifndef SPINE_ATLASATTACHMENTLOADER_H_
-#define SPINE_ATLASATTACHMENTLOADER_H_
-
-#include <spine/AttachmentLoader.h>
-#include <spine/Atlas.h>
+#include <spine/Attachment.h>
+#include <spine/extension.h>
+#include <spine/Slot.h>
 
 #ifdef __cplusplus
 namespace spine {
-extern "C" {
 #endif
 
-typedef struct {
-	AttachmentLoader super;
-	Atlas* atlas;
-} AtlasAttachmentLoader;
+typedef struct _AttachmentVtable {
+	void (*dispose) (Attachment* self);
+} _AttachmentVtable;
 
-AtlasAttachmentLoader* AtlasAttachmentLoader_create (Atlas* atlas);
+void _Attachment_init (Attachment* self, const char* name, AttachmentType type, //
+		void (*dispose) (Attachment* self)) {
+
+	CONST_CAST(_AttachmentVtable*, self->vtable) = NEW(_AttachmentVtable);
+	VTABLE(Attachment, self) ->dispose = dispose;
+
+	MALLOC_STR(self->name, name);
+	self->type = type;
+}
+
+void _Attachment_deinit (Attachment* self) {
+	FREE(self->vtable);
+	FREE(self->name);
+}
+
+void Attachment_dispose (Attachment* self) {
+	VTABLE(Attachment, self) ->dispose(self);
+}
 
 #ifdef __cplusplus
 }
-}
 #endif
-
-#endif /* SPINE_ATLASATTACHMENTLOADER_H_ */

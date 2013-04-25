@@ -23,11 +23,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#ifndef SPINE_ATLASATTACHMENTLOADER_H_
-#define SPINE_ATLASATTACHMENTLOADER_H_
+#ifndef SPINE_ANIMATIONSTATE_H_
+#define SPINE_ANIMATIONSTATE_H_
 
-#include <spine/AttachmentLoader.h>
-#include <spine/Atlas.h>
+#include <spine/AnimationStateData.h>
 
 #ifdef __cplusplus
 namespace spine {
@@ -35,15 +34,31 @@ extern "C" {
 #endif
 
 typedef struct {
-	AttachmentLoader super;
-	Atlas* atlas;
-} AtlasAttachmentLoader;
+	AnimationStateData* const data;
+	Animation* const animation;
+	float time;
+	int/*bool*/loop;
+} AnimationState;
 
-AtlasAttachmentLoader* AtlasAttachmentLoader_create (Atlas* atlas);
+/* @param data May be 0 for no mixing. */
+AnimationState* AnimationState_create (AnimationStateData* data);
+void AnimationState_dispose (AnimationState* self);
+
+void AnimationState_update (AnimationState* self, float delta);
+
+void AnimationState_apply (AnimationState* self, struct Skeleton* skeleton);
+
+/* @param animationName May be 0. */
+void AnimationState_setAnimationByName (AnimationState* self, const char* animationName, int/**/loop);
+/* @param animation May be 0. */
+void AnimationState_setAnimation (AnimationState* self, Animation* animation, int/**/loop);
+void AnimationState_clearAnimation (AnimationState* self);
+
+int/*bool*/AnimationState_isComplete (AnimationState* self);
 
 #ifdef __cplusplus
 }
 }
 #endif
 
-#endif /* SPINE_ATLASATTACHMENTLOADER_H_ */
+#endif /* SPINE_ANIMATIONSTATE_H_ */

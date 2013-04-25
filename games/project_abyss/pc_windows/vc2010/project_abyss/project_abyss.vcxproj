@@ -79,6 +79,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -114,11 +115,26 @@
     <ClInclude Include="..\..\..\..\..\mkengine\generic\RessourceManager.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\Scene.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\singleton.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\SpineModel.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Animation.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\AnimationState.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\AnimationStateData.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Atlas.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\AtlasAttachmentLoader.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Attachment.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\AttachmentLoader.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Bone.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\BoneData.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\extension.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Json.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\RegionAttachment.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Skeleton.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\SkeletonData.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\SkeletonJson.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Skin.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\Slot.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\SlotData.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\spine\spine.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\Spinor.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\Sprite.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\Text.h" />
@@ -148,7 +164,6 @@
     <ClInclude Include="..\..\..\..\..\mkengine\pc\pstdint.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\pc\Shader.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\pc\Sound.h" />
-    <ClInclude Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_batchallocator.h" />
     <ClInclude Include="..\..\..\src\ChapterState.h" />
     <ClInclude Include="..\..\..\src\components\AnimatedGraphicsComponent.h" />
     <ClInclude Include="..\..\..\src\components\Component.h" />
@@ -229,11 +244,79 @@
     <ClCompile Include="..\..\..\..\..\mkengine\generic\PostFX.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\generic\RessourceManager.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\generic\Scene.cpp" />
-    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Atlas.cpp" />
-    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\AtlasAttachmentLoader.cpp" />
-    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\RegionAttachment.cpp" />
-    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Skeleton.cpp" />
-    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\SkeletonJson.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\SpineModel.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Animation.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\AnimationState.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\AnimationStateData.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Atlas.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\AtlasAttachmentLoader.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Attachment.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\AttachmentLoader.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Bone.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\BoneData.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\extension.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Json.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\RegionAttachment.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Skeleton.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\SkeletonData.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\SkeletonJson.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Skin.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\Slot.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\spine\SlotData.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\Spinor.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\generic\Sprite.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\generic\Text.cpp" />
@@ -275,18 +358,6 @@
     <ClCompile Include="..\..\..\..\..\mkengine\pc\lowSystem.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\pc\Shader.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\pc\Sound.cpp" />
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_reader.cpp" />
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_value.cpp" />
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_writer.cpp" />
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\Animation.cpp" />
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\BaseAtlas.cpp" />
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\BaseRegionAttachment.cpp" />
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\BaseSkeleton.cpp" />
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\BaseSkeletonJson.cpp" />
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\Bone.cpp" />
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\SkeletonData.cpp" />
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\Skin.cpp" />
-    <ClCompile Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\spine\Slot.cpp" />
     <ClCompile Include="..\..\..\src\ChapterState.cpp" />
     <ClCompile Include="..\..\..\src\components\AnimatedGraphicsComponent.cpp" />
     <ClCompile Include="..\..\..\src\components\DoorComponent.cpp" />
@@ -338,9 +409,6 @@
     <ClCompile Include="..\..\..\src\StateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_internalarray.inl" />
-    <None Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_internalmap.inl" />
-    <None Include="..\..\..\..\..\mkengine\spine-runtimes\spine-cpp\src\json\json_valueiterator.inl" />
     <None Include="UML_Game.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

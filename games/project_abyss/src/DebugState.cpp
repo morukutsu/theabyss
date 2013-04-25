@@ -146,10 +146,13 @@ void DebugState::Update(StateManager* game)
 	{
 		if(id < mapsSubMenu->GetItemCount() - 1) 
 		{
-			game->ChangeState(LevelState::Instance() );
+			std::string path;
 			DebugItemButton *but = (DebugItemButton*)(mapsSubMenu->GetSelectedItem());
-			LevelState::Instance()->LoadMap(but->GetLabel() );
+			path = but->GetLabel();
 
+			game->ChangeState(LevelState::Instance() );
+			LevelState::Instance()->LoadMap(path);
+			return;
 		}
 		else if(id == mapsSubMenu->GetItemCount() - 1) 
 		{
@@ -168,6 +171,7 @@ void DebugState::Update(StateManager* game)
 			// Chargement d'un chapitre du jeu
 			game->ChangeState(ChapterState::Instance() );
 			ChapterState::Instance()->SetChapter("chapters/chapter_2.xml");
+			return;
 		}
 		else if(id == chaptersSubMenu->GetItemCount() - 1) 
 		{

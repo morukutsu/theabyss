@@ -14,7 +14,7 @@ void SplashState::Init()
 	alpha = 0.0f;
 	elapsedTime = 0.0f;
 
-	littlespace_splash = new spine::Skeleton();
+	littlespace_splash = new mk::SpineModel();
 	littlespace_splash->LoadModelDescriptorFile("test/littlespace_logo.xml");
 	littlespace_splash->PlayAnim("animation", ANIM_ONCE);
 
@@ -54,7 +54,10 @@ void SplashState::Update(StateManager* game)
 	}
 
 	if(elapsedTime > 6)
+	{
 		game->ChangeState(DebugState::Instance() );
+		return;
+	}
 
 	if(alpha >= 1.0f)
 		alpha = 1.0f;

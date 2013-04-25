@@ -23,11 +23,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#ifndef SPINE_ATLASATTACHMENTLOADER_H_
-#define SPINE_ATLASATTACHMENTLOADER_H_
+#ifndef SPINE_ANIMATIONSTATEDATA_H_
+#define SPINE_ANIMATIONSTATEDATA_H_
 
-#include <spine/AttachmentLoader.h>
-#include <spine/Atlas.h>
+#include <spine/Animation.h>
+#include <spine/SkeletonData.h>
 
 #ifdef __cplusplus
 namespace spine {
@@ -35,15 +35,21 @@ extern "C" {
 #endif
 
 typedef struct {
-	AttachmentLoader super;
-	Atlas* atlas;
-} AtlasAttachmentLoader;
+	SkeletonData* const skeletonData;
+	const void* const entries;
+} AnimationStateData;
 
-AtlasAttachmentLoader* AtlasAttachmentLoader_create (Atlas* atlas);
+AnimationStateData* AnimationStateData_create (SkeletonData* skeletonData);
+void AnimationStateData_dispose (AnimationStateData* self);
+
+void AnimationStateData_setMixByName (AnimationStateData* self, const char* fromName, const char* toName, float duration);
+void AnimationStateData_setMix (AnimationStateData* self, Animation* from, Animation* to, float duration);
+/* Returns 0 if there is no mixing between the animations. */
+float AnimationStateData_getMix (AnimationStateData* self, Animation* from, Animation* to);
 
 #ifdef __cplusplus
 }
 }
 #endif
 
-#endif /* SPINE_ATLASATTACHMENTLOADER_H_ */
+#endif /* SPINE_ANIMATIONSTATEDATA_H_ */

@@ -23,27 +23,24 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#ifndef SPINE_ATLASATTACHMENTLOADER_H_
-#define SPINE_ATLASATTACHMENTLOADER_H_
+#ifndef SPINE_SPINE_H_
+#define SPINE_SPINE_H_
 
-#include <spine/AttachmentLoader.h>
+#include <spine/Animation.h>
+#include <spine/AnimationState.h>
+#include <spine/AnimationStateData.h>
 #include <spine/Atlas.h>
+#include <spine/AtlasAttachmentLoader.h>
+#include <spine/Attachment.h>
+#include <spine/AttachmentLoader.h>
+#include <spine/Bone.h>
+#include <spine/BoneData.h>
+#include <spine/RegionAttachment.h>
+#include <spine/Skeleton.h>
+#include <spine/SkeletonData.h>
+#include <spine/SkeletonJson.h>
+#include <spine/Skin.h>
+#include <spine/Slot.h>
+#include <spine/SlotData.h>
 
-#ifdef __cplusplus
-namespace spine {
-extern "C" {
-#endif
-
-typedef struct {
-	AttachmentLoader super;
-	Atlas* atlas;
-} AtlasAttachmentLoader;
-
-AtlasAttachmentLoader* AtlasAttachmentLoader_create (Atlas* atlas);
-
-#ifdef __cplusplus
-}
-}
-#endif
-
-#endif /* SPINE_ATLASATTACHMENTLOADER_H_ */
+#endif /* SPINE_SPINE_H_ */

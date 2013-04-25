@@ -23,27 +23,36 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#ifndef SPINE_ATLASATTACHMENTLOADER_H_
-#define SPINE_ATLASATTACHMENTLOADER_H_
+#ifndef SPINE_SKIN_H_
+#define SPINE_SKIN_H_
 
-#include <spine/AttachmentLoader.h>
-#include <spine/Atlas.h>
+#include <spine/Attachment.h>
 
 #ifdef __cplusplus
 namespace spine {
 extern "C" {
 #endif
 
-typedef struct {
-	AttachmentLoader super;
-	Atlas* atlas;
-} AtlasAttachmentLoader;
+struct Skeleton;
 
-AtlasAttachmentLoader* AtlasAttachmentLoader_create (Atlas* atlas);
+typedef struct {
+	const char* const name;
+} Skin;
+
+Skin* Skin_create (const char* name);
+void Skin_dispose (Skin* self);
+
+/* The Skin owns the attachment. */
+void Skin_addAttachment (Skin* self, int slotIndex, const char* name, Attachment* attachment);
+/* Returns 0 if the attachment was not found. */
+Attachment* Skin_getAttachment (const Skin* self, int slotIndex, const char* name);
+
+/** Attach each attachment in this skin if the corresponding attachment in oldSkin is currently attached. */
+void Skin_attachAll (const Skin* self, struct Skeleton* skeleton, const Skin* oldSkin);
 
 #ifdef __cplusplus
 }
 }
 #endif
 
-#endif /* SPINE_ATLASATTACHMENTLOADER_H_ */
+#endif /* SPINE_SKIN_H_ */

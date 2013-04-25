@@ -23,11 +23,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#ifndef SPINE_ATLASATTACHMENTLOADER_H_
-#define SPINE_ATLASATTACHMENTLOADER_H_
+#ifndef SPINE_SLOTDATA_H_
+#define SPINE_SLOTDATA_H_
 
-#include <spine/AttachmentLoader.h>
-#include <spine/Atlas.h>
+#include <spine/BoneData.h>
 
 #ifdef __cplusplus
 namespace spine {
@@ -35,15 +34,21 @@ extern "C" {
 #endif
 
 typedef struct {
-	AttachmentLoader super;
-	Atlas* atlas;
-} AtlasAttachmentLoader;
+	const char* const name;
+	const BoneData* const boneData;
+	const char* const attachmentName;
+	float r, g, b, a;
+} SlotData;
 
-AtlasAttachmentLoader* AtlasAttachmentLoader_create (Atlas* atlas);
+SlotData* SlotData_create (const char* name, BoneData* boneData);
+void SlotData_dispose (SlotData* self);
+
+/* @param attachmentName May be 0 for no bind pose attachment. */
+void SlotData_setAttachmentName (SlotData* self, const char* attachmentName);
 
 #ifdef __cplusplus
 }
 }
 #endif
 
-#endif /* SPINE_ATLASATTACHMENTLOADER_H_ */
+#endif /* SPINE_SLOTDATA_H_ */

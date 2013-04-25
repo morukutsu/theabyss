@@ -23,27 +23,46 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#ifndef SPINE_ATLASATTACHMENTLOADER_H_
-#define SPINE_ATLASATTACHMENTLOADER_H_
-
-#include <spine/AttachmentLoader.h>
-#include <spine/Atlas.h>
+#include <spine/AtlasAttachmentLoader.h>
+#include <spine/extension.h>
 
 #ifdef __cplusplus
 namespace spine {
-extern "C" {
 #endif
 
-typedef struct {
-	AttachmentLoader super;
-	Atlas* atlas;
-} AtlasAttachmentLoader;
+Attachment* _AtlasAttachmentLoader_newAttachment (AttachmentLoader* loader, Skin* skin, AttachmentType type, const char* name) {
+	AtlasAttachmentLoader* self = SUB_CAST(AtlasAttachmentLoader, loader);
+	switch (type) {
+	case ATTACHMENT_REGION: {
+		AtlasRegion* region = Atlas_findRegion(self->atlas, name);
+		if (!region) {
+			_AttachmentLoader_setError(loader, "Region not found: ", name);
+			return 0;
+		}
+		RegionAttachment* attachment = RegionAttachment_create(name);
+		attachment->texture = region->page->texture;
+		RegionAttachment_setUVs(attachment, region->u, region->v, region->u2, region->v2, region->rotate);
+		attachment->regionOffsetX = region->offsetX;
+		attachment->regionOffsetY = region->offsetY;
+		attachment->regionWidth = region->width;
+		attachment->regionHeight = region->height;
+		attachment->regionOriginalWidth = region->originalWidth;
+		attachment->regionOriginalHeight = region->originalHeight;
+		return SUPER(attachment);
+	}
+	default:
+		_AttachmentLoader_setUnknownTypeError(loader, type);
+		return 0;
+	}
+}
 
-AtlasAttachmentLoader* AtlasAttachmentLoader_create (Atlas* atlas);
+AtlasAttachmentLoader* AtlasAttachmentLoader_create (Atlas* atlas) {
+	AtlasAttachmentLoader* self = NEW(AtlasAttachmentLoader);
+	_AttachmentLoader_init(SUPER(self), _AttachmentLoader_deinit, _AtlasAttachmentLoader_newAttachment);
+	self->atlas = atlas;
+	return self;
+}
 
 #ifdef __cplusplus
 }
-}
 #endif
-
-#endif /* SPINE_ATLASATTACHMENTLOADER_H_ */
