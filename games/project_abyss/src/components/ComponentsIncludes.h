@@ -13,3 +13,4 @@
 #include "DoorComponent.h"
 #include "PlayerWeaponComponent.h"
 #include "SensorComponent.h"
+#include "BodyComponent.h"

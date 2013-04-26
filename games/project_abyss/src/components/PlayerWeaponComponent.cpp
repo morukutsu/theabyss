@@ -57,7 +57,7 @@ void PlayerWeaponComponent::Shoot()
 		mx = 1.0f;
 
 	// Tir
-	NVector velBullet = parent->mVel + NVector(PULSE_LASER_VELOCITY*mx*cosf(mWpnAngle), PULSE_LASER_VELOCITY*sinf(mWpnAngle));
+	NVector velBullet = /*parent->mVel +*/ NVector(PULSE_LASER_VELOCITY*mx*cosf(mWpnAngle), PULSE_LASER_VELOCITY*sinf(mWpnAngle));
 
 	NVector posBullet = parent->mPos + NVector(wpns[0].shootX*-mx, wpns[0].shootY);
 

@@ -12,6 +12,9 @@ AnimatedGraphicsComponent::AnimatedGraphicsComponent(std::string modelf, float _
 	model.Scale(scale, scale);
 	model.LoadModelDescriptorFile(modelf);
 
+	if(defaultAnim == "")
+		defaultAnim = model.animations[0].name;
+
 	model.PlayAnim(ANIM_LOOP, defaultAnim);
 
 	model.Mirror(false, true);
@@ -26,6 +29,8 @@ AnimatedGraphicsComponent::AnimatedGraphicsComponent(std::string modelf, float _
 	anim_offset = _anim_offset;
 
 	no_shadow = _no_shadow;
+
+	offsetX = offsetY = 0;
 }
 
 void AnimatedGraphicsComponent::Init()
@@ -38,7 +43,7 @@ void AnimatedGraphicsComponent::Init()
 void AnimatedGraphicsComponent::Update()
 {
 	model.SetDepth(parent->mDepth);
-	model.MoveTo(parent->mPos.x/32, parent->mPos.y/32);
+	model.MoveTo((parent->mPos.x + offsetX)/32, (parent->mPos.y  + offsetY)/32);
 	model.Alpha(1.0f);
 	model.Rotate(angle);
 	model.Mirror(mirrorX, mirrorY);

@@ -166,6 +166,7 @@
     <ClInclude Include="..\..\..\..\..\mkengine\pc\Sound.h" />
     <ClInclude Include="..\..\..\src\ChapterState.h" />
     <ClInclude Include="..\..\..\src\components\AnimatedGraphicsComponent.h" />
+    <ClInclude Include="..\..\..\src\components\BodyComponent.h" />
     <ClInclude Include="..\..\..\src\components\Component.h" />
     <ClInclude Include="..\..\..\src\components\ComponentsIncludes.h" />
     <ClInclude Include="..\..\..\src\components\DoorComponent.h" />
@@ -360,6 +361,7 @@
     <ClCompile Include="..\..\..\..\..\mkengine\pc\Sound.cpp" />
     <ClCompile Include="..\..\..\src\ChapterState.cpp" />
     <ClCompile Include="..\..\..\src\components\AnimatedGraphicsComponent.cpp" />
+    <ClCompile Include="..\..\..\src\components\BodyComponent.cpp" />
     <ClCompile Include="..\..\..\src\components\DoorComponent.cpp" />
     <ClCompile Include="..\..\..\src\components\GraphicsComponent.cpp" />
     <ClCompile Include="..\..\..\src\components\LightComponent.cpp" />

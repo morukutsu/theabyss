@@ -18,6 +18,7 @@ namespace mk
         int frmStart;
 		int frmEnd;
         float fps;            //Vitesse de l'animation en frames
+		std::string name;
     };
 
 	struct sRotationRestriction
@@ -54,7 +55,7 @@ namespace mk
 			void Rotate(float Angle);
 			void SetDepth(float z);
 
-			int  AddAnimation(int start, int end, float fps);
+			int  AddAnimation(std::string name, int start, int end, float fps);
 			void PlayAnim(int mode, int anim, bool trans = true);
 			void PlayAnim(int mode, std::string anim, bool trans = true);
 			void SetAnimationSpeed(int animation, float speed);

@@ -438,10 +438,10 @@ namespace mk
 		posZ = z;
 	}
 
-	int ModelBone::AddAnimation(int start, int end, float fps)
+	int ModelBone::AddAnimation(std::string name, int start, int end, float fps)
     {
         //Déclaration d'une structure anim temporaire
-        sModelAnim tmpAnim = {start, end, fps};
+        sModelAnim tmpAnim = {start, end, fps, name};
         //Ajout au vector
         animations[animNbr] = tmpAnim;
         animNbr++;
@@ -599,7 +599,7 @@ namespace mk
 			elem->QueryIntAttribute("end", &end);
 			elem->QueryFloatAttribute("speed", &speed);
 
-			AddAnimation(start, end, speed);
+			AddAnimation(name, start, end, speed);
 
 			animationsLookup[name] = animNbr-1;
 
