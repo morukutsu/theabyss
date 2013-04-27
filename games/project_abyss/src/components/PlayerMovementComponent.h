@@ -26,16 +26,28 @@ class PlayerMovementComponent : public Component
 		void HandleMovement(int command);
 
 		void HandleDoors();
+
+		void HandleCollisionwithEnnemies();
+
+		void HandleMirrorH();
+
 	public:
 		PlayerInputComponent* input;
 		PlayerBodyComponent* body;
 
 		// Variables du gameplay
-		float MAX_VELOCITY, ACCELERATION, DECELERATION;
+		float MAX_VELOCITY, ACCELERATION, DECELERATION, KNOCKBACK, KNOCKBACK_TIME;
 
 		// Etats
-		bool isPlayerAccelerated;
+		bool isPlayerAccelerated, isAcceleratedLeft, isAcceleratedRight;
 		bool isGoingThroughDoor;
+		bool isKnockback;
+
+		// Gestion du knockback
+		float mKnockbackTime;
+
+		// Mirroring du vaisseau
+		bool mirrorH, oldMirrorH;
 };
 
 #endif

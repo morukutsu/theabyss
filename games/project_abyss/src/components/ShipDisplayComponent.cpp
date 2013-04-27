@@ -19,8 +19,7 @@ ShipDisplayComponent::ShipDisplayComponent(PlayerMovementComponent* pmov, Player
 	reactorsAngle = 0.0f;
 
 	isVaisseauHurt = true;
-	mirrorH = false;
-
+	
 	// Chargement des images
 	parts[SHIP_PART_COCKPIT] = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("sprites/vaisseau/vaisseau.png");
 	parts[SHIP_PART_COCKPIT_HURT] = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("sprites/vaisseau/hurt/vaisseau.png");
@@ -139,10 +138,8 @@ void ShipDisplayComponent::Receive(int message, void* data)
 void ShipDisplayComponent::Update()
 {
 	// Mirroring des sprites
-	bool oldMirrorH = mirrorH;
-	if(parent->mVel.x < -1.0f || parent->mVel.x > 1.0f)
-		mirrorH = parent->mVel.x > 0;
-	parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MIRROR] = mirrorH ? 1 : 0;
+	mirrorH = playerMovementComponent->mirrorH;
+	bool oldMirrorH = playerMovementComponent->oldMirrorH;
 
 	// Effets graphiques
 	UpdateReactorsPower();

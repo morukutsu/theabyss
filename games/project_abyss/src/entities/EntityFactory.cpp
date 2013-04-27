@@ -6,6 +6,7 @@
 
 #include "EntitiesIncludes.h"
 #include "../components/ComponentsIncludes.h"
+#include "../physics/BodyDef.h"
 
 Entity* EntityFactory::Create(std::string name, std::string type, 
 	float x, float y, float z, float w, float h, std::map<std::string, std::string>& properties)
@@ -181,7 +182,7 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 		gfx->offsetX = -40;
 		gfx->offsetY = +100;
 
-		BodyComponent* body = new BodyComponent(BODY_CMP_BLOB, 10, 120.0f, 120.0f);
+		BodyComponent* body = new BodyComponent(BODY_ENNEMY, BODY_CMP_BLOB, 10, 120.0f, 120.0f);
 
 		ent->AddComponent(gfx);
 		ent->AddComponent(body);

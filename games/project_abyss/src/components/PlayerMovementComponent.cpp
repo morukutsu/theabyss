@@ -18,8 +18,11 @@ PlayerMovementComponent::PlayerMovementComponent(PlayerInputComponent* in, Playe
 	MAX_VELOCITY = 15.0f;
 	ACCELERATION = 2000.0f;
 	DECELERATION = 0.9f;
+	KNOCKBACK = 100.0f;
+	KNOCKBACK_TIME = 0.25f;
 
 	isGoingThroughDoor = false;
+	mirrorH = false;
 }
 
 void PlayerMovementComponent::Init()
@@ -38,8 +41,14 @@ void PlayerMovementComponent::Update()
 	parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MOVED] = -1;
 
 	// Lock de l'user input
-	if(parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_LOCK_USER_INPUT] == 1)
+	if(parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_LOCK_USER_INPUT] == 1 || isKnockback)
 		input->commands.clear();
+
+	// Gestion de la réponse aux collisions avec des ennemis
+	HandleCollisionwithEnnemies();
+
+	// Mirroring
+	HandleMirrorH();
 
 	// Gestion des déplacements dans les portes
 	HandleDoors();
@@ -60,6 +69,7 @@ void PlayerMovementComponent::ProcessCommands()
 {
 	// Remise a zero des etats
 	isPlayerAccelerated = false;
+	isAcceleratedLeft = isAcceleratedRight = false;
 
 	// Traite toutes les commandes reçues depuis l'input à cette frame
 	for(std::list<int>::iterator it = input->commands.begin(); it != input->commands.end(); it++)
@@ -92,10 +102,12 @@ void PlayerMovementComponent::HandleMovement(int command)
 	else if(command == CMD_ACCEL_LEFT)
 	{
 		curVel += NVector(-ACCELERATION, 0);
+		isAcceleratedLeft = true;
 	}
 	else if(command == CMD_ACCEL_RIGHT)
 	{
 		curVel += NVector(ACCELERATION, 0);
+		isAcceleratedRight = true;
 	}
 
 	parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MOVED] = command;
@@ -116,6 +128,20 @@ void PlayerMovementComponent::HandleMovement(int command)
 		curVel.y = 0;
 
 	body->cockpit->AddImpulse(curVel, 1.0f/30.0f);
+}
+
+void PlayerMovementComponent::HandleMirrorH()
+{
+	oldMirrorH = mirrorH;
+
+	// On update le mirroring horizontal que s'il n'y a pas de knockback
+	if(!isKnockback && isPlayerAccelerated)
+	{
+		if((parent->mVel.x < -1.0f && isAcceleratedLeft) || (parent->mVel.x > 1.0f && isAcceleratedRight) )
+			mirrorH = parent->mVel.x > 0;
+	}
+
+	parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MIRROR] = mirrorH ? 1 : 0;
 }
 
 void PlayerMovementComponent::HandleDoors()
@@ -165,5 +191,46 @@ void PlayerMovementComponent::HandleDoors()
 			input->commands.push_back(CMD_ACCEL_DOWN);
 			break;
 	};
+}
+
+void PlayerMovementComponent::HandleCollisionwithEnnemies()
+{
+	bool isCollisionWithEnnemy = false;
+	NVector ennemyPos;
+
+	// Check si le body est en collision avec un ennemi
+	if(body->cockpit->isCollision) 
+	{
+		// Check s'ils sont en collision entre deux
+		std::vector<CBody*> c = body->cockpit->GetCollisionsBodies();
+		for(int i = 0; i < c.size(); i++) 
+		{
+			if(c[i]->bodytype == BODY_ENNEMY)
+			{
+				isCollisionWithEnnemy = true;
+				ennemyPos = c[i]->GetPosition();
+				break;
+			}
+		}
+	}
+
+	// Application du knock-back
+	if(isCollisionWithEnnemy)
+	{
+		NVector knockbackVel = (body->cockpit->GetPosition() - ennemyPos)*KNOCKBACK;
+		body->cockpit->AddImpulse(knockbackVel, 1.0f/30.0f);
+		mKnockbackTime = KNOCKBACK_TIME;
+		isKnockback = true;
+	}
+
+	if(mKnockbackTime < 0.0f)
+	{
+		mKnockbackTime = 0.0f;
+		isKnockback = false;
+	}
+	else
+	{
+		mKnockbackTime -= 1.0f/30.0f;
+	}
 }
 

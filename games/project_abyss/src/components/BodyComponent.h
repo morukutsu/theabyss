@@ -15,7 +15,7 @@ class CBody;
 class BodyComponent : public Component
 {
 	public:
-		BodyComponent(int type, int numVertices, float w, float h = 0.0f);
+		BodyComponent(int bodydef, int type, int numVertices, float w, float h = 0.0f);
 
 		void Receive(int message, void* data);
 
@@ -27,7 +27,7 @@ class BodyComponent : public Component
 		// Hitbox "solides"
 		CBody* body;
 
-		int type, numVertices;
+		int bodydef, type, numVertices;
 		float w, h;
 };
 

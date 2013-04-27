@@ -9,9 +9,10 @@
 #include "../entities/EntityManager.h"
 #include "../level_manager/GameMap.h"
 
-BodyComponent::BodyComponent(int _type, int _numVertices, float _w, float _h)
+BodyComponent::BodyComponent(int _bodydef, int _type, int _numVertices, float _w, float _h)
 {
 	body = new CBody();
+	bodydef = _bodydef;
 	type = _type;
 	numVertices = _numVertices;
 	w = _w;
@@ -40,12 +41,15 @@ void BodyComponent::Init()
 		case BODY_CMP_BOX:
 			points = PolyColl::BuildBox(numVertices, w, h);
 			break;
+		default:
+			lowError("Type de body inconnu, BodyComponent");
+			break;
 	}
 
 	body->Initialise(parent->mPos, 0.0f, points, numVertices);
 	body->SetFriction(0.1f);
 	body->SetGlue(0.0f);
-	body->bodytype = BODY_FULL;
+	body->bodytype = bodydef;
 
 	parent->GetEntityManager()->GetGameMap()->AddBody(body);
 
