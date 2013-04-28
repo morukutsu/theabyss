@@ -28,6 +28,7 @@ class GraphicsComponent : public Component
 		float offsetX, offsetY;
 		bool mirrorX, mirrorY;
 		bool no_shadow;
+		float alpha;
 };
 
 #endif

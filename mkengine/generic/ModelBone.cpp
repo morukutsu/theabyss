@@ -17,7 +17,6 @@ namespace mk
 	{
 		animated = 0;
 		vertexArray = NULL;
-		vertexIndices = NULL;
 		normalArray = NULL;
 		skeleton = NULL;
 		priority = 0;
@@ -52,17 +51,11 @@ namespace mk
 			vertexArray = NULL;
 		}
 
-		if(vertexIndices)
-		{
-			free (vertexIndices);
-			vertexIndices = NULL;
-		}
-
-		if(normalArray)
+		/*if(normalArray)
 		{
 			free (normalArray);
 			normalArray = NULL;
-		}
+		}*/
 
 		if(skeleton)
 		{
@@ -71,8 +64,8 @@ namespace mk
 		}
 
 		// Liberation de la mémoire
-		modelTris.swap(modelTris);
-		modelTris.clear();
+		//modelTris.swap(modelTris);
+		//modelTris.clear();
 
 		mRotRestrictions.swap(mRotRestrictions);
 		mRotRestrictions.clear();
@@ -115,47 +108,12 @@ namespace mk
 	{
 		mMesh = mesh;
 		vertexArray = (vec5_t *)malloc (sizeof (vec5_t) * mesh->max_verts);
-		vertexIndices = (unsigned int *)malloc (sizeof (unsigned int) * mesh->max_tris * 3);
-		normalArray = (vec3_t *)malloc (sizeof (vec3_t) * mesh->max_verts);
+		//vertexIndices = (unsigned int *)malloc (sizeof (unsigned int) * mesh->max_tris * 3);
+		//normalArray = (vec3_t *)malloc (sizeof (vec3_t) * mesh->max_verts);
 		//mMesh->computeWeightNormals();
 
-		/// Bounding box
-		bounds.x1 = bounds.y1 = FLT_MAX;
-		bounds.x2 = bounds.y2 = FLT_MIN;
-
-		//Tri des triangles selon Z
-		SetupVertexIndices(&mMesh->md5file.meshes[0]);
-		PrepareMesh (&mMesh->md5file.meshes[0], mMesh->md5file.baseSkel);
-		for(int k = 0; k < mMesh->md5file.meshes[0].num_tris; k++)
-		{
-			float depth = 0;
-			float* vtx_ = vertexArray[mMesh->md5file.meshes[0].triangles[k].index[0]];
-			depth = -vtx_[2];
-			for(int j = 1; j < 3; j++)
-			{
-				float* vtx = vertexArray[mMesh->md5file.meshes[0].triangles[k].index[j]];
-				if(-vtx_[2] < depth)
-					depth = -vtx_[2];
-
-				// Calculate bbox
-				if(vtx[0] < bounds.x1)
-					bounds.x1 = vtx[0];
-				if(vtx[1] < bounds.y1)
-					bounds.y1 = vtx[1];
-				if(vtx[0] > bounds.x2)
-					bounds.x2 = vtx[0];
-				if(vtx[1] > bounds.y2)
-					bounds.y2 = vtx[1];
-			}
-			ModelTri mt(k, depth);
-			modelTris.push_back(mt);
-		}
-		modelTris.sort();
-
-		// Rotation de la bounding box
-		float sav = bounds.y2;
-		bounds.y2 = -bounds.y1;
-		bounds.y1 = -sav;
+		// Bounding box
+		bounds = mMesh->bounds;
 	}
 
 	void ModelBone::AssignAnim(MeshBoneAnim* anim)
@@ -206,18 +164,9 @@ namespace mk
 		}
 	}
 
-	void ModelBone::SetupVertexIndices(const struct md5_mesh_t* mesh)
-	{
-		/* Setup vertex indices */
-		int i, j, k;
-		for (k = 0, i = 0; i < mesh->num_tris; ++i)
-		{
-			for (j = 0; j < 3; ++j, ++k)
-				vertexIndices[k] = mesh->triangles[i].index[j];
-		}
-	}
+	
 
-	void ModelBone::PrepareMesh (const struct md5_mesh_t *mesh, const struct md5_joint_t *skeleton)
+	void ModelBone::PrepareMesh (const struct md5_mesh_t *mesh, const struct md5_joint_t *skeleton, vec5_t *vtxArray)
 	{
 		int i, j, k;
 
@@ -266,12 +215,12 @@ namespace mk
 			normalArray[i][1] = newnorm[1];
 			normalArray[i][2] = newnorm[2];*/
 
-			vertexArray[i][0] = finalVertex[0];
-			vertexArray[i][1] = finalVertex[1];
+			vtxArray[i][0] = finalVertex[0];
+			vtxArray[i][1] = finalVertex[1];
 			//vertexArray[i][2] = finalVertex[2];
-			vertexArray[i][2] = 0;
-			vertexArray[i][3] = mesh->vertices[i].st[0];
-			vertexArray[i][4] = mesh->vertices[i].st[1];
+			vtxArray[i][2] = 0;
+			vtxArray[i][3] = mesh->vertices[i].st[0];
+			vtxArray[i][4] = mesh->vertices[i].st[1];
 		}
 	}
 
@@ -436,7 +385,25 @@ namespace mk
 	void ModelBone::Mirror(bool v, bool h)
     {
 		mirrorX = v;
-        mirrorY = h;	
+        mirrorY = h;
+
+		bounds = mMesh->bounds;
+
+		if(mirrorX)
+		{
+			// Rotation de la bounding box
+			float sav = bounds.x2;
+			bounds.x2 = -bounds.x1;
+			bounds.x1 = -sav;
+		}
+
+		if(!mirrorY)
+		{
+			// Rotation de la bounding box
+			float sav = bounds.y2;
+			bounds.y2 = -bounds.y1;
+			bounds.y1 = -sav;
+		}
     }
 
     void ModelBone::Alpha(float val)

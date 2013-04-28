@@ -20,6 +20,8 @@ GraphicsComponent::GraphicsComponent(std::string filename, float _scale, int _pr
 	no_shadow = _no_shadow;
 
 	offsetX = offsetY = 0;
+
+	alpha = 1.0f;
 }
 
 void GraphicsComponent::Init()
@@ -38,7 +40,7 @@ void GraphicsComponent::Update()
 	spr.Rotate(angle);
 	spr.Mirror(mirrorX, mirrorY);
 	spr.SetPriority(prio);
-	spr.Alpha(1.0f);
+	spr.Alpha(alpha);
 	spr.SavePositions();
 }
 

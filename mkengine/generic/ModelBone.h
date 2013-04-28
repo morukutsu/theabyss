@@ -30,7 +30,6 @@ namespace mk
 	class MeshBone;
 	class MeshBoneAnim;
 	class Image;
-	class ModelTri;
 	class ModelBone : public Drawable
 	{
 		public:
@@ -81,8 +80,8 @@ namespace mk
 			int animated; // = 0;
 			vec5_t *vertexArray;// = NULL;
 			vec3_t *normalArray;// = NULL;
-			unsigned int *vertexIndices;// = NULL;
-			std::list<ModelTri> modelTris;
+			
+			//std::list<ModelTri> modelTris;
 
 			int transition;
 			float transTimer;
@@ -101,30 +100,9 @@ namespace mk
 
 		public:
 			void InterpolateSkeletons (const struct md5_joint_t *skelA, const struct md5_joint_t *skelB, int num_joints, float interp, struct md5_joint_t *out);
-			void PrepareMesh (const struct md5_mesh_t *mesh, const struct md5_joint_t *skeleton);
+			static void PrepareMesh (const struct md5_mesh_t *mesh, const struct md5_joint_t *skeleton, vec5_t *vtxArray);
 			void Animate (const struct md5_anim_t *anim, struct anim_info_t *animInfo, double dt);
 			void DrawSkeleton (const struct md5_joint_t *skeleton, int num_joints);
-			void SetupVertexIndices(const struct md5_mesh_t* mesh);
-	};
-
-	//Pour le tri des vertices des modèles
-	class ModelTri
-	{
-	public:
-		ModelTri(int indice, float depth)
-		{
-			i = indice;
-			z = depth;
-		}
-
-		bool operator<(const ModelTri& a)
-		{
-			return z > a.z;
-		}
-
-	public:
-		int i;
-		float z;
 	};
 };
 

@@ -401,7 +401,7 @@ void lowDisplayModelBone(mk::ModelBone* mb)
 	}
 
 	//Affichage avec vertex array
-	mb->PrepareMesh (&mb->mMesh->md5file.meshes[0], mb->skeleton);
+	mb->PrepareMesh (&mb->mMesh->md5file.meshes[0], mb->skeleton, mb->vertexArray);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	/*for(std::list<mk::ModelTri>::iterator i = mb->modelTris.begin(); i != mb->modelTris.end(); i++)
@@ -427,7 +427,7 @@ void lowDisplayModelBone(mk::ModelBone* mb)
 	evilPointer+=sizeof(GL_FLOAT)*3;
 	glTexCoordPointer(2, GL_FLOAT,sizeof(GL_FLOAT)*5, evilPointer);
 
-	glDrawElements (GL_TRIANGLES, mb->mMesh->md5file.meshes[0].num_tris * 3, GL_UNSIGNED_INT, mb->vertexIndices);
+	glDrawElements (GL_TRIANGLES, mb->mMesh->md5file.meshes[0].num_tris * 3, GL_UNSIGNED_INT, mb->mMesh->vertexIndices);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);

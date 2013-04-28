@@ -20,11 +20,25 @@ namespace mk
 		vertexIndices = NULL;
 		normalArray = NULL;*/
 
+		vertexArray = NULL;
+		vertexIndices = NULL;
 	}
 
 	MeshBone::~MeshBone()
 	{
 		FreeModel(&md5file);
+
+		if(vertexIndices)
+		{
+			free (vertexIndices);
+			vertexIndices = NULL;
+		}
+
+		if(vertexArray)
+		{
+			free (vertexArray);
+			vertexArray = NULL;
+		}
 	}
 
 
@@ -41,6 +55,9 @@ namespace mk
 
 		//std::cout << "Notif : Modele charge " << filename << std::endl;
 		//AllocVertexArrays();
+
+		SetupVertexIndices();
+		ProcessModel();
 
 		return MESH_OK;
 	}
@@ -212,6 +229,9 @@ namespace mk
 				curr_mesh++;
 			}
 		}
+
+		SetupVertexIndices();
+		ProcessModel();
 
 		return MESH_OK;
 	}
@@ -434,6 +454,62 @@ namespace mk
 			free (mdl->meshes);
 			mdl->meshes = NULL;
 		}
+	}
+
+	void MeshBone::SetupVertexIndices()
+	{
+		vertexIndices = (unsigned int *)malloc (sizeof (unsigned int) * max_tris * 3);
+
+		/* Setup vertex indices */
+		int i, j, k;
+		for (k = 0, i = 0; i < md5file.meshes[0].num_tris; ++i)
+		{
+			for (j = 0; j < 3; ++j, ++k)
+				vertexIndices[k] = md5file.meshes[0].triangles[i].index[j];
+		}
+	}
+
+	void MeshBone::ProcessModel()
+	{
+		vertexArray = (vec5_t *)malloc (sizeof (vec5_t) * max_verts);
+
+		// Bounding box
+		bounds.x1 = bounds.y1 = FLT_MAX;
+		bounds.x2 = bounds.y2 = FLT_MIN;
+
+		//Tri des triangles selon Z
+		//SetupVertexIndices(&mMesh->md5file.meshes[0]);
+		mk::ModelBone::PrepareMesh (&md5file.meshes[0], md5file.baseSkel, vertexArray);
+		for(int k = 0; k < md5file.meshes[0].num_tris; k++)
+		{
+			float depth = 0;
+			float* vtx_ = vertexArray[md5file.meshes[0].triangles[k].index[0]];
+			depth = -vtx_[2];
+			for(int j = 1; j < 3; j++)
+			{
+				float* vtx = vertexArray[md5file.meshes[0].triangles[k].index[j]];
+				if(-vtx_[2] < depth)
+					depth = -vtx_[2];
+
+				// Calculate bbox
+				if(vtx[0] < bounds.x1)
+					bounds.x1 = vtx[0];
+				if(vtx[1] < bounds.y1)
+					bounds.y1 = vtx[1];
+				if(vtx[0] > bounds.x2)
+					bounds.x2 = vtx[0];
+				if(vtx[1] > bounds.y2)
+					bounds.y2 = vtx[1];
+			}
+			//ModelTri mt(k, depth);
+			//modelTris.push_back(mt);
+		}
+		//modelTris.sort();
+
+		// Rotation de la bounding box
+		float sav = bounds.y2;
+		bounds.y2 = -bounds.y1;
+		bounds.y1 = -sav;
 	}
 
 	void MeshBone::computeWeightNormals()
