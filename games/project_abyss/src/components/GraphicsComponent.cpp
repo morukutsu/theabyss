@@ -18,6 +18,8 @@ GraphicsComponent::GraphicsComponent(std::string filename, float _scale, int _pr
 	mirrorY = _mirrorY;
 
 	no_shadow = _no_shadow;
+
+	offsetX = offsetY = 0;
 }
 
 void GraphicsComponent::Init()
@@ -31,8 +33,8 @@ void GraphicsComponent::Update()
 {
 	spr.SetDepth(parent->mDepth);
 	spr.SetSize(spr.image->getImageWidth()/32.0f, spr.image->getImageHeight()/32.0f);
-	spr.MoveTo(parent->mPos.x/32, parent->mPos.y/32);
-	spr.Scale(scale, scale);
+	spr.MoveTo((parent->mPos.x + offsetX)/32, (parent->mPos.y + offsetY)/32);
+	//spr.Scale(scale, scale);
 	spr.Rotate(angle);
 	spr.Mirror(mirrorX, mirrorY);
 	spr.SetPriority(prio);

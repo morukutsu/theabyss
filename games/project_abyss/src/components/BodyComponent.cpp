@@ -46,7 +46,7 @@ void BodyComponent::Init()
 			break;
 	}
 
-	body->Initialise(parent->mPos, 0.0f, points, numVertices);
+	body->Initialise(parent->mPos, 1.0f, points, numVertices);
 	body->SetFriction(0.1f);
 	body->SetGlue(0.0f);
 	body->bodytype = bodydef;

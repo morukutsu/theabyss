@@ -18,11 +18,14 @@ class GraphicsComponent : public Component
 
 		void Init();
 
+		void Offset(float x, float y) { offsetX = x, offsetY = y; };
+
 	public:
 		mk::Sprite spr;
 		float scale;
 		int prio;
 		float angle;
+		float offsetX, offsetY;
 		bool mirrorX, mirrorY;
 		bool no_shadow;
 };

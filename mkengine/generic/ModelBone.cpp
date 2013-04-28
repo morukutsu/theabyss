@@ -87,7 +87,16 @@ namespace mk
 	void ModelBone::Play(float dt)
 	{
 		if(isStarted && !isPaused)
+		{
 			Animate(&mAnim->md5anim, &animInfo, dt*animations[currentAnim].fps);
+			float deltaFrame = (1.0f/30.0f) * animations[currentAnim].fps;
+
+			InterpolateSkeletons(mAnim->md5anim.skelFrames[mPlayingFrame],
+				mAnim->md5anim.skelFrames[animInfo.next_frame],
+				mAnim->md5anim.num_joints,
+				(animInfo.last_time + deltaFrame) * mAnim->md5anim.frameRate,
+				skeleton);
+		}
 
 		int nf = 0;
 		if(!isTransition)
@@ -318,7 +327,7 @@ namespace mk
 	void ModelBone::DrawSkeleton (const struct md5_joint_t *skeleton, int num_joints)
 	{
 		glPushMatrix();
-		glTranslatef(posX, posY, 0);
+		glTranslatef(posX, posY, posZ);
 
 		
 		if(mirrorX)
@@ -337,7 +346,7 @@ namespace mk
 		glScalef(scaleX, scaleY, 1.0f);
 
 		glDisable (GL_TEXTURE_2D);
-		glEnable (GL_DEPTH_TEST);
+		glDisable (GL_DEPTH_TEST);
 		glEnable (GL_BLEND);
 
 		int i;
@@ -347,7 +356,9 @@ namespace mk
 		glColor3f (1.0f, 0.0f, 0.0f);
 		glBegin (GL_POINTS);
 		for (i = 0; i < num_joints; ++i)
+		{
 			glVertex3f (skeleton[i].pos[0], skeleton[i].pos[1], 0);
+		}
 		glEnd ();
 		glPointSize (1.0f);
 
@@ -367,7 +378,7 @@ namespace mk
 		glColor3f(1.0f,1.0f,1.0f);
 
 		glDisable (GL_BLEND);
-		glDisable (GL_DEPTH_TEST);
+		glEnable (GL_DEPTH_TEST);
 
 		glPopMatrix();
 
@@ -524,6 +535,27 @@ namespace mk
 		animInfo.next_frame = 0;
         isStarted = false;
     }
+
+	int ModelBone::GetBoneID(std::string name)
+	{
+		int id = -1;
+
+		for(int i = 0; i < mMesh->md5file.num_joints; i++) 
+		{
+			if(strcmp(name.c_str(), mMesh->md5file.baseSkel[i].name) == 0)
+			{
+				id = i;
+				break;
+			}
+		}
+
+		return id;
+	}
+
+	md5_joint_t* ModelBone::GetBone(int id)
+	{
+		return &skeleton[id];
+	}
 
 	void ModelBone::Interpolate(float dt)
 	{

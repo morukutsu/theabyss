@@ -67,6 +67,9 @@ namespace mk
 			void Interpolate(float dt);
 			void SavePositions();
 
+			int GetBoneID(std::string name);
+			md5_joint_t* GetBone(int id);
+
 		public:
 			MeshBone* mMesh;
 			MeshBoneAnim* mAnim;

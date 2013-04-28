@@ -52,6 +52,7 @@ class EntityManager
 		void setEntityPosition(std::string& name, float x, float y);
 		float getEntityPositionX(std::string& name);
 		float getEntityPositionY(std::string& name);
+		void addWaypointToEntity(std::string& ent_name, std::string& waypt_name);
 
 	private:
 		// Entités

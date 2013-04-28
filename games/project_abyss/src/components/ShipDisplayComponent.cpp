@@ -397,6 +397,12 @@ void ShipDisplayComponent::UpdateReactorsAngle()
 		targetAngle = 0.0f;
 	}
 
+	// En cas de knockback
+	if(playerMovementComponent->isKnockback)
+	{
+		targetAngle = targetAngle - 90;
+	}
+
 	float speed = fabs(reactorsAngle - targetAngle) / 4.0f;
 	if(speed >= 8.0f)
 		speed = 8.0f;

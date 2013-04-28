@@ -14,3 +14,4 @@
 #include "PlayerWeaponComponent.h"
 #include "SensorComponent.h"
 #include "BodyComponent.h"
+#include "EnnemyBigfishComponent.h"

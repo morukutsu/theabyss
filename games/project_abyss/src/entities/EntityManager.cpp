@@ -149,3 +149,15 @@ float EntityManager::getEntityPositionY(std::string& name)
 		lowError("Entity " + name + "does not exist");
 	return a->mPos.y;
 }
+
+void EntityManager::addWaypointToEntity(std::string& ent_name, std::string& waypt_name)
+{
+	// Récupère les deux entités en fct de leur noms
+	Entity* ent = GetEntityByName(ent_name);
+	Entity* waypoint = GetEntityByName(waypt_name);
+
+	if(ent == NULL || waypoint == NULL)
+		return;
+
+	ent->AddWaypoint(waypoint);
+}

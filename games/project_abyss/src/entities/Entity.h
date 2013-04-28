@@ -7,6 +7,7 @@
 #include "../physics/Vector.h"
 #include <list>
 #include <string>
+#include <vector>
 
 class Component;
 class mk::Scene;
@@ -33,6 +34,7 @@ class Entity
 		mk::Scene* GetScene() { return parentScene; };
 		void SetEntityManager(EntityManager * m) { entityManager = m; };
 		EntityManager* GetEntityManager() { return entityManager; };
+		void AddWaypoint(Entity* e) { waypoints.push_back(e); };
 
 		void InitComponents();
 		void UpdateComponents();
@@ -49,6 +51,9 @@ class Entity
 
 		// Collisions
 		CBody* sensorBody;
+
+		// Waypoints
+		std::vector<Entity*> waypoints;
 
 	protected:
 		int mId;												// Identifiant de l'instance de l'entité

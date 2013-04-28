@@ -178,18 +178,15 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 	else if(type == "ennemy_bigfish")
 	{
 		ent = new MoveableEntity();
-		AnimatedGraphicsComponent* gfx = new AnimatedGraphicsComponent("anims/mobs/bigfish.xml", 4.0f, -3);
-		gfx->offsetX = -40;
-		gfx->offsetY = +100;
-
-		BodyComponent* body = new BodyComponent(BODY_ENNEMY, BODY_CMP_BLOB, 10, 120.0f, 120.0f);
-
-		ent->AddComponent(gfx);
-		ent->AddComponent(body);
+		ent->AddComponent(new EnnemyBigfishComponent() );
+	}
+	else if(type == "waypoint")
+	{
+		ent = new StaticEntity();
 	}
 	else
 	{
-		lowError("Uknown entity/gfx type" + type);
+		lowError("Uknown entity/gfx type : " + type);
 	}
 
 	// Parametres de base
