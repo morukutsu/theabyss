@@ -87,7 +87,7 @@ void EnnemyBigfishComponent::FollowWaypoints()
 		curWaypointID = 0;
 
 		// Déplacement vers le prochain waypoint
-		vel = (nextEntityToFollow->mPos - parent->mPos);
+		vel = (nextEntityToFollow->mPos + NVector(nextEntityToFollow->mWidth, nextEntityToFollow->mHeight)/2.0f - parent->mPos);
 		vel.Normalise();
 		vel = vel * ENN_BIGFISH_SPEED;
 	}
@@ -105,11 +105,8 @@ void EnnemyBigfishComponent::FollowWaypoints()
 		nextEntityToFollow = parent->waypoints[curWaypointID];
 
 		// Déplacement vers le prochain waypoint
-		vel = (nextEntityToFollow->mPos - parent->mPos);
+		vel = (nextEntityToFollow->mPos + NVector(nextEntityToFollow->mWidth, nextEntityToFollow->mHeight)/2.0f - parent->mPos);
 		vel.Normalise();
 		vel = vel * ENN_BIGFISH_SPEED;
-
-		std::cout << "plop" << std::endl;
 	}
-
 }
