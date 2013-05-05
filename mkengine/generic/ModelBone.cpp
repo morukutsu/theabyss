@@ -273,6 +273,11 @@ namespace mk
 			animInfo.next_frame = animations[currentAnim].frmStart;
 	}
 
+	int ModelBone::GetAnimFrame()
+	{
+		return animInfo.curr_frame;
+	}
+
 	void ModelBone::DrawSkeleton (const struct md5_joint_t *skeleton, int num_joints)
 	{
 		glPushMatrix();

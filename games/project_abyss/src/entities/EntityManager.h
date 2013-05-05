@@ -11,6 +11,7 @@
 
 #include <map>
 #include <string>
+#include "../physics/Vector.h"
 
 #define COMMON_STATE_VAR_SIZE 16
 
@@ -46,6 +47,8 @@ class EntityManager
 
 		Entity* GetEntityByName(std::string name);
 		void SendMessageToEntity(std::string entityName, int message, void* data);
+
+		NVector GetHeroPosition();
 
 		// Pour les scripts
 		int checkCollisionBetweenEntities(std::string& ent1, std::string& ent2);

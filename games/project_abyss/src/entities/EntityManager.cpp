@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Messages.h"
 #include <string>
+#include "../level_manager/GameMap.h"
 
 EntityManager::EntityManager()
 {
@@ -68,6 +69,11 @@ void EntityManager::Receive(int message, void* data)
 		commonStateVariables[v->idf] = v->value;
 		break;
 	};
+}
+
+NVector EntityManager::GetHeroPosition()
+{
+	return parentMap->heroEntity->mPos;
 }
 
 Entity* EntityManager::GetEntityByName(std::string name) 

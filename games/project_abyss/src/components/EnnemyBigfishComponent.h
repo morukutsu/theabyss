@@ -12,6 +12,8 @@
 #define ENN_BIGFISH_SPEED			4.0f
 #define ENN_BIGFISH_SLOWDIST		100.0f
 #define ENN_BIGFISH_WAIT  		    2.0f
+#define ENN_BIGFISH_SPOTTED_RADIUS  650.0f
+#define ENN_BIGFISH_ATTACK_RADIUS	400.0f
 
 class AnimatedGraphicsComponent;
 class BodyComponent;
@@ -45,6 +47,9 @@ class EnnemyBigfishComponent : public Component
 
 		int boneID, boneID_eye;
 
+		// Les deux textures
+		mk::Image *texA, *texB;
+
 		// Waypoints
 		Entity* nextEntityToFollow;
 		int curWaypointID;
@@ -54,7 +59,8 @@ class EnnemyBigfishComponent : public Component
 
 		// IA Statemachine
 		int state;
-		float mWaitTime;
+		float mWaitTime, mSpottedWaitTime;
+		
 };
 
 #endif

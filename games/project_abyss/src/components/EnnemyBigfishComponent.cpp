@@ -6,9 +6,13 @@
 #include "../physics/BodyDef.h"
 #include "../entities/Entity.h"
 #include "../physics/Body.h"
+#include "../entities/EntityManager.h"
 
 EnnemyBigfishComponent::EnnemyBigfishComponent()
 {
+	texA = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("anims/mobs/bigfish/bigfish2.png");
+	texB = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("anims/mobs/bigfish/bigfish.png");
+
 	gfx = new AnimatedGraphicsComponent("anims/mobs/bigfish/bigfish.xml", 4.0f, -3);
 	halo = new GraphicsComponent("anims/mobs/bigfish/light_normal.png");
 	body = new BodyComponent(BODY_ENNEMY, BODY_CMP_BLOB, 10, 120.0f, 120.0f);
@@ -32,6 +36,9 @@ EnnemyBigfishComponent::EnnemyBigfishComponent()
 	state = S_SEEK;
 
 	mirrorH = false;
+
+	// Choix de la bonne texture
+	gfx->model.Assign(texA);
 }
 
 void EnnemyBigfishComponent::Receive(int message, void* data)
@@ -41,10 +48,6 @@ void EnnemyBigfishComponent::Receive(int message, void* data)
 
 void EnnemyBigfishComponent::Update()
 {
-	// Déplacements simples
-	parent->mPos = body->body->GetPosition();
-	parent->mVel = body->body->GetDisplacement();
-
 	// Mirroring
 	float mx = 1.0f;
 	if(!lockMirror && ((parent->mVel.x < 0.25f) || (parent->mVel.x > 0.25f)) )
@@ -65,6 +68,10 @@ void EnnemyBigfishComponent::Update()
 	lightEye->Offset(-40*mx + (bone->pos[0]*gfx->model.scaleX*32)*mx, 100 - bone->pos[1]*gfx->model.scaleY*32);
 
 	FollowWaypoints();
+
+	// Déplacements simples
+	parent->mPos = body->body->GetPosition();
+	parent->mVel = body->body->GetDisplacement();
 }
 
 void EnnemyBigfishComponent::Init()
@@ -89,6 +96,21 @@ void EnnemyBigfishComponent::FollowWaypoints()
 	if(parent->waypoints.size() == 0)
 		return;
 
+	// Changement d'état
+	// Si le héros se rapproche trop, on passe en S_SPOTTED
+	NVector heroPos = parent->GetEntityManager()->GetHeroPosition();
+	NVector spottedVec = heroPos - parent->mPos;
+	
+	if(spottedVec.Length() < ENN_BIGFISH_ATTACK_RADIUS && state != S_ATTACK) 
+	{
+		state = S_ATTACK;
+	}
+	else if(spottedVec.Length() < ENN_BIGFISH_SPOTTED_RADIUS && state != S_SPOTTED && state != S_ATTACK) 
+	{
+		state = S_SPOTTED;
+		mSpottedWaitTime = 2.0f;
+	}
+
 	// States
 	if(state == S_SEEK)
 	{
@@ -112,6 +134,9 @@ void EnnemyBigfishComponent::FollowWaypoints()
 		NVector dist = (nextEntityToFollow->mPos + NVector(nextEntityToFollow->mWidth, nextEntityToFollow->mHeight)/2.0f - parent->mPos);
 		if(dist.Length() < ENN_BIGFISH_SLOWDIST)
 			state = S_SLOW;
+
+		gfx->model.Assign(texA);
+		gfx->model.PlayAnim(ANIM_LOOP, "recherche", false);
 	}
 	else if(state == S_SLOW) 
 	{
@@ -141,6 +166,9 @@ void EnnemyBigfishComponent::FollowWaypoints()
 			state = S_WAIT;
 			mWaitTime = ENN_BIGFISH_WAIT;
 		}
+
+		gfx->model.Assign(texA);
+		gfx->model.PlayAnim(ANIM_LOOP, "recherche", false);
 	}
 	else if(state == S_WAIT) 
 	{
@@ -152,5 +180,31 @@ void EnnemyBigfishComponent::FollowWaypoints()
 		{
 			state = S_SEEK;
 		}
+
+		gfx->model.Assign(texA);
+		gfx->model.PlayAnim(ANIM_LOOP, "recherche");
+	}
+	else if(state == S_SPOTTED)
+	{
+		gfx->model.Assign(texB);
+
+		// Wait
+		lockMirror = true;
+		//mirrorH = spottedVec.x < 0;
+		body->body->SetLinearVelocity(NVector(0, 0) );
+
+		mSpottedWaitTime -= 1.0f/30.0f;
+		if(mSpottedWaitTime < 0)
+		{
+			state = S_SEEK;
+			mSpottedWaitTime = 0;
+		}
+
+		int frameNo = gfx->model.GetAnimFrame();
+		gfx->model.PlayAnim(ANIM_LOOP, "repere", false);
+		gfx->model.SetAnimFrame(frameNo);
+	}
+	else if(state == S_ATTACK)
+	{
 	}
 }
