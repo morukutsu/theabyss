@@ -10,6 +10,7 @@
 #include <iostream>
 #include "xml\tinyxml.h"
 #include <cfloat>
+#include "mkengine.h"
 
 namespace mk
 {
@@ -40,7 +41,9 @@ namespace mk
 
 		mMesh = NULL;
 		mAnim = NULL;
-		image = NULL;     
+		image = NULL; 
+
+		currentTime = oldTime = 0.0f;
 	}
 
 	ModelBone::~ModelBone()
@@ -81,14 +84,16 @@ namespace mk
 	{
 		if(isStarted && !isPaused)
 		{
-			Animate(&mAnim->md5anim, &animInfo, dt*animations[currentAnim].fps);
-			float deltaFrame = (1.0f/30.0f) * animations[currentAnim].fps;
+			Animate(&mAnim->md5anim, &animInfo, (double)dt * (double)animations[currentAnim].fps);
+			//std::cout << (double)animations[currentAnim].fps << std::endl;
+
+			/*float deltaFrame = dt * animations[currentAnim].fps;
 
 			InterpolateSkeletons(mAnim->md5anim.skelFrames[mPlayingFrame],
 				mAnim->md5anim.skelFrames[animInfo.next_frame],
 				mAnim->md5anim.num_joints,
-				(animInfo.last_time + deltaFrame) * mAnim->md5anim.frameRate,
-				skeleton);
+				(animInfo.last_time + deltaFrame) * mAnim->md5anim.frameRate * animations[currentAnim].fps,
+				skeleton);*/
 		}
 
 		int nf = 0;
@@ -137,7 +142,7 @@ namespace mk
 	}
 
 	//Private
-	void ModelBone::InterpolateSkeletons (const struct md5_joint_t *skelA, const struct md5_joint_t *skelB, int num_joints, float interp, struct md5_joint_t *out)
+	void ModelBone::InterpolateSkeletons (const struct md5_joint_t *skelA, const struct md5_joint_t *skelB, int num_joints, double interp, struct md5_joint_t *out)
 	{
 		int i;
 
@@ -224,7 +229,7 @@ namespace mk
 		}
 	}
 
-	void ModelBone::Animate (const struct md5_anim_t *anim, struct anim_info_t *animInfo, double dt)
+	void ModelBone::Animate (const struct md5_anim_t *anim, struct anim_info_t *animInfo_s, double dt)
 	{
 		int maxFrames = animations[currentAnim].frmEnd;
 
@@ -233,27 +238,27 @@ namespace mk
 		{
 			transTimer += dt;
 
-			if(transTimer >= animInfo->max_time)
+			if(transTimer >= animInfo_s->max_time)
 			{
 				transTimer = 0.0;
 				isTransition = false;
 			}
 		}
 
-		animInfo->last_time += dt;
+		animInfo_s->last_time += dt;
 
 		/* move to next frame */
-		if (animInfo->last_time >= animInfo->max_time)
+		if (animInfo_s->last_time >= animInfo_s->max_time)
 		{
-			animInfo->curr_frame++;
-			animInfo->next_frame++;
-			animInfo->last_time = 0.0;
+			animInfo_s->curr_frame++;
+			animInfo_s->next_frame++;
+			animInfo_s->last_time = 0.0;
 
-			if (animInfo->curr_frame > maxFrames)
-				animInfo->curr_frame = animations[currentAnim].frmStart;
+			if (animInfo_s->curr_frame > maxFrames)
+				animInfo_s->curr_frame = animations[currentAnim].frmStart;
 
-			if (animInfo->next_frame > maxFrames)
-				animInfo->next_frame = animations[currentAnim].frmStart;
+			if (animInfo_s->next_frame > maxFrames)
+				animInfo_s->next_frame = animations[currentAnim].frmStart;
 		}
 	}
 
@@ -531,7 +536,11 @@ namespace mk
 
 	void ModelBone::Interpolate(float dt)
 	{
-		float deltaFrame = (1.0f/30.0f) * animations[currentAnim].fps * dt;
+		UpdateTime();
+
+		double deltaFrame = 0 /*(1.0/30.0) * (double)animations[currentAnim].fps * (double)dt*/;
+		
+		Play(currentTime - oldTime);
 
 		InterpolateSkeletons(mAnim->md5anim.skelFrames[mPlayingFrame],
 			mAnim->md5anim.skelFrames[animInfo.next_frame],
@@ -548,6 +557,12 @@ namespace mk
 
 		if(prevPos.angle != curPos.angle)
 			angle = RadiansToDegrees(Slerp2D(dt, 0.0f, 1.0f, DegreesToRadians(prevPos.angle), DegreesToRadians(curPos.angle)));
+	}
+
+	void ModelBone::UpdateTime()
+	{
+		oldTime = currentTime;
+		currentTime = lowGetTime();
 	}
 
 	void ModelBone::SavePositions()

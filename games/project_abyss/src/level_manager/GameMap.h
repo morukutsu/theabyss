@@ -12,10 +12,11 @@ class Entity;
 class EntityManager;
 class GameMapLayer;
 class CBody;
+class LevelManager;
 class GameMap : public mk::Map
 {
 public:
-	GameMap();
+	GameMap(LevelManager* lvl);
 	~GameMap();
 
 	void Init();
@@ -32,6 +33,8 @@ public:
 	void DebugCollisions();
 
 	std::string GetScriptFilename() { return scriptFilename; }
+	
+	LevelManager* GetLevelManager() { return lvlMan; };
 
 public:
 	// Entités
@@ -54,6 +57,9 @@ public:
 
 	// Script
 	std::string scriptFilename;
+
+	// LevelManager
+	LevelManager* lvlMan;
 
 };
 

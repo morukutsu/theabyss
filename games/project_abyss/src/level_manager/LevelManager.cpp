@@ -189,7 +189,7 @@ void LevelManager::LoadMap(std::string filename)
 	scene = new mk::Scene();
 	scene->Clear();
 
-	gameMap = new GameMap();
+	gameMap = new GameMap(this);
 	gameMap->ParseMap(filename);
 	gameMap->LoadGameMap(scene);
 	gameMap->AddMapLayersToScene(scene);
@@ -218,8 +218,8 @@ void LevelManager::LoadMap(std::string filename)
 	std::cout << "Map " << filename << " loaded." << std::endl;
 
 	// TEMP, TODO
-	cutscene = new Cutscene(this);
-	cutscene->Load("cutscenes/intro_chapitre_2.xml");
+	//cutscene = new Cutscene(this);
+	//cutscene->Load("cutscenes/intro_chapitre_2.xml");
 
 	mk::Core::SetLoadingFrame(true);
 }
@@ -259,7 +259,7 @@ void LevelManager::SwitchMap(std::string filename, std::string door_idf)
 	scene = new mk::Scene();
 	scene->Clear();
 
-	gameMap = new GameMap();
+	gameMap = new GameMap(this);
 
 	// Resetting du mirroring du héros
 	gameMap->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MIRROR] = heroMirrorH;
@@ -597,6 +597,16 @@ void LevelManager::RegisterFunctionsForScript()
 	}*/
 
 	engine->EndConfigGroup();
+}
+
+// Cutscenes
+void LevelManager::LaunchCutscene(std::string path)
+{
+	if(cutscene)
+		delete cutscene;
+
+	cutscene = new Cutscene(this);
+	cutscene->Load(path);
 }
 
 // Affiche des infos de debug

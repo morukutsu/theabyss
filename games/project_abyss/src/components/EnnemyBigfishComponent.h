@@ -38,6 +38,11 @@ class EnnemyBigfishComponent : public Component
 
 		void FollowWaypoints();
 
+		void Move(float speed);
+		bool WaypointReached();
+
+		void LaunchGameoverScene();
+
 	public:
 		AnimatedGraphicsComponent *gfx;
 		GraphicsComponent *flare, *halo;
@@ -56,10 +61,14 @@ class EnnemyBigfishComponent : public Component
 		NVector vel;
 		bool mirrorH;
 		bool lockMirror;
+		bool isSpotted;
 
 		// IA Statemachine
 		int state;
 		float mWaitTime, mSpottedWaitTime;
+
+		// Cutscene de fin
+		int cutsceneState;
 		
 };
 

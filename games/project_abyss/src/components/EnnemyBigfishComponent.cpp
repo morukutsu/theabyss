@@ -7,6 +7,8 @@
 #include "../entities/Entity.h"
 #include "../physics/Body.h"
 #include "../entities/EntityManager.h"
+#include "../level_manager/GameMap.h"
+#include "../level_manager/LevelManager.h"
 
 EnnemyBigfishComponent::EnnemyBigfishComponent()
 {
@@ -16,6 +18,7 @@ EnnemyBigfishComponent::EnnemyBigfishComponent()
 	gfx = new AnimatedGraphicsComponent("anims/mobs/bigfish/bigfish.xml", 4.0f, -3);
 	halo = new GraphicsComponent("anims/mobs/bigfish/light_normal.png");
 	body = new BodyComponent(BODY_ENNEMY, BODY_CMP_BLOB, 10, 120.0f, 120.0f);
+
 	flare = new GraphicsComponent("anims/mobs/bigfish/halo_light.png");
 
 	// Lights
@@ -39,6 +42,10 @@ EnnemyBigfishComponent::EnnemyBigfishComponent()
 
 	// Choix de la bonne texture
 	gfx->model.Assign(texA);
+
+	isSpotted = false;
+
+	cutsceneState = 0;
 }
 
 void EnnemyBigfishComponent::Receive(int message, void* data)
@@ -72,6 +79,8 @@ void EnnemyBigfishComponent::Update()
 	// Déplacements simples
 	parent->mPos = body->body->GetPosition();
 	parent->mVel = body->body->GetDisplacement();
+
+	body->body->isSensor = true;	// Temporaire, passage en mode sensor
 }
 
 void EnnemyBigfishComponent::Init()
@@ -107,8 +116,11 @@ void EnnemyBigfishComponent::FollowWaypoints()
 	}
 	else if(spottedVec.Length() < ENN_BIGFISH_SPOTTED_RADIUS && state != S_SPOTTED && state != S_ATTACK) 
 	{
-		state = S_SPOTTED;
-		mSpottedWaitTime = 2.0f;
+		isSpotted = true;
+	}
+	else 
+	{
+		isSpotted = false;
 	}
 
 	// States
@@ -116,59 +128,23 @@ void EnnemyBigfishComponent::FollowWaypoints()
 	{
 		lockMirror = false;
 
-		// Initialisation du déplacement
-		if(nextEntityToFollow == NULL)
-		{
-			nextEntityToFollow = parent->waypoints[0];
-			curWaypointID = 0;
-
-			// Déplacement vers le prochain waypoint
-			vel = (nextEntityToFollow->mPos + NVector(nextEntityToFollow->mWidth, nextEntityToFollow->mHeight)/2.0f - parent->mPos);
-			vel.Normalise();
-			vel = vel * ENN_BIGFISH_SPEED;
-		}
-
-		body->body->SetLinearVelocity(vel);
+		Move(ENN_BIGFISH_SPEED);
 
 		// Changement d'état
 		NVector dist = (nextEntityToFollow->mPos + NVector(nextEntityToFollow->mWidth, nextEntityToFollow->mHeight)/2.0f - parent->mPos);
 		if(dist.Length() < ENN_BIGFISH_SLOWDIST)
 			state = S_SLOW;
-
-		gfx->model.Assign(texA);
-		gfx->model.PlayAnim(ANIM_LOOP, "recherche", false);
 	}
 	else if(state == S_SLOW) 
 	{
-		// Déplacement vers le prochain waypoint
-		vel = (nextEntityToFollow->mPos + NVector(nextEntityToFollow->mWidth, nextEntityToFollow->mHeight)/2.0f - parent->mPos);
-		vel.Normalise();
-		vel = vel * ENN_BIGFISH_SPEED / 2.0f;
+		Move(ENN_BIGFISH_SPEED / 2.0f);
 
-		body->body->SetLinearVelocity(vel);
-
-		// Check si l'ennemi a atteint le waypoint
-		if(parent->mPos.x > nextEntityToFollow->mPos.x 
-			&& parent->mPos.x < nextEntityToFollow->mPos.x + nextEntityToFollow->mWidth
-			&& parent->mPos.y > nextEntityToFollow->mPos.y 
-			&& parent->mPos.y < nextEntityToFollow->mPos.y + nextEntityToFollow->mHeight)
+		if(WaypointReached() )
 		{
-			curWaypointID++;
-			curWaypointID = curWaypointID % parent->waypoints.size();
-			nextEntityToFollow = parent->waypoints[curWaypointID];
-
-			// Déplacement vers le prochain waypoint
-			vel = (nextEntityToFollow->mPos + NVector(nextEntityToFollow->mWidth, nextEntityToFollow->mHeight)/2.0f - parent->mPos);
-			vel.Normalise();
-			vel = vel * ENN_BIGFISH_SPEED;
-
 			// Changement d'état
 			state = S_WAIT;
 			mWaitTime = ENN_BIGFISH_WAIT;
 		}
-
-		gfx->model.Assign(texA);
-		gfx->model.PlayAnim(ANIM_LOOP, "recherche", false);
 	}
 	else if(state == S_WAIT) 
 	{
@@ -180,31 +156,124 @@ void EnnemyBigfishComponent::FollowWaypoints()
 		{
 			state = S_SEEK;
 		}
-
-		gfx->model.Assign(texA);
-		gfx->model.PlayAnim(ANIM_LOOP, "recherche");
-	}
-	else if(state == S_SPOTTED)
-	{
-		gfx->model.Assign(texB);
-
-		// Wait
-		lockMirror = true;
-		//mirrorH = spottedVec.x < 0;
-		body->body->SetLinearVelocity(NVector(0, 0) );
-
-		mSpottedWaitTime -= 1.0f/30.0f;
-		if(mSpottedWaitTime < 0)
-		{
-			state = S_SEEK;
-			mSpottedWaitTime = 0;
-		}
-
-		int frameNo = gfx->model.GetAnimFrame();
-		gfx->model.PlayAnim(ANIM_LOOP, "repere", false);
-		gfx->model.SetAnimFrame(frameNo);
 	}
 	else if(state == S_ATTACK)
 	{
+		// On lance la cutscene de gameover
+		if(cutsceneState == 0)
+		{
+			// On lance la cutscene
+			mirrorH = spottedVec.x < 0;
+			lockMirror = true;
+			body->body->SetLinearVelocity(NVector(0, 0) );
+			LaunchGameoverScene();
+			cutsceneState = 1;
+			gfx->model.PlayAnim(ANIM_LOOP, "repere", false);
+			mWaitTime = 0;
+
+			// Desactivaiton collisions (knockback) du body avec le héros
+			body->body->bodytype = BODY_FULL;
+		}
+		else if(cutsceneState == 1)
+		{
+			// On attend une demi seconde
+			body->body->SetLinearVelocity(NVector(0, 0) );
+
+			mWaitTime += 1.0f/30.0f;
+
+			if(mWaitTime >= 0.5f)
+				cutsceneState = 2;
+		}
+		else if(cutsceneState == 2)
+		{
+			// Passage à la phase de déplacement vers le héros
+			vel = (heroPos + NVector(64, 64)/2.0f - parent->mPos);
+			vel.Normalise();
+			vel = vel * ENN_BIGFISH_SPEED*2;
+
+			body->body->SetLinearVelocity(vel );
+
+			// Quand le héros est atteint on arrête de bouger
+			if(parent->mPos.x > heroPos.x 
+				&& parent->mPos.x < heroPos.x + 32
+				&& parent->mPos.y > heroPos.y 
+				&& parent->mPos.y < heroPos.y + 32)
+			{
+				cutsceneState = 3;
+			}
+		}
+		else if(cutsceneState == 3)
+		{
+			body->body->SetLinearVelocity(NVector(0, 0) );
+
+			// On gobe
+			gfx->model.PlayAnim(ANIM_LOOP, "gobe", false);
+		}
 	}
+
+	// Changement de textures et d'animations
+	if(state == S_ATTACK)
+	{
+		gfx->model.Assign(texB);
+		//gfx->model.PlayAnim(ANIM_LOOP, "gobe", false);
+	}
+	else
+	{
+		if(isSpotted)
+		{
+			gfx->model.Assign(texB);
+			gfx->model.PlayAnim(ANIM_LOOP, "repere", false);
+		}
+		else
+		{
+			gfx->model.Assign(texA);
+			gfx->model.PlayAnim(ANIM_LOOP, "recherche", false);
+		}
+	}
+}
+
+void EnnemyBigfishComponent::Move(float speed)
+{
+	// Initialisation du déplacement
+	if(nextEntityToFollow == NULL)
+	{
+		nextEntityToFollow = parent->waypoints[0];
+		curWaypointID = 0;
+
+		// Déplacement vers le prochain waypoint
+		vel = (nextEntityToFollow->mPos + NVector(nextEntityToFollow->mWidth, nextEntityToFollow->mHeight)/2.0f - parent->mPos);
+		vel.Normalise();
+		vel = vel * speed;
+	}
+
+	body->body->SetLinearVelocity(vel);
+}
+
+bool EnnemyBigfishComponent::WaypointReached()
+{
+	// Check si l'ennemi a atteint le waypoint
+	if(parent->mPos.x > nextEntityToFollow->mPos.x 
+		&& parent->mPos.x < nextEntityToFollow->mPos.x + nextEntityToFollow->mWidth
+		&& parent->mPos.y > nextEntityToFollow->mPos.y 
+		&& parent->mPos.y < nextEntityToFollow->mPos.y + nextEntityToFollow->mHeight)
+	{
+		curWaypointID++;
+		curWaypointID = curWaypointID % parent->waypoints.size();
+		nextEntityToFollow = parent->waypoints[curWaypointID];
+
+		// Déplacement vers le prochain waypoint
+		vel = (nextEntityToFollow->mPos + NVector(nextEntityToFollow->mWidth, nextEntityToFollow->mHeight)/2.0f - parent->mPos);
+		vel.Normalise();
+		vel = vel * ENN_BIGFISH_SPEED;
+
+		return true;
+	}
+
+	return false;
+}
+
+void EnnemyBigfishComponent::LaunchGameoverScene()
+{
+	parent->GetEntityManager()->GetGameMap()->GetLevelManager()->LaunchCutscene("cutscenes/gameover_bigfish.xml");
+	parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_LOCK_USER_INPUT] = 1;
 }

@@ -47,6 +47,9 @@ public:
 	// Script
 	void RegisterFunctionsForScript();
 
+	// Cutscenes
+	void LaunchCutscene(std::string path);
+
 private:
 	void ShowDebug();
 

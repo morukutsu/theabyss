@@ -11,12 +11,14 @@
 #include "../physics/Body.h"
 #include "../physics/Polygon.h"
 #include "../physics/Vector.h"
+#include "LevelManager.h"
 
-GameMap::GameMap()
+GameMap::GameMap(LevelManager* lvl)
 {
 	SetTextureQuality(ConfigurationManager::getInstance()->GetAttributeInt("Graphics_TextureQuality"));
 	entityManager = new EntityManager();
 	scriptFilename = "";
+	lvlMan = lvl;
 }
 
 GameMap::~GameMap()

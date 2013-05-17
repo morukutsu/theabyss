@@ -63,6 +63,7 @@ namespace mk
 			void Stop();
 			void SetAnimFrame(int frameNo);
 			int  GetAnimFrame();
+			void UpdateTime();
 
 			void Interpolate(float dt);
 			void SavePositions();
@@ -83,7 +84,6 @@ namespace mk
 			vec3_t *normalArray;// = NULL;
 			
 			//std::list<ModelTri> modelTris;
-
 			int transition;
 			float transTimer;
 			bool isTransition;
@@ -99,8 +99,10 @@ namespace mk
 
 			vec3_t bboxMin, bboxMax;
 
+			float currentTime, oldTime;
+
 		public:
-			void InterpolateSkeletons (const struct md5_joint_t *skelA, const struct md5_joint_t *skelB, int num_joints, float interp, struct md5_joint_t *out);
+			void InterpolateSkeletons (const struct md5_joint_t *skelA, const struct md5_joint_t *skelB, int num_joints, double interp, struct md5_joint_t *out);
 			static void PrepareMesh (const struct md5_mesh_t *mesh, const struct md5_joint_t *skeleton, vec5_t *vtxArray);
 			void Animate (const struct md5_anim_t *anim, struct anim_info_t *animInfo, double dt);
 			void DrawSkeleton (const struct md5_joint_t *skeleton, int num_joints);

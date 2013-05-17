@@ -49,7 +49,8 @@ void AnimatedGraphicsComponent::Update()
 	model.Mirror(mirrorX, mirrorY);
 	model.Scale(scale, scale);
 	model.SetPriority(prio);
-	model.Play(1.0f/30.0f);
+	//model.Play(1.0f/30.0f);
+	model.UpdateTime();
 	model.SavePositions();
 }
 
