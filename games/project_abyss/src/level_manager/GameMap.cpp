@@ -165,7 +165,8 @@ void GameMap::LoadGameMap(mk::Scene* scene)
 					body->Initialise(center, 0.0f, points, 2);
 					body->SetFriction(0.1f);
 					body->SetGlue(0.0f);
-					body->bodykind = BODY_WORLD_BOUNDS;
+					//body->bodykind = BODY_WORLD_BOUNDS;
+					body->bodytype = BODY_WORLD_BOUNDS;
 
 					bodies.push_back(body);
 				}

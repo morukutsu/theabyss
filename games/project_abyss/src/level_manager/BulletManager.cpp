@@ -65,7 +65,7 @@ void BulletManager::AllocateBullets()
 		bullets[i].spr.Hide();
 		
 		entityManager->GetGameMap()->AddBody(bullets[i].body);
-		bullets[i].body->isSleeping = true;
+		bullets[i].body->isSleeping = false;
 
 		// Linking
 		if(i == MAX_BULLETS-1)

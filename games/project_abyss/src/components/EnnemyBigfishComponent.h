@@ -14,6 +14,7 @@
 #define ENN_BIGFISH_WAIT  		    2.0f
 #define ENN_BIGFISH_SPOTTED_RADIUS  650.0f
 #define ENN_BIGFISH_ATTACK_RADIUS	400.0f
+#define ENN_BIGFISH_KILL_RADIUS		125.0f
 
 class AnimatedGraphicsComponent;
 class BodyComponent;
@@ -43,6 +44,8 @@ class EnnemyBigfishComponent : public Component
 
 		void LaunchGameoverScene();
 
+		void CheckCollisions();
+
 	public:
 		AnimatedGraphicsComponent *gfx;
 		GraphicsComponent *flare, *halo;
@@ -65,7 +68,7 @@ class EnnemyBigfishComponent : public Component
 
 		// IA Statemachine
 		int state;
-		float mWaitTime, mSpottedWaitTime;
+		float mWaitTime, mSpottedWaitTime, mAttackSpeed;
 
 		// Cutscene de fin
 		int cutsceneState;

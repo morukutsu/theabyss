@@ -78,6 +78,7 @@ void LightComponent::Update()
 	if(lightType == LIGHT_MESH)
 	{
 		mesh.MoveTo((parent->mPos.x + offsetX)/32, (parent->mPos.y + offsetY)/32, parent->mDepth);
+		mesh.SavePositions();
 	}
 	else if(lightType == LIGHT_SPRITE)
 	{

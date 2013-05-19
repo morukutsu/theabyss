@@ -20,6 +20,7 @@ namespace mk
 			void AddVertex(mk::Vertex v);
 			void SetVertexMode(int mode) { vertexMode = mode; };
 
+			void SavePositions();
 			void Interpolate(float dt);
 
 		private:

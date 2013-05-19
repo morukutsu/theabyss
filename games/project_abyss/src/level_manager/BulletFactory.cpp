@@ -16,6 +16,7 @@ void BulletFactory::Init(int bullet_type, Bullet* bullet)
 			int numV = 4;
 			bullet->body->Initialise(NVector(bullet->originX, bullet->originY), 1.0f, bullet->vertices, numV);
 			bullet->body->isSensor = true;
+			bullet->body->bodytype = BODY_BULLET;
 
 			bullet->spr.MoveTo(bullet->originX / 32.0f, bullet->originY / 32.0f);
 			bullet->spr.ignoreLightPipeline = true;

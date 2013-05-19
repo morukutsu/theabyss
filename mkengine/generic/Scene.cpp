@@ -514,6 +514,7 @@ namespace mk
 		// Biding current scene in FBO 1
 		mWorkFBO->Bind(1);
 		
+		shader_blurH.shader.setParameter("intensity", effectIntensity);
 		shader_blurH.shader.setParameter("radius", intensity);
 		shader_blurH.Bind();
 
@@ -527,6 +528,7 @@ namespace mk
 		// Biding H blurred scene in FBO 0
 		mWorkFBO->Bind(0);
 
+		shader_blurV.shader.setParameter("intensity", effectIntensity);
 		shader_blurV.shader.setParameter("radius", intensity);
 		shader_blurV.Bind();
 

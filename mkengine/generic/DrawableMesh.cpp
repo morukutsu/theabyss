@@ -68,8 +68,22 @@ namespace mk
 		posZ = z;
 	}
 
+	void DrawableMesh::SavePositions()
+	{
+		prevPos = curPos;
+		curPos.posX = posX;
+		curPos.posY = posY;
+		curPos.posZ = posZ;
+		//curPos.alpha = alpha;
+		//curPos.angle = angle;
+		//curPos.scaleX = scaleX;
+		//curPos.scaleY = scaleY;
+	}
+
 	void DrawableMesh::Interpolate(float dt)
 	{
-
+		posX = Lerp(dt, 0.0f, 1.0f, prevPos.posX, curPos.posX);
+		posY = Lerp(dt, 0.0f, 1.0f, prevPos.posY, curPos.posY);
+		posZ = Lerp(dt, 0.0f, 1.0f, prevPos.posZ, curPos.posZ);
 	}
 };

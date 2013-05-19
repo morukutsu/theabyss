@@ -30,6 +30,10 @@ void CutsceneEventChangeValue::Start()
 	{
 		value_addr = &levelManager->scene->blur_intensity;
 	}
+	else if(value_changed == "fx_intensity")
+	{
+		value_addr = &levelManager->scene->effectIntensity;
+	}
 }
 
 void CutsceneEventChangeValue::Run(float time) 

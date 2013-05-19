@@ -9,5 +9,6 @@
 #define BODY_HERO				1
 #define BODY_WORLD_BOUNDS		2
 #define BODY_ENNEMY				3
+#define BODY_BULLET				4
 
 #endif

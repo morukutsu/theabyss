@@ -2,6 +2,8 @@ uniform sampler2D texture;
 
 uniform float radius;
 
+uniform float intensity;
+
 float blurSize = 1.0/(512.0 * radius);
 
 void main()
@@ -13,7 +15,7 @@ void main()
 	vec4 color = srcColor;
 	
 	// Visibilite de l'effet
-	float intensity = 1.0;
+	//float intensity = 1.0;
 	
 	// ------------
 	// EFFET

@@ -63,16 +63,22 @@ void EnnemyBigfishComponent::Update()
 		mx = -1.0f;
 
 	gfx->mirrorX = mirrorH;
-	gfx->offsetX = -40*mx;
+	//gfx->offsetX = -40*mx;
+	gfx->offsetX = 0;
 
 	// Positionnement des éléments graphiques
 	md5_joint_t* bone = gfx->model.GetBone(boneID);
-	light->Offset(-40*mx + (bone->pos[0]*gfx->model.scaleX*32)*mx, 100 - bone->pos[1]*gfx->model.scaleY*32);
-	halo->Offset(-40*mx + (bone->pos[0]*gfx->model.scaleX*32)*mx, 100 - bone->pos[1]*gfx->model.scaleY*32);
-	flare->Offset(-40*mx + (bone->pos[0]*gfx->model.scaleX*32)*mx, 100 - bone->pos[1]*gfx->model.scaleY*32);
+	NVector lanternePos = NVector((bone->pos[0]*gfx->model.scaleX*32)*mx, -bone->pos[1]*gfx->model.scaleY*32);
+	lanternePos.Rotate(NVector(0, 0), DegreesToRadians(gfx->angle)*-mx );
+
+	light->Offset(lanternePos.x, lanternePos.y);
+	halo->Offset(lanternePos.x, lanternePos.y);
+	flare->Offset(lanternePos.x, lanternePos.y);
 
 	bone = gfx->model.GetBone(boneID_eye);
-	lightEye->Offset(-40*mx + (bone->pos[0]*gfx->model.scaleX*32)*mx, 100 - bone->pos[1]*gfx->model.scaleY*32);
+	NVector eyePos = NVector((bone->pos[0]*gfx->model.scaleX*32)*mx, -bone->pos[1]*gfx->model.scaleY*32);
+	eyePos.Rotate(NVector(0, 0), DegreesToRadians(gfx->angle)*-mx );
+	lightEye->Offset(eyePos.x, eyePos.y);
 
 	FollowWaypoints();
 
@@ -85,7 +91,8 @@ void EnnemyBigfishComponent::Update()
 
 void EnnemyBigfishComponent::Init()
 {
-	gfx->offsetY = +100;
+	//gfx->offsetY = +100;
+	gfx->offsetY = 0;
 	flare->alpha = 0.06f;
 
 	parent->AddComponent(gfx);
@@ -101,6 +108,10 @@ void EnnemyBigfishComponent::Init()
 
 void EnnemyBigfishComponent::FollowWaypoints()
 {
+	float mx = 1.0f;
+	if(mirrorH)
+		mx = -1.0f;
+
 	// Check erreurs
 	if(parent->waypoints.size() == 0)
 		return;
@@ -122,6 +133,8 @@ void EnnemyBigfishComponent::FollowWaypoints()
 	{
 		isSpotted = false;
 	}
+
+	CheckCollisions();
 
 	// States
 	if(state == S_SEEK)
@@ -172,10 +185,28 @@ void EnnemyBigfishComponent::FollowWaypoints()
 			mWaitTime = 0;
 
 			// Desactivaiton collisions (knockback) du body avec le héros
-			body->body->bodytype = BODY_FULL;
+			// body->body->bodytype = BODY_FULL;
+			body->body->isSleeping = true;
 		}
 		else if(cutsceneState == 1)
 		{
+			vel = (heroPos - parent->mPos);
+
+			// Calcul de la vitesse de l'ennemi en fonction de la distance
+			mAttackSpeed = 4.0f + vel.Length() / 500.0f;
+
+			// Changement progressif de l'angle
+			vel.Normalise();
+
+			// On oriente l'ennemi en direction du héros
+			float targetAngle;
+			if(!mirrorH)
+				targetAngle = -(SimpleMaths::GetAngle2Points(0, 0, vel.x, vel.y) + 90 - 15);
+			else
+				targetAngle =  (SimpleMaths::GetAngle2Points(vel.x, vel.y, 0, 0) + 90 + 15);
+
+			gfx->angle = RadiansToDegrees(Slerp2D(mWaitTime, 0, 0.5f, 0, DegreesToRadians(targetAngle) ) );
+
 			// On attend une demi seconde
 			body->body->SetLinearVelocity(NVector(0, 0) );
 
@@ -187,17 +218,20 @@ void EnnemyBigfishComponent::FollowWaypoints()
 		else if(cutsceneState == 2)
 		{
 			// Passage à la phase de déplacement vers le héros
-			vel = (heroPos + NVector(64, 64)/2.0f - parent->mPos);
+			vel = (heroPos - parent->mPos);
 			vel.Normalise();
-			vel = vel * ENN_BIGFISH_SPEED*2;
+			vel = vel * ENN_BIGFISH_SPEED * mAttackSpeed;
 
-			body->body->SetLinearVelocity(vel );
+			body->body->SetLinearVelocity(vel);
+
+			// On oriente l'ennemi en direction du héros
+			if(!mirrorH)
+				gfx->angle = -(SimpleMaths::GetAngle2Points(0, 0, vel.x, vel.y) + 90 - 15);
+			else
+				gfx->angle =  (SimpleMaths::GetAngle2Points(vel.x, vel.y, 0, 0) + 90 + 15);
 
 			// Quand le héros est atteint on arrête de bouger
-			if(parent->mPos.x > heroPos.x 
-				&& parent->mPos.x < heroPos.x + 32
-				&& parent->mPos.y > heroPos.y 
-				&& parent->mPos.y < heroPos.y + 32)
+			if(spottedVec.Length() < ENN_BIGFISH_KILL_RADIUS)
 			{
 				cutsceneState = 3;
 			}
@@ -276,4 +310,22 @@ void EnnemyBigfishComponent::LaunchGameoverScene()
 {
 	parent->GetEntityManager()->GetGameMap()->GetLevelManager()->LaunchCutscene("cutscenes/gameover_bigfish.xml");
 	parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_LOCK_USER_INPUT] = 1;
+}
+
+void EnnemyBigfishComponent::CheckCollisions()
+{
+	// Collisions
+	if(body->body->isCollision)
+	{
+		std::vector<CBody*>& cbodies = body->body->cbodies;
+		for(int i = 0; i < cbodies.size(); i++)
+		{
+			if(cbodies[i]->bodytype == BODY_BULLET)
+			{
+				// TODO: verifier plus finement les collisions
+				// Désactiver cette vérification une fois un stade du jeu passé ou le héros peut tuer l'ennemi
+				state = S_ATTACK;
+			}
+		}
+	}
 }
