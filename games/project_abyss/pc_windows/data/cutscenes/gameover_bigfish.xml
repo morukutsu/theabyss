@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gameover cutscene: bigfish -->
+<Cutscene>
+	<Events>
+		<!-- Barres noires -->
+		<Event time="0" duration="0" type="fx">
+			<Parameter name="fx_type" value="black_bands"/>
+			<Parameter name="toggle" value="on"/>
+		</Event>
+		
+		<!-- Demarrage du blur -->
+		<Event time="2" duration="0" type="fx">
+			<Parameter name="fx_type" value="blur"/>
+			<Parameter name="intensity" value="30.0"/>
+			<Parameter name="toggle" value="on"/>
+		</Event>
+		
+		<!-- Opacité / Puissance progressive du blur -->
+		<Event time="2" duration="1.5" type="change_value">
+			<Parameter name="value_changed" value="fx_intensity"/>
+			<Parameter name="start_value" value="0.0"/>
+			<Parameter name="end_value" value="1.0"/>
+		</Event>
+		
+		<Event time="2" duration="3.0" type="change_value">
+			<Parameter name="value_changed" value="blur_intensity"/>
+			<Parameter name="start_value" value="10.0"/>
+			<Parameter name="end_value" value="1.0"/>
+		</Event>
+		
+		<!-- Fin -->
+	</Events>
+</Cutscene>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Generator>
+	<Parameter name="Sprite" value="rect.png"/>
+	<Parameter name="MaxParticles" value="60"/>
+	<Parameter name="InitialLife" value="0.5"/>
+	<Parameter name="Frequency" value="32"/>
+	<Parameter name="Gravity" value="0.0"/>
+	<Parameter name="Referencial" value="local"/>
+	
+	<Parameter name="InitialSize" value="1.0"/>
+	<Parameter name="SizeVariation" value="-0.15"/>
+	
+	<Parameter name="Fade" value="0.05"/>
+	<Parameter name="FadeRange_Min" value="0.0"/>
+	<Parameter name="FadeRange_Max" value="0.0"/>
+	
+	<Parameter name="Velocity_X" value="2.5"/>
+	<Parameter name="Velocity_Y" value="0.0"/>
+	<Parameter name="Velocity_Z" value="0.0"/>
+	
+	<Parameter name="Velocity_X_Range_Min" value="0.0"/>
+	<Parameter name="Velocity_Y_Range_Min" value="-0.25"/>
+	<Parameter name="Velocity_Z_Range_Min" value="0.0"/>
+	
+	<Parameter name="Velocity_X_Range_Max" value="0.0"/>
+	<Parameter name="Velocity_Y_Range_Max" value="0.25"/>
+	<Parameter name="Velocity_Z_Range_Max" value="0.0"/>
+	
+	<Parameter name="InitialAlpha" value="1.0"/>
+	<Parameter name="AlphaFade" value="0.0"/>
+	
+	<Parameter name="InitialAngle" value="0.0"/>
+	<Parameter name="AngleVariation" value="0.0"/>
+	
+	<Parameter name="InitialColor_Red" value="255"/>
+	<Parameter name="InitialColor_Green" value="255"/>
+	<Parameter name="InitialColor_Blue" value="255"/>
+	
+	<Parameter name="Func_Velocity_X" value="sin"/>
+	<Parameter name="Func_Velocity_Y" value="random"/>
+	<Parameter name="Func_Velocity_Z" value="random"/>
+</Generator>

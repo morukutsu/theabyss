@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Cutscene>
+	<Events>
+		<Event time="0" duration="0" type="fx">
+			<Parameter name="fx_type" value="black_bands"/>
+			<Parameter name="toggle" value="off"/>
+		</Event>
+	</Events>
+</Cutscene>

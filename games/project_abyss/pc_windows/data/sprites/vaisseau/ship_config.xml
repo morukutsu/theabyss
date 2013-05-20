@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Ship>
+	<Element name="SHIP_PART_COCKPIT" rx="27" ry="34" x="0" y="0" />
+	<Element name="SHIP_PART_VIS" rx="0" ry="0" x="20" y="35" />
+	<Element name="SHIP_PART_REACTEUR_FRONT" rx="-21" ry="-7" x="42" y="38" />
+	<Element name="SHIP_PART_REACTEUR_BACK" rx="-21" ry="-7" x="38" y="26" />
+	<Element name="SHIP_FX_LUEUR" rx="160.5" ry="157" x="0" y="0" />
+	<Element name="SHIP_FX_FLASHLIGHT" rx="222" ry="-37" x="215" y="40" />
+	<Element name="REACTOR_LIGHT_0" rx="48" ry="32" x="106" y="38" />
+	<Element name="REACTOR_LIGHT_1" rx="48" ry="18" x="102" y="25" />
+	<Element name="FLASHLIGHT_MASK" rx="284.5" ry="63.5" x="320" y="92" />
+	<Element name="BACKLIGHT_MASK" rx="0" ry="0" x="16" y="0" />
+	<Element name="SHIP_PART_TORCHE" rx="0" ry="0" x="65" y="53" />
+</Ship>

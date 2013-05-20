@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ShipWeapons>
+	<Weapon>
+		<Name>WPN_PRIMARY_LASER</Name>
+		<Arm filename="sprites/vaisseau/armes/bras.png" rotation="0" rx="20" ry="0" x="-5" y="40" />
+		<Cannon filename="sprites/vaisseau/armes/canon.png" rotation="1" rx="0" ry="0" x="-20" y="0" />
+		<ShootPosition x="-30" y="40" />
+	</Weapon>
+</ShipWeapons>
