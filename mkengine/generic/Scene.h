@@ -78,8 +78,8 @@ namespace mk
 			// Pipeline de rendu
 			bool isLighting, isPostFXShader;
 			FBO *mWorkFBO;
-			Shader postfx;
-			Shader light_alpha_fix;
+			Shader* postfx;
+			Shader* light_alpha_fix;
 			float effectIntensity;
 
 			// Frustum culling
@@ -91,7 +91,7 @@ namespace mk
 			mk::Sprite *backgroundSprite;
 			
 			// Gestion de quelques effets graphiques
-			Shader shader_blurH, shader_blurV;
+			Shader *shader_blurH, *shader_blurV;
 			float blur_intensity;
 			bool isEffectBlur;
 			float black_bands_h, old_black_bands_h, black_bands_time;

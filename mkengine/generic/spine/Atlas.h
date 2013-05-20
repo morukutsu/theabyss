@@ -27,7 +27,6 @@
 #define SPINE_ATLAS_H_
 
 #ifdef __cplusplus
-namespace spine {
 extern "C" {
 #endif
 
@@ -56,7 +55,7 @@ struct AtlasPage {
 	AtlasFilter minFilter, magFilter;
 	AtlasWrap uWrap, vWrap;
 
-	void* texture;
+	void* rendererObject;
 	int width, height;
 
 	AtlasPage* next;
@@ -105,7 +104,6 @@ void Atlas_dispose (Atlas* atlas);
 AtlasRegion* Atlas_findRegion (const Atlas* self, const char* name);
 
 #ifdef __cplusplus
-}
 }
 #endif
 

@@ -31,7 +31,6 @@
 #include <spine/Skin.h>
 
 #ifdef __cplusplus
-namespace spine {
 extern "C" {
 #endif
 
@@ -58,9 +57,9 @@ void Skeleton_dispose (Skeleton* self);
 
 void Skeleton_updateWorldTransform (const Skeleton* self);
 
-void Skeleton_setToBindPose (const Skeleton* self);
-void Skeleton_setBonesToBindPose (const Skeleton* self);
-void Skeleton_setSlotsToBindPose (const Skeleton* self);
+void Skeleton_setToSetupPose (const Skeleton* self);
+void Skeleton_setBonesToSetupPose (const Skeleton* self);
+void Skeleton_setSlotsToSetupPose (const Skeleton* self);
 
 /* Returns 0 if the bone was not found. */
 Bone* Skeleton_findBone (const Skeleton* self, const char* boneName);
@@ -90,7 +89,6 @@ int Skeleton_setAttachment (Skeleton* self, const char* slotName, const char* at
 void Skeleton_update (Skeleton* self, float deltaTime);
 
 #ifdef __cplusplus
-}
 }
 #endif
 

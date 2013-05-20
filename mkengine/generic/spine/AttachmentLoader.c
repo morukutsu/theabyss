@@ -27,10 +27,6 @@
 #include <stdio.h>
 #include <spine/extension.h>
 
-#ifdef __cplusplus
-namespace spine {
-#endif
-
 typedef struct _AttachmentLoaderVtable {
 	Attachment* (*newAttachment) (AttachmentLoader* self, Skin* skin, AttachmentType type, const char* name);
 	void (*dispose) (AttachmentLoader* self);
@@ -52,7 +48,7 @@ void _AttachmentLoader_deinit (AttachmentLoader* self) {
 
 void AttachmentLoader_dispose (AttachmentLoader* self) {
 	VTABLE(AttachmentLoader, self) ->dispose(self);
-    FREE(self);
+	FREE(self);
 }
 
 Attachment* AttachmentLoader_newAttachment (AttachmentLoader* self, Skin* skin, AttachmentType type, const char* name) {
@@ -75,7 +71,3 @@ void _AttachmentLoader_setUnknownTypeError (AttachmentLoader* self, AttachmentTy
 	sprintf(buffer, "%d", type);
 	_AttachmentLoader_setError(self, "Unknown attachment type: ", buffer);
 }
-
-#ifdef __cplusplus
-}
-#endif

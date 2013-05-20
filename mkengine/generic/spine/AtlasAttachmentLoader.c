@@ -26,10 +26,6 @@
 #include <spine/AtlasAttachmentLoader.h>
 #include <spine/extension.h>
 
-#ifdef __cplusplus
-namespace spine {
-#endif
-
 Attachment* _AtlasAttachmentLoader_newAttachment (AttachmentLoader* loader, Skin* skin, AttachmentType type, const char* name) {
 	AtlasAttachmentLoader* self = SUB_CAST(AtlasAttachmentLoader, loader);
 	switch (type) {
@@ -41,7 +37,7 @@ Attachment* _AtlasAttachmentLoader_newAttachment (AttachmentLoader* loader, Skin
 			return 0;
 		}
 		attachment = RegionAttachment_create(name);
-		attachment->texture = region->page->texture;
+		attachment->rendererObject = region;
 		RegionAttachment_setUVs(attachment, region->u, region->v, region->u2, region->v2, region->rotate);
 		attachment->regionOffsetX = region->offsetX;
 		attachment->regionOffsetY = region->offsetY;
@@ -63,7 +59,3 @@ AtlasAttachmentLoader* AtlasAttachmentLoader_create (Atlas* atlas) {
 	self->atlas = atlas;
 	return self;
 }
-
-#ifdef __cplusplus
-}
-#endif

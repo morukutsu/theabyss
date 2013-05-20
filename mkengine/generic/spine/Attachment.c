@@ -27,10 +27,6 @@
 #include <spine/extension.h>
 #include <spine/Slot.h>
 
-#ifdef __cplusplus
-namespace spine {
-#endif
-
 typedef struct _AttachmentVtable {
 	void (*dispose) (Attachment* self);
 } _AttachmentVtable;
@@ -52,9 +48,5 @@ void _Attachment_deinit (Attachment* self) {
 
 void Attachment_dispose (Attachment* self) {
 	VTABLE(Attachment, self) ->dispose(self);
-    FREE(self);
+	FREE(self);
 }
-
-#ifdef __cplusplus
-}
-#endif

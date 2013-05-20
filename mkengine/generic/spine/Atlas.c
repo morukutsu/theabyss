@@ -27,10 +27,6 @@
 #include <ctype.h>
 #include <spine/extension.h>
 
-#ifdef __cplusplus
-namespace spine {
-#endif
-
 AtlasPage* AtlasPage_create (const char* name) {
 	AtlasPage* self = NEW(AtlasPage);
 	MALLOC_STR(self->name, name);
@@ -40,7 +36,7 @@ AtlasPage* AtlasPage_create (const char* name) {
 void AtlasPage_dispose (AtlasPage* self) {
 	FREE(self->name);
 	_AtlasPage_disposeTexture(self);
-    FREE(self);
+	FREE(self);
 }
 
 /**/
@@ -337,7 +333,3 @@ AtlasRegion* Atlas_findRegion (const Atlas* self, const char* name) {
 	}
 	return 0;
 }
-
-#ifdef __cplusplus
-}
-#endif

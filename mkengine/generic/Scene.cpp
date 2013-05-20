@@ -70,17 +70,14 @@ namespace mk
 		isBlackBandsDisplayed = false;
 
 		// Chargement du shader fix lights
-		mk::AsciiFile* shaderFile = (mk::AsciiFile*)mk::RessourceManager::getInstance()->LoadRessource("shaders/light_alpha_fix.fx");
-
-		std::string tmp = shaderFile->getString();
-		tmp = tmp.substr(0, shaderFile->getSize());
-		light_alpha_fix.Load(tmp);
-
-		light_alpha_fix.shader.setParameter("texture", sf::Shader::CurrentTexture);
-
-		mk::RessourceManager::getInstance()->DeleteRessource(shaderFile);
+		light_alpha_fix = (mk::Shader*)mk::RessourceManager::getInstance()->LoadRessource("shaders/light_alpha_fix.fx");
+		light_alpha_fix->shader.setParameter("texture", sf::Shader::CurrentTexture);
 
 		effectIntensity = 1.0f;
+
+		// Compilation de certains shaders
+		mk::RessourceManager::getInstance()->LoadRessource("shaders/postfx_blur_h.fx");
+		mk::RessourceManager::getInstance()->LoadRessource("shaders/postfx_blur_v.fx");
 	}
 
 	Scene::~Scene()
@@ -230,14 +227,14 @@ namespace mk
 		
 		if(isPostFXShader)
 		{
-			postfx.shader.setParameter("intensity", effectIntensity);
-			postfx.Bind();
+			postfx->shader.setParameter("intensity", effectIntensity);
+			postfx->Bind();
 		}
 
 		lowDisplayFBO(mWorkFBO, 1);
 
 		if(isPostFXShader)
-			postfx.Unbind();
+			postfx->Unbind();
 
 		UpdateBlackBands();
 		RenderBlackBands(0.0f);
@@ -250,13 +247,8 @@ namespace mk
 	void Scene::LoadPostFXShader(std::string shader)
 	{
 		// Chargement du shader
-		mk::AsciiFile* shaderFile = (mk::AsciiFile*)mk::RessourceManager::getInstance()->LoadRessource(shader);
-
-		std::string tmp = shaderFile->getString();
-		tmp = tmp.substr(0, shaderFile->getSize());
-		postfx.Load(tmp);
-
-		postfx.shader.setParameter("texture", sf::Shader::CurrentTexture);
+		postfx = (mk::Shader*)mk::RessourceManager::getInstance()->LoadRessource(shader);
+		postfx->shader.setParameter("texture", sf::Shader::CurrentTexture);
 
 		// On cherche si le postfx contient une lookup
 		if(shader.find("lookup") != std::string::npos) {
@@ -264,12 +256,10 @@ namespace mk
 			std::string lookupfile = shader;
 			lookupfile = lookupfile.substr(0, shader.length() - 2) + "png";
 			mk::Image* lookupimg = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource(lookupfile);
-			postfx.shader.setParameter("lookup", lookupimg->img);
+			postfx->shader.setParameter("lookup", lookupimg->img);
 		}
 
 		isPostFXShader = true;
-
-		mk::RessourceManager::getInstance()->DeleteRessource(shaderFile);
 	}
 
 	void Scene::FrustumCulling()
@@ -347,7 +337,7 @@ namespace mk
 					lowSetBlendMode(MK_BLEND_ALPHA);
 
 					if((*it)->posZ >= 0.0f)
-						light_alpha_fix.Bind();
+						light_alpha_fix->Bind();
 
 					unsigned char r, g, b;
 					r = (*it)->r, g = (*it)->g, b = (*it)->b;
@@ -356,7 +346,7 @@ namespace mk
 					(*it)->r = r, (*it)->g = g, (*it)->b = b;
 
 					if((*it)->posZ >= 0.0f)
-						light_alpha_fix.Unbind();
+						light_alpha_fix->Unbind();
 				}
 			}
 			else if((*it)->mType == DRAWABLE_TYPE_LIGHT)
@@ -478,26 +468,12 @@ namespace mk
 	void Scene::InitBlur()
 	{
 		// Chargement du shader horizontal
-		mk::AsciiFile* shaderFile = (mk::AsciiFile*)mk::RessourceManager::getInstance()->LoadRessource("shaders/postfx_blur_h.fx");
-
-		std::string tmp = shaderFile->getString();
-		tmp = tmp.substr(0, shaderFile->getSize());
-		
-		shader_blurH.Load(tmp);
-		shader_blurH.shader.setParameter("texture", sf::Shader::CurrentTexture);
-
-		mk::RessourceManager::getInstance()->DeleteRessource(shaderFile);
+		shader_blurH = (mk::Shader*)mk::RessourceManager::getInstance()->LoadRessource("shaders/postfx_blur_h.fx");
+		shader_blurH->shader.setParameter("texture", sf::Shader::CurrentTexture);
 
 		// Chargement du shader vertical
-		shaderFile = (mk::AsciiFile*)mk::RessourceManager::getInstance()->LoadRessource("shaders/postfx_blur_v.fx");
-
-		tmp = shaderFile->getString();
-		tmp = tmp.substr(0, shaderFile->getSize());
-		
-		shader_blurV.Load(tmp);
-		shader_blurV.shader.setParameter("texture", sf::Shader::CurrentTexture);
-		
-		mk::RessourceManager::getInstance()->DeleteRessource(shaderFile);
+		shader_blurV = (mk::Shader*)mk::RessourceManager::getInstance()->LoadRessource("shaders/postfx_blur_v.fx");
+		shader_blurV->shader.setParameter("texture", sf::Shader::CurrentTexture);
 	}
 
 	void Scene::RenderBlur(float intensity)
@@ -514,30 +490,30 @@ namespace mk
 		// Biding current scene in FBO 1
 		mWorkFBO->Bind(1);
 		
-		shader_blurH.shader.setParameter("intensity", effectIntensity);
-		shader_blurH.shader.setParameter("radius", intensity);
-		shader_blurH.Bind();
+		shader_blurH->shader.setParameter("intensity", effectIntensity);
+		shader_blurH->shader.setParameter("radius", intensity);
+		shader_blurH->Bind();
 
 		// Displaying in FBO 0
 		mWorkFBO->StartDrawing(0);
 		lowDisplayFBO(mWorkFBO, 1);
 		mWorkFBO->EndDrawing();
 
-		shader_blurH.Unbind();
+		shader_blurH->Unbind();
 
 		// Biding H blurred scene in FBO 0
 		mWorkFBO->Bind(0);
 
-		shader_blurV.shader.setParameter("intensity", effectIntensity);
-		shader_blurV.shader.setParameter("radius", intensity);
-		shader_blurV.Bind();
+		shader_blurV->shader.setParameter("intensity", effectIntensity);
+		shader_blurV->shader.setParameter("radius", intensity);
+		shader_blurV->Bind();
 
 		// Displaying in FBO 1
 		mWorkFBO->StartDrawing(1);
 		lowDisplayFBO(mWorkFBO, 0);
 		mWorkFBO->EndDrawing();
 
-		shader_blurV.Unbind();
+		shader_blurV->Unbind();
 
 		mk::Core::ConfigureViewport();
 

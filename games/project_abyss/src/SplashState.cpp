@@ -17,7 +17,6 @@ void SplashState::Init()
 	littlespace_splash = new mk::SpineModel();
 	littlespace_splash->LoadModelDescriptorFile("test/littlespace_logo.xml");
 	littlespace_splash->PlayAnim("animation", ANIM_ONCE);
-
 	littlespace_splash->posX = mk::Core::getBaseWidth()/2.0f;
 	littlespace_splash->posY = mk::Core::getBaseHeight()/2.0f;
 

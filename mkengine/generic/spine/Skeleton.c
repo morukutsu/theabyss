@@ -27,10 +27,6 @@
 #include <string.h>
 #include <spine/extension.h>
 
-#ifdef __cplusplus
-namespace spine {
-#endif
-
 Skeleton* Skeleton_create (SkeletonData* data) {
 	int i, ii;
 
@@ -95,7 +91,7 @@ void Skeleton_dispose (Skeleton* self) {
 	FREE(self->slots);
 
 	FREE(self->drawOrder);
-    FREE(self);
+	FREE(self);
 }
 
 void Skeleton_updateWorldTransform (const Skeleton* self) {
@@ -104,21 +100,21 @@ void Skeleton_updateWorldTransform (const Skeleton* self) {
 		Bone_updateWorldTransform(self->bones[i], self->flipX, self->flipY);
 }
 
-void Skeleton_setToBindPose (const Skeleton* self) {
-	Skeleton_setBonesToBindPose(self);
-	Skeleton_setSlotsToBindPose(self);
+void Skeleton_setToSetupPose (const Skeleton* self) {
+	Skeleton_setBonesToSetupPose(self);
+	Skeleton_setSlotsToSetupPose(self);
 }
 
-void Skeleton_setBonesToBindPose (const Skeleton* self) {
+void Skeleton_setBonesToSetupPose (const Skeleton* self) {
 	int i;
 	for (i = 0; i < self->boneCount; ++i)
-		Bone_setToBindPose(self->bones[i]);
+		Bone_setToSetupPose(self->bones[i]);
 }
 
-void Skeleton_setSlotsToBindPose (const Skeleton* self) {
+void Skeleton_setSlotsToSetupPose (const Skeleton* self) {
 	int i;
 	for (i = 0; i < self->slotCount; ++i)
-		Slot_setToBindPose(self->slots[i]);
+		Slot_setToSetupPose(self->slots[i]);
 }
 
 Bone* Skeleton_findBone (const Skeleton* self, const char* boneName) {
@@ -201,7 +197,3 @@ int Skeleton_setAttachment (Skeleton* self, const char* slotName, const char* at
 void Skeleton_update (Skeleton* self, float deltaTime) {
 	self->time += deltaTime;
 }
-
-#ifdef __cplusplus
-}
-#endif

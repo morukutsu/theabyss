@@ -27,10 +27,6 @@
 #include <math.h>
 #include <spine/extension.h>
 
-#ifdef __cplusplus
-namespace spine {
-#endif
-
 static int yDown;
 
 void Bone_setYDown (int value) {
@@ -41,7 +37,7 @@ Bone* Bone_create (BoneData* data, Bone* parent) {
 	Bone* self = NEW(Bone);
 	CONST_CAST(BoneData*, self->data) = data;
 	CONST_CAST(Bone*, self->parent) = parent;
-	Bone_setToBindPose(self);
+	Bone_setToSetupPose(self);
 	return self;
 }
 
@@ -49,7 +45,7 @@ void Bone_dispose (Bone* self) {
 	FREE(self);
 }
 
-void Bone_setToBindPose (Bone* self) {
+void Bone_setToSetupPose (Bone* self) {
 	self->x = self->data->x;
 	self->y = self->data->y;
 	self->rotation = self->data->rotation;
@@ -97,7 +93,3 @@ void Bone_updateWorldTransform (Bone* self, int flipX, int flipY) {
 		CONST_CAST(float, self->m11) = -self->m11;
 	}
 }
-
-#ifdef __cplusplus
-}
-#endif

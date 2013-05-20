@@ -8,15 +8,14 @@ using sf::Quads;
 using sf::RenderTarget;
 using sf::RenderStates;
 
-namespace spine {
-void _AtlasPage_createTexture (spine::AtlasPage* self, const char* path) {
+void _AtlasPage_createTexture (AtlasPage* self, const char* path) {
 	mk::Image* texture = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource(path);
-	self->texture = texture;
+	self->rendererObject = texture;
 	self->width = texture->getImageWidth();
 	self->height = texture->getImageHeight();
 }
 
-void _AtlasPage_disposeTexture (spine::AtlasPage* self) {
+void _AtlasPage_disposeTexture (AtlasPage* self) {
 	//delete (mk::Image*)self->texture;
 }
 
@@ -27,11 +26,9 @@ char* _Util_readFile (const char* path, int* length) {
 	char* ptr = (char*)malloc(*length);
 
 	// TODO : trouver où ce buffer est libéré...
-	strcpy(ptr, atlasFile->buffer);
+	strncpy(ptr, atlasFile->buffer, atlasFile->getSize());
 
 	return ptr;
-}
-
 }
 
 namespace mk {
@@ -39,26 +36,27 @@ namespace mk {
 SpineModel::SpineModel () 
 {
 	currentAnim = NULL;
-	spine::Bone_setYDown(true);
+	Bone_setYDown(true);
 }
 
 SpineModel::~SpineModel()
 {
 	//delete atlas_file;
-	spine::AnimationState_dispose(state);
-	spine::Skeleton_dispose(skeleton_file);
-	spine::SkeletonData_dispose(skeletonData);
+	AnimationState_dispose(state);
+	Skeleton_dispose(skeleton_file);
+	SkeletonData_dispose(skeletonData);
 }
 
 void SpineModel::Draw ()
 {
 	vertexArray.clear();
+	float vertexPositions[8];
 	for (int i = 0; i < skeleton_file->slotCount; ++i) {
-		spine::Slot* slot = skeleton_file->slots[i];
-		spine::Attachment* attachment = slot->attachment;
-		if (!attachment || attachment->type != spine::ATTACHMENT_REGION) continue;
-		spine::RegionAttachment* regionAttachment = (spine::RegionAttachment*)attachment;
-		RegionAttachment_updateVertices(regionAttachment, slot);
+		Slot* slot = skeleton_file->slots[i];
+		Attachment* attachment = slot->attachment;
+		if (!attachment || attachment->type != ATTACHMENT_REGION) continue;
+		RegionAttachment* regionAttachment = (RegionAttachment*)attachment;
+		RegionAttachment_computeVertices(regionAttachment, slot, vertexPositions);
 
 		sf::Uint8 r = skeleton_file->r * slot->r * 255;
 		sf::Uint8 g = skeleton_file->g * slot->g * 255;
@@ -83,27 +81,27 @@ void SpineModel::Draw ()
 		vertices[3].color.b = b;
 		vertices[3].color.a = a;
 
-		vertices[0].position.x = regionAttachment->vertices[spine::VERTEX_X1];
-		vertices[0].position.y = regionAttachment->vertices[spine::VERTEX_Y1];
-		vertices[1].position.x = regionAttachment->vertices[spine::VERTEX_X2];
-		vertices[1].position.y = regionAttachment->vertices[spine::VERTEX_Y2];
-		vertices[2].position.x = regionAttachment->vertices[spine::VERTEX_X3];
-		vertices[2].position.y = regionAttachment->vertices[spine::VERTEX_Y3];
-		vertices[3].position.x = regionAttachment->vertices[spine::VERTEX_X4];
-		vertices[3].position.y = regionAttachment->vertices[spine::VERTEX_Y4];
+		vertices[0].position.x = vertexPositions[VERTEX_X1];
+		vertices[0].position.y = vertexPositions[VERTEX_Y1];
+		vertices[1].position.x = vertexPositions[VERTEX_X2];
+		vertices[1].position.y = vertexPositions[VERTEX_Y2];
+		vertices[2].position.x = vertexPositions[VERTEX_X3];
+		vertices[2].position.y = vertexPositions[VERTEX_Y3];
+		vertices[3].position.x = vertexPositions[VERTEX_X4];
+		vertices[3].position.y = vertexPositions[VERTEX_Y4];
 
 		sf::Vector2u size;
-		texture = (mk::Image*)regionAttachment->texture;
+		texture = (mk::Image*)((AtlasRegion*)regionAttachment->rendererObject)->page->rendererObject;
 		size.x = texture->getImageWidth();
 		size.y = texture->getImageHeight();
-		vertices[0].texCoords.x = regionAttachment->uvs[spine::VERTEX_X1]/* * size.x*/;
-		vertices[0].texCoords.y = regionAttachment->uvs[spine::VERTEX_Y1]/* * size.y*/;
-		vertices[1].texCoords.x = regionAttachment->uvs[spine::VERTEX_X2]/* * size.x*/;
-		vertices[1].texCoords.y = regionAttachment->uvs[spine::VERTEX_Y2]/* * size.y*/;
-		vertices[2].texCoords.x = regionAttachment->uvs[spine::VERTEX_X3]/* * size.x*/;
-		vertices[2].texCoords.y = regionAttachment->uvs[spine::VERTEX_Y3]/* * size.y*/;
-		vertices[3].texCoords.x = regionAttachment->uvs[spine::VERTEX_X4]/* * size.x*/;
-		vertices[3].texCoords.y = regionAttachment->uvs[spine::VERTEX_Y4]/* * size.y*/;
+		vertices[0].texCoords.x = regionAttachment->uvs[VERTEX_X1]/* * size.x*/;
+		vertices[0].texCoords.y = regionAttachment->uvs[VERTEX_Y1]/* * size.y*/;
+		vertices[1].texCoords.x = regionAttachment->uvs[VERTEX_X2]/* * size.x*/;
+		vertices[1].texCoords.y = regionAttachment->uvs[VERTEX_Y2]/* * size.y*/;
+		vertices[2].texCoords.x = regionAttachment->uvs[VERTEX_X3]/* * size.x*/;
+		vertices[2].texCoords.y = regionAttachment->uvs[VERTEX_Y3]/* * size.y*/;
+		vertices[3].texCoords.x = regionAttachment->uvs[VERTEX_X4]/* * size.x*/;
+		vertices[3].texCoords.y = regionAttachment->uvs[VERTEX_Y4]/* * size.y*/;
 
 		vertexArray.append(vertices[0]);
 		vertexArray.append(vertices[1]);
@@ -121,24 +119,24 @@ void SpineModel::Interpolate(float dt)
 	
 	//animationTime += (1.0f/30.0f)*dt;
 	
-	//spine::AnimationState_update(state, animationTime - oldAnimationTime);
+	//AnimationState_update(state, animationTime - oldAnimationTime);
 
 	if(anim_mode == ANIM_LOOP)
 	{
-		spine::AnimationState_apply(state, skeleton_file);
-		spine::Skeleton_updateWorldTransform(skeleton_file);
+		AnimationState_apply(state, skeleton_file);
+		Skeleton_updateWorldTransform(skeleton_file);
 	}
 	else if(anim_mode == ANIM_ONCE && animationTime < currentAnim->duration)
 	{
-		spine::AnimationState_apply(state, skeleton_file);
-		spine::Skeleton_updateWorldTransform(skeleton_file);
+		AnimationState_apply(state, skeleton_file);
+		Skeleton_updateWorldTransform(skeleton_file);
 	}
 }
 
 void SpineModel::PlayAnim(std::string anim, int mode)
 {
-	currentAnim = spine::SkeletonData_findAnimation(skeletonData, anim.c_str() );
-	spine::AnimationState_setAnimation(state, currentAnim, true);
+	currentAnim = SkeletonData_findAnimation(skeletonData, anim.c_str() );
+	AnimationState_setAnimation(state, currentAnim, true);
 	animationTime = 0;
 	anim_mode = mode;
 }
@@ -148,9 +146,9 @@ void SpineModel::Play()
 	oldAnimationTime = animationTime;
 	animationTime += 1.0f/30.0f;
 
-	//spine::Skeleton_update(skeleton_file, (1.0f/30.0f));
+	//Skeleton_update(skeleton_file, (1.0f/30.0f));
 
-	//spine::AnimationState_update(state, (1.0f/30.0f));
+	//AnimationState_update(state, (1.0f/30.0f));
 	//state->time = animationTime;
 
 	if(anim_mode == ANIM_ONCE && animationTime > currentAnim->duration)
@@ -183,22 +181,24 @@ void SpineModel::LoadModelDescriptorFile(std::string filename)
 	skeleton = elem->GetText();
 
 	// Chargement de l'Atlas
-	atlas_file = spine::Atlas_readAtlasFile(atlas.c_str() );
-	spine::SkeletonJson* json = spine::SkeletonJson_create(atlas_file);
+	atlas_file = Atlas_readAtlasFile(atlas.c_str() );
+
+	SkeletonJson* json = SkeletonJson_create(atlas_file);
+
 	skeletonData = SkeletonJson_readSkeletonDataFile(json, skeleton.c_str() );
-	spine::SkeletonJson_dispose(json);
+	SkeletonJson_dispose(json);
 
 	skeleton_file = Skeleton_create(skeletonData);
-	state = spine::AnimationState_create(0);
+	state = AnimationState_create(0);
 
 	// Chargement du squelette
 	skeleton_file->flipX = false;
 	skeleton_file->flipY = false;
-	spine::Skeleton_setToBindPose(skeleton_file);
+	Skeleton_setToSetupPose(skeleton_file);
 
 	skeleton_file->root->x = 0;
 	skeleton_file->root->y = 0;
-	spine::Skeleton_updateWorldTransform(skeleton_file);
+	Skeleton_updateWorldTransform(skeleton_file);
 
 	// Initialisation
 	vertexArray.setPrimitiveType(Quads);

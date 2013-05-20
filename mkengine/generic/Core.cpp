@@ -82,6 +82,8 @@ namespace mk
 		mWindowHeight = viewporth;
 
 		isVSync = false;
+
+		std::cout << "### MKENGINE Core initialized ###" << std::endl;
 	}
 	
 	void Core::ToggleWidescreenMode(int h, bool wide)

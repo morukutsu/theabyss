@@ -8,14 +8,19 @@
 
 #include <string>
 #include <SFML/Graphics.hpp>
+#include "Ressource.h"
 
 namespace mk 
 {
-	class Shader 
+	class Shader : public Ressource
 	{
 		public:
 			Shader();
 			~Shader();
+
+			int LoadFromFile(const char* filename);	
+			int LoadFromFile(FILE* fp, long size);		
+			int LoadFromMemory(char* mem, int size);
 
 			void Load(std::string text);
 			void Bind();
@@ -23,6 +28,9 @@ namespace mk
 
 		public:
 			sf::Shader shader;
+
+			char* buffer;
+			int filesize;
 	};
 };
 

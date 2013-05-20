@@ -33,16 +33,16 @@ namespace mk
 			sf::VertexArray vertexArray;
 			mk::Image* texture;
 
-			spine::Atlas* atlas_file;
-			spine::Skeleton* skeleton_file;
-			spine::SkeletonData* skeletonData;
+			Atlas* atlas_file;
+			Skeleton* skeleton_file;
+			SkeletonData* skeletonData;
 
-			spine::AnimationState* state;
+			AnimationState* state;
 
-			spine::Animation* currentAnim;
+			Animation* currentAnim;
 
 			// Liste des animations
-			//std::map<std::string, spine::Animation*> animations;
+			//std::map<std::string, Animation*> animations;
 
 			float animationTime, oldAnimationTime;
 			int anim_mode;

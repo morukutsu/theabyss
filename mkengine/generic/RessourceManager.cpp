@@ -9,6 +9,7 @@
 #include "AsciiFile.h"
 #include "ExtendedSpriteRessource.h"
 #include "lowSystem.h"
+#include "Shader.h"
 
 namespace mk
 {
@@ -147,12 +148,14 @@ namespace mk
 				tmpRes = new MeshBone();
 			else if(ext == "md5anim")
 				tmpRes = new MeshBoneAnim();
-			else if(ext == "xml" || ext == "tmx" || ext == "ogg" || ext == "txt" || ext == "fx" || ext == "json" || ext == "atlas" || ext == "as")
+			else if(ext == "xml" || ext == "tmx" || ext == "ogg" || ext == "txt" || ext == "json" || ext == "atlas" || ext == "as")
 				tmpRes = new AsciiFile();
 			else if(ext == "raw")
 				tmpRes = new Sound();
 			else if(ext == "spr")
 				tmpRes = new ExtendedSpriteRessource();
+			else if(ext == "fx")
+				tmpRes = new Shader();
 
 			tmpRes->LoadFromFile(mFilePointer, mFileSize);
 			tmpRes->mFromRessourceManager = true;

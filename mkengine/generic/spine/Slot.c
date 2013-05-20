@@ -27,10 +27,6 @@
 #include <spine/extension.h>
 #include <spine/Skeleton.h>
 
-#ifdef __cplusplus
-namespace spine {
-#endif
-
 typedef struct {
 	Slot super;
 	float attachmentTime;
@@ -41,7 +37,7 @@ Slot* Slot_create (SlotData* data, Skeleton* skeleton, Bone* bone) {
 	CONST_CAST(SlotData*, self->data) = data;
 	CONST_CAST(Skeleton*, self->skeleton) = skeleton;
 	CONST_CAST(Bone*, self->bone) = bone;
-	Slot_setToBindPose(self);
+	Slot_setToSetupPose(self);
 	return self;
 }
 
@@ -62,7 +58,7 @@ float Slot_getAttachmentTime (const Slot* self) {
 	return self->skeleton->time - SUB_CAST(_Internal, self) ->attachmentTime;
 }
 
-void Slot_setToBindPose (Slot* self) {
+void Slot_setToSetupPose (Slot* self) {
 	Attachment* attachment = 0;
 	self->r = self->data->r;
 	self->g = self->data->g;
@@ -81,7 +77,3 @@ void Slot_setToBindPose (Slot* self) {
 	}
 	Slot_setAttachment(self, attachment);
 }
-
-#ifdef __cplusplus
-}
-#endif
