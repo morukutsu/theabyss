@@ -57,6 +57,12 @@ class RangeFuncSin : public RangeFunc
 	}
 };
 
+struct ColorKey
+{
+	float time;
+	float r, g, b;
+};
+
 RangeFunc* createFunc(std::string name);
 
 class ParticleGeneratorComponent : public Component
@@ -75,6 +81,13 @@ class ParticleGeneratorComponent : public Component
 		void SetIgnoreLightPipeline(bool t);
 		void RotateLocal(float x, float y, float angle);
 		void MirrorLocal(bool v, bool h);
+
+	private:
+		void GetColorInterp(float life, float *r, float *g, float *b);
+
+	public:
+		static void HSL2RGB(float h, float sl, float l, float *r, float *g, float *b);
+		static void RGB2HSL(float r, float g, float b, float *h, float *s, float *l);
 
 	public:
 		// Gestion des particules
@@ -115,6 +128,9 @@ class ParticleGeneratorComponent : public Component
 
 		// Mirroing local
 		bool mirrorV, mirrorH, oldMirrorV, oldMirrorH;
+
+		// Colorkey
+		std::vector<ColorKey> colorKeys;
 };
 
 #endif

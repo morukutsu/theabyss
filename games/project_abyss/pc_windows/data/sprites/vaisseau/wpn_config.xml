@@ -2,8 +2,8 @@
 <ShipWeapons>
 	<Weapon>
 		<Name>WPN_PRIMARY_LASER</Name>
-		<Arm filename="sprites/vaisseau/armes/bras.png" rotation="0" rx="20" ry="0" x="-5" y="40" />
-		<Cannon filename="sprites/vaisseau/armes/canon.png" rotation="1" rx="0" ry="0" x="-20" y="0" />
-		<ShootPosition x="-30" y="40" />
+		<Arm filename="sprites/vaisseau/armes/bras.png" rotation="0" rx="20" ry="0" x="-15" y="50" />
+		<Cannon filename="sprites/vaisseau/armes/canon.png" rotation="1" rx="0" ry="0" x="-24" y="0" />
+		<ShootPosition x="-60" y="50" />
 	</Weapon>
 </ShipWeapons>
