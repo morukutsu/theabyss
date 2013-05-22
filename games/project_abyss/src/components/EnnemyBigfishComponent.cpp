@@ -252,10 +252,24 @@ void EnnemyBigfishComponent::FollowWaypoints()
 			if(mWaitTime > 0.35f)
 			{
 				cutsceneState = 4;
-				NVector power = NVector(50000.0f, -7000.0f);
+				NVector power = NVector(50000.0f*mx, -7000.0f);
 				parent->GetEntityManager()->SendMessageToEntity("hero", MSG_POWER, &power);
 				parent->GetEntityManager()->SendMessageToEntity("hero", MSG_BODY_ACTIVATE_GRAVITY, NULL);
 				parent->GetEntityManager()->SendMessageToEntity("hero", MSG_HERO_KILL, NULL);
+				mWaitTime = 0.0f;
+			}
+		}
+		else if(cutsceneState == 4)
+		{
+			// Retour en idle
+			mWaitTime += 1.0f/30.0f;
+			if(mWaitTime > 0.5f)
+			{
+				vel = (nextEntityToFollow->mPos + NVector(nextEntityToFollow->mWidth, nextEntityToFollow->mHeight)/2.0f - parent->mPos);
+				vel.Normalise();
+				vel = vel * ENN_BIGFISH_SPEED;
+				gfx->angle = 0;
+				state = S_SEEK;
 			}
 		}
 	}
