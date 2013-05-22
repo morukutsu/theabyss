@@ -13,7 +13,7 @@
 
 #define SHIP_MAIN_PARTS_COUNT			8
 #define SHIP_PARTS_COUNT				11
-#define GEN_COUNT						4
+#define GEN_COUNT						5
 #define WPN_ARM_COUNT					1
 #define WPN_COUNT						1
 
@@ -35,7 +35,8 @@ enum {
 enum
 {
 	GEN_REACT_A_FRONT, GEN_REACT_B_FRONT,
-	GEN_REACT_A_BACK, GEN_REACT_B_BACK
+	GEN_REACT_A_BACK, GEN_REACT_B_BACK,
+	GEN_SMOKE
 };
 
 enum 
@@ -103,6 +104,7 @@ class ShipDisplayComponent : public Component
 		// Effets graphiques
 		NVector reactorVelOrig[2], reactorVel[2];
 		bool isVaisseauHurt;
+
 
 		// Mirroring
 		bool mirrorH;

@@ -231,6 +231,10 @@ void GameMap::UpdatePhysics()
 	// Update des body
 	for(std::list<CBody*>::iterator it = bodies.begin(); it != bodies.end(); it++)
 	{
+		// Application de la gravité
+		if((*it)->isGravity)
+			(*it)->AddImpulse(NVector(0, GRAVITY), 1.0f/30.0f);
+
 		// Update à 30FPS
 		(*it)->Update(1.0f/30.0f);
 

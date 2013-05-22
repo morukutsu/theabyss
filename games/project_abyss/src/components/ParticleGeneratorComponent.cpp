@@ -430,9 +430,14 @@ void ParticleGeneratorComponent::GetColorInterp(float life, float *r, float *g, 
 {
 	// On trouve les deux frames clé à interpoler en fonction de life
 	int prevFrame = 0;
-	for(int i = 0; i < colorKeys.size() - 1; i++)
+	for(int i = 0; i < colorKeys.size(); i++)
 	{
-		if(life > colorKeys[i].time && life < colorKeys[i+1].time)
+		if(i == colorKeys.size() - 1)
+		{
+			prevFrame = i;
+			break;
+		}
+		else if(life > colorKeys[i].time && life < colorKeys[i+1].time)
 		{
 			prevFrame = i;
 			break;
@@ -449,15 +454,25 @@ void ParticleGeneratorComponent::GetColorInterp(float life, float *r, float *g, 
 	RGB2HSL(colorKeys[prevFrame].r, colorKeys[prevFrame].g, colorKeys[prevFrame].b, &h1, &s1, &l1);
 	RGB2HSL(colorKeys[nextFrame].r, colorKeys[nextFrame].g, colorKeys[nextFrame].b, &h2, &s2, &l2);
 
-
 	// Interpolation
 	float ith, its, itl;
-	ith = wrapf(Slerp2D(life - colorKeys[prevFrame].time, 0.0f, colorKeys[nextFrame].time - colorKeys[prevFrame].time, h1*PI*2, h2*PI*2)/(PI*2), 0, 1);
-	its = Lerp(life - colorKeys[prevFrame].time, 0.0f, colorKeys[nextFrame].time - colorKeys[prevFrame].time, s1, s2);
-	itl = Lerp(life - colorKeys[prevFrame].time, 0.0f, colorKeys[nextFrame].time - colorKeys[prevFrame].time, l1, l2);
+	if(nextFrame != prevFrame)
+	{
+		ith = wrapf(Slerp2D(life - colorKeys[prevFrame].time, 0.0f, colorKeys[nextFrame].time - colorKeys[prevFrame].time, h1*PI*2, h2*PI*2)/(PI*2), 0, 1);
+		its = Lerp(life - colorKeys[prevFrame].time, 0.0f, colorKeys[nextFrame].time - colorKeys[prevFrame].time, s1, s2);
+		itl = Lerp(life - colorKeys[prevFrame].time, 0.0f, colorKeys[nextFrame].time - colorKeys[prevFrame].time, l1, l2);
+	}
+	else
+	{
+		ith = h1;
+		its = s1;
+		itl = l1;
+	}
 
 	// ReConversion en RGB
 	HSL2RGB(ith, its, itl, r, g, b);
+
+	//std::cout << "LIFE " << life << "(" << prevFrame << ") h1 : " << h1 << ", (" << nextFrame << ") h2 : " << h2 << ", interp : " << ith << std::endl;
 }
 
 void ParticleGeneratorComponent::HSL2RGB(float h, float s, float l, float* outR, float* outG, float* outB)

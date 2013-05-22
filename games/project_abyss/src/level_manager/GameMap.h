@@ -5,8 +5,11 @@
 #ifndef MK_GAMEMAP
 #define MK_GAMEMAP
 
+#define GRAVITY		800.0f
+
 #include "mkengine.h"
 #include <list>
+#include "../physics/Vector.h"
 
 class Entity;
 class EntityManager;

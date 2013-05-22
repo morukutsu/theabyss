@@ -9,6 +9,7 @@
 #include "../entities/EntityManager.h"
 #include "../level_manager/GameMap.h"
 #include "../level_manager/LevelManager.h"
+#include "../entities/Messages.h"
 
 EnnemyBigfishComponent::EnnemyBigfishComponent()
 {
@@ -213,7 +214,10 @@ void EnnemyBigfishComponent::FollowWaypoints()
 			mWaitTime += 1.0f/30.0f;
 
 			if(mWaitTime >= 0.5f)
+			{
 				cutsceneState = 2;
+				mWaitTime = 0.0f;
+			}
 		}
 		else if(cutsceneState == 2)
 		{
@@ -242,6 +246,17 @@ void EnnemyBigfishComponent::FollowWaypoints()
 
 			// On gobe
 			gfx->model.PlayAnim(ANIM_LOOP, "gobe", false);
+
+			// Après qqs temps, attaque du bigfish
+			mWaitTime += 1.0f/30.0f;
+			if(mWaitTime > 0.35f)
+			{
+				cutsceneState = 4;
+				NVector power = NVector(50000.0f, -7000.0f);
+				parent->GetEntityManager()->SendMessageToEntity("hero", MSG_POWER, &power);
+				parent->GetEntityManager()->SendMessageToEntity("hero", MSG_BODY_ACTIVATE_GRAVITY, NULL);
+				parent->GetEntityManager()->SendMessageToEntity("hero", MSG_HERO_KILL, NULL);
+			}
 		}
 	}
 

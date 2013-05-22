@@ -132,7 +132,18 @@ void ShipDisplayComponent::PositionSprites(bool v)
 
 void ShipDisplayComponent::Receive(int message, void* data)
 {
-
+	if(message == MSG_HERO_KILL)
+	{
+		// On désactive les générateurs de particules
+		generators[GEN_REACT_A_BACK]->isActive = false;
+		generators[GEN_REACT_B_BACK]->isActive = false;
+		generators[GEN_REACT_A_FRONT]->isActive = false;
+		generators[GEN_REACT_B_FRONT]->isActive = false;
+		generators[GEN_SMOKE]->isActive = true;
+		parts_sprites[SHIP_FX_FLASHLIGHT].Hide();
+		parts_sprites[SHIP_PART_TORCHE].Hide();
+		//flashLight->spr.Hide();
+	}
 }
 
 void ShipDisplayComponent::Update()
@@ -159,8 +170,6 @@ void ShipDisplayComponent::Update()
 		getSprite(SHIP_PART_REACTEUR_BACK, shadow).Show();
 	}
 	parts_sprites[SHIP_FX_LUEUR].Show();
-	parts_sprites[SHIP_FX_FLASHLIGHT].Show();
-	parts_sprites[SHIP_PART_TORCHE].Show();
 
 	for(int k = 0; k < SHIP_MAIN_PARTS_COUNT; k+=2)
 	{
@@ -305,7 +314,9 @@ void ShipDisplayComponent::Init()
 	generators[GEN_REACT_B_FRONT] = new ParticleGeneratorComponent("particles/001_ship_reactor_B_front.xml");
 	generators[GEN_REACT_A_BACK] = new ParticleGeneratorComponent("particles/001_ship_reactor_A_back.xml");
 	generators[GEN_REACT_B_BACK] = new ParticleGeneratorComponent("particles/001_ship_reactor_B_back.xml");
-	
+	generators[GEN_SMOKE] = new ParticleGeneratorComponent("particles/smoke.xml");
+	generators[GEN_SMOKE]->isActive = false;
+
 	for(int k = 0; k < GEN_COUNT; k++)
 	{
 		parent->AddComponent(generators[k]);
@@ -316,6 +327,7 @@ void ShipDisplayComponent::Init()
 	generators[GEN_REACT_B_FRONT]->priority = 3 + prioShift;
 	generators[GEN_REACT_A_BACK]->priority = 5 + prioShift;
 	generators[GEN_REACT_B_BACK]->priority = 5 + prioShift;
+	generators[GEN_SMOKE]->priority = -3 + prioShift;
 
 	reactorVelOrig[0] = NVector(generators[GEN_REACT_A_FRONT]->vx, generators[GEN_REACT_A_FRONT]->vy);
 	reactorVelOrig[1] = NVector(generators[GEN_REACT_B_FRONT]->vx, generators[GEN_REACT_B_FRONT]->vy);
@@ -346,6 +358,10 @@ void ShipDisplayComponent::Init()
 	ReadWeaponsFromXML();
 
 	mirrorH = parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MIRROR] == 1;
+
+	// Affichage de quelques sprites
+	parts_sprites[SHIP_FX_FLASHLIGHT].Show();
+	parts_sprites[SHIP_PART_TORCHE].Show();
 }
 
 void ShipDisplayComponent::Mirror(bool v)

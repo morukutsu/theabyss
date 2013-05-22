@@ -32,7 +32,15 @@ void PlayerMovementComponent::Init()
 
 void PlayerMovementComponent::Receive(int message, void* data)
 {
-
+	if(message == MSG_POWER)
+	{
+		NVector vec = *(NVector*)data;
+		body->cockpit->AddImpulse(vec, 1.0f/30.0f);
+	}
+	else if(message == MSG_BODY_ACTIVATE_GRAVITY)
+	{
+		body->cockpit->isGravity = true;
+	}
 }
 
 void PlayerMovementComponent::Update()
