@@ -63,6 +63,12 @@ struct ColorKey
 	float r, g, b;
 };
 
+struct GenSprite
+{
+	float frequency;
+	mk::Image* img;
+};
+
 RangeFunc* createFunc(std::string name);
 
 class ParticleGeneratorComponent : public Component
@@ -84,6 +90,7 @@ class ParticleGeneratorComponent : public Component
 
 	private:
 		void GetColorInterp(float life, float *r, float *g, float *b);
+		mk::Image* PickSprite();
 
 	public:
 		static void HSL2RGB(float h, float sl, float l, float *r, float *g, float *b);
@@ -97,8 +104,7 @@ class ParticleGeneratorComponent : public Component
 
 		// Paramètres
 		int maxParticles;
-		std::string spriteFilename;
-		mk::Image* img;
+		std::vector<GenSprite> imgs;
 
 		float initialLife;					// Durée de vie en secondes de la particule
 		float initialSize, sizeVariation;	// Scale initial de la particule

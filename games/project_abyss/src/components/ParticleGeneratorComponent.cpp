@@ -53,7 +53,20 @@ ParticleGeneratorComponent::ParticleGeneratorComponent(std::string filename)
 
 		if(parameterName == "Sprite")
 		{
-			spriteFilename = elem->Attribute("value");
+			TiXmlElement * elem2 = elem->FirstChildElement("Sprite");
+			while(elem2)
+			{
+				std::string spriteFilename = elem2->Attribute("filename");
+				GenSprite genSpr;
+				
+				genSpr.img = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("particles/" + spriteFilename);
+				elem2->QueryFloatAttribute("frequency", &genSpr.frequency);
+
+				imgs.push_back(genSpr);
+
+			
+				elem2 = elem2->NextSiblingElement();
+			}	
 		} 
 		else if(parameterName == "MaxParticles")
 		{
@@ -209,9 +222,6 @@ ParticleGeneratorComponent::ParticleGeneratorComponent(std::string filename)
 
 		elem = elem->NextSiblingElement();
 	}
-
-	// Preloading particle sprite
-	img = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("particles/" + spriteFilename);
 }
 
 ParticleGeneratorComponent::~ParticleGeneratorComponent()
@@ -235,7 +245,7 @@ void ParticleGeneratorComponent::Init()
 		for(int k = 0; k < maxParticles; k++) 
 		{
 			particles[k].active = false;
-			particles[k].spr.Assign(img);
+			//particles[k].spr.Assign(img);
 			particles[k].spr.Set3DMode(true);
 			particles[k].spr.isCullingIgnored = true;
 
@@ -300,8 +310,8 @@ void ParticleGeneratorComponent::Update()
 				particles[k].size = 0.0f;
 
 			// Déplacement du sprite dans le scene node
-			particles[k].spr.SetSize((img->getImageWidth() / 32.0f) * particles[k].size, 
-					(img->getImageHeight() / 32.0f) * particles[k].size);
+			particles[k].spr.SetSize((particles[k].spr.image->getImageWidth() / 32.0f) * particles[k].size, 
+					(particles[k].spr.image->getImageHeight() / 32.0f) * particles[k].size);
 
 			if(!referencial)
 			{
@@ -377,8 +387,10 @@ void ParticleGeneratorComponent::Update()
 				particles[k].g = initialColorG;
 				particles[k].b = initialColorB;
 				
-				particles[k].spr.SetSize((img->getImageWidth() / 32.0f) * particles[k].size, 
-					(img->getImageHeight() / 32.0f) * particles[k].size);
+				particles[k].spr.Assign(PickSprite() );
+
+				particles[k].spr.SetSize((particles[k].spr.image->getImageWidth() / 32.0f) * particles[k].size, 
+					(particles[k].spr.image->getImageHeight() / 32.0f) * particles[k].size);
 
 				if(!referencial)
 				{
@@ -473,6 +485,33 @@ void ParticleGeneratorComponent::GetColorInterp(float life, float *r, float *g, 
 	HSL2RGB(ith, its, itl, r, g, b);
 
 	//std::cout << "LIFE " << life << "(" << prevFrame << ") h1 : " << h1 << ", (" << nextFrame << ") h2 : " << h2 << ", interp : " << ith << std::endl;
+}
+
+mk::Image* ParticleGeneratorComponent::PickSprite()
+{
+	int idOfImg = 0;
+
+	// Optimisation pour les générateurs avec une seule image
+	if(imgs.size() == 1)
+		return imgs[0].img;
+
+	float u = SimpleMaths::Rand(0.0f, 1.0f);
+
+	float borneInf = 0;
+
+	for(int i = 0; i < imgs.size(); i++)
+	{
+		if(u > borneInf && u < borneInf + imgs[i].frequency)
+		{
+			idOfImg = i;
+			break;
+		}
+
+		borneInf += imgs[i].frequency;
+	}
+
+	//std::cout << idOfImg << std::endl;
+	return imgs[idOfImg].img;
 }
 
 void ParticleGeneratorComponent::HSL2RGB(float h, float s, float l, float* outR, float* outG, float* outB)

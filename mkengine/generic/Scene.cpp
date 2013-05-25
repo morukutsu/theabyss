@@ -48,8 +48,7 @@ namespace mk
 
 		// TODO : conserver les FBO en mémoire, ou ne pas détruire la scène dans le lvl manager ...
 		// Pipeline
-		mWorkFBO = new FBO();
-		mWorkFBO->Create(mk::Core::getWindowWidth(), mk::Core::getWindowHeight(), 2);
+		mWorkFBO = mk::FBO::getInstance();
 
 		isLighting = false;
 		isShowLightMask = false;
@@ -82,13 +81,15 @@ namespace mk
 
 	Scene::~Scene()
 	{
-		mWorkFBO->Destroy();
-		delete mWorkFBO;
+		//mWorkFBO->Destroy();
+		//delete mWorkFBO;
 
 		for(std::list<Drawable*>::iterator it = elements.begin(); it != elements.end(); )
 		{
 			elements.erase(it++);
 		}
+
+		elements.clear();
 	}
 
 	void Scene::Add(Drawable* elem)

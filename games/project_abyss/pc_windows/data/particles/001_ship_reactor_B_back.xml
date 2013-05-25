@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Generator>
-	<Parameter name="Sprite" value="rect.png"/>
+	<!-- frequency of appartition of this sprite -->
+	<Parameter name="Sprite">
+		<Sprite filename="rect.png" frequency="1.0"/>
+	</Parameter>
 	<Parameter name="MaxParticles" value="60"/>
 	<Parameter name="InitialLife" value="0.5"/>
 	<Parameter name="Frequency" value="32"/>

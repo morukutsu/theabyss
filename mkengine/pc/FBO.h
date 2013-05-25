@@ -5,11 +5,14 @@
 #define MK_FBO
 
 #include <vector>
+#include "singleton.h"
 
 namespace mk 
 {
-	class FBO 
+	class FBO : public Singleton<FBO>
 	{
+		friend class Singleton<FBO>;
+
 		public:
 			FBO();
 			~FBO();
@@ -29,7 +32,6 @@ namespace mk
 			// Allowing to stack multiple texture in one FBO
 			std::vector<unsigned int> textures;
 			std::vector<unsigned int> depthBuffers;
-			std::vector<unsigned int> stencilBuffers;
 
 			unsigned int fbo;
 	};

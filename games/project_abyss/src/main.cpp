@@ -28,6 +28,9 @@ int main(int argc, char **argv )
 
 	mk::Core* mCore = new mk::Core(winW, winH, "project_abyss", RENDERMODE_NONE);
 
+	// Création des FBO
+	mk::FBO::getInstance()->Create(mk::Core::getWindowWidth(), mk::Core::getWindowHeight(), 2);
+
 	// Acivation du fullscreen
 	std::string isFullscreen = ConfigurationManager::getInstance()->GetAttributeString("Graphics_Fullscreen");
 	if(isFullscreen == "true")
@@ -158,6 +161,8 @@ int main(int argc, char **argv )
 
 	// freeing ressources
 	mk::RessourceManager::getInstance()->Free();
+
+	mk::FBO::getInstance()->Destroy();
 
 	// destroying engine
 	delete mCore;

@@ -26,7 +26,6 @@ namespace mk
 
 		textures.resize(num);
 		depthBuffers.resize(num);
-		stencilBuffers.resize(num);
 
 		// Creation de la texture
 		for(int i = 0; i < num; i++)
@@ -104,13 +103,16 @@ namespace mk
 
 	void FBO::Destroy()
 	{
-		glDeleteFramebuffersEXT(1, &fbo);
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 
 		for(int i = 0; i < textures.size(); i++)
 		{
+			std::cout << depthBuffers[i] << std::endl;
+
 			glDeleteBuffers(1, &depthBuffers[i]);
-			glDeleteBuffers(1, &stencilBuffers[i]);
 			glDeleteTextures(1, &textures[i]);
 		}
+
+		glDeleteFramebuffersEXT(1, &fbo);
 	}
 };
