@@ -528,7 +528,7 @@ void lowDisplayExtendedSprite(mk::ExtendedSprite* spr)
 	
 }
 
-void lowDisplayFBO(mk::FBO* fbo, int id)
+void lowDisplayFBO(mk::FBO* fbo, int id, float offsetX, float offsetY)
 {
 	// Display
 	float Width  = static_cast<float>(fbo->getImageWidth());
@@ -538,7 +538,7 @@ void lowDisplayFBO(mk::FBO* fbo, int id)
 	glPushMatrix();
 	
 	//glTranslatef(0.375f, 0.375f, 0.f);
-	glTranslatef(0, 0, mAutoDepth);
+	glTranslatef(offsetX, offsetY, mAutoDepth);
 	glScalef(1.0f, 1.0f, 1.0f);
 
 	glEnable (GL_DEPTH_TEST);

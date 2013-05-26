@@ -74,6 +74,8 @@ namespace mk
 
 		effectIntensity = 1.0f;
 
+		isScreenShaking = false;
+
 		// Compilation de certains shaders
 		mk::RessourceManager::getInstance()->LoadRessource("shaders/postfx_blur_h.fx");
 		mk::RessourceManager::getInstance()->LoadRessource("shaders/postfx_blur_v.fx");
@@ -232,12 +234,16 @@ namespace mk
 			postfx->Bind();
 		}
 
-		lowDisplayFBO(mWorkFBO, 1);
+		if(isScreenShaking)
+		{
+			lowDisplayFBO(mWorkFBO, 1, shakeOffsetX, shakeOffsetY);
+		}
+		else
+			lowDisplayFBO(mWorkFBO, 1);
 
 		if(isPostFXShader)
 			postfx->Unbind();
 
-		UpdateBlackBands();
 		RenderBlackBands(0.0f);
 
 		mk::Core::ConfigureViewport();
@@ -295,6 +301,17 @@ namespace mk
 				mDisplayedElements++;
 			}
 		}
+
+		UpdateTimedEffets(dt);
+	}
+
+	void Scene::UpdateTimedEffets(float dt)
+	{
+		oldTime = curTime;
+		curTime = lowGetTime();
+
+		UpdateShakeScreen(dt);
+		UpdateBlackBands();
 	}
 
 	void Scene::StencilWritePass(std::list<Drawable*>& list)
@@ -552,10 +569,10 @@ namespace mk
 
 	void Scene::UpdateBlackBands()
 	{
-		black_bands_time += 1.0f/30.0f;
-		if(black_bands_time > 2.0f)
+		black_bands_time += curTime - oldTime;
+		if(black_bands_time > 0.5f)
 		{
-			black_bands_time = 2.0f;
+			black_bands_time = 0.5f;
 
 			if(blackbandsSens == false)
 			{
@@ -567,11 +584,39 @@ namespace mk
 
 		if(blackbandsSens)
 		{
-			black_bands_h = Lerp(black_bands_time, 0.0f, 2.0f, 0.0f, BLACK_BARS_HEIGHT);
+			black_bands_h = Lerp(black_bands_time, 0.0f, 0.5f, 0.0f, BLACK_BARS_HEIGHT);
 		}
 		else
 		{
-			black_bands_h = Lerp(black_bands_time, 0.0f, 2.0f, BLACK_BARS_HEIGHT, 0.0f);
+			black_bands_h = Lerp(black_bands_time, 0.0f, 0.5f, BLACK_BARS_HEIGHT, 0.0f);
+		}
+	}
+
+	void Scene::ShakeScreen(float intensity, float time)
+	{
+		isScreenShaking = true;
+		screenShakeIntensity = intensity;
+		screenShakeTime = time;
+		shakeBounceTime = shakeOffsetX = shakeOffsetY = 0.0f;
+	}
+
+	void Scene::UpdateShakeScreen(float dt)
+	{
+		if(isScreenShaking)
+		{
+			screenShakeTime -= curTime - oldTime;
+			shakeBounceTime -= curTime - oldTime;
+
+			// On recalcule les shake coordinates a un certain intervalle
+			if(shakeBounceTime < 0.0f)
+			{
+				shakeOffsetX = ((float)rand() / RAND_MAX) * screenShakeIntensity;
+				shakeOffsetY = ((float)rand() / RAND_MAX) * screenShakeIntensity;
+				shakeBounceTime = 0.025f;
+			}
+
+			if(screenShakeTime < 0.0f)
+				isScreenShaking = false;
 		}
 	}
 

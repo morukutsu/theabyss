@@ -27,6 +27,7 @@ namespace mk
 
 			void FrustumCulling();
 			void Interpolation(float dt);
+			void UpdateTimedEffets(float dt);
 			void LightPass(std::list<Drawable*>& list);
 			void DiffusePass(std::list<Drawable*>& list);
 			void StencilWritePass(std::list<Drawable*>& list);
@@ -67,6 +68,9 @@ namespace mk
 
 			void SetEffectIntensity(float it) { effectIntensity = it; };
 
+			void ShakeScreen(float intensity, float time);
+			void UpdateShakeScreen(float dt);
+
 			// Debug rendering pipeline
 			void DebugShowLightMask(bool v) { isShowLightMask = v; };
 			void DebugShowAABB(bool v) { isShowAABB = v; };
@@ -96,6 +100,9 @@ namespace mk
 			bool isEffectBlur;
 			float black_bands_h, old_black_bands_h, black_bands_time;
 			bool isBlackBandsActivated, isBlackBandsDisplayed, blackbandsSens;
+			bool isScreenShaking;
+			float screenShakeIntensity, screenShakeTime, shakeBounceTime, shakeOffsetX, shakeOffsetY;
+			float oldTime, curTime;
 
 			// Debug
 			bool isShowLightMask, isShowAABB;
