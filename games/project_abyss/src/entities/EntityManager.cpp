@@ -6,6 +6,7 @@
 #include "Messages.h"
 #include <string>
 #include "../level_manager/GameMap.h"
+#include "EntityFactory.h"
 
 EntityManager::EntityManager()
 {
@@ -32,10 +33,11 @@ void EntityManager::InitCommonVariables()
 	//commonStateVariables[C_STATE_PLAYER_MIRROR] = 0;
 }
 
-void EntityManager::Add(Entity* ent)
+void EntityManager::Add(Entity* ent, float lifetime)
 {
 	ent->SetId(mNextAvailableId);
 	ent->SetEntityManager(this);
+	ent->lifetime = lifetime;
 	entities.push_back(ent);
 		
 	mNextAvailableId++;
@@ -45,12 +47,38 @@ void EntityManager::Add(Entity* ent)
 	entitiesHashMap.insert(std::pair<std::string, Entity*>(ent->mName, ent));
 }
 
+void EntityManager::AddParticleImage(float x, float y, std::string filename, float lifetime)
+{
+	std::map<std::string, std::string> properties;
+	properties["image"] = filename;
+	properties["prio"] = "-5";
+	properties["no_shadow"] = "1";
+	Entity* e = EntityFactory::Create("img_particle", "gfx", x, y, 0.0f, 32, 32, properties);
+	Add(e, lifetime);
+	e->SetScene(parentScene);
+	e->Init();
+}
+
 void EntityManager::Update()
 {
 	// Update all the entities
-	for(std::list<Entity*>::iterator it = entities.begin(); it != entities.end(); it++) 
+	for(std::list<Entity*>::iterator it = entities.begin(); it != entities.end();) 
 	{
-		(*it)->Update();
+		if((*it)->toDelete || (*it)->lifetime > -1.0f && (*it)->lifetime < 0)
+		{
+			delete (*it);
+			entities.erase(it++);
+		}
+		else
+		{
+			(*it)->Update();
+			
+			// Gestion du lifetime
+			if((*it)->lifetime > -1.0f)
+				(*it)->lifetime -= 1.0f/30.0f;
+
+			it++;
+		}
 	}
 
 	// Update bullet manager

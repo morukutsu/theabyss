@@ -142,6 +142,7 @@ void ShipDisplayComponent::Receive(int message, void* data)
 		generators[GEN_SMOKE]->isActive = true;
 		parts_sprites[SHIP_FX_FLASHLIGHT].Hide();
 		parts_sprites[SHIP_PART_TORCHE].Hide();
+		parent->GetEntityManager()->AddParticleImage(parent->mPos.x, parent->mPos.y, "particles/explosion.png", 0.15f);
 		//flashLight->spr.Hide();
 	}
 }

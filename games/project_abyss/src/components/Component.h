@@ -8,6 +8,8 @@ class Entity;
 class Component
 {
 	public:
+		virtual ~Component() { };
+
 		// Utilisé pour recevoir les messages broadcastés depuis l'entité
 		virtual void Receive(int message, void* data) = 0;
 		

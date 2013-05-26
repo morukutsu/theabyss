@@ -16,8 +16,8 @@ class CBody;
 class Entity
 {
 	public:
-		Entity() { mId = -1; toDelete = false; isActive = true; mDepth = 0.0f; sensorBody = NULL; };
-		~Entity();
+		Entity() { mId = -1; toDelete = false; isActive = true; mDepth = 0.0f; sensorBody = NULL; lifetime = -1.0f; };
+		virtual ~Entity();
 
 		virtual void Init() = 0;								// Loading
 		virtual void Resolve() = 0;								// Initialisation des positions etc
@@ -55,6 +55,10 @@ class Entity
 		// Waypoints
 		std::vector<Entity*> waypoints;
 
+		// Temps de vie de l'entité
+		float lifetime;
+		bool toDelete;
+
 	protected:
 		int mId;												// Identifiant de l'instance de l'entité
 		
@@ -68,7 +72,7 @@ class Entity
 		EntityManager* entityManager;
 
 		// Triggers
-		bool isActive, toDelete;	
+		bool isActive;	
 };
 
 #endif

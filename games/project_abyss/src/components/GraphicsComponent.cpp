@@ -28,6 +28,22 @@ void GraphicsComponent::Init()
 {
 	parent->GetScene()->Add(&spr);
 	spr.ignoreLightPipeline = no_shadow;
+
+	// test
+	spr.SetDepth(parent->mDepth);
+	spr.SetSize(spr.image->getImageWidth()/32.0f, spr.image->getImageHeight()/32.0f);
+	spr.MoveTo((parent->mPos.x + offsetX)/32, (parent->mPos.y + offsetY)/32);
+	//spr.Scale(scale, scale);
+	spr.Rotate(angle);
+	spr.Mirror(mirrorX, mirrorY);
+	spr.SetPriority(prio);
+	spr.Alpha(alpha);
+	spr.SavePositions();
+}
+
+GraphicsComponent::~GraphicsComponent()
+{
+	parent->GetScene()->Remove(&spr);
 }
 
 

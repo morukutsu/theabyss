@@ -30,7 +30,7 @@ class EntityManager
 
 		void InitCommonVariables();
 
-		void Add(Entity* ent);
+		void Add(Entity* ent, float lifetime = -1.0f);
 		void Update();
 		
 		int  GetEntitiesCount() { return entities.size(); };
@@ -56,6 +56,9 @@ class EntityManager
 		float getEntityPositionX(std::string& name);
 		float getEntityPositionY(std::string& name);
 		void addWaypointToEntity(std::string& ent_name, std::string& waypt_name);
+
+		// Particules
+		void AddParticleImage(float x, float y, std::string filename, float lifetime);
 
 	private:
 		// Entités

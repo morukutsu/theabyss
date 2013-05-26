@@ -11,6 +11,7 @@ class GraphicsComponent : public Component
 {
 	public:
 		GraphicsComponent(std::string filename, float scale = 1.0f, int prio = 0, float _angle = 0.0f, bool _mirrorX = false, bool _mirrorY = false, bool no_shadow = false);
+		~GraphicsComponent();
 
 		void Receive(int message, void* data);
 

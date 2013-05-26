@@ -9,7 +9,8 @@
 #include "../physics/BodyDef.h"
 
 Entity* EntityFactory::Create(std::string name, std::string type, 
-	float x, float y, float z, float w, float h, std::map<std::string, std::string>& properties)
+	float x, float y, float z, float w, float h, std::map<std::string, std::string>& properties,
+	float lifetime)
 {
 	// Vérifications
 	if(name == "")
