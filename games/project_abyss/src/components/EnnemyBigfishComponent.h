@@ -69,6 +69,7 @@ class EnnemyBigfishComponent : public Component
 		// IA Statemachine
 		int state;
 		float mWaitTime, mSpottedWaitTime, mAttackSpeed;
+		int targetHaloColor, curHaloColor;
 
 		// Cutscene de fin
 		int cutsceneState;

@@ -47,6 +47,8 @@ EnnemyBigfishComponent::EnnemyBigfishComponent()
 	isSpotted = false;
 
 	cutsceneState = 0;
+
+	curHaloColor = 255;
 }
 
 void EnnemyBigfishComponent::Receive(int message, void* data)
@@ -274,23 +276,41 @@ void EnnemyBigfishComponent::FollowWaypoints()
 		}
 	}
 
+	// Lissage changement couleur
+	if(curHaloColor < targetHaloColor)
+		curHaloColor += 8;
+	if(curHaloColor > targetHaloColor)
+		curHaloColor -= 8;
+
+	if(curHaloColor > 255)
+		curHaloColor = 255;
+
+	if(curHaloColor < 96)
+		curHaloColor = 96;
+
 	// Changement de textures et d'animations
 	if(state == S_ATTACK)
 	{
+		targetHaloColor = 96;
 		gfx->model.Assign(texB);
+		halo->spr.Tint(MK_MAKE_RGBA(255, curHaloColor, curHaloColor, 255) );
 		//gfx->model.PlayAnim(ANIM_LOOP, "gobe", false);
 	}
 	else
 	{
 		if(isSpotted)
 		{
+			targetHaloColor = 96;
 			gfx->model.Assign(texB);
 			gfx->model.PlayAnim(ANIM_LOOP, "repere", false);
+			halo->spr.Tint(MK_MAKE_RGBA(255, curHaloColor, curHaloColor, 255) );
 		}
 		else
 		{
+			targetHaloColor = 255;
 			gfx->model.Assign(texA);
 			gfx->model.PlayAnim(ANIM_LOOP, "recherche", false);
+			halo->spr.Tint(MK_MAKE_RGBA(255, curHaloColor, curHaloColor, 255) );
 		}
 	}
 }
