@@ -144,6 +144,8 @@ void ShipDisplayComponent::Receive(int message, void* data)
 		parts_sprites[SHIP_PART_TORCHE].Hide();
 		parent->GetEntityManager()->AddParticleImage(parent->mPos.x, parent->mPos.y, "particles/explosion.png", 0.15f);
 		//flashLight->spr.Hide();
+		reactorLight[0]->spr.Hide();
+		reactorLight[1]->spr.Hide();
 	}
 }
 
