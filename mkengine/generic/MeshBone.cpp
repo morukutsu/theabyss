@@ -22,6 +22,8 @@ namespace mk
 
 		vertexArray = NULL;
 		vertexIndices = NULL;
+
+		mLoaded = false;
 	}
 
 	MeshBone::~MeshBone()
@@ -58,6 +60,8 @@ namespace mk
 
 		SetupVertexIndices();
 		ProcessModel();
+
+		mLoaded = true;
 
 		return MESH_OK;
 	}
@@ -232,6 +236,7 @@ namespace mk
 
 		SetupVertexIndices();
 		ProcessModel();
+		mLoaded = true;
 
 		return MESH_OK;
 	}

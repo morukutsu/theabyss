@@ -26,7 +26,8 @@ namespace mk
 	void Shader::Load(std::string text)
 	{
 		std::cout << "Compiling shader..." << std::endl;
-		shader.loadFromMemory(text, sf::Shader::Type::Fragment);
+		if(shader.loadFromMemory(text, sf::Shader::Type::Fragment) )
+			mLoaded = true;
 	}
 
 	void Shader::Bind()
@@ -56,8 +57,6 @@ namespace mk
 
 			Load(buffer);
 
-			mLoaded = true;
-
 			return 0;
 		}
 		else
@@ -80,7 +79,6 @@ namespace mk
 
 			Load(buffer);
 
-			mLoaded = true;
 			return 0;
 		}
 		else

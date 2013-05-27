@@ -60,14 +60,18 @@ namespace mk
 		void StartRecording();						//Commence à enregistrer une liste de ressources à charger
 		std::vector<Ressource*> EndRecording();		//Retourne la liste des ressources enregistrées
 
+		void SetShaderDebug(bool v) { shaderDebug = v; };
+
 		std::list<string> mLoadJobs;
 		std::list<Ressource*> mFreeJobs;
 
 		bool mLoadingMode;							 //Si la TOC est chargée, on charge depuis le .bin
 		
+		bool shaderDebug;
+
 		// Statistiques
 		long mVramUsage;							// Vram occupée en octets
-   
+		
 	private:
 		std::map<unsigned int, sArchiveFile> mToc;	
 		std::string mFileLoadingPrefix;

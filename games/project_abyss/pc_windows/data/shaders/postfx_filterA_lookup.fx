@@ -11,9 +11,6 @@ void main()
 	// Couleur de travail
 	vec4 color = srcColor;
 	
-	// Visibilite de l'effet
-	// float intensity = 1.0;
-	
 	// ------------
 	// EFFET
 	// ------------

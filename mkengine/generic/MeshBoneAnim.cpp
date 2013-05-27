@@ -8,7 +8,7 @@ namespace mk
 {
 	MeshBoneAnim::MeshBoneAnim()
 	{
-
+		mLoaded = false;
 	}
 
 	MeshBoneAnim::~MeshBoneAnim()
@@ -26,6 +26,7 @@ namespace mk
 		if(!ReadMD5Anim (filename, &md5anim))
 		{
 			FreeAnim (&md5anim);
+			mLoaded = true;
 			return MESHA_ERROR;
 		}
 		else
@@ -182,6 +183,8 @@ namespace mk
 
 		if (jointInfos)
 			free (jointInfos);
+
+		mLoaded = true;
 
 		return MESHA_OK;
 	}

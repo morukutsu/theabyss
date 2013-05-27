@@ -70,6 +70,14 @@ int main(int argc, char **argv )
 		mCore->SetDebugVisible(false);
 	}
 
+	// Activation du dev mode pour les shaders
+	std::string isDebugShaders = ConfigurationManager::getInstance()->GetAttributeString("Debug_Shaders");
+	if(isDebugShaders == "true") {
+		mk::RessourceManager::getInstance()->SetShaderDebug(true);
+	} else {
+		mk::RessourceManager::getInstance()->SetShaderDebug(false);
+	}
+
 	// Chargement mapping contrôles
 	mk::InputManager::setControlKeyboardMapping(0, mk::ButtonName::Up, mk::InputManager::toKeyboardKey(ConfigurationManager::getInstance()->GetAttributeString("CtrlMap_Keyb_Up")));
 	mk::InputManager::setControlKeyboardMapping(0, mk::ButtonName::Down, mk::InputManager::toKeyboardKey(ConfigurationManager::getInstance()->GetAttributeString("CtrlMap_Keyb_Down")));

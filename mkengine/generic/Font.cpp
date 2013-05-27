@@ -9,7 +9,7 @@ namespace mk
 {
 	Font::Font()
 	{
-
+		mLoaded = false;
 	}
 
 	Font::~Font()
@@ -63,6 +63,7 @@ namespace mk
 			//La police est bien chargée
 			fclose(file);
 			//std::cout << "Notif : La police " << filename << " est chargee" << std::endl;
+			mLoaded = true;
 			return 0;
 		}
 		else
@@ -124,6 +125,7 @@ namespace mk
 				mChars[id].xAdvance = xadvance;
 			}
 			//std::cout << "Notif : La police " << filename << " est chargee" << std::endl;
+			mLoaded = true;
 			return 0;
 		}
 		else

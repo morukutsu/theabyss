@@ -29,6 +29,8 @@ namespace mk
 		mVramUsage = 0;
 
 		mArchive = NULL;
+
+		shaderDebug = false;
     }
 
     RessourceManager::~RessourceManager()
@@ -159,12 +161,30 @@ namespace mk
 
 			tmpRes->LoadFromFile(mFilePointer, mFileSize);
 			tmpRes->mFromRessourceManager = true;
-			resList[hash] = tmpRes;
+
+			if(tmpRes->mLoaded) 
+			{
+				if(shaderDebug)
+				{
+					Shader * shaderPtr = dynamic_cast<Shader*>(tmpRes);
+					if(!shaderPtr)
+						resList[hash] = tmpRes;
+				}
+				else
+				{
+					resList[hash] = tmpRes;
+				}
+				std::cout << "[Load] : " << hash << " | " << filename << std::endl;
+			}
+			else
+			{
+				std::cout << "[Load FAILED] : " << hash << " | " << filename << std::endl;
+			}
 
 			if(mLoadingMode == false)
 				fclose(mFilePointer);
 
-			std::cout << "[Load] : " << hash << " | " << filename << std::endl;
+			
 		}
 		
 		return tmpRes;
