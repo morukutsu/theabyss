@@ -28,6 +28,8 @@ PlayerMovementComponent::PlayerMovementComponent(PlayerInputComponent* in, Playe
 void PlayerMovementComponent::Init()
 {
 	parent->mVel = NVector(0, 0);
+
+	mirrorH = parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MIRROR] == 1;
 }
 
 void PlayerMovementComponent::Receive(int message, void* data)

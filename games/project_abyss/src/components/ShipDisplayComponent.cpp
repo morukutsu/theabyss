@@ -361,8 +361,6 @@ void ShipDisplayComponent::Init()
 
 	ReadWeaponsFromXML();
 
-	mirrorH = parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MIRROR] == 1;
-
 	// Affichage de quelques sprites
 	parts_sprites[SHIP_FX_FLASHLIGHT].Show();
 	parts_sprites[SHIP_PART_TORCHE].Show();
