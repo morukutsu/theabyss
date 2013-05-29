@@ -124,6 +124,7 @@ void EnnemyBigfishComponent::FollowWaypoints()
 	NVector heroPos = parent->GetEntityManager()->GetHeroPosition();
 	NVector spottedVec = heroPos - parent->mPos;
 	
+	oldIsSpotted = isSpotted;
 	if(spottedVec.Length() < ENN_BIGFISH_ATTACK_RADIUS && state != S_ATTACK) 
 	{
 		state = S_ATTACK;
@@ -303,14 +304,20 @@ void EnnemyBigfishComponent::FollowWaypoints()
 			targetHaloColor = 96;
 			gfx->model.Assign(texB);
 			gfx->model.PlayAnim(ANIM_LOOP, "repere", false);
+			if(oldIsSpotted != isSpotted)
+				gfx->model.SetAnimFrame(savedFrame);
 			halo->spr.Tint(MK_MAKE_RGBA(255, curHaloColor, curHaloColor, 255) );
+			savedFrame = gfx->model.GetAnimFrame();
 		}
 		else
 		{
 			targetHaloColor = 255;
 			gfx->model.Assign(texA);
 			gfx->model.PlayAnim(ANIM_LOOP, "recherche", false);
+			if(oldIsSpotted != isSpotted)
+				gfx->model.SetAnimFrame(savedFrame);
 			halo->spr.Tint(MK_MAKE_RGBA(255, curHaloColor, curHaloColor, 255) );
+			savedFrame = gfx->model.GetAnimFrame();
 		}
 	}
 }

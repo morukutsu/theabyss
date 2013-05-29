@@ -64,7 +64,7 @@ class EnnemyBigfishComponent : public Component
 		NVector vel;
 		bool mirrorH;
 		bool lockMirror;
-		bool isSpotted;
+		bool isSpotted, oldIsSpotted;
 
 		// IA Statemachine
 		int state;
@@ -73,6 +73,9 @@ class EnnemyBigfishComponent : public Component
 
 		// Cutscene de fin
 		int cutsceneState;
+
+		// Anims
+		int savedFrame;
 		
 };
 

@@ -10,7 +10,7 @@ float height;
 vec2 radialDistortion(vec2 coord)
 {
 	//vec2 cc = coord - vec2(0.5, +0.25);
-	vec2 cc = coord - vec2(0.5, 0.5);
+	vec2 cc = coord - vec2(0.5, 0.25);
 	float dist = dot(cc, cc) * distortion;
 	cc = (coord + cc * (1.0 + dist) * dist);
 	return cc;
@@ -21,7 +21,7 @@ void main()
 	// Couleur originale
 	vec2 uv = gl_TexCoord[0].st;
 	
-	uv = radialDistortion(uv);
+	//uv = radialDistortion(uv);
 	
 	vec4 srcColor = texture2D(texture, uv);
 	vec4 newColor = srcColor;
