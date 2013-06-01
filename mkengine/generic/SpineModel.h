@@ -22,10 +22,10 @@ namespace mk
 			void Play();
 
 			void MoveTo(float x, float y) { posX = x, posY = y; };
-			void Scale(float w, float h)  { scaleX = w, scaleY = h; };
+			void Scale(float w, float h)  { scaleX = w/32.0f, scaleY = h/32.0f; };
 			void Rotate(float Angle) { angle = Angle; };
 			void SetDepth(float z) { posZ = z; };
-
+			void Mirror(bool h, bool v) { mirrorX = h; mirrorY = !v; };
 			void Interpolate(float dt);
 			void SavePositions();
 
@@ -46,6 +46,7 @@ namespace mk
 
 			float animationTime, oldAnimationTime;
 			int anim_mode;
+			bool anim_finished;
 	};
 };
 

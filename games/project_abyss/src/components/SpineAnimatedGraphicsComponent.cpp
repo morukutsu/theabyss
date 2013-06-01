@@ -1,25 +1,25 @@
 // project_abyss
 // LittleSpace Studio 2012
 
-#include "AnimatedGraphicsComponent.h"
+#include "SpineAnimatedGraphicsComponent.h"
 #include <iostream>
 #include "../entities/Entity.h"
 #include "RessourceManager.h"
 
-AnimatedGraphicsComponent::AnimatedGraphicsComponent(std::string modelf, float _scale, int _prio, std::string defaultAnim, float _angle, bool _mirrorX, bool _mirrorY, int _anim_offset, bool _no_shadow)
+SpineAnimatedGraphicsComponent::SpineAnimatedGraphicsComponent(std::string modelf, float _scale, int _prio, std::string defaultAnim, float _angle, bool _mirrorX, bool _mirrorY, int _anim_offset, bool _no_shadow)
 {
 	// Chargement des ressources
-	model.Scale(_scale, _scale);
+	model.Scale(_scale/32.0f, _scale/32.0f);
 	model.LoadModelDescriptorFile(modelf);
 
 	if(defaultAnim == "")
-		defaultAnim = model.animations[0].name;
+		defaultAnim = model.skeletonData->animations[0]->name;
 
-	model.PlayAnim(ANIM_LOOP, defaultAnim);
+	model.PlayAnim(defaultAnim, ANIM_LOOP);
 
 	model.Mirror(false, true);
 
-	model.SetAnimFrame(_anim_offset);
+	//model.SetAnimFrame(_anim_offset);
 
 	scale = _scale;
 	prio = _prio;
@@ -33,28 +33,27 @@ AnimatedGraphicsComponent::AnimatedGraphicsComponent(std::string modelf, float _
 	offsetX = offsetY = 0;
 }
 
-void AnimatedGraphicsComponent::Init()
+void SpineAnimatedGraphicsComponent::Init()
 {
 	parent->GetScene()->Add(&model);
 	model.ignoreLightPipeline = no_shadow;
 }
 
 
-void AnimatedGraphicsComponent::Update()
+void SpineAnimatedGraphicsComponent::Update()
 {
 	model.SetDepth(parent->mDepth);
 	model.MoveTo((parent->mPos.x + offsetX)/32, (parent->mPos.y  + offsetY)/32);
-	model.Alpha(1.0f);
+	//model.Alpha(1.0f);
 	model.Rotate(angle);
 	model.Mirror(mirrorX, mirrorY);
 	model.Scale(scale, scale);
 	model.SetPriority(prio);
-	//model.Play(1.0f/30.0f);
-	model.UpdateTime();
+	model.Play();
 	model.SavePositions();
 }
 
-void AnimatedGraphicsComponent::Receive(int message, void* data)
+void SpineAnimatedGraphicsComponent::Receive(int message, void* data)
 {
 
 }

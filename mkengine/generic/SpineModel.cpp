@@ -37,6 +37,7 @@ SpineModel::SpineModel ()
 {
 	currentAnim = NULL;
 	Bone_setYDown(true);
+	anim_finished = false;
 }
 
 SpineModel::~SpineModel()
@@ -49,6 +50,9 @@ SpineModel::~SpineModel()
 
 void SpineModel::Draw ()
 {
+	skeleton_file->flipX = mirrorX;
+	skeleton_file->flipY = mirrorY;
+
 	vertexArray.clear();
 	float vertexPositions[8];
 	for (int i = 0; i < skeleton_file->slotCount; ++i) {
@@ -117,16 +121,14 @@ void SpineModel::Interpolate(float dt)
 
 	state->time = animationTime + (1.0f/30.0f)*dt;
 	
-	//animationTime += (1.0f/30.0f)*dt;
-	
-	//AnimationState_update(state, animationTime - oldAnimationTime);
-
-	if(anim_mode == ANIM_LOOP)
+	if(anim_mode == ANIM_ONCE && state->time > currentAnim->duration)
 	{
-		AnimationState_apply(state, skeleton_file);
-		Skeleton_updateWorldTransform(skeleton_file);
+		animationTime = currentAnim->duration;
+		state->time = animationTime;
+		anim_finished = true;
 	}
-	else if(anim_mode == ANIM_ONCE && animationTime < currentAnim->duration)
+
+	if(!anim_finished)
 	{
 		AnimationState_apply(state, skeleton_file);
 		Skeleton_updateWorldTransform(skeleton_file);
@@ -139,6 +141,8 @@ void SpineModel::PlayAnim(std::string anim, int mode)
 	AnimationState_setAnimation(state, currentAnim, true);
 	animationTime = 0;
 	anim_mode = mode;
+
+	anim_finished = false;
 }
 
 void SpineModel::Play()
@@ -154,9 +158,14 @@ void SpineModel::Play()
 	if(anim_mode == ANIM_ONCE && animationTime > currentAnim->duration)
 	{
 		animationTime = currentAnim->duration;
+		anim_finished = true;
 	}
 }
 
+void SpineModel::SavePositions()
+{
+
+}
 
 void SpineModel::LoadModelDescriptorFile(std::string filename)
 {

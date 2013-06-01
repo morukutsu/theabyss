@@ -15,3 +15,4 @@
 #include "SensorComponent.h"
 #include "BodyComponent.h"
 #include "EnnemyBigfishComponent.h"
+#include "SpineAnimatedGraphicsComponent.h"

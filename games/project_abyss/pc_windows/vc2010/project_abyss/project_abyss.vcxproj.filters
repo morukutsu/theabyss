@@ -509,6 +509,9 @@
     <ClInclude Include="..\..\..\src\components\EnnemyBigfishComponent.h">
       <Filter>Fichiers d%27en-tête\game\components</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\components\SpineAnimatedGraphicsComponent.h">
+      <Filter>Fichiers d%27en-tête\game\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\AsciiFile.cpp">
@@ -899,6 +902,9 @@
       <Filter>Fichiers sources\game\components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\components\EnnemyBigfishComponent.cpp">
+      <Filter>Fichiers sources\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\components\SpineAnimatedGraphicsComponent.cpp">
       <Filter>Fichiers sources\game\components</Filter>
     </ClCompile>
   </ItemGroup>

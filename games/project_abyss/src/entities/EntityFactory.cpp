@@ -132,13 +132,51 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 		ent = new StaticEntity();
 		ent->AddComponent(new AnimatedGraphicsComponent(properties["model"], scale, prio, defaultanim, angle, mirrorX, mirrorY, anim_offset, no_shadow) );
 	}
+	else if(type == "spineanimatedgfx")
+	{
+		float scale = 1.0f;
+		int prio = 0;
+		std::string defaultanim = "idle";
+		float angle = 0.0f;
+		bool mirrorX = false;
+		bool mirrorY = false;
+		int anim_offset = 0;
+		bool no_shadow = false;
+
+		if(properties.find("scale") != properties.end() )
+			scale = toFloat(properties["scale"]);
+
+		if(properties.find("angle") != properties.end() )
+			angle = toFloat(properties["angle"]);
+
+		if(properties.find("prio") != properties.end() )
+			prio = toInt(properties["prio"]);
+
+		if(properties.find("defaultanim") != properties.end() )
+			defaultanim = properties["defaultanim"];
+
+		if(properties.find("mirror_x") != properties.end() )
+			mirrorX = toInt(properties["mirror_x"]) == 1;
+
+		if(properties.find("mirror_y") != properties.end() )
+			mirrorY = toInt(properties["mirror_y"]) == 1;
+
+		if(properties.find("anim_offset") != properties.end() )
+			anim_offset = toInt(properties["anim_offset"]);
+
+		if(properties.find("no_shadow") != properties.end() )
+			no_shadow = toInt(properties["no_shadow"]) == 1;
+
+		ent = new StaticEntity();
+		ent->AddComponent(new SpineAnimatedGraphicsComponent(properties["model"], scale, prio, defaultanim, angle, mirrorX, mirrorY, anim_offset, no_shadow) );
+	}
 	else if(type == "gfx")
 	{
 		float scale = 1.0f;
 		int prio = 0;
 		float angle = 0.0f;
 		bool mirrorX = false;
-		bool mirrorY = false;
+		bool mirrorY = true;
 		bool no_shadow = false;
 
 		if(properties.find("scale") != properties.end() )
@@ -154,7 +192,7 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 			mirrorX = toInt(properties["mirror_x"]) == 1;
 
 		if(properties.find("mirror_y") != properties.end() )
-			mirrorY = toInt(properties["mirror_y"]) == 1;
+			mirrorY = toInt(properties["mirror_y"]) == 0;
 
 		if(properties.find("no_shadow") != properties.end() )
 			no_shadow = toInt(properties["no_shadow"]) == 1;
