@@ -219,6 +219,11 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 		ent = new MoveableEntity();
 		ent->AddComponent(new EnnemyBigfishComponent() );
 	}
+	else if(type == "ennemy_fish")
+	{
+		ent = new MoveableEntity();
+		ent->AddComponent(new EnnemyFishComponent() );
+	}
 	else if(type == "waypoint")
 	{
 		ent = new StaticEntity();

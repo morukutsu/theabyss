@@ -16,3 +16,5 @@
 #include "BodyComponent.h"
 #include "EnnemyBigfishComponent.h"
 #include "SpineAnimatedGraphicsComponent.h"
+#include "EnnemyFishComponent.h"
+#include "IABaseEnnemyComponent.h"

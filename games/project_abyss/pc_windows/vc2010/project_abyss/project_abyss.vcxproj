@@ -171,7 +171,9 @@
     <ClInclude Include="..\..\..\src\components\ComponentsIncludes.h" />
     <ClInclude Include="..\..\..\src\components\DoorComponent.h" />
     <ClInclude Include="..\..\..\src\components\EnnemyBigfishComponent.h" />
+    <ClInclude Include="..\..\..\src\components\EnnemyFishComponent.h" />
     <ClInclude Include="..\..\..\src\components\GraphicsComponent.h" />
+    <ClInclude Include="..\..\..\src\components\IABaseEnnemyComponent.h" />
     <ClInclude Include="..\..\..\src\components\LightComponent.h" />
     <ClInclude Include="..\..\..\src\components\ParticleGeneratorComponent.h" />
     <ClInclude Include="..\..\..\src\components\PlayerBodyComponent.h" />
@@ -366,7 +368,9 @@
     <ClCompile Include="..\..\..\src\components\BodyComponent.cpp" />
     <ClCompile Include="..\..\..\src\components\DoorComponent.cpp" />
     <ClCompile Include="..\..\..\src\components\EnnemyBigfishComponent.cpp" />
+    <ClCompile Include="..\..\..\src\components\EnnemyFishComponent.cpp" />
     <ClCompile Include="..\..\..\src\components\GraphicsComponent.cpp" />
+    <ClCompile Include="..\..\..\src\components\IABaseEnnemyComponent.cpp" />
     <ClCompile Include="..\..\..\src\components\LightComponent.cpp" />
     <ClCompile Include="..\..\..\src\components\ParticleGeneratorComponent.cpp" />
     <ClCompile Include="..\..\..\src\components\PlayerBodyComponent.cpp" />
