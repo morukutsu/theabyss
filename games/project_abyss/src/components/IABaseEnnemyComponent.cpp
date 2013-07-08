@@ -23,8 +23,6 @@ void IABaseEnnemyComponent::Receive(int message, void* data)
 void IABaseEnnemyComponent::Update()
 {
 	stateTime += 1.0f/30.0f;
-	if(currentState != previousState)
-		stateTime = 0.0f;
 
 	Automate();
 }

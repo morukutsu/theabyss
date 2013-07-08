@@ -10,7 +10,8 @@
 #include "../physics/Vector.h"
 
 class IABaseEnnemyComponent;
-
+class GraphicsComponent;
+class BodyComponent;
 class EnnemyFishComponent : public Component
 {
 	public:
@@ -25,6 +26,14 @@ class EnnemyFishComponent : public Component
 
 	public:
 		IABaseEnnemyComponent* cmp;
+		GraphicsComponent* gfx;
+		BodyComponent* body;
+
+		// Etat
+		int state, prevState;
+
+		// Déplacement
+		NVector moveVel;
 };
 
 #endif

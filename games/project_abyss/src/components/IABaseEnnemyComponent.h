@@ -11,6 +11,7 @@
 
 class IABaseEnnemyComponent : public Component
 {
+	public: 
 	enum {
 		S_WAIT, S_MOVE, S_ATTACK, S_HIT, S_DEAD
 	};
@@ -25,7 +26,7 @@ class IABaseEnnemyComponent : public Component
 		void Init();
 
 		void Automate();
-		void ChangeState(int st) { previousState = currentState; currentState  = st; };
+		void ChangeState(int st) { previousState = currentState; currentState = st; stateTime = 0.0f; };
 
 		void SetLife(int l) { life = l; };
 		int GetLife() { return life; };
@@ -35,6 +36,9 @@ class IABaseEnnemyComponent : public Component
 
 		void SetPlayerTouched(bool v) { playerTouched = v; };
 		bool GetPlayerTouched() { return playerTouched; };
+
+		int  GetState() { return currentState; };
+		int	 GetPrevState() { return previousState; };
 
 	private:
 		int currentState, previousState;
