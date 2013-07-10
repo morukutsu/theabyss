@@ -34,10 +34,8 @@ void IABaseEnnemyComponent::Automate()
 	{
 		if(playerTouched)
 			ChangeState(S_HIT);
-		else if(stateTime > 2.0f)
+		else if(stateTime > 1.5f)
 			ChangeState(S_MOVE);
-		else if(playerSpotted)
-			ChangeState(S_ATTACK);
 		else if(life <= 0)
 			ChangeState(S_DEAD);
 	}
@@ -46,7 +44,7 @@ void IABaseEnnemyComponent::Automate()
 	{
 		if(playerTouched)
 			ChangeState(S_HIT);
-		else if(stateTime > 2.0f)
+		else if(stateTime > 3.0f)
 			ChangeState(S_WAIT);
 		else if(playerSpotted)
 			ChangeState(S_ATTACK);
@@ -60,6 +58,8 @@ void IABaseEnnemyComponent::Automate()
 			ChangeState(S_HIT);
 		else if(life <= 0)
 			ChangeState(S_DEAD);
+		else if(stateTime > 1.0f)
+			ChangeState(S_WAIT);
 	}
 	// ETAT S_HIT
 	else if(currentState == S_HIT) 

@@ -9,6 +9,8 @@
 #include <list>
 #include "../physics/Vector.h"
 
+#define ENNEMY_FISH_ATTACK_RADIUS	400.0f
+
 class IABaseEnnemyComponent;
 class GraphicsComponent;
 class BodyComponent;
@@ -24,6 +26,9 @@ class EnnemyFishComponent : public Component
 
 		void Init();
 
+		void LookForPlayer();
+		void CheckCollisionsWithBullets();
+
 	public:
 		IABaseEnnemyComponent* cmp;
 		GraphicsComponent* gfx;
@@ -31,6 +36,7 @@ class EnnemyFishComponent : public Component
 
 		// Etat
 		int state, prevState;
+		int life;
 
 		// Déplacement
 		NVector moveVel;
