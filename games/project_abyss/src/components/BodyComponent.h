@@ -16,6 +16,7 @@ class BodyComponent : public Component
 {
 	public:
 		BodyComponent(int bodydef, int type, int numVertices, float w, float h = 0.0f);
+		~BodyComponent();
 
 		void Receive(int message, void* data);
 

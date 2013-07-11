@@ -32,6 +32,7 @@ public:
 	void UpdatePhysics();
 
 	void AddBody(CBody* body);
+	void RemoveBody(CBody* body);
 
 	void DebugCollisions();
 

@@ -21,11 +21,12 @@ EnnemyFishComponent::EnnemyFishComponent()
 
 	life = 30;
 	cmp->SetLife(life);
+
+	deadTime = 0.0f;
 }
 
 EnnemyFishComponent::~EnnemyFishComponent()
 {
-	// TODO : supprimer les composants
 
 }
 
@@ -93,7 +94,9 @@ void EnnemyFishComponent::Update()
 			break;
 
 		case IABaseEnnemyComponent::S_DEAD:
-			std::cout << "dead" << std::endl;
+			deadTime += 1.0f/30.0f;
+			if(deadTime > 2.0f)
+				parent->toDelete = true;
 			break;
 	}
 

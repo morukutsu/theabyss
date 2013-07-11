@@ -19,6 +19,13 @@ BodyComponent::BodyComponent(int _bodydef, int _type, int _numVertices, float _w
 	h = _h;
 }
 
+BodyComponent::~BodyComponent()
+{
+	// supprimer le body du monde
+	parent->GetEntityManager()->GetGameMap()->RemoveBody(body);
+	body->toDelete = true;
+}
+
 void BodyComponent::Receive(int message, void* data)
 {
 

@@ -229,18 +229,28 @@ void GameMap::SpecialCases(std::string name, std::string type, Entity* entity)
 void GameMap::UpdatePhysics()
 {
 	// Update des body
-	for(std::list<CBody*>::iterator it = bodies.begin(); it != bodies.end(); it++)
+	for(std::list<CBody*>::iterator it = bodies.begin(); it != bodies.end();)
 	{
-		// Application de la gravité
-		if((*it)->isGravity)
-			(*it)->AddImpulse(NVector(0, GRAVITY), 1.0f/30.0f);
+		if((*it)->toDelete)
+		{
+			delete (*it);
+			bodies.erase(it++);
+		}
+		else
+		{
+			// Application de la gravité
+			if((*it)->isGravity)
+				(*it)->AddImpulse(NVector(0, GRAVITY), 1.0f/30.0f);
 
-		// Update à 30FPS
-		(*it)->Update(1.0f/30.0f);
+			// Update à 30FPS
+			(*it)->Update(1.0f/30.0f);
 
-		(*it)->ClearCollisionBodies();
+			(*it)->ClearCollisionBodies();
 
-		(*it)->isCollision = false;
+			(*it)->isCollision = false;
+
+			it++;
+		}
 	}
 
 	// Gestion des collisions
@@ -275,6 +285,11 @@ void GameMap::UpdatePhysics()
 void GameMap::AddBody(CBody* body)
 {
 	bodies.push_back(body);
+}
+
+void GameMap::RemoveBody(CBody* body)
+{
+	bodies.remove(body);
 }
 
 void GameMap::DebugCollisions()

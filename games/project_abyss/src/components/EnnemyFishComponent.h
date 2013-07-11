@@ -38,6 +38,8 @@ class EnnemyFishComponent : public Component
 		int state, prevState;
 		int life;
 
+		float deadTime;
+
 		// Déplacement
 		NVector moveVel;
 };
