@@ -8,8 +8,13 @@
 #include "gamestate.h"
 #include "mkengine.h"
 
+class LevelManager;
 class MenuState : public CGameState
 {
+	enum {
+		STATE_PRESS_BTN, STATE_MENU
+	};
+
 public:
     void Init();
     void Cleanup();
@@ -26,22 +31,31 @@ public:
         return &m_MenuState;
     }
 
+	void UpdateCam();
+
 protected:
     MenuState() { }
 
 private:
     static MenuState m_MenuState;
 
-	//Sprites & Images
-	mk::Image *imgSplash, *imgBg;
-	mk::Sprite sprSplash, sprBg;
+	// Pour la map du menu
+	LevelManager* lvlMan;
 
-	mk::ExtendedSpriteRessource* sprRes;
-	mk::ExtendedSprite spr;
+	//Sprites & Images
+	mk::Font* fnt;
 
 	// Effets
 	float alpha;
 	float elapsedTime;
+	float origCamZ, camZ;
+
+	// Etat menu
+	int oldState, state;
+	bool changedState;
+
+	// Strings du menu
+	const char* mainMenuStrings[4];
 };
 
 #endif

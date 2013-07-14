@@ -32,7 +32,7 @@ void BulletUpdater::Update(Bullet* bullet)
 				std::vector<CBody*>& cbodies = bullet->body->cbodies;
 				for(int i = 0; i < cbodies.size(); i++)
 				{
-					if(cbodies[i]->bodykind == BODY_WORLD_BOUNDS || cbodies[i]->bodytype == BODY_ENNEMY)
+					if(cbodies[i]->bodytype == BODY_WORLD_BOUNDS || cbodies[i]->bodytype == BODY_ENNEMY)
 					{
 						bullet->toDelete = true;
 					}

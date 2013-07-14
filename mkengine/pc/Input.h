@@ -71,6 +71,9 @@ namespace mk
 
 		// Emulation de l'user input du joystick au clavier
 		sf::Keyboard::Key emuKeyJoy[4];
+
+		// Si une touche a été appuyée à cette frame
+		bool btnPressed;
 	};
 
 	// Map pour stocker la correspondance touche / string

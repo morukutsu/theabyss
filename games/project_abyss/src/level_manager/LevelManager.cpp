@@ -10,6 +10,7 @@
 #include "../effects/ScrollFadeEffect.h"
 #include "../components/PlayerInputComponent.h"
 #include "../script/ScriptManager.h"
+#include "../LevelState.h"
 
 LevelManager::LevelManager()
 {
@@ -716,10 +717,12 @@ void LevelManager::ShowDebug()
 			debugMenuTitle->ToggleFocus(true);
 
 			// Retour DebugState
-			UnloadMap();
-			StateManager::getInstance()->ChangeState(DebugState::Instance() );
+			//UnloadMap();
+			//StateManager::getInstance()->ChangeState(DebugState::Instance() );
 			
-			return;
+			// Il ne faut plus jamais updater l'état courant après un change state
+			//return;
+			LevelState::Instance()->returnToDebugState = true;
 		}
 		else if(id == debugMenuFull->GetItemCount() - 1) 
 		{

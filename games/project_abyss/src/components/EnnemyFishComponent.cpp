@@ -58,7 +58,7 @@ void EnnemyFishComponent::Update()
 	{
 		case IABaseEnnemyComponent::S_WAIT:
 			// On ne bouge pas
-			body->body->SetLinearVelocity(NVector(0, 0) );
+			body->body->SetLinearVelocity(body->body->GetDisplacement() * 0.95f);
 			break;
 
 		case IABaseEnnemyComponent::S_MOVE:
@@ -96,7 +96,10 @@ void EnnemyFishComponent::Update()
 		case IABaseEnnemyComponent::S_DEAD:
 			deadTime += 1.0f/30.0f;
 			if(deadTime > 2.0f)
+			{
 				parent->toDelete = true;
+				body->body->toDelete = true;
+			}
 			break;
 	}
 

@@ -37,6 +37,9 @@ private:
     static LevelState m_LevelState;
 
 	LevelManager* lvlMan;
+
+public:
+	bool returnToDebugState;
 };
 
 #endif

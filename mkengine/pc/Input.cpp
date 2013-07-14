@@ -27,6 +27,7 @@ namespace mk
 		//Sur PC, soit une utilise une vraie wiimote... soit le clavier/gamepad
 		Input old = _in[0];
 		Input in;
+		in.btnPressed = false;
 
 		// Conservation des données sur les emu keys
 		for(int i = 0; i < 4; i++) 
@@ -40,6 +41,8 @@ namespace mk
 		for(int i = 0; i < MAX_BUTTONS; i++)
 		{
 			in.buttons[i].held = sf::Keyboard::isKeyPressed(mKeybMapping[0][i]);
+			if(in.buttons[i].held)
+				in.btnPressed = true;
 		}
 		
 		/*in.buttons[ButtonNames::B].held = sf::Keyboard::isKeyPressed(sf::Keyboard::Z);

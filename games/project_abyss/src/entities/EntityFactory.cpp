@@ -176,7 +176,7 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 		int prio = 0;
 		float angle = 0.0f;
 		bool mirrorX = false;
-		bool mirrorY = true;
+		bool mirrorY = false;
 		bool no_shadow = false;
 
 		if(properties.find("scale") != properties.end() )
@@ -189,7 +189,7 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 			angle = toFloat(properties["angle"]);
 
 		if(properties.find("mirror_x") != properties.end() )
-			mirrorX = toInt(properties["mirror_x"]) == 1;
+			mirrorX = toInt(properties["mirror_x"]) == 0;
 
 		if(properties.find("mirror_y") != properties.end() )
 			mirrorY = toInt(properties["mirror_y"]) == 0;
