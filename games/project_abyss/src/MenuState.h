@@ -15,6 +15,15 @@ class MenuState : public CGameState
 		STATE_PRESS_BTN, STATE_MENU
 	};
 
+	struct sParticle {
+		float x, y, z;
+		float vx, vy, vz;
+		float alpha;
+		float life;
+
+		mk::Sprite spr;
+	};
+
 public:
     void Init();
     void Cleanup();
@@ -32,6 +41,10 @@ public:
     }
 
 	void UpdateCam();
+
+	void InitParticles();
+	void UpdateParticles();
+	void ResetParticle(int id);
 
 protected:
     MenuState() { }
@@ -56,6 +69,8 @@ private:
 
 	// Strings du menu
 	const char* mainMenuStrings[4];
+
+	sParticle particles[64];
 };
 
 #endif

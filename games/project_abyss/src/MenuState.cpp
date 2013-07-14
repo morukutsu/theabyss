@@ -7,6 +7,7 @@
 #include "level_manager\LevelManager.h"
 #include "LanguageManager.h"
 #include "DebugState.h"
+#include "SimpleMaths.h"
 
 //GFX
 MenuState MenuState::m_MenuState;
@@ -44,11 +45,97 @@ void MenuState::Init()
 	mainMenuStrings[3] = LanguageManager::GetCString(LOC_MENU_QUITTER);
 
 	mk::Core::SetLoadingFrame(true);
+
+	// Effet particules
+	InitParticles();
 }
 
 void MenuState::Cleanup()
 {
 	delete lvlMan;
+}
+
+void MenuState::InitParticles()
+{
+	for(int i = 0; i < 64; i++)
+	{
+		ResetParticle(i);
+
+		// Sprite
+		particles[i].spr.Set3DMode(true);
+		particles[i].spr.Assign((mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("particles/rect.png") );
+		
+		
+		lvlMan->scene->Add(&particles[i].spr);
+		particles[i].spr.ignoreLightPipeline = true;
+	}
+}
+
+void MenuState::ResetParticle(int i)
+{
+	particles[i].z = SimpleMaths::Rand(-5.0f, 5.0f);
+	particles[i].x = SimpleMaths::Rand(7.0f, 30.0f)*64;
+	particles[i].y = SimpleMaths::Rand(5.0f, 18.0f)*64;
+
+	particles[i].vx = SimpleMaths::Rand(-5.0f, 5.0f);
+	particles[i].vy = SimpleMaths::Rand(-5.0f, 5.0f);
+
+	if(particles[i].z < 0.0f)
+		particles[i].vz = SimpleMaths::Rand(-0.25f, 0.0f);
+	else
+		particles[i].vz = SimpleMaths::Rand(0.0f, 0.25f);
+	
+	particles[i].alpha = 0.0f;
+	particles[i].life = 0.0f + SimpleMaths::Rand(0.0f, 5.0f);
+
+	particles[i].spr.SetDepth(particles[i].z);
+	particles[i].spr.MoveTo(particles[i].x / 32.0f, particles[i].y / 32.0f);
+	particles[i].spr.SavePositions();
+}
+
+void MenuState::UpdateParticles()
+{
+	for(int i = 0; i < 64; i++)
+	{
+		// Vie
+		particles[i].life += 1.0f/30.0f;
+		if(particles[i].life >= 10.0f)
+		{
+			ResetParticle(i);
+		}
+
+		// Maj de l'alpha
+		if(particles[i].life < 10.0f - 2.0F)
+		{
+			particles[i].alpha += 0.01f;
+			if(particles[i].alpha >= 1.0f)
+				particles[i].alpha = 1.0f;
+		}
+		else
+		{
+			particles[i].alpha -= 0.05f;
+			if(particles[i].alpha <= 0.0f)
+				particles[i].alpha = 0.0f;
+		}
+
+		// Changement de vitesse
+		//particles[i].vx
+
+		// Deplacement
+		particles[i].x += particles[i].vx;
+		particles[i].y += particles[i].vy;
+		particles[i].z += particles[i].vz;
+		//if(
+		// Display
+		particles[i].spr.MoveTo(particles[i].x / 32.0f, particles[i].y / 32.0f);
+		particles[i].spr.SetDepth(particles[i].z);
+
+		particles[i].spr.SetSize(particles[i].spr.image->getImageWidth()/32.0f, particles[i].spr.image->getImageHeight()/32.0f);
+		particles[i].spr.Rotate(0.0f);
+		particles[i].spr.SetPriority(4);
+		particles[i].spr.Alpha(particles[i].alpha);
+		particles[i].spr.SavePositions();
+	}
 }
 
 void MenuState::Pause()
@@ -102,6 +189,9 @@ void MenuState::Update(StateManager* game)
 			changedState = false;
 		}
 	}
+
+	// effets
+	UpdateParticles();
 }
 
 void MenuState::UpdateCam()
@@ -150,7 +240,7 @@ void MenuState::Draw(StateManager* game, int mode, float interpolation)
 				//lowDisplayText(fnt, txtPosX - 5, txtPosY, s, MK_MAKE_RGBA(0, 255, 255, 255), 1.0f);
 
 				// Rouge
-				lowDisplayText(fnt, txtPosX -1, txtPosY -1, s, MK_MAKE_RGBA(255, 0, 0, 255), 1.05f);
+				//lowDisplayText(fnt, txtPosX -1, txtPosY -1, s, MK_MAKE_RGBA(255, 0, 0, 255), 1.05f);
 
 				// Blanc
 				lowDisplayText(fnt, txtPosX, txtPosY, s, MK_MAKE_RGBA(255, 255, 255, 255), 1.0f);

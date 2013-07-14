@@ -35,7 +35,7 @@ namespace mk
 		}
 		else
 		{*/
-			r = a->posZ + a->priority*0.01f < b->posZ + b->priority*0.01f;
+			r = a->posZ + a->priority*PRIORITY_FACTOR < b->posZ + b->priority*PRIORITY_FACTOR;
 		/*}*/
 
 		return r;
