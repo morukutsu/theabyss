@@ -26,8 +26,8 @@ void MenuState::Init()
 	lvlMan->LoadMap("maps/title.tmx");
 
 	// On configure un effet
-	lvlMan->scene->LoadPostFXShader("shaders/postfx_filterB_lookup.fx");
-	lvlMan->scene->SetEffectIntensity(0.55f);
+	//lvlMan->scene->LoadPostFXShader("shaders/postfx_filterB_lookup.fx");
+	//lvlMan->scene->SetEffectIntensity(0.55f);
 
 	camZ = 0.0f;
 	origCamZ = lvlMan->gameCamera.GetDepth();
@@ -63,7 +63,7 @@ void MenuState::InitParticles()
 
 		// Sprite
 		particles[i].spr.Set3DMode(true);
-		particles[i].spr.Assign((mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("particles/rect.png") );
+		particles[i].spr.Assign((mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("particles/bulle.png") );
 		
 		
 		lvlMan->scene->Add(&particles[i].spr);

@@ -509,7 +509,7 @@ namespace mk
 		mWorkFBO->Bind(1);
 		
 		shader_blurH->shader.setParameter("intensity", effectIntensity);
-		shader_blurH->shader.setParameter("radius", intensity);
+		shader_blurH->shader.setParameter("radius", (int)ceil(intensity));
 		shader_blurH->Bind();
 
 		// Displaying in FBO 0
@@ -523,7 +523,7 @@ namespace mk
 		mWorkFBO->Bind(0);
 
 		shader_blurV->shader.setParameter("intensity", effectIntensity);
-		shader_blurV->shader.setParameter("radius", intensity);
+		shader_blurV->shader.setParameter("radius", (int)ceil(intensity));
 		shader_blurV->Bind();
 
 		// Displaying in FBO 1

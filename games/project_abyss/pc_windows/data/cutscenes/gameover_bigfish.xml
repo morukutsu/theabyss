@@ -11,7 +11,7 @@
 		<!-- Demarrage du blur -->
 		<Event time="2" duration="0" type="fx">
 			<Parameter name="fx_type" value="blur"/>
-			<Parameter name="intensity" value="30.0"/>
+			<Parameter name="intensity" value="1.0"/>
 			<Parameter name="toggle" value="on"/>
 		</Event>
 		
@@ -24,8 +24,8 @@
 		
 		<Event time="2" duration="3.0" type="change_value">
 			<Parameter name="value_changed" value="blur_intensity"/>
-			<Parameter name="start_value" value="10.0"/>
-			<Parameter name="end_value" value="1.0"/>
+			<Parameter name="start_value" value="1.0"/>
+			<Parameter name="end_value" value="10.0"/>
 		</Event>
 		
 		<!-- Fin -->
