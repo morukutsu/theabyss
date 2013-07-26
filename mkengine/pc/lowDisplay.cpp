@@ -528,18 +528,19 @@ void lowDisplayExtendedSprite(mk::ExtendedSprite* spr)
 	
 }
 
-void lowDisplayFBO(mk::FBO* fbo, int id, float offsetX, float offsetY)
+void lowDisplayFBO(mk::FBO* fbo, int id, float offsetX, float offsetY, float scaleX, float scaleY, float alpha)
 {
 	// Display
-	float Width  = static_cast<float>(fbo->getImageWidth());
-	float Height = static_cast<float>(fbo->getImageHeight());
-
+	float Width  = static_cast<float>(fbo->texs[id].w);
+	float Height = static_cast<float>(fbo->texs[id].h);
+	float texw = fbo->texs[id].texw;
+	float texh = fbo->texs[id].texh;
 
 	glPushMatrix();
 	
 	//glTranslatef(0.375f, 0.375f, 0.f);
 	glTranslatef(offsetX, offsetY, mAutoDepth);
-	glScalef(1.0f, 1.0f, 1.0f);
+	//glScalef(scaleX, scaleY, 1.0f);
 
 	glEnable (GL_DEPTH_TEST);
 	glEnable (GL_BLEND);
@@ -549,19 +550,19 @@ void lowDisplayFBO(mk::FBO* fbo, int id, float offsetX, float offsetY)
  
     // Draw the sprite's triangles
     glBegin(GL_QUADS);
-		 glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		 glColor4f(1.0f, 1.0f, 1.0f, alpha);
 
-		 glTexCoord2f(0,  (float)fbo->h/fbo->texh);    
+		 glTexCoord2f(0,  (float)Height/texh);    
 		 glVertex2f(0, 0);
 
          glTexCoord2f(0, 0);
-		 glVertex2f(0, Height);
+		 glVertex2f(0, Height * scaleY);
 
-         glTexCoord2f((float)fbo->w/fbo->texw, 0);
-		 glVertex2f(Width, Height);
+         glTexCoord2f((float)Width/texw, 0);
+		 glVertex2f(Width * scaleX, Height * scaleY);
 
-         glTexCoord2f((float)fbo->w/fbo->texw, (float)fbo->h/fbo->texh);    
-		 glVertex2f(Width, 0) ;
+         glTexCoord2f((float)Width/texw, (float)Height/texh);    
+		 glVertex2f(Width * scaleX, 0);
     glEnd();
 
 	glDisable (GL_BLEND);

@@ -29,7 +29,15 @@ int main(int argc, char **argv )
 	mk::Core* mCore = new mk::Core(winW, winH, "project_abyss", RENDERMODE_NONE);
 
 	// Création des FBO
-	mk::FBO::getInstance()->Create(mk::Core::getWindowWidth(), mk::Core::getWindowHeight(), 2);
+	mk::FBO::getInstance()->CreateFBO();
+	
+	// Full res FBOs
+	mk::FBO::getInstance()->CreateTexture(0, mk::Core::getWindowWidth(), mk::Core::getWindowHeight());
+	mk::FBO::getInstance()->CreateTexture(1, mk::Core::getWindowWidth(), mk::Core::getWindowHeight());
+
+	// 1/4 res FBO
+	mk::FBO::getInstance()->CreateTexture(2, mk::Core::getWindowWidth() / 4.0f, mk::Core::getWindowHeight() / 4.0f);
+	mk::FBO::getInstance()->CreateTexture(3, mk::Core::getWindowWidth() / 4.0f, mk::Core::getWindowHeight() / 4.0f);
 
 	// Acivation du fullscreen
 	std::string isFullscreen = ConfigurationManager::getInstance()->GetAttributeString("Graphics_Fullscreen");

@@ -9,6 +9,19 @@
 
 namespace mk 
 {
+	struct FBOtex
+	{
+		// Identifiant utile du FBO
+		int identifier;
+
+		// Identifiants OpenGL
+		unsigned int texture, depthBuffer;
+		
+		// Largeur et hauteur du FBO
+		int w, h;
+		int texw, texh;
+	};
+
 	class FBO : public Singleton<FBO>
 	{
 		friend class Singleton<FBO>;
@@ -17,22 +30,17 @@ namespace mk
 			FBO();
 			~FBO();
 
-			void Create(int w, int h, int num);
+			void CreateFBO();
+			void CreateTexture(int identifier, int w, int h);
 			void Destroy();
 
 			void Bind(int id);
 			void StartDrawing(int id);
 			void EndDrawing();
-			int getImageWidth() { return w; };
-			int getImageHeight() { return h; };
 
 		public:
-			int w, h, texw, texh;
-
 			// Allowing to stack multiple texture in one FBO
-			std::vector<unsigned int> textures;
-			std::vector<unsigned int> depthBuffers;
-
+			std::vector<FBOtex> texs;
 			unsigned int fbo;
 	};
 };

@@ -16,61 +16,55 @@ namespace mk
 		// Destroy texture ... ...
 	}
 
-	void FBO::Create(int _w, int _h, int num)
+	void FBO::CreateFBO()
 	{
-		w = _w;
-		h = _h;
+		// Creation du FBO
+		glGenFramebuffersEXT(1, &fbo);	
+	}
 
-		texw = roundUpToNextPowerOfTwo(_w);
-		texh = roundUpToNextPowerOfTwo(_h);
+	void FBO::CreateTexture(int id, int _w, int _h)
+	{
+		// Creation de l'indentifier FBO
+		FBOtex fbotex;
+		fbotex.identifier = id;
+		fbotex.w = _w;
+		fbotex.h = _h;
 
-		textures.resize(num);
-		depthBuffers.resize(num);
+		fbotex.texw = roundUpToNextPowerOfTwo(_w);
+		fbotex.texh = roundUpToNextPowerOfTwo(_h);
 
 		// Creation de la texture
-		for(int i = 0; i < num; i++)
-		{
-			glEnable(GL_TEXTURE_2D);
-			glGenTextures(1, &textures[i]);
-			glBindTexture(GL_TEXTURE_2D, textures[i]);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, texw, texh, 0, GL_RGB, GL_INT, NULL);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glDisable(GL_TEXTURE_2D);
+		glEnable(GL_TEXTURE_2D);
+		glGenTextures(1, &fbotex.texture);
+		glBindTexture(GL_TEXTURE_2D, fbotex.texture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, fbotex.texw, fbotex.texh, 0, GL_RGB, GL_INT, NULL);
+		
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glDisable(GL_TEXTURE_2D);
 
-			// Création du Z buffer
-			/*glGenRenderbuffersEXT(1, &depthBuffers[i]);
-			glBindRenderbufferEXT(GL_RENDERBUFFER, depthBuffers[i]);
-			glRenderbufferStorageEXT(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, texw, texh);
-			glBindRenderbufferEXT(GL_RENDERBUFFER, 0);*/
-
-			glGenRenderbuffersEXT(1, &depthBuffers[i]);
-			glBindRenderbufferEXT(GL_RENDERBUFFER, depthBuffers[i]);
-			glRenderbufferStorageEXT(GL_RENDERBUFFER, GL_DEPTH_STENCIL_EXT, texw, texh);
-			glBindRenderbufferEXT(GL_RENDERBUFFER, 0);
-
-			// Creation du stencil buffer
-			/*glGenRenderbuffersEXT(1, &stencilBuffers[i]);
-			glBindRenderbufferEXT(GL_RENDERBUFFER, stencilBuffers[i]);
-			glRenderbufferStorageEXT(GL_RENDERBUFFER, GL_STENCIL_INDEX8_EXT, texw, texh);
-			glBindRenderbufferEXT(GL_RENDERBUFFER, 0);*/
-		}
-
-		// Creation du FBO
-		glGenFramebuffersEXT(1, &fbo);
+		glGenRenderbuffersEXT(1, &fbotex.depthBuffer);
+		glBindRenderbufferEXT(GL_RENDERBUFFER, fbotex.depthBuffer);
+		glRenderbufferStorageEXT(GL_RENDERBUFFER, GL_DEPTH_STENCIL_EXT, fbotex.texw, fbotex.texh);
+		glBindRenderbufferEXT(GL_RENDERBUFFER, 0);
+	
+		texs.push_back(fbotex);
 	}
 
 	void FBO::Bind(int id)
 	{
-		glBindTexture(GL_TEXTURE_2D, textures[id]);
+		glBindTexture(GL_TEXTURE_2D, texs[id].texture);
 	}
 
 	void FBO::StartDrawing(int id)
 	{
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fbo);
-		glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, textures[id], 0);
-		glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, depthBuffers[id]);
-		glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_STENCIL_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, depthBuffers[id]);
+		glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, texs[id].texture, 0);
+		glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, texs[id].depthBuffer);
+		glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_STENCIL_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, texs[id].depthBuffer);
 		
 		/*if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		{
@@ -105,12 +99,10 @@ namespace mk
 	{
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 
-		for(int i = 0; i < textures.size(); i++)
+		for(int i = 0; i < texs.size(); i++)
 		{
-			std::cout << depthBuffers[i] << std::endl;
-
-			glDeleteBuffers(1, &depthBuffers[i]);
-			glDeleteTextures(1, &textures[i]);
+			glDeleteBuffers(1, &texs[i].depthBuffer);
+			glDeleteTextures(1, &texs[i].texture);
 		}
 
 		glDeleteFramebuffersEXT(1, &fbo);

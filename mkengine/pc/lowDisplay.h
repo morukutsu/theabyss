@@ -50,7 +50,7 @@ void lowDisplayCircle(float x, float y, float radius, int precision, u32 color);
 void lowDisplayText(mk::Font* fnt, float x, float y, const char* text, u32 color, float scale = 1.0f);
 void lowDisplayModelBone(mk::ModelBone* mb);
 void lowDisplayExtendedSprite(mk::ExtendedSprite* spr);
-void lowDisplayFBO(mk::FBO* fbo, int id, float offsetX = 0.0f, float offsetY = 0.0f);
+void lowDisplayFBO(mk::FBO* fbo, int id, float offsetX = 0.0f, float offsetY = 0.0f, float scaleX = 1.0f, float scaleY = 1.0f, float alpha = 1.0f);
 void lowDisplayVtxArray(sf::VertexArray& vtxArray, mk::Image* img, float x, float y, float z, float sx, float sy, float angle, bool mx, bool my);
 
 // Color

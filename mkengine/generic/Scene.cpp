@@ -223,7 +223,7 @@ namespace mk
 		glPushMatrix();
 
 		// Cas avec seulement un postfx d'activé
-		mk::Core::ConfigureViewportFBO();
+		mk::Core::ConfigureViewportFBO(mWorkFBO->texs[1]);
 		lowSetBlendMode(MK_BLEND_ALPHA);
 
 		mWorkFBO->Bind(1);
@@ -421,7 +421,7 @@ namespace mk
 	{
 		glPushMatrix();
 
-		mk::Core::ConfigureViewportFBO();
+		mk::Core::ConfigureViewportFBO(mWorkFBO->texs[0]);
 
 		// Permet de debugguer en affichant le masque des lumières
 		if(!isShowLightMask)
@@ -498,40 +498,66 @@ namespace mk
 	{
 		// Utilise la mémoire réservée pour le FBO light
 		// A appliquer après le FBO light
-
 		glPushMatrix();
 
 		// Cas avec seulement un postfx d'activé
-		mk::Core::ConfigureViewportFBO();
 		lowSetBlendMode(MK_BLEND_ALPHA);
 
-		// Biding current scene in FBO 1
-		mWorkFBO->Bind(1);
+		// Downsample current FBO1 scene to FBO2 (half res)
+		mk::Core::ConfigureViewportFBO(mWorkFBO->texs[2]);
+		mWorkFBO->StartDrawing(2);
+		glClearDepth(1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		lowDisplayFBO(mWorkFBO, 1, 0, 0, 0.25f, 0.25f);
+		mWorkFBO->EndDrawing();
+
+		// Clear FBO3 (TODO : à ne faire qu'une seule fois)
+		mk::Core::ConfigureViewportFBO(mWorkFBO->texs[3]);
+		mWorkFBO->StartDrawing(3);
+		glClearDepth(1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		mWorkFBO->EndDrawing();
+
+		// Blur loop
+		//for(int i = 0; i < (int)ceil(intensity); i++)
+		//{
+			// Binding downsampled scene in FBO 2
+			mWorkFBO->Bind(2);
 		
-		shader_blurH->shader.setParameter("intensity", effectIntensity);
-		shader_blurH->shader.setParameter("radius", (int)ceil(intensity));
-		shader_blurH->Bind();
+			//shader_blurH->shader.setParameter("intensity", effectIntensity);
+			shader_blurH->Bind();
 
-		// Displaying in FBO 0
-		mWorkFBO->StartDrawing(0);
-		lowDisplayFBO(mWorkFBO, 1);
-		mWorkFBO->EndDrawing();
+			// Displaying in FBO 3 
+			mk::Core::ConfigureViewportFBO(mWorkFBO->texs[3]);
+			mWorkFBO->StartDrawing(3);
+			lowDisplayFBO(mWorkFBO, 2, 0, 0, 1.0f, 1.0f);
+			mWorkFBO->EndDrawing();
 
-		shader_blurH->Unbind();
+			shader_blurH->Unbind();
 
-		// Biding H blurred scene in FBO 0
-		mWorkFBO->Bind(0);
+			// Binding H blurred scene in FBO 3
+			mWorkFBO->Bind(3);
 
-		shader_blurV->shader.setParameter("intensity", effectIntensity);
-		shader_blurV->shader.setParameter("radius", (int)ceil(intensity));
-		shader_blurV->Bind();
+			//shader_blurV->shader.setParameter("intensity", effectIntensity);
+			shader_blurV->Bind();
 
-		// Displaying in FBO 1
+			// Displaying in FBO 2
+			mk::Core::ConfigureViewportFBO(mWorkFBO->texs[2]);
+			mWorkFBO->StartDrawing(2);
+			lowDisplayFBO(mWorkFBO, 3, 0, 0, 1.0f, 1.0f);
+			mWorkFBO->EndDrawing();
+
+			shader_blurV->Unbind();
+		//}
+
+		// Upscale scene in FBO2 to FBO 1
+		mk::Core::ConfigureViewportFBO(mWorkFBO->texs[1]);
 		mWorkFBO->StartDrawing(1);
-		lowDisplayFBO(mWorkFBO, 0);
+		lowDisplayFBO(mWorkFBO, 2, 0, 0, 4.0f, 4.0f, intensity);
 		mWorkFBO->EndDrawing();
-
-		shader_blurV->Unbind();
 
 		mk::Core::ConfigureViewport();
 
@@ -547,8 +573,8 @@ namespace mk
 	{
 		if(isBlackBandsActivated)
 		{
-			lowDisplayFillRect(0, 0, mk::Core::getBaseWidth(), black_bands_h, 0x000000FF);
-			lowDisplayFillRect(0, mk::Core::getBaseHeight(), mk::Core::getBaseWidth(), mk::Core::getBaseHeight() - black_bands_h, 0x000000FF);
+			lowDisplayFillRect(0, 0, mk::Core::getWindowWidth(), black_bands_h, 0x000000FF);
+			lowDisplayFillRect(0, mk::Core::getWindowHeight(), mk::Core::getWindowWidth(), mk::Core::getWindowHeight() - black_bands_h, 0x000000FF);
 		}
 	}
 

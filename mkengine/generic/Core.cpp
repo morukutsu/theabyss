@@ -199,10 +199,10 @@ namespace mk
 		lowViewport(0, h, Core::getWindowWidth(), Core::getBaseHeight()*Core::GetScaleFactor() );
 	}
 
-	void Core::ConfigureViewportFBO()
+	void Core::ConfigureViewportFBO(FBOtex tex)
 	{
-		lowViewport(0, 0, Core::getWindowWidth(), Core::getWindowHeight() );
-		lowSetProjectionOrtho(Core::getWindowWidth(), Core::getWindowHeight() );
+		lowViewport(0, 0, tex.w, tex.h );
+		lowSetProjectionOrtho(tex.w, tex.h );
 	}
 
 	void Core::Screenshot()

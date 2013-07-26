@@ -55,7 +55,7 @@ namespace mk
 			static float GetScaleFactor() { return (float)mWindowWidth/(float)mBaseWidth; };
 
 			static void ConfigureViewport();
-			static void ConfigureViewportFBO();
+			static void ConfigureViewportFBO(FBOtex tex);
 			static void Screenshot();
 
 			static bool GetLoadingFrame() { return isLoadingFrame; };

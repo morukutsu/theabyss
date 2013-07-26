@@ -1,10 +1,8 @@
 uniform sampler2D texture;
 
-uniform int radius;
+//uniform float intensity;
 
-uniform float intensity;
-
-float blurSize = 1.0/(2048.0);
+float blurSize = 1.0/(512.0);
 
 void main()
 {
@@ -16,7 +14,7 @@ void main()
 	//for (int i = 0; i < 2; i++) 
 	//{
 		// Couleur originale
-		//vec4 srcColor = texture2D(texture, gl_TexCoord[0].st);
+		vec4 srcColor = texture2D(texture, gl_TexCoord[0].st);
 		
 		// Couleur de travail
 		//vec4 color = srcColor;
@@ -38,5 +36,6 @@ void main()
 	//}
 	
 	// Fin
+	//gl_FragColor = sum * intensity + srcColor * (1.0 - intensity);
 	gl_FragColor = sum;
 }

@@ -26,8 +26,8 @@ void MenuState::Init()
 	lvlMan->LoadMap("maps/title.tmx");
 
 	// On configure un effet
-	//lvlMan->scene->LoadPostFXShader("shaders/postfx_filterB_lookup.fx");
-	//lvlMan->scene->SetEffectIntensity(0.55f);
+	lvlMan->scene->LoadPostFXShader("shaders/postfx_filterB_lookup.fx");
+	lvlMan->scene->SetEffectIntensity(0.55f);
 
 	camZ = 0.0f;
 	origCamZ = lvlMan->gameCamera.GetDepth();
