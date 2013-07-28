@@ -76,9 +76,14 @@ namespace mk
 
 		isScreenShaking = false;
 
+		InitBloom();
+		isEffectBloom = true;
+		bloom_intensity = 1.0f;
+
 		// Compilation de certains shaders
 		mk::RessourceManager::getInstance()->LoadRessource("shaders/postfx_blur_h.fx");
 		mk::RessourceManager::getInstance()->LoadRessource("shaders/postfx_blur_v.fx");
+		mk::RessourceManager::getInstance()->LoadRessource("shaders/postfx_brightpass.fx");
 	}
 
 	Scene::~Scene()
@@ -217,6 +222,11 @@ namespace mk
 
 	void Scene::FinalDraw()
 	{
+		// EFFECT : BLOOM
+		if(isEffectBloom)
+			RenderBloom(bloom_intensity);
+
+		// EFFECT : BLUR
 		if(isEffectBlur)
 			RenderBlur(blur_intensity);
 
@@ -521,37 +531,34 @@ namespace mk
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		mWorkFBO->EndDrawing();
 
-		// Blur loop
-		//for(int i = 0; i < (int)ceil(intensity); i++)
-		//{
-			// Binding downsampled scene in FBO 2
-			mWorkFBO->Bind(2);
+		// Blur
+		// Binding downsampled scene in FBO 2
+		mWorkFBO->Bind(2);
 		
-			//shader_blurH->shader.setParameter("intensity", effectIntensity);
-			shader_blurH->Bind();
+		//shader_blurH->shader.setParameter("intensity", effectIntensity);
+		shader_blurH->Bind();
 
-			// Displaying in FBO 3 
-			mk::Core::ConfigureViewportFBO(mWorkFBO->texs[3]);
-			mWorkFBO->StartDrawing(3);
-			lowDisplayFBO(mWorkFBO, 2, 0, 0, 1.0f, 1.0f);
-			mWorkFBO->EndDrawing();
+		// Displaying in FBO 3 
+		mk::Core::ConfigureViewportFBO(mWorkFBO->texs[3]);
+		mWorkFBO->StartDrawing(3);
+		lowDisplayFBO(mWorkFBO, 2, 0, 0, 1.0f, 1.0f);
+		mWorkFBO->EndDrawing();
 
-			shader_blurH->Unbind();
+		shader_blurH->Unbind();
 
-			// Binding H blurred scene in FBO 3
-			mWorkFBO->Bind(3);
+		// Binding H blurred scene in FBO 3
+		mWorkFBO->Bind(3);
 
-			//shader_blurV->shader.setParameter("intensity", effectIntensity);
-			shader_blurV->Bind();
+		//shader_blurV->shader.setParameter("intensity", effectIntensity);
+		shader_blurV->Bind();
 
-			// Displaying in FBO 2
-			mk::Core::ConfigureViewportFBO(mWorkFBO->texs[2]);
-			mWorkFBO->StartDrawing(2);
-			lowDisplayFBO(mWorkFBO, 3, 0, 0, 1.0f, 1.0f);
-			mWorkFBO->EndDrawing();
+		// Displaying in FBO 2
+		mk::Core::ConfigureViewportFBO(mWorkFBO->texs[2]);
+		mWorkFBO->StartDrawing(2);
+		lowDisplayFBO(mWorkFBO, 3, 0, 0, 1.0f, 1.0f);
+		mWorkFBO->EndDrawing();
 
-			shader_blurV->Unbind();
-		//}
+		shader_blurV->Unbind();
 
 		// Upscale scene in FBO2 to FBO 1
 		mk::Core::ConfigureViewportFBO(mWorkFBO->texs[1]);
@@ -560,6 +567,85 @@ namespace mk
 		mWorkFBO->EndDrawing();
 
 		mk::Core::ConfigureViewport();
+
+		glPopMatrix();
+	}
+
+	void Scene::InitBloom()
+	{
+		// Chargement du shader brightpass
+		brightpass = (mk::Shader*)mk::RessourceManager::getInstance()->LoadRessource("shaders/postfx_brightpass.fx");
+		brightpass->shader.setParameter("texture", sf::Shader::CurrentTexture);
+	}
+
+	void Scene::RenderBloom(float intensity)
+	{
+		// Copy FBO1 to FBO2 downsampled + brightpass
+		glPushMatrix();
+
+		// Cas avec seulement un postfx d'activé
+		lowSetBlendMode(MK_BLEND_ALPHA);
+
+		mk::Core::ConfigureViewportFBO(mWorkFBO->texs[2]);
+		mWorkFBO->StartDrawing(2);
+		glClearDepth(1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		mWorkFBO->Bind(1);
+		brightpass->Bind();
+		lowDisplayFBO(mWorkFBO, 1, 0, 0, 0.25f, 0.25f);
+		brightpass->Unbind();
+
+		mWorkFBO->EndDrawing();
+
+		// Clear FBO3 (TODO : à ne faire qu'une seule fois)
+		mk::Core::ConfigureViewportFBO(mWorkFBO->texs[3]);
+		mWorkFBO->StartDrawing(3);
+		glClearDepth(1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		mWorkFBO->EndDrawing();
+
+		// Blur FBO2
+		// Binding downsampled scene in FBO 2
+		mWorkFBO->Bind(2);
+		
+		shader_blurH->Bind();
+
+		// Displaying in FBO 3 
+		mk::Core::ConfigureViewportFBO(mWorkFBO->texs[3]);
+		mWorkFBO->StartDrawing(3);
+		lowDisplayFBO(mWorkFBO, 2, 0, 0, 1.0f, 1.0f);
+		mWorkFBO->EndDrawing();
+
+		shader_blurH->Unbind();
+
+		// Binding H blurred scene in FBO 3
+		mWorkFBO->Bind(3);
+
+		shader_blurV->Bind();
+
+		// Displaying in FBO 2
+		mk::Core::ConfigureViewportFBO(mWorkFBO->texs[2]);
+		mWorkFBO->StartDrawing(2);
+		lowDisplayFBO(mWorkFBO, 3, 0, 0, 1.0f, 1.0f);
+		mWorkFBO->EndDrawing();
+
+		shader_blurV->Unbind();
+
+		// Display on FBO1, additive
+		lowSetBlendMode(MK_BLEND_ADD);
+
+		// Upscale scene in FBO2 to FBO 1
+		mk::Core::ConfigureViewportFBO(mWorkFBO->texs[1]);
+		mWorkFBO->StartDrawing(1);
+		lowDisplayFBO(mWorkFBO, 2, 0, 0, 4.0f, 4.0f, intensity);
+		mWorkFBO->EndDrawing();
+
+		mk::Core::ConfigureViewport();
+
+		lowSetBlendMode(MK_BLEND_ALPHA);
 
 		glPopMatrix();
 	}

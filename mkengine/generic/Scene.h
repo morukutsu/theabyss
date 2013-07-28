@@ -71,6 +71,9 @@ namespace mk
 			void ShakeScreen(float intensity, float time);
 			void UpdateShakeScreen(float dt);
 
+			void InitBloom();
+			void RenderBloom(float intensity);
+
 			// Debug rendering pipeline
 			void DebugShowLightMask(bool v) { isShowLightMask = v; };
 			void DebugShowAABB(bool v) { isShowAABB = v; };
@@ -84,6 +87,7 @@ namespace mk
 			FBO *mWorkFBO;
 			Shader* postfx;
 			Shader* light_alpha_fix;
+			Shader* brightpass;
 			float effectIntensity;
 
 			// Frustum culling
@@ -96,13 +100,14 @@ namespace mk
 			
 			// Gestion de quelques effets graphiques
 			Shader *shader_blurH, *shader_blurV;
-			float blur_intensity;
+			float blur_intensity, bloom_intensity;
 			bool isEffectBlur;
 			float black_bands_h, old_black_bands_h, black_bands_time;
 			bool isBlackBandsActivated, isBlackBandsDisplayed, blackbandsSens;
 			bool isScreenShaking;
 			float screenShakeIntensity, screenShakeTime, shakeBounceTime, shakeOffsetX, shakeOffsetY;
 			float oldTime, curTime;
+			bool isEffectBloom;
 
 			// Debug
 			bool isShowLightMask, isShowAABB;
