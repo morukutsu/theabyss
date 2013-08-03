@@ -11,6 +11,7 @@
 
 #define ENNEMY_FISH_ATTACK_RADIUS	400.0f
 
+class AnimatedGraphicsComponent;
 class IABaseEnnemyComponent;
 class GraphicsComponent;
 class BodyComponent;
@@ -31,7 +32,7 @@ class EnnemyFishComponent : public Component
 
 	public:
 		IABaseEnnemyComponent* cmp;
-		GraphicsComponent* gfx;
+		AnimatedGraphicsComponent *gfx;
 		BodyComponent* body;
 
 		// Etat
@@ -42,6 +43,8 @@ class EnnemyFishComponent : public Component
 
 		// Déplacement
 		NVector moveVel;
+
+		bool mirrorH;
 };
 
 #endif

@@ -57,7 +57,7 @@ namespace mk
 			
 			unsigned int *vertexIndices;// = NULL;
 			vec5_t *vertexArray;// = NULL;
-			//std::list<ModelTri> modelTris;
+			std::list<ModelTri> modelTris;
 
 			mk::BoundingBox bounds;
 

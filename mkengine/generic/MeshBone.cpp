@@ -233,9 +233,10 @@ namespace mk
 				curr_mesh++;
 			}
 		}
-
-		SetupVertexIndices();
+		
 		ProcessModel();
+		SetupVertexIndices();
+		
 		mLoaded = true;
 
 		return MESH_OK;
@@ -466,11 +467,21 @@ namespace mk
 		vertexIndices = (unsigned int *)malloc (sizeof (unsigned int) * max_tris * 3);
 
 		/* Setup vertex indices */
-		int i, j, k;
+		/*int i, j, k;
 		for (k = 0, i = 0; i < md5file.meshes[0].num_tris; ++i)
 		{
 			for (j = 0; j < 3; ++j, ++k)
 				vertexIndices[k] = md5file.meshes[0].triangles[i].index[j];
+		}*/
+		int id = 0;
+		for(std::list<mk::ModelTri>::iterator i = modelTris.begin(); i != modelTris.end(); i++)
+		{
+			int k = (*i).i;
+			for(int j = 0; j < 3; j++)
+			{
+				vertexIndices[id] = md5file.meshes[0].triangles[k].index[j];
+				id++;
+			}
 		}
 	}
 
@@ -484,7 +495,7 @@ namespace mk
 
 		//Tri des triangles selon Z
 		//SetupVertexIndices(&mMesh->md5file.meshes[0]);
-		mk::ModelBone::PrepareMesh (&md5file.meshes[0], md5file.baseSkel, vertexArray);
+		mk::ModelBone::PrepareMeshFirst (&md5file.meshes[0], md5file.baseSkel, vertexArray);
 		for(int k = 0; k < md5file.meshes[0].num_tris; k++)
 		{
 			float depth = 0;
@@ -506,10 +517,10 @@ namespace mk
 				if(vtx[1] > bounds.y2)
 					bounds.y2 = vtx[1];
 			}
-			//ModelTri mt(k, depth);
-			//modelTris.push_back(mt);
+			ModelTri mt(k, depth);
+			modelTris.push_back(mt);
 		}
-		//modelTris.sort();
+		modelTris.sort();
 
 		// Rotation de la bounding box
 		float sav = bounds.y2;

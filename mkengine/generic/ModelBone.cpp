@@ -206,7 +206,6 @@ namespace mk
 				/* The sum of all weight->bias should be 1.0 */
 				finalVertex[0] += (joint->pos[0] + wv[0]) * weight->bias;
 				finalVertex[1] += (joint->pos[1] + wv[1]) * weight->bias;
-				//finalVertex[2] += (joint->pos[2] + wv[2]) * weight->bias;
 			}
 			
 			/*float norme = sqrt(newnorm[0]*newnorm[0] + newnorm[1]*newnorm[1] + newnorm[2]*newnorm[2]);
@@ -222,8 +221,65 @@ namespace mk
 
 			vtxArray[i][0] = finalVertex[0];
 			vtxArray[i][1] = finalVertex[1];
-			//vertexArray[i][2] = finalVertex[2];
 			vtxArray[i][2] = 0;
+			vtxArray[i][3] = mesh->vertices[i].st[0];
+			vtxArray[i][4] = mesh->vertices[i].st[1];
+		}
+	}
+
+	void ModelBone::PrepareMeshFirst (const struct md5_mesh_t *mesh, const struct md5_joint_t *skeleton, vec5_t *vtxArray)
+	{
+		int i, j, k;
+
+		/* Setup vertices */
+		for (i = 0; i < mesh->num_verts; ++i)
+		{
+			vec3_t finalVertex = { 0.0f, 0.0f, 0.0f };
+			//vec3_t wn = { 0.0f, 0.0f, 0.0f };
+			//vec3_t newnorm = { 0.0f, 0.0f, 0.0f };
+
+			/* Calculate final vertex to draw with weights */
+			for (j = 0; j < mesh->vertices[i].count; ++j)
+			{
+				const struct md5_weight_t *weight = &mesh->weights[mesh->vertices[i].start + j];
+				const struct md5_joint_t *joint = &skeleton[weight->joint];
+
+				/* Calculate transformed vertex for this weight */
+				vec3_t wv;
+				Quat_rotatePoint (joint->orient, weight->pos, wv);
+				
+				// Calculate transformed normal for this weight
+				/*wn[0] = weight->norm[0];
+				wn[1] = weight->norm[1];
+				wn[2] = weight->norm[2];
+				
+				Quat_rotatePoint(joint->orient, wn, newnorm);
+
+				newnorm[0] += newnorm[0] * weight->bias;
+				newnorm[1] += newnorm[1] * weight->bias;
+				newnorm[2] += newnorm[2] * weight->bias;*/
+
+				/* The sum of all weight->bias should be 1.0 */
+				finalVertex[0] += (joint->pos[0] + wv[0]) * weight->bias;
+				finalVertex[1] += (joint->pos[1] + wv[1]) * weight->bias;
+				finalVertex[2] += (joint->pos[2] + wv[2]) * weight->bias;
+			}
+			
+			/*float norme = sqrt(newnorm[0]*newnorm[0] + newnorm[1]*newnorm[1] + newnorm[2]*newnorm[2]);
+			newnorm[0] = newnorm[0]/norme;
+			newnorm[1] = newnorm[1]/norme;
+			newnorm[2] = newnorm[2]/norme;*/
+
+			/*Vec_normalize(newnorm);
+
+			normalArray[i][0] = newnorm[0];
+			normalArray[i][1] = newnorm[1];
+			normalArray[i][2] = newnorm[2];*/
+
+			vtxArray[i][0] = finalVertex[0];
+			vtxArray[i][1] = finalVertex[1];
+			vtxArray[i][2] = finalVertex[2];
+			//vtxArray[i][2] = 0;
 			vtxArray[i][3] = mesh->vertices[i].st[0];
 			vtxArray[i][4] = mesh->vertices[i].st[1];
 		}

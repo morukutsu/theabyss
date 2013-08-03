@@ -12,7 +12,7 @@
 
 EnnemyFishComponent::EnnemyFishComponent()
 {
-	gfx = new GraphicsComponent("anims/mobs/fish/fish_placeholder.png");
+	gfx = new AnimatedGraphicsComponent("anims/mobs/fish/fish.xml", 2.0f, -3);
 	cmp = new IABaseEnnemyComponent();
 	body = new BodyComponent(BODY_ENNEMY, BODY_CMP_BLOB, 10, 50.0f, 50.0f);
 
@@ -102,6 +102,15 @@ void EnnemyFishComponent::Update()
 			}
 			break;
 	}
+
+	// Mirroring
+	float mx = 1.0f;
+	if(((parent->mVel.x < 0.25f) || (parent->mVel.x > 0.25f)) )
+		mirrorH = parent->mVel.x < 0;
+	if(mirrorH)
+		mx = -1.0f;
+
+	gfx->mirrorX = !mirrorH;
 
 	// Déplacements simples
 	parent->mPos = body->body->GetPosition();
