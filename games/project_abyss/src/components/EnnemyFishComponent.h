@@ -15,6 +15,7 @@ class AnimatedGraphicsComponent;
 class IABaseEnnemyComponent;
 class GraphicsComponent;
 class BodyComponent;
+class LightComponent;
 class EnnemyFishComponent : public Component
 {
 	public:
@@ -34,12 +35,14 @@ class EnnemyFishComponent : public Component
 		IABaseEnnemyComponent* cmp;
 		AnimatedGraphicsComponent *gfx;
 		BodyComponent* body;
+		LightComponent* light;
 
 		// Etat
 		int state, prevState;
 		int life;
 
 		float deadTime;
+		float progressiveSpeed, targetSpeed;
 
 		// Déplacement
 		NVector moveVel;

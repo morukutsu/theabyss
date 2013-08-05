@@ -60,7 +60,11 @@ LightComponent::LightComponent(std::string filename)
 
 LightComponent::~LightComponent()
 {
-	
+	// Ajout de la light au scene node
+	if(lightType == LIGHT_MESH)
+		parent->GetScene()->RemoveLight(&mesh);
+	else if(lightType == LIGHT_SPRITE)
+		parent->GetScene()->RemoveLight(&spr);
 }
 
 void LightComponent::Init()

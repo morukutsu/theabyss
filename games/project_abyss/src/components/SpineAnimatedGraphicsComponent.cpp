@@ -39,6 +39,10 @@ void SpineAnimatedGraphicsComponent::Init()
 	model.ignoreLightPipeline = no_shadow;
 }
 
+SpineAnimatedGraphicsComponent::~SpineAnimatedGraphicsComponent()
+{
+	parent->GetScene()->Remove(&model);
+}
 
 void SpineAnimatedGraphicsComponent::Update()
 {

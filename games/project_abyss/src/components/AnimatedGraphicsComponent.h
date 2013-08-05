@@ -11,6 +11,7 @@ class AnimatedGraphicsComponent : public Component
 {
 	public:
 		AnimatedGraphicsComponent(std::string model, float scale = 1.0f, int prio = 0, std::string defaultAnim = "", float angle = 0.0f, bool mirrorX = false, bool mirrorY = false, int anim_offset = 0, bool no_shadow = false);
+		~AnimatedGraphicsComponent();
 
 		void Receive(int message, void* data);
 

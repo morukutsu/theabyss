@@ -15,6 +15,8 @@ EnnemyFishComponent::EnnemyFishComponent()
 	gfx = new AnimatedGraphicsComponent("anims/mobs/fish/fish.xml", 2.0f, -3);
 	cmp = new IABaseEnnemyComponent();
 	body = new BodyComponent(BODY_ENNEMY, BODY_CMP_BLOB, 10, 50.0f, 50.0f);
+	light = new LightComponent(10.0f);
+	light->mesh.SetPriority(-4);
 
 	cmp->SetPlayerTouched(false);
 	cmp->SetPlayerSpotted(false);
@@ -23,6 +25,9 @@ EnnemyFishComponent::EnnemyFishComponent()
 	cmp->SetLife(life);
 
 	deadTime = 0.0f;
+
+	progressiveSpeed = 1.0f;
+	targetSpeed = 1.0f;
 }
 
 EnnemyFishComponent::~EnnemyFishComponent()
@@ -35,6 +40,7 @@ void EnnemyFishComponent::Init()
 	parent->AddComponent(gfx);
 	parent->AddComponent(cmp);
 	parent->AddComponent(body);
+	parent->AddComponent(light);
 }
 
 void EnnemyFishComponent::Receive(int message, void* data)
@@ -59,6 +65,8 @@ void EnnemyFishComponent::Update()
 		case IABaseEnnemyComponent::S_WAIT:
 			// On ne bouge pas
 			body->body->SetLinearVelocity(body->body->GetDisplacement() * 0.95f);
+			progressiveSpeed = 1.0f;
+			gfx->model.PlayAnim(ANIM_LOOP, "idle");
 			break;
 
 		case IABaseEnnemyComponent::S_MOVE:
@@ -69,9 +77,11 @@ void EnnemyFishComponent::Update()
 				moveVel.y = SimpleMaths::Rand(-1.0f, 1.0f);
 				moveVel.Normalise();
 
-				moveVel = moveVel * 5.0f;
+				targetSpeed = 5.0f;
 			}
-			body->body->SetLinearVelocity(moveVel );
+
+			body->body->SetLinearVelocity(moveVel * progressiveSpeed);
+			gfx->model.PlayAnim(ANIM_LOOP, "move");
 			break;
 
 		case IABaseEnnemyComponent::S_ATTACK:
@@ -79,28 +89,44 @@ void EnnemyFishComponent::Update()
 			NVector spottedVec = heroPos - parent->mPos;
 			spottedVec.Normalise();
 
-			moveVel = spottedVec * 15.0f;
+			targetSpeed = 15.0f;
+			moveVel = spottedVec * progressiveSpeed;
 			body->body->SetLinearVelocity(moveVel );
 			}
+			gfx->model.PlayAnim(ANIM_LOOP, "attack");
 			break;
 
 		case IABaseEnnemyComponent::S_HIT:
 			if(prevState != IABaseEnnemyComponent::S_HIT)
 			{
-				body->body->SetLinearVelocity(NVector(0, 0) );
+				body->body->SetLinearVelocity(body->body->GetDisplacement() * 0.95f);
+				
 				life -= 10;
 				cmp->SetLife(life);
 			}
+			gfx->model.PlayAnim(ANIM_LOOP, "idle");
 			break;
 
 		case IABaseEnnemyComponent::S_DEAD:
+			body->body->SetLinearVelocity(NVector(0, 0) );
 			deadTime += 1.0f/30.0f;
 			if(deadTime > 2.0f)
 			{
 				parent->toDelete = true;
 				body->body->toDelete = true;
 			}
+			gfx->model.PlayAnim(ANIM_LOOP, "idle");
 			break;
+	}
+
+	// Mise à jour de la vitesse
+	if(progressiveSpeed > targetSpeed) 
+	{
+		progressiveSpeed -= 0.5f;
+	}
+	else if(progressiveSpeed < targetSpeed) 
+	{
+		progressiveSpeed += 0.5f;
 	}
 
 	// Mirroring

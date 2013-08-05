@@ -23,6 +23,7 @@ PlayerMovementComponent::PlayerMovementComponent(PlayerInputComponent* in, Playe
 
 	isGoingThroughDoor = false;
 	mirrorH = false;
+	isKnockback = false;
 }
 
 void PlayerMovementComponent::Init()

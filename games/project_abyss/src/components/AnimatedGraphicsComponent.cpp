@@ -33,6 +33,11 @@ AnimatedGraphicsComponent::AnimatedGraphicsComponent(std::string modelf, float _
 	offsetX = offsetY = 0;
 }
 
+AnimatedGraphicsComponent::~AnimatedGraphicsComponent() 
+{
+	parent->GetScene()->Remove(&model);
+}
+
 void AnimatedGraphicsComponent::Init()
 {
 	parent->GetScene()->Add(&model);
