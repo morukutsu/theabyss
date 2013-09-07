@@ -12,7 +12,7 @@
 
 EnnemyFishComponent::EnnemyFishComponent()
 {
-	gfx = new AnimatedGraphicsComponent("anims/mobs/fish/fish.xml", 2.0f, -3);
+	gfx = new AnimatedGraphicsComponent("anims/mobs/fish/fish.xml", 2.0f, 2);
 	cmp = new IABaseEnnemyComponent();
 	body = new BodyComponent(BODY_ENNEMY, BODY_CMP_BLOB, 10, 50.0f, 50.0f);
 	light = new LightComponent(10.0f);

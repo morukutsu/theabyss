@@ -15,7 +15,11 @@ struct WpnInfo {
 };
 
 enum {
-	C_POS_NEUTRAL, C_POS_UP, C_POS_DOWN, C_POS_UP_DIAG, C_POS_DOWN_DIAG
+	C_POS_NEUTRAL, C_POS_UP, C_POS_DOWN, C_POS_UP_DIAG, C_POS_DOWN_DIAG, C_POS_FREE
+};
+
+enum {
+	C_MODE_FIXED, C_MODE_FREE
 };
 
 class CBody;
@@ -34,6 +38,7 @@ class PlayerWeaponComponent : public Component
 		void Shoot();
 		
 		void Orient(int dir);
+		void OrientMouse(float mscrx, float mscry);
 
 		void ReadWeaponsFromXML();
 
@@ -44,6 +49,8 @@ class PlayerWeaponComponent : public Component
 		float mWpnAngle;
 
 		int mCannonOrientation;
+
+		int mCannonMode; // fixed / free mode
 };
 
 #endif

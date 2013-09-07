@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------
 // TmxTileset.cpp
 //
-// Copyright (c) 2010-2012, Tamir Atias
+// Copyright (c) 2010-2013, Tamir Atias
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -105,6 +105,14 @@ namespace Tmx
 			tiles.push_back(tile);
 
 			tileNode = tilesetNode->IterateChildren("tile", tileNode);
+		}
+		
+		// Parse the properties if any.
+		const TiXmlNode *propertiesNode = tilesetNode->FirstChild("properties");
+		
+		if (propertiesNode) 
+		{
+			properties.Parse(propertiesNode);
 		}
 	}
 

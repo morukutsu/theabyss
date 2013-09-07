@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------
 // TmxImage.h
 //
-// Copyright (c) 2010-2012, Tamir Atias
+// Copyright (c) 2010-2013, Tamir Atias
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,9 @@
 #include "TmxLayer.h"
 #include "TmxObject.h"
 #include "TmxObjectGroup.h"
+#include "TmxEllipse.h"
 #include "TmxPolygon.h"
 #include "TmxPolyline.h"
 #include "TmxPropertySet.h"
 #include "TmxUtil.h"
+#include "TmxImageLayer.h"

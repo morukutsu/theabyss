@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------
 // TmxLayer.cpp
 //
-// Copyright (c) 2010-2012, Tamir Atias
+// Copyright (c) 2010-2013, Tamir Atias
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -44,6 +44,7 @@ namespace Tmx
 		, height(0) 
 		, opacity(1.0f)
 		, visible(true)
+		, zOrder(0)
 		, properties()
 		, encoding(TMX_ENCODING_XML)
 		, compression(TMX_COMPRESSION_NONE)

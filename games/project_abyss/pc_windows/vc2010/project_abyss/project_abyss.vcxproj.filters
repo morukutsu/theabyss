@@ -518,6 +518,12 @@
     <ClInclude Include="..\..\..\src\components\IABaseEnnemyComponent.h">
       <Filter>Fichiers d%27en-tête\game\components</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxEllipse.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\tmxparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxImageLayer.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic\tmxparser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\AsciiFile.cpp">
@@ -918,6 +924,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\components\IABaseEnnemyComponent.cpp">
       <Filter>Fichiers sources\game\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxEllipse.cpp">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxImageLayer.cpp">
+      <Filter>Fichiers sources\mkengine\generic\tmxparser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -139,7 +139,9 @@
     <ClInclude Include="..\..\..\..\..\mkengine\generic\Sprite.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\Text.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\Tmx.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxEllipse.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxImage.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxImageLayer.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxLayer.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxMap.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxMapTile.h" />
@@ -326,7 +328,9 @@
     <ClCompile Include="..\..\..\..\..\mkengine\generic\Sprite.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\generic\Text.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\base64\base64.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxEllipse.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxImage.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxImageLayer.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxLayer.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxMap.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxObject.cpp" />

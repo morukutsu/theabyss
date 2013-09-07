@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------
 // TmxLayer.h
 //
-// Copyright (c) 2010-2012, Tamir Atias
+// Copyright (c) 2010-2013, Tamir Atias
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -64,6 +64,10 @@ namespace Tmx
 	//-------------------------------------------------------------------------
 	class Layer 
 	{
+	private:
+		// Prevent copy constructor.
+		Layer(const Layer &_layer);
+
 	public:
 		Layer(const Tmx::Map *_map);
 		~Layer();
@@ -115,6 +119,12 @@ namespace Tmx
 		// See: LayerCompressionType
 		Tmx::LayerCompressionType GetCompression() const { return compression; }
 
+		// Get the zorder of the layer.
+		int GetZOrder() const { return zOrder; }
+		
+		// Set the zorder of the layer.
+		void SetZOrder( int z ) { zOrder = z; }
+
 	private:
 		void ParseXML(const TiXmlNode *dataNode);
 		void ParseBase64(const std::string &innerText);
@@ -129,6 +139,7 @@ namespace Tmx
 	
 		float opacity;
 		bool visible;
+		int zOrder;
 
 		Tmx::PropertySet properties;
 

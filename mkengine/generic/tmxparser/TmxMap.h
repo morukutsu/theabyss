@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------
 // TmxMap.h
 //
-// Copyright (c) 2010-2012, Tamir Atias
+// Copyright (c) 2010-2013, Tamir Atias
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -35,6 +35,7 @@
 namespace Tmx 
 {
 	class Layer;
+	class ImageLayer;
 	class ObjectGroup;
 	class Tileset;
 
@@ -49,6 +50,9 @@ namespace Tmx
 		// There was an error in parsing the TMX file.
 		// This is being caused by TinyXML parsing problems.
 		TMX_PARSING_ERROR = 0x02,
+		
+		// The size of the file is invalid.
+		TMX_INVALID_FILE_SIZE = 0x04
 	};
 
 	//-------------------------------------------------------------------------
@@ -60,7 +64,10 @@ namespace Tmx
 		TMX_MO_ORTHOGONAL = 0x01,
 
 		// This map is an isometric map.
-		TMX_MO_ISOMETRIC = 0x02
+		TMX_MO_ISOMETRIC = 0x02,
+
+		// This map is an isometric staggered map.
+		TMX_MO_STAGGERED = 0x03
 	};
 
 	//-------------------------------------------------------------------------
@@ -70,6 +77,10 @@ namespace Tmx
 	//-------------------------------------------------------------------------
 	class Map 
 	{
+	private:
+		// Prevent copy constructor.
+		Map(const Map &_map);
+
 	public:
 		Map();
 		~Map();
@@ -123,6 +134,15 @@ namespace Tmx
 		// Get the whole object group collection.
 		const std::vector< Tmx::ObjectGroup* > &GetObjectGroups() const { return object_groups; }
 
+		// Get the layer at a certain index.
+		const Tmx::ImageLayer *GetImageLayer(int index) const { return image_layers.at(index); }
+
+		// Get the amount of layers.
+		int GetNumImageLayers() const { return image_layers.size(); }
+
+		// Get the whole layers collection.
+		const std::vector< Tmx::ImageLayer* > &GetImageLayers() const { return image_layers; }
+
 		// Find the tileset index for a tileset using a tile gid.
 		int FindTilesetIndex(int gid) const;
 
@@ -148,7 +168,7 @@ namespace Tmx
 		unsigned char GetErrorCode() const { return error_code; }
 
 		// Get the property set.
-		const Tmx::PropertySet &GetProperties() { return properties; }
+		const Tmx::PropertySet &GetProperties() const { return properties; }
 
 	private:
 		std::string file_name;
@@ -163,6 +183,7 @@ namespace Tmx
 		int tile_height;
 
 		std::vector< Tmx::Layer* > layers;
+		std::vector< Tmx::ImageLayer* > image_layers;
 		std::vector< Tmx::ObjectGroup* > object_groups;
 		std::vector< Tmx::Tileset* > tilesets;
 

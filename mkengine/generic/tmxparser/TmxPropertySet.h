@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------
 // TmxPropertySet.h
 //
-// Copyright (c) 2010-2012, Tamir Atias
+// Copyright (c) 2010-2013, Tamir Atias
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -41,18 +41,23 @@ namespace Tmx
 	{
 	public:
 		PropertySet();
+		~PropertySet();
 
 		// Parse a node containing all the property nodes.
 		void Parse(const TiXmlNode *propertiesNode);
 	
 		// Get a numeric property (integer).
 		int GetNumericProperty(const std::string &name) const;
+		// Get a numeric property (float).
+		float GetFloatProperty(const std::string &name) const;
 
 		// Get a literal property (string).
 		std::string GetLiteralProperty(const std::string &name) const;
 
 		// Returns the amount of properties.
 		int GetSize() const { return properties.size(); }
+
+		bool HasProperty( const std::string& name ) const;
 
 		// Returns the STL map of the properties.
 		std::map< std::string, std::string > GetList() const 
