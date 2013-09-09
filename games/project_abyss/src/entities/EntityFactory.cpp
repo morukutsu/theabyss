@@ -86,13 +86,13 @@ Entity* EntityFactory::Create(std::string name, std::string type,
 		ent->AddComponent(pwpn);
 
 		ent->AddComponent(new ShipDisplayComponent(pmov, pwpn) );
-
-		
 	}
 	else if(type == "particlegenerator")
 	{
 		ent = new StaticEntity();
-		ent->AddComponent(new ParticleGeneratorComponent(properties["filename"]) );
+		ParticleGeneratorComponent* pgen = new ParticleGeneratorComponent(properties["filename"]);
+		pgen->SetArea(w, h);
+		ent->AddComponent(pgen);
 	}
 	else if(type == "animatedgfx")
 	{

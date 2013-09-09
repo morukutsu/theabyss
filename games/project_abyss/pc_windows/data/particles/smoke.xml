@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Generator>
-	<!-- frequency of appartition of this sprite -->
+	<!-- frequency of this sprite -->
 	<Parameter name="Sprite">
 		<Sprite filename="smoke0.png" frequency="0.5"/>
 		<Sprite filename="smoke1.png" frequency="0.5"/>
@@ -44,6 +44,9 @@
 	<Parameter name="Func_Velocity_X" value="random"/>
 	<Parameter name="Func_Velocity_Y" value="random"/>
 	<Parameter name="Func_Velocity_Z" value="random"/>
+	
+	<Parameter name="Area_Generator" value="false"/>
+	<Parameter name="Area_Type" value="rect"/>
 	
 	<!-- The time = 1 - life -->
 	<Parameter name="Color_Keyframes">

@@ -9,9 +9,16 @@
 
 #define PULSE_LASER_VELOCITY		40.0F
 
+struct PartPositionInfo {
+	float x, y, rx, ry;
+};
+
 struct WpnInfo {
 	std::string wpn_name;
 	float shootX, shootY;
+	std::string img_arm, img_cannon;
+	PartPositionInfo arm_position, cannon_position;
+	bool isArmRotationFixed, isCannonRotationFixed;
 };
 
 enum {

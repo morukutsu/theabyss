@@ -34,6 +34,7 @@ ParticleGeneratorComponent::ParticleGeneratorComponent(std::string filename)
 	rotCenterY = 0;
 	rotAngle = 0;
 	ignoreLightPipeline = true;
+	isAreaGenerator = false;
 
 	// Initialisations range funcs
 	for(int i = 0; i < MAX_PARAMETERS; i++)
@@ -219,6 +220,20 @@ ParticleGeneratorComponent::ParticleGeneratorComponent(std::string filename)
 				elem2 = elem2->NextSiblingElement();
 			}
 		}
+		else if(parameterName == "Area_Generator")
+		{
+			std::string value = elem->Attribute("value");
+			if(value == "true")
+				isAreaGenerator = true;
+			else
+				isAreaGenerator = false;
+		}
+		else if(parameterName == "Area_Type")
+		{
+			std::string value = elem->Attribute("value");
+			if(value == "rect")
+				areaType = AREA_RECT;
+		}
 
 		elem = elem->NextSiblingElement();
 	}
@@ -234,6 +249,12 @@ ParticleGeneratorComponent::~ParticleGeneratorComponent()
 
 	particles.swap(particles);
 	particles.clear();
+}
+
+void ParticleGeneratorComponent::SetArea(float w, float h)
+{
+	areaW = w;
+	areaH = h;
 }
 
 void ParticleGeneratorComponent::Init()
@@ -370,6 +391,12 @@ void ParticleGeneratorComponent::Update()
 					particles[k].x = parent->mPos.x; 
 					particles[k].y = parent->mPos.y;
 					particles[k].z = parent->mDepth;
+				}
+
+				if(isAreaGenerator && areaType == AREA_RECT)
+				{
+					particles[k].x += SimpleMaths::Rand(0.0f, areaW);
+					particles[k].y += SimpleMaths::Rand(0.0f, areaH);
 				}
                
 				particles[k].vx = vx + rangeFuncs[PARAM_VEL_X]->func(genTime, vx_rmin, vx_rmax) + movingParent_vx;

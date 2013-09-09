@@ -160,6 +160,9 @@ namespace mk
 		// Affichage du pointeur de souris
 		if(isPointerVisible) 
 		{
+			mMousePointer.SetCenter(-mMousePointer.image->getImageWidth() / 2, 
+				-mMousePointer.image->getImageHeight() / 2);
+
 			mMousePointer.MoveTo(Lerp(interpolation, 0.0f, 1.0f, oldPointerX, pointerX), 
 				Lerp(interpolation, 0.0f, 1.0f, oldPointerY, pointerY));
 

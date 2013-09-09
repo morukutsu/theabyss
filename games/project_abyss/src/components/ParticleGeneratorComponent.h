@@ -18,6 +18,11 @@ enum
 	PARAM_VEL_X, PARAM_VEL_Y, PARAM_VEL_Z
 };
 
+enum
+{
+	AREA_RECT
+};
+
 struct Particle 
 {
 	bool active;
@@ -88,6 +93,8 @@ class ParticleGeneratorComponent : public Component
 		void RotateLocal(float x, float y, float angle);
 		void MirrorLocal(bool v, bool h);
 
+		void SetArea(float w, float h);
+
 	private:
 		void GetColorInterp(float life, float *r, float *g, float *b);
 		mk::Image* PickSprite();
@@ -125,6 +132,11 @@ class ParticleGeneratorComponent : public Component
 		bool referencial;
 		int priority;
 		bool ignoreLightPipeline;
+
+		bool isAreaGenerator;
+		int  areaType;
+
+		float areaW, areaH;
 
 		// Fonctions
 		RangeFunc* rangeFuncs[MAX_PARAMETERS];

@@ -4,6 +4,8 @@
 		<Name>WPN_PRIMARY_LASER</Name>
 		<Arm filename="sprites/vaisseau/armes/bras.png" rotation="0" rx="20" ry="0" x="-15" y="50" />
 		<Cannon filename="sprites/vaisseau/armes/canon.png" rotation="1" rx="0" ry="0" x="-24" y="0" />
-		<ShootPosition x="-60" y="50" />
+		
+		<!-- Shoot position relative a Cannon position -->
+		<ShootPosition x="-21" y="0" />
 	</Weapon>
 </ShipWeapons>

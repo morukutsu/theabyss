@@ -72,7 +72,19 @@ void PlayerWeaponComponent::Shoot()
 	// Tir
 	NVector velBullet = /*parent->mVel +*/ NVector(PULSE_LASER_VELOCITY*mx*cosf(mWpnAngle), PULSE_LASER_VELOCITY*sinf(mWpnAngle));
 
-	NVector posBullet = parent->mPos + NVector(wpns[0].shootX*-mx, wpns[0].shootY);
+	// Calcul de la position de tir réelle relative au vaisseau
+	// Arm + Cannon + shoot
+	NVector armPos = NVector(wpns[0].arm_position.x, wpns[0].arm_position.y);
+	NVector cannonPos = NVector(wpns[0].cannon_position.x, wpns[0].cannon_position.y);
+
+
+	NVector shootPosRelative = armPos + cannonPos + NVector(wpns[0].shootX, wpns[0].shootY);
+	shootPosRelative.Rotate(armPos + cannonPos, -mWpnAngle);
+
+	// Position de tir + rotation
+	NVector posBullet = NVector(shootPosRelative.x*-mx, shootPosRelative.y);
+
+	posBullet += parent->mPos;
 
 	BulletManager* bman = parent->GetEntityManager()->GetBulletManager();
 	bman->Emit(posBullet.x, posBullet.y, velBullet.x, velBullet.y, BULLET_PULSE_LASER);
@@ -119,6 +131,11 @@ void PlayerWeaponComponent::OrientMouse(float mscrx, float mscry)
 
 	// calcul du vecteur de tir en fonction de la position du héros
 	NVector heroPosition = parent->mPos;
+	NVector armPos = NVector(wpns[0].arm_position.x, wpns[0].arm_position.y);
+	NVector cannonPos = NVector(wpns[0].cannon_position.x, wpns[0].cannon_position.y);
+	NVector shootPosRelative = armPos + cannonPos + NVector(wpns[0].shootX, wpns[0].shootY);
+	shootPosRelative = NVector(shootPosRelative.x*-mx, shootPosRelative.y);
+	heroPosition += shootPosRelative;
 
 	float scrollX = parent->GetEntityManager()->GetGameMap()->GetLevelManager()->scrollX;
 	float scrollY = parent->GetEntityManager()->GetGameMap()->GetLevelManager()->scrollY;
@@ -128,14 +145,14 @@ void PlayerWeaponComponent::OrientMouse(float mscrx, float mscry)
 
 	NVector mouseWorldPosition = NVector(mscrx, mscry) + NVector(scrollX, scrollY)*32.0f;
 
-	std::cout << "Hero pos" << std::endl << "x : " << heroPosition.x << "y : " << heroPosition.y << std::endl;
-	std::cout << "Mouse World pos" << std::endl << "x : " << mouseWorldPosition.x << "y : " << mouseWorldPosition.y << std::endl;
+	//std::cout << "Hero pos" << std::endl << "x : " << heroPosition.x << "y : " << heroPosition.y << std::endl;
+	//std::cout << "Mouse World pos" << std::endl << "x : " << mouseWorldPosition.x << "y : " << mouseWorldPosition.y << std::endl;
 
 	NVector shootVector = heroPosition - mouseWorldPosition;
 
-	mWpnAngle = -SimpleMaths::GetAngle2PointsRad(shootVector.x, shootVector.y, 0, 0) + PI/2.0f;
+	mWpnAngle = mx * SimpleMaths::GetAngle2PointsRad(shootVector.x, shootVector.y, 0, 0) + PI/2.0f;
 
-	std::cout << mWpnAngle << std::endl;
+	//std::cout << mWpnAngle << std::endl;
 }
 
 void PlayerWeaponComponent::ReadWeaponsFromXML()
@@ -155,6 +172,46 @@ void PlayerWeaponComponent::ReadWeaponsFromXML()
 		// Name
 		TiXmlElement *tag = elem->FirstChildElement("Name");
 		w.wpn_name = tag->GetText();
+
+		// Arm
+		tag = elem->FirstChildElement("Arm");
+		std::string arm_filename = tag->Attribute("filename");
+		if(arm_filename != "")
+		{
+			w.img_arm = arm_filename;
+			double rx, ry, px, py;
+			int rotation;
+
+			tag->Attribute("rx", &rx);
+			tag->Attribute("ry", &ry);
+			tag->Attribute("x", &px);
+			tag->Attribute("y", &py);
+			tag->Attribute("rotation", &rotation);
+
+			w.isArmRotationFixed = (rotation != 1);
+
+			w.arm_position.x = px, w.arm_position.y = py, w.arm_position.rx = rx, w.arm_position.ry = ry;	
+		}
+
+		// Cannon
+		tag = elem->FirstChildElement("Cannon");
+		std::string cannon_filename = tag->Attribute("filename");
+		if(cannon_filename != "")
+		{
+			w.img_cannon = cannon_filename;
+			double rx, ry, px, py;
+			int rotation;
+
+			tag->Attribute("rx", &rx);
+			tag->Attribute("ry", &ry);
+			tag->Attribute("x", &px);
+			tag->Attribute("y", &py);
+			tag->Attribute("rotation", &rotation);
+
+			w.isCannonRotationFixed = (rotation != 1);
+
+			w.cannon_position.x = px, w.cannon_position.y = py, w.cannon_position.rx = rx, w.cannon_position.ry = ry;
+		}
 
 		// Shoot position
 		tag = elem->FirstChildElement("ShootPosition");
