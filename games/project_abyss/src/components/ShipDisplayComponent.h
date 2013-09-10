@@ -7,13 +7,14 @@
 #include "Component.h"
 #include "mkengine.h"
 #include "../physics/Vector.h"
+#include "../physics/Anchor.h"
 
 #include <map>
 #include <string>
 
 #define SHIP_MAIN_PARTS_COUNT			8
 #define SHIP_PARTS_COUNT				11
-#define GEN_COUNT						5
+#define GEN_COUNT						6
 #define WPN_ARM_COUNT					1
 #define WPN_COUNT						1
 
@@ -36,7 +37,8 @@ enum
 {
 	GEN_REACT_A_FRONT, GEN_REACT_B_FRONT,
 	GEN_REACT_A_BACK, GEN_REACT_B_BACK,
-	GEN_SMOKE
+	GEN_SMOKE,
+	GEN_BUBBLES
 };
 
 enum 
@@ -104,7 +106,7 @@ class ShipDisplayComponent : public Component
 		// Effets graphiques
 		NVector reactorVelOrig[2], reactorVel[2];
 		bool isVaisseauHurt;
-
+		Anchor anchorBubbleGen;
 
 		// Mirroring
 		bool mirrorH;

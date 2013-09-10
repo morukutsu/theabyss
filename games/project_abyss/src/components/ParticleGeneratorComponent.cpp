@@ -413,6 +413,16 @@ void ParticleGeneratorComponent::Update()
 				particles[k].vx = vx + rangeFuncs[PARAM_VEL_X]->func(genTime, vx_rmin, vx_rmax) + movingParent_vx;
 				particles[k].vy = vy + rangeFuncs[PARAM_VEL_Y]->func(genTime, vy_rmin, vy_rmax) + movingParent_vy;
 				particles[k].vz = vz + rangeFuncs[PARAM_VEL_Z]->func(genTime, vz_rmin, vz_rmax) + movingParent_vz;
+				
+				if(!referencial == false)
+				{
+					float mx = mirrorV ? 1.0f: -1.0f;
+					float my = mirrorH ? 1.0f: -1.0f;
+
+					particles[k].vx = particles[k].vx * mx;
+					particles[k].vy = particles[k].vy * my;
+				}
+
 				particles[k].alpha = initialAlpha;
 				particles[k].alphaFade = alphaFade;
 				particles[k].angle = alphaFade;

@@ -524,6 +524,9 @@
     <ClInclude Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxImageLayer.h">
       <Filter>Fichiers d%27en-tête\mkengine\generic\tmxparser</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\physics\Anchor.h">
+      <Filter>Fichiers d%27en-tête\game\physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\AsciiFile.cpp">
@@ -930,6 +933,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\tmxparser\TmxImageLayer.cpp">
       <Filter>Fichiers sources\mkengine\generic\tmxparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\physics\Anchor.cpp">
+      <Filter>Fichiers sources\game\physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

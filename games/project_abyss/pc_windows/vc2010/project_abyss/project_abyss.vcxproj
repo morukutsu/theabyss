@@ -217,6 +217,7 @@
     <ClInclude Include="..\..\..\src\level_manager\LevelManager.h" />
     <ClInclude Include="..\..\..\src\loc_header.h" />
     <ClInclude Include="..\..\..\src\MenuState.h" />
+    <ClInclude Include="..\..\..\src\physics\Anchor.h" />
     <ClInclude Include="..\..\..\src\physics\Body.h" />
     <ClInclude Include="..\..\..\src\physics\BodyDef.h" />
     <ClInclude Include="..\..\..\src\physics\Matrix.h" />
@@ -410,6 +411,7 @@
     <ClCompile Include="..\..\..\src\level_manager\LevelManager.cpp" />
     <ClCompile Include="..\..\..\src\main.cpp" />
     <ClCompile Include="..\..\..\src\MenuState.cpp" />
+    <ClCompile Include="..\..\..\src\physics\Anchor.cpp" />
     <ClCompile Include="..\..\..\src\physics\Body.cpp" />
     <ClCompile Include="..\..\..\src\physics\Polygon.cpp" />
     <ClCompile Include="..\..\..\src\physics\Vector.cpp" />

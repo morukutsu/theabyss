@@ -122,6 +122,9 @@ void ShipDisplayComponent::PositionSprites(bool v)
 	generators[GEN_REACT_B_BACK]->offsetY = 25/32.0f + parent->mPos.y/32.0f;
 	generators[GEN_REACT_B_BACK]->offsetZ = parent->mDepth;
 
+	generators[GEN_BUBBLES]->offsetX = (anchorBubbleGen.GetTransformedPoint().x - parent->mPos.x)*mx;
+	generators[GEN_BUBBLES]->offsetY = anchorBubbleGen.GetTransformedPoint().y - parent->mPos.y;
+
 	for(int k = 0; k < SHIP_PARTS_COUNT; k++)
 	{
 		parts_sprites[k].SetRotCenter(parts_centers[k].x / 32.0f, parts_centers[k].y / 32.0f);
@@ -139,11 +142,14 @@ void ShipDisplayComponent::Receive(int message, void* data)
 		generators[GEN_REACT_B_BACK]->isActive = false;
 		generators[GEN_REACT_A_FRONT]->isActive = false;
 		generators[GEN_REACT_B_FRONT]->isActive = false;
+		//generators[GEN_BUBBLES]->isActive = false;
 		generators[GEN_SMOKE]->isActive = true;
+
 		parts_sprites[SHIP_FX_FLASHLIGHT].Hide();
 		parts_sprites[SHIP_PART_TORCHE].Hide();
 		parent->GetEntityManager()->AddParticleImage(parent->mPos.x, parent->mPos.y, "particles/explosion.png", 0.15f);
 		parent->GetScene()->ShakeScreen(10.0f, 0.5f);
+
 		//flashLight->spr.Hide();
 		reactorLight[0]->spr.Hide();
 		reactorLight[1]->spr.Hide();
@@ -319,6 +325,7 @@ void ShipDisplayComponent::Init()
 	generators[GEN_REACT_A_BACK] = new ParticleGeneratorComponent("particles/001_ship_reactor_A_back.xml");
 	generators[GEN_REACT_B_BACK] = new ParticleGeneratorComponent("particles/001_ship_reactor_B_back.xml");
 	generators[GEN_SMOKE] = new ParticleGeneratorComponent("particles/smoke.xml");
+	generators[GEN_BUBBLES] = new ParticleGeneratorComponent("particles/002_ship_bubbles.xml");
 	generators[GEN_SMOKE]->isActive = false;
 
 	for(int k = 0; k < GEN_COUNT; k++)
@@ -332,10 +339,14 @@ void ShipDisplayComponent::Init()
 	generators[GEN_REACT_A_BACK]->priority = 5 + prioShift;
 	generators[GEN_REACT_B_BACK]->priority = 5 + prioShift;
 	generators[GEN_SMOKE]->priority = -3 + prioShift;
+	generators[GEN_BUBBLES]->priority = 0 + prioShift;
 
 	reactorVelOrig[0] = NVector(generators[GEN_REACT_A_FRONT]->vx, generators[GEN_REACT_A_FRONT]->vy);
 	reactorVelOrig[1] = NVector(generators[GEN_REACT_B_FRONT]->vx, generators[GEN_REACT_B_FRONT]->vy);
 
+	anchorBubbleGen.SetAnchor(&(parent->mPos));
+	anchorBubbleGen.SetRotationOffset(NVector(25/32.0f, 30/32.0f));
+	anchorBubbleGen.SetOffset(NVector(70/32.0f, 30/32.0f));
 	// Flashlight
 	flashLight = new LightComponent("sprites/vaisseau/light_torch.png");
 	flashLight->spr.SetPriority(-3 + prioShift);
@@ -445,7 +456,8 @@ void ShipDisplayComponent::UpdateReactorsAngle()
 	generators[GEN_REACT_A_BACK]->RotateLocal(-48/32.0f, -6/32.0f, reactorsAngle);
 	generators[GEN_REACT_B_FRONT]->RotateLocal(-48/32.0f, -6/32.0f, reactorsAngle);
 	generators[GEN_REACT_B_BACK]->RotateLocal(-48/32.0f, -6/32.0f, reactorsAngle);
-
+	anchorBubbleGen.SetAngle(DegreesToRadians(reactorsAngle));
+	
 	NVector posLightReactorFront = NVector(partsPositionsXML[SHIP_PARTS_COUNT + REACTOR_LIGHT_0].x * mx, 
 										   partsPositionsXML[SHIP_PARTS_COUNT + REACTOR_LIGHT_0].y);
 
@@ -520,6 +532,9 @@ void ShipDisplayComponent::UpdateReactorsPower()
 
 	generators[GEN_REACT_B_BACK]->vx = reactorVel[1].x;
 	generators[GEN_REACT_B_BACK]->vy = reactorVel[1].y;
+
+	generators[GEN_BUBBLES]->vx = normalisedShipVelocity.x;
+	generators[GEN_BUBBLES]->vy = normalisedShipVelocity.y;
 }
 
 mk::Sprite& ShipDisplayComponent::getSprite(int constant, bool shadow)
