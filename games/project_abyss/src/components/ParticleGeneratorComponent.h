@@ -137,6 +137,7 @@ class ParticleGeneratorComponent : public Component
 		int  areaType;
 
 		float areaW, areaH;
+		float areaZ_min, areaZ_max;
 
 		// Fonctions
 		RangeFunc* rangeFuncs[MAX_PARAMETERS];

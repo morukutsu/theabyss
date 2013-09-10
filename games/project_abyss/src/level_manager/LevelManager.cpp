@@ -92,6 +92,8 @@ void LevelManager::Init()
 	cutscene = NULL;
 
 	scrollDiffX = scrollDiffY = 0;
+	scrollDiffDeplX = scrollDiffDeplY = 0;
+
 	scrollingResumeTime = 0;
 
 	// changement de pointeur de souris
@@ -436,55 +438,90 @@ void LevelManager::ComputeScrolling()
 	// Pour les X
 	if(scrollEntity->mVel.x < 0 && gameMap->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MOVED] == CMD_ACCEL_LEFT)
 	{
-		scrollDiffX -= DYNAMIC_SCROLLING_SPEED;
+		scrollDiffDeplX -= DYNAMIC_SCROLLING_SPEED;
 	}
 	else if(scrollEntity->mVel.x > 0 && gameMap->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MOVED] == CMD_ACCEL_RIGHT)
 	{
-		scrollDiffX += DYNAMIC_SCROLLING_SPEED;
+		scrollDiffDeplX += DYNAMIC_SCROLLING_SPEED;
 	}
 	else
 	{
 		if(scrollingResumeTime > 1.5f)
 		{
-			if(fabs(scrollDiffX) > DYNAMIC_SCROLLING_SPEED) 
+			if(fabs(scrollDiffDeplX) > DYNAMIC_SCROLLING_SPEED) 
 			{
-				if(scrollDiffX > 0)
-					scrollDiffX -= DYNAMIC_SCROLLING_SPEED;
-				else if(scrollDiffX < 0)
-					scrollDiffX += DYNAMIC_SCROLLING_SPEED;
+				if(scrollDiffDeplX > 0)
+					scrollDiffDeplX -= DYNAMIC_SCROLLING_SPEED;
+				else if(scrollDiffDeplX < 0)
+					scrollDiffDeplX += DYNAMIC_SCROLLING_SPEED;
 			}
 			else
 			{
-				scrollDiffX = 0;
+				scrollDiffDeplX = 0;
 			}
 		}
 	}
 
+	if(scrollDiffDeplX >= 200/32.0f)
+		scrollDiffDeplX = 200/32.0f; 
+	if(scrollDiffDeplX <= -200/32.0f)
+		scrollDiffDeplX = -200/32.0f;
+
 	// Pour les Y
 	if(scrollEntity->mVel.y < 0 && gameMap->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MOVED] == CMD_ACCEL_UP)
 	{
-		scrollDiffY -= DYNAMIC_SCROLLING_SPEED;
+		scrollDiffDeplY -= DYNAMIC_SCROLLING_SPEED;
 	}
 	else if(scrollEntity->mVel.y > 0 && gameMap->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MOVED] == CMD_ACCEL_DOWN)
 	{
-		scrollDiffY += DYNAMIC_SCROLLING_SPEED;
+		scrollDiffDeplY += DYNAMIC_SCROLLING_SPEED;
 	}
 	else
 	{
 		if(scrollingResumeTime > 1.5f)
 		{
-			if(fabs(scrollDiffY) > DYNAMIC_SCROLLING_SPEED) 
+			if(fabs(scrollDiffDeplY) > DYNAMIC_SCROLLING_SPEED) 
 			{
-				if(scrollDiffY > 0)
-					scrollDiffY -= DYNAMIC_SCROLLING_SPEED;
-				else if(scrollDiffY < 0)
-					scrollDiffY += DYNAMIC_SCROLLING_SPEED;
+				if(scrollDiffDeplY > 0)
+					scrollDiffDeplY -= DYNAMIC_SCROLLING_SPEED;
+				else if(scrollDiffDeplY < 0)
+					scrollDiffDeplY += DYNAMIC_SCROLLING_SPEED;
 			}
 			else
 			{
-				scrollDiffY = 0;
+				scrollDiffDeplY = 0;
 			}
 		}
+	}
+
+	if(scrollDiffDeplY >= 200/32.0f * 9.0f/16.0f)
+		scrollDiffDeplY = 200/32.0f * 9.0f/16.0f; 
+	if(scrollDiffDeplY <= -200/32.0f * 9.0f/16.0f)
+		scrollDiffDeplY = -200/32.0f * 9.0f/16.0f;
+
+	// Scroll diff mouse
+	mk::Input *input = mk::InputManager::GetInput(0, CNT_KEYBOARD);
+	NVector screenCenter = NVector(mk::Core::getBaseWidth()/2.0f, mk::Core::getBaseHeight()/2.0f);
+	NVector mouseScreenPosition = NVector(input->pointer.x, input->pointer.y);
+	NVector mouseVec = screenCenter - mouseScreenPosition;
+
+	float scrollDiffMouseX, scrollDiffMouseY;
+
+	scrollDiffMouseX = -(mouseVec.x / 32.0f) / 8.0f;
+	scrollDiffMouseY = -(mouseVec.y / 32.0f) / 8.0f;
+
+	scrollDiffDeplX = scrollDiffDeplY = 0;
+
+	//scrollDiffX = mk::max(scrollDiffMouseX, scrollDiffDeplX);
+	//scrollDiffY = mk::max(scrollDiffMouseY, scrollDiffDeplY);
+
+	// Foce only mouse scroll: TODO : toggle that by option
+	if(scrollEntity == gameMap->heroEntity)
+	{
+		scrollDiffX = scrollDiffMouseX;
+		scrollDiffY = scrollDiffMouseY;
+	} else {
+		scrollDiffX = scrollDiffY = 0;
 	}
 
 	if(scrollDiffX >= 200/32.0f)

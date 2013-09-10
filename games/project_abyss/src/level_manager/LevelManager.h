@@ -74,6 +74,7 @@ public:
 	Entity* scrollEntity;
 	float scrollX, scrollY, prevScrollX, prevScrollY, scrollDiffX, scrollDiffY;
 	float scrollingResumeTime;
+	float scrollDiffDeplX, scrollDiffDeplY;
 
 	// Cutscenes
 	Cutscene* cutscene;

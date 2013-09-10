@@ -35,6 +35,7 @@ ParticleGeneratorComponent::ParticleGeneratorComponent(std::string filename)
 	rotAngle = 0;
 	ignoreLightPipeline = true;
 	isAreaGenerator = false;
+	areaZ_min = areaZ_max = 0.0f;
 
 	// Initialisations range funcs
 	for(int i = 0; i < MAX_PARAMETERS; i++)
@@ -234,6 +235,14 @@ ParticleGeneratorComponent::ParticleGeneratorComponent(std::string filename)
 			if(value == "rect")
 				areaType = AREA_RECT;
 		}
+		else if(parameterName == "Area_Z_Min")
+		{
+			elem->QueryFloatAttribute("value", &areaZ_min);
+		}
+		else if(parameterName == "Area_Z_Max")
+		{
+			elem->QueryFloatAttribute("value", &areaZ_max);
+		}
 
 		elem = elem->NextSiblingElement();
 	}
@@ -398,7 +407,9 @@ void ParticleGeneratorComponent::Update()
 					particles[k].x += SimpleMaths::Rand(0.0f, areaW);
 					particles[k].y += SimpleMaths::Rand(0.0f, areaH);
 				}
-               
+				
+				particles[k].z += SimpleMaths::Rand(areaZ_min, areaZ_max);
+
 				particles[k].vx = vx + rangeFuncs[PARAM_VEL_X]->func(genTime, vx_rmin, vx_rmax) + movingParent_vx;
 				particles[k].vy = vy + rangeFuncs[PARAM_VEL_Y]->func(genTime, vy_rmin, vy_rmax) + movingParent_vy;
 				particles[k].vz = vz + rangeFuncs[PARAM_VEL_Z]->func(genTime, vz_rmin, vz_rmax) + movingParent_vz;
