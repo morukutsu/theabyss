@@ -11,18 +11,6 @@
 #include <math.h>
 #include "../SimpleMaths.h"
 
-#define MAX_PARAMETERS			16
-
-enum 
-{
-	PARAM_VEL_X, PARAM_VEL_Y, PARAM_VEL_Z
-};
-
-enum
-{
-	AREA_RECT
-};
-
 struct Particle 
 {
 	bool active;
@@ -37,45 +25,6 @@ struct Particle
 	mk::Sprite spr;
 };
 
-class RangeFunc
-{
-	public:
-	virtual float func(float t, float min, float max) = 0;
-};
-
-class RangeFuncRandom : public RangeFunc
-{
-	public:
-	float func(float t, float min, float max) {
-		return SimpleMaths::Rand(min, max);
-	}
-};
-
-class RangeFuncSin : public RangeFunc
-{
-	public:
-	float func(float t, float min, float max) {
-		float v = (1.0f + sinf(t))/2.0f;	// Sin entre 0 et 1
-		v = v * (max-min);	// Scale des valeurs dans l'intervalle min/max
-		v = v + min;		// Ajout de la borne min
-		return v;
-	}
-};
-
-struct ColorKey
-{
-	float time;
-	float r, g, b;
-};
-
-struct GenSprite
-{
-	float frequency;
-	mk::Image* img;
-};
-
-RangeFunc* createFunc(std::string name);
-
 class ParticleGeneratorComponent : public Component
 {
 	public:
@@ -87,6 +36,7 @@ class ParticleGeneratorComponent : public Component
 		void Update();
 
 		void Init();
+		void Load(std::string filename);
 
 		void ChangePriority(int prio);
 		void SetIgnoreLightPipeline(bool t);
@@ -108,39 +58,13 @@ class ParticleGeneratorComponent : public Component
 		std::vector<Particle> particles;
 		float particleBootTime, genTime;
 		bool isActive;
+		float movingParent_vx, movingParent_vy, movingParent_vz;
 
 		// Paramètres
-		int maxParticles;
-		std::vector<GenSprite> imgs;
+		mk::ParticleGeneratorRessource* params;
 
-		float initialLife;					// Durée de vie en secondes de la particule
-		float initialSize, sizeVariation;	// Scale initial de la particule
-		float frequency;					// Nombre de particules par seconde
-		float gravity;						// Gravité
-		float fade, fade_rmin, fade_rmax;	// Facteur de disparition de la particule
-		float vx, vy, vz;					// Vitesse de la particule
-		float vx_rmin, vy_rmin, vz_rmin;
-		float vx_rmax, vy_rmax, vz_rmax;
-		float initialAlpha;
-		float alphaFade;
-		float initialAngle, angleVariation;
-		float initialColorR, initialColorG, initialColorB;
-
-		float offsetX, offsetY, offsetZ;
-
-		float movingParent_vx, movingParent_vy, movingParent_vz;
-		bool referencial;
 		int priority;
 		bool ignoreLightPipeline;
-
-		bool isAreaGenerator;
-		int  areaType;
-
-		float areaW, areaH;
-		float areaZ_min, areaZ_max;
-
-		// Fonctions
-		RangeFunc* rangeFuncs[MAX_PARAMETERS];
 
 		// Rotation locale
 		float rotCenterX, rotCenterY, rotAngle;
@@ -148,8 +72,10 @@ class ParticleGeneratorComponent : public Component
 		// Mirroing local
 		bool mirrorV, mirrorH, oldMirrorV, oldMirrorH;
 
-		// Colorkey
-		std::vector<ColorKey> colorKeys;
+		// Paramètres pouvant être changés (copiés)
+		float areaW, areaH;
+		float vx, vy, vz;
+		float offsetX, offsetY, offsetZ;
 };
 
 #endif

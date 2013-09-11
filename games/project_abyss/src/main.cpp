@@ -50,6 +50,10 @@ int main(int argc, char **argv )
 		mk::Core::ToggleVSync();
 
 	//mk::RessourceManager::getInstance()->LoadTableOfContents("ressource.bin");
+	std::string isCache = ConfigurationManager::getInstance()->GetAttributeString("Cache_Ressources");
+	if(isCache == "false")
+		mk::RessourceManager::getInstance()->SetCache(false);
+
 	mk::InputManager::Init();
 
 	//Statemanager initialisation
@@ -107,9 +111,6 @@ int main(int argc, char **argv )
 
 	//Language Manager (TODO : Charger la langue sauvegardée)
 	LanguageManager::LoadLanguage((mk::AsciiFile*)mk::RessourceManager::getInstance()->LoadRessource("lang/french.xml") );
-	
-	// Script engine
-	//mk::
 
 	float nextGameUpdateTime = lowGetTime();
 	int   loops = 0;

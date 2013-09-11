@@ -527,6 +527,9 @@
     <ClInclude Include="..\..\..\src\physics\Anchor.h">
       <Filter>Fichiers d%27en-tête\game\physics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\ParticleGeneratorRessource.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\AsciiFile.cpp">
@@ -936,6 +939,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\physics\Anchor.cpp">
       <Filter>Fichiers sources\game\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\ParticleGeneratorRessource.cpp">
+      <Filter>Fichiers sources\mkengine\generic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

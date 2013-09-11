@@ -6,258 +6,41 @@
 #include "../SimpleMaths.h"
 #include <cmath>
 
-RangeFunc* createFunc(std::string name)
-{
-	if(name == "sin")
-		return new RangeFuncSin();
-	else if(name == "random")
-		return new RangeFuncRandom();
-	else
-		return NULL;
-}
 
 ParticleGeneratorComponent::ParticleGeneratorComponent(std::string filename)
 {
 	// Intialisation
-	maxParticles = -1;
-	initialLife = 1.0f;
-	initialSize = 1.0f;
-	gravity = 0.0f;
 	particleBootTime = -1.0f;
 	isActive = true;
-	initialAngle = 0.0f;
 	genTime = 0.0f;
-	offsetX = offsetY = offsetZ = 0.0f;
 	movingParent_vx = movingParent_vy = movingParent_vz = 0.0f;
 	priority = 0;
 	rotCenterX = 0;
 	rotCenterY = 0;
 	rotAngle = 0;
 	ignoreLightPipeline = true;
-	isAreaGenerator = false;
-	areaZ_min = areaZ_max = 0.0f;
+	offsetX = offsetY = offsetZ = 0.0f;
 
-	// Initialisations range funcs
-	for(int i = 0; i < MAX_PARAMETERS; i++)
-		rangeFuncs[i] = NULL;
-
-	// Parsing du fichier XML contenant les particules
-	mk::AsciiFile * f = (mk::AsciiFile*)mk::RessourceManager::getInstance()->LoadRessource(filename);
-	TiXmlDocument doc;
-	doc.Parse(f->getString() );
-
-	TiXmlElement * root = doc.FirstChildElement("Generator");
-
-	TiXmlElement * elem = root->FirstChildElement("Parameter");
-	while(elem)
-	{
-		std::string parameterName = elem->Attribute("name");
-
-		if(parameterName == "Sprite")
-		{
-			TiXmlElement * elem2 = elem->FirstChildElement("Sprite");
-			while(elem2)
-			{
-				std::string spriteFilename = elem2->Attribute("filename");
-				GenSprite genSpr;
-				
-				genSpr.img = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("particles/" + spriteFilename);
-				elem2->QueryFloatAttribute("frequency", &genSpr.frequency);
-
-				imgs.push_back(genSpr);
-
-			
-				elem2 = elem2->NextSiblingElement();
-			}	
-		} 
-		else if(parameterName == "MaxParticles")
-		{
-			elem->QueryIntAttribute("value", &maxParticles);
-		}
-		else if(parameterName == "InitialLife")
-		{
-			elem->QueryFloatAttribute("value", &initialLife);
-		}
-		else if(parameterName == "InitialSize")
-		{
-			elem->QueryFloatAttribute("value", &initialSize);
-		}
-		else if(parameterName == "SizeVariation")
-		{
-			elem->QueryFloatAttribute("value", &sizeVariation);
-		}
-		else if(parameterName == "Frequency")
-		{
-			elem->QueryFloatAttribute("value", &frequency);
-		}
-		else if(parameterName == "Gravity")
-		{
-			elem->QueryFloatAttribute("value", &gravity);
-		}
-		else if(parameterName == "Fade")
-		{
-			elem->QueryFloatAttribute("value", &fade);
-		}
-		else if(parameterName == "FadeRange_Min")
-		{
-			elem->QueryFloatAttribute("value", &fade_rmin);
-		}
-		else if(parameterName == "FadeRange_Max")
-		{
-			elem->QueryFloatAttribute("value", &fade_rmax);
-		}
-		else if(parameterName == "Velocity_X")
-		{
-			elem->QueryFloatAttribute("value", &vx);
-		}
-		else if(parameterName == "Velocity_Y")
-		{
-			elem->QueryFloatAttribute("value", &vy);
-		}
-		else if(parameterName == "Velocity_Z")
-		{
-			elem->QueryFloatAttribute("value", &vz);
-		}
-		else if(parameterName == "Velocity_X_Range_Min")
-		{
-			elem->QueryFloatAttribute("value", &vx_rmin);
-		}
-		else if(parameterName == "Velocity_Y_Range_Min")
-		{
-			elem->QueryFloatAttribute("value", &vy_rmin);
-		}
-		else if(parameterName == "Velocity_Z_Range_Min")
-		{
-			elem->QueryFloatAttribute("value", &vz_rmin);
-		}
-		else if(parameterName == "Velocity_X_Range_Max")
-		{
-			elem->QueryFloatAttribute("value", &vx_rmax);
-		}
-		else if(parameterName == "Velocity_Y_Range_Max")
-		{
-			elem->QueryFloatAttribute("value", &vy_rmax);
-		}
-		else if(parameterName == "Velocity_Z_Range_Max")
-		{
-			elem->QueryFloatAttribute("value", &vz_rmax);
-		}
-		else if(parameterName == "InitialAlpha")
-		{
-			elem->QueryFloatAttribute("value", &initialAlpha);
-		}
-		else if(parameterName == "AlphaFade")
-		{
-			elem->QueryFloatAttribute("value", &alphaFade);
-		}
-		else if(parameterName == "InitialAngle")
-		{
-			elem->QueryFloatAttribute("value", &initialAngle);
-		}
-		else if(parameterName == "AngleVariation")
-		{
-			elem->QueryFloatAttribute("value", &angleVariation);
-		}
-		else if(parameterName == "InitialColor_Red")
-		{
-			int v;
-			elem->QueryIntAttribute("value", &v);
-			initialColorR = v/255.0f;
-		}
-		else if(parameterName == "InitialColor_Green")
-		{
-			int v;
-			elem->QueryIntAttribute("value", &v);
-			initialColorG = v/255.0f;
-		}
-		else if(parameterName == "InitialColor_Blue")
-		{
-			int v;
-			elem->QueryIntAttribute("value", &v);
-			initialColorB = v/255.0f;
-		}
-		else if(parameterName == "Func_Velocity_X")
-		{
-			rangeFuncs[PARAM_VEL_X] = createFunc(elem->Attribute("value"));
-		}
-		else if(parameterName == "Func_Velocity_Y")
-		{
-			rangeFuncs[PARAM_VEL_Y] = createFunc(elem->Attribute("value"));
-		}
-		else if(parameterName == "Func_Velocity_Z")
-		{
-			rangeFuncs[PARAM_VEL_Z] = createFunc(elem->Attribute("value"));
-		}
-		else if(parameterName == "Referencial")
-		{
-			std::string value = elem->Attribute("value");
-			if(value == "local")
-			{
-				referencial = false;
-			}
-			else if(value == "world")
-			{
-				referencial = true;
-			}
-		}
-		else if(parameterName == "Color_Keyframes")
-		{
-			TiXmlElement* elem2 = elem->FirstChildElement("ColorKey");
-			// Loading each Colorkey
-			while(elem2)
-			{
-				ColorKey key;
-				elem2->QueryFloatAttribute("time", &key.time);
-
-				int v;
-				elem2->QueryIntAttribute("R", &v);
-				key.r = v/255.0f;
-				elem2->QueryIntAttribute("G", &v);
-				key.g = v/255.0f;
-				elem2->QueryIntAttribute("B", &v);
-				key.b = v/255.0f;
-
-				colorKeys.push_back(key);
-				elem2 = elem2->NextSiblingElement();
-			}
-		}
-		else if(parameterName == "Area_Generator")
-		{
-			std::string value = elem->Attribute("value");
-			if(value == "true")
-				isAreaGenerator = true;
-			else
-				isAreaGenerator = false;
-		}
-		else if(parameterName == "Area_Type")
-		{
-			std::string value = elem->Attribute("value");
-			if(value == "rect")
-				areaType = AREA_RECT;
-		}
-		else if(parameterName == "Area_Z_Min")
-		{
-			elem->QueryFloatAttribute("value", &areaZ_min);
-		}
-		else if(parameterName == "Area_Z_Max")
-		{
-			elem->QueryFloatAttribute("value", &areaZ_max);
-		}
-
-		elem = elem->NextSiblingElement();
-	}
+	Load(filename);
 }
 
 ParticleGeneratorComponent::~ParticleGeneratorComponent()
 {
-	for(int i = 0; i < MAX_PARAMETERS; i++)
-	{
-		if(rangeFuncs[i])
-			delete rangeFuncs[i];
-	}
-
 	particles.swap(particles);
 	particles.clear();
+}
+
+void ParticleGeneratorComponent::Load(std::string filename)
+{
+	// Chargement des paramètres
+	params = (mk::ParticleGeneratorRessource*)mk::RessourceManager::getInstance()->LoadRessource(filename);
+	
+	// Paramètres pouvant être copiés
+	areaW = params->areaW;
+	areaH = params->areaH;
+	vx = params->vx;
+	vy = params->vy;
+	vz = params->vz;
 }
 
 void ParticleGeneratorComponent::SetArea(float w, float h)
@@ -269,10 +52,10 @@ void ParticleGeneratorComponent::SetArea(float w, float h)
 void ParticleGeneratorComponent::Init()
 {
 	// Creating particles array
-	if(maxParticles != -1)
+	if(params->maxParticles != -1)
 	{
-		particles.resize(maxParticles);
-		for(int k = 0; k < maxParticles; k++) 
+		particles.resize(params->maxParticles);
+		for(int k = 0; k < params->maxParticles; k++) 
 		{
 			particles[k].active = false;
 			//particles[k].spr.Assign(img);
@@ -293,7 +76,7 @@ void ParticleGeneratorComponent::Init()
 
 void ParticleGeneratorComponent::ChangePriority(int prio)
 {
-	for(int k = 0; k < maxParticles; k++) 
+	for(int k = 0; k < params->maxParticles; k++) 
 	{
 		particles[k].spr.SetPriority(prio);
 	}
@@ -302,7 +85,7 @@ void ParticleGeneratorComponent::ChangePriority(int prio)
 
 void ParticleGeneratorComponent::SetIgnoreLightPipeline(bool t)
 {
-	for(int k = 0; k < maxParticles; k++) 
+	for(int k = 0; k < params->maxParticles; k++) 
 	{
 		particles[k].spr.ignoreLightPipeline = t;
 	}
@@ -315,7 +98,7 @@ void ParticleGeneratorComponent::Receive(int message, void* data)
 
 void ParticleGeneratorComponent::Update()
 {
-	for(int k = 0; k < maxParticles; k++) 
+	for(int k = 0; k < params->maxParticles; k++) 
 	{
 		if(particles[k].active)
 		{
@@ -328,7 +111,7 @@ void ParticleGeneratorComponent::Update()
 			particles[k].size += particles[k].sizeVariation;
 
 			particles[k].life -= particles[k].fade;
-			particles[k].vy += gravity;
+			particles[k].vy += params->gravity;
 			particles[k].spr.Show();
 			if (particles[k].life <= 0.0f)
 			{
@@ -343,7 +126,7 @@ void ParticleGeneratorComponent::Update()
 			particles[k].spr.SetSize((particles[k].spr.image->getImageWidth() / 32.0f) * particles[k].size, 
 					(particles[k].spr.image->getImageHeight() / 32.0f) * particles[k].size);
 
-			if(!referencial)
+			if(!params->referencial)
 			{
 				NVector targetPoint = NVector(particles[k].x/32.0f, particles[k].y/32.0f);
 				NVector center = NVector(rotCenterX, rotCenterY);
@@ -360,7 +143,7 @@ void ParticleGeneratorComponent::Update()
 			}
 
 			// Changement de couleur
-			if(colorKeys.size() != 0) {
+			if(params->colorKeys.size() != 0) {
 				GetColorInterp(1.0f - particles[k].life, &particles[k].r, &particles[k].g, &particles[k].b);
 				/*particles[k].r = 0;
 				particles[k].g = 0;
@@ -383,13 +166,13 @@ void ParticleGeneratorComponent::Update()
 			// Ajout d'une nouvelle particule
 			if (particleBootTime <= 0.0f && isActive)
 			{
-				particleBootTime = 1.0f/frequency;
+				particleBootTime = 1.0f/params->frequency;
 
-				particles[k].life = initialLife;
-				particles[k].fade = fade + SimpleMaths::Rand(fade_rmin, fade_rmax);
+				particles[k].life = params->initialLife;
+				particles[k].fade = params->fade + SimpleMaths::Rand(params->fade_rmin, params->fade_rmax);
                 particles[k].active = true;
 
-				if(referencial == false)
+				if(params->referencial == false)
 				{
 					particles[k].x = 0; 
 					particles[k].y = 0;
@@ -402,19 +185,19 @@ void ParticleGeneratorComponent::Update()
 					particles[k].z = parent->mDepth;
 				}
 
-				if(isAreaGenerator && areaType == AREA_RECT)
+				if(params->isAreaGenerator && params->areaType == mk::AREA_RECT)
 				{
 					particles[k].x += SimpleMaths::Rand(0.0f, areaW);
 					particles[k].y += SimpleMaths::Rand(0.0f, areaH);
 				}
 				
-				particles[k].z += SimpleMaths::Rand(areaZ_min, areaZ_max);
+				particles[k].z += SimpleMaths::Rand(params->areaZ_min, params->areaZ_max);
 
-				particles[k].vx = vx + rangeFuncs[PARAM_VEL_X]->func(genTime, vx_rmin, vx_rmax) + movingParent_vx;
-				particles[k].vy = vy + rangeFuncs[PARAM_VEL_Y]->func(genTime, vy_rmin, vy_rmax) + movingParent_vy;
-				particles[k].vz = vz + rangeFuncs[PARAM_VEL_Z]->func(genTime, vz_rmin, vz_rmax) + movingParent_vz;
+				particles[k].vx = vx + params->rangeFuncs[mk::PARAM_VEL_X]->func(genTime, params->vx_rmin, params->vx_rmax) + movingParent_vx;
+				particles[k].vy = vy + params->rangeFuncs[mk::PARAM_VEL_Y]->func(genTime, params->vy_rmin, params->vy_rmax) + movingParent_vy;
+				particles[k].vz = vz + params->rangeFuncs[mk::PARAM_VEL_Z]->func(genTime, params->vz_rmin,params-> vz_rmax) + movingParent_vz;
 				
-				if(!referencial == false)
+				if(!params->referencial == false)
 				{
 					float mx = mirrorV ? 1.0f: -1.0f;
 					float my = mirrorH ? 1.0f: -1.0f;
@@ -423,24 +206,24 @@ void ParticleGeneratorComponent::Update()
 					particles[k].vy = particles[k].vy * my;
 				}
 
-				particles[k].alpha = initialAlpha;
-				particles[k].alphaFade = alphaFade;
-				particles[k].angle = alphaFade;
-				particles[k].angleVariation = angleVariation;
+				particles[k].alpha = params->initialAlpha;
+				particles[k].alphaFade = params->alphaFade;
+				particles[k].angle = params->alphaFade;
+				particles[k].angleVariation = params->angleVariation;
 
-				particles[k].size = initialSize;
-				particles[k].sizeVariation = sizeVariation;
+				particles[k].size = params->initialSize;
+				particles[k].sizeVariation = params->sizeVariation;
 
-				particles[k].r = initialColorR;
-				particles[k].g = initialColorG;
-				particles[k].b = initialColorB;
+				particles[k].r = params->initialColorR;
+				particles[k].g = params->initialColorG;
+				particles[k].b = params->initialColorB;
 				
 				particles[k].spr.Assign(PickSprite() );
 
 				particles[k].spr.SetSize((particles[k].spr.image->getImageWidth() / 32.0f) * particles[k].size, 
 					(particles[k].spr.image->getImageHeight() / 32.0f) * particles[k].size);
 
-				if(!referencial)
+				if(!params->referencial)
 				{
 					NVector targetPoint = NVector(particles[k].x/32.0f, particles[k].y/32.0f);
 					NVector center = NVector(rotCenterX, rotCenterY);
@@ -490,14 +273,14 @@ void ParticleGeneratorComponent::GetColorInterp(float life, float *r, float *g, 
 {
 	// On trouve les deux frames clé à interpoler en fonction de life
 	int prevFrame = 0;
-	for(int i = 0; i < colorKeys.size(); i++)
+	for(int i = 0; i < params->colorKeys.size(); i++)
 	{
-		if(i == colorKeys.size() - 1)
+		if(i == params->colorKeys.size() - 1)
 		{
 			prevFrame = i;
 			break;
 		}
-		else if(life > colorKeys[i].time && life < colorKeys[i+1].time)
+		else if(life > params->colorKeys[i].time && life < params->colorKeys[i+1].time)
 		{
 			prevFrame = i;
 			break;
@@ -505,22 +288,22 @@ void ParticleGeneratorComponent::GetColorInterp(float life, float *r, float *g, 
 	}
 
 	int nextFrame = prevFrame + 1;
-	if(nextFrame > colorKeys.size() - 1)
-		nextFrame = colorKeys.size() - 1;
+	if(nextFrame > params->colorKeys.size() - 1)
+		nextFrame = params->colorKeys.size() - 1;
 
 	// On réalise l'interpolation des deux couleurs
 	// Convertion des deux couleurs en HSL
 	float h1, s1, l1, h2, s2, l2;
-	RGB2HSL(colorKeys[prevFrame].r, colorKeys[prevFrame].g, colorKeys[prevFrame].b, &h1, &s1, &l1);
-	RGB2HSL(colorKeys[nextFrame].r, colorKeys[nextFrame].g, colorKeys[nextFrame].b, &h2, &s2, &l2);
+	RGB2HSL(params->colorKeys[prevFrame].r, params->colorKeys[prevFrame].g, params->colorKeys[prevFrame].b, &h1, &s1, &l1);
+	RGB2HSL(params->colorKeys[nextFrame].r, params->colorKeys[nextFrame].g, params->colorKeys[nextFrame].b, &h2, &s2, &l2);
 
 	// Interpolation
 	float ith, its, itl;
 	if(nextFrame != prevFrame)
 	{
-		ith = wrapf(Slerp2D(life - colorKeys[prevFrame].time, 0.0f, colorKeys[nextFrame].time - colorKeys[prevFrame].time, h1*PI*2, h2*PI*2)/(PI*2), 0, 1);
-		its = Lerp(life - colorKeys[prevFrame].time, 0.0f, colorKeys[nextFrame].time - colorKeys[prevFrame].time, s1, s2);
-		itl = Lerp(life - colorKeys[prevFrame].time, 0.0f, colorKeys[nextFrame].time - colorKeys[prevFrame].time, l1, l2);
+		ith = wrapf(Slerp2D(life - params->colorKeys[prevFrame].time, 0.0f, params->colorKeys[nextFrame].time - params->colorKeys[prevFrame].time, h1*PI*2, h2*PI*2)/(PI*2), 0, 1);
+		its = Lerp(life - params->colorKeys[prevFrame].time, 0.0f, params->colorKeys[nextFrame].time - params->colorKeys[prevFrame].time, s1, s2);
+		itl = Lerp(life - params->colorKeys[prevFrame].time, 0.0f, params->colorKeys[nextFrame].time - params->colorKeys[prevFrame].time, l1, l2);
 	}
 	else
 	{
@@ -540,26 +323,26 @@ mk::Image* ParticleGeneratorComponent::PickSprite()
 	int idOfImg = 0;
 
 	// Optimisation pour les générateurs avec une seule image
-	if(imgs.size() == 1)
-		return imgs[0].img;
+	if(params->imgs.size() == 1)
+		return params->imgs[0].img;
 
 	float u = SimpleMaths::Rand(0.0f, 1.0f);
 
 	float borneInf = 0;
 
-	for(int i = 0; i < imgs.size(); i++)
+	for(int i = 0; i < params->imgs.size(); i++)
 	{
-		if(u > borneInf && u < borneInf + imgs[i].frequency)
+		if(u > borneInf && u < borneInf + params->imgs[i].frequency)
 		{
 			idOfImg = i;
 			break;
 		}
 
-		borneInf += imgs[i].frequency;
+		borneInf += params->imgs[i].frequency;
 	}
 
 	//std::cout << idOfImg << std::endl;
-	return imgs[idOfImg].img;
+	return params->imgs[idOfImg].img;
 }
 
 void ParticleGeneratorComponent::HSL2RGB(float h, float s, float l, float* outR, float* outG, float* outB)

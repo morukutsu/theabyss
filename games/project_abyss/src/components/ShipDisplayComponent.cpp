@@ -320,12 +320,12 @@ void ShipDisplayComponent::Init()
 	parts_sprites[SHIP_FX_LUEUR].SetBlending(MK_BLEND_ALPHA);
 
 	// Ajout des composants générateurs de particules
-	generators[GEN_REACT_A_FRONT] = new ParticleGeneratorComponent("particles/001_ship_reactor_A_front.xml");
-	generators[GEN_REACT_B_FRONT] = new ParticleGeneratorComponent("particles/001_ship_reactor_B_front.xml");
-	generators[GEN_REACT_A_BACK] = new ParticleGeneratorComponent("particles/001_ship_reactor_A_back.xml");
-	generators[GEN_REACT_B_BACK] = new ParticleGeneratorComponent("particles/001_ship_reactor_B_back.xml");
-	generators[GEN_SMOKE] = new ParticleGeneratorComponent("particles/smoke.xml");
-	generators[GEN_BUBBLES] = new ParticleGeneratorComponent("particles/002_ship_bubbles.xml");
+	generators[GEN_REACT_A_FRONT] = new ParticleGeneratorComponent("particles/001_ship_reactor_A_front.gen");
+	generators[GEN_REACT_B_FRONT] = new ParticleGeneratorComponent("particles/001_ship_reactor_B_front.gen");
+	generators[GEN_REACT_A_BACK] = new ParticleGeneratorComponent("particles/001_ship_reactor_A_back.gen");
+	generators[GEN_REACT_B_BACK] = new ParticleGeneratorComponent("particles/001_ship_reactor_B_back.gen");
+	generators[GEN_SMOKE] = new ParticleGeneratorComponent("particles/smoke.gen");
+	generators[GEN_BUBBLES] = new ParticleGeneratorComponent("particles/002_ship_bubbles.gen");
 	generators[GEN_SMOKE]->isActive = false;
 
 	for(int k = 0; k < GEN_COUNT; k++)

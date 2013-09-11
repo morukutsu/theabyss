@@ -32,5 +32,6 @@
 #include "AssetsPreprocessing.h"
 #include "Shader.h"
 #include "SpineModel.h"
+#include "ParticleGeneratorRessource.h"
 
 #endif

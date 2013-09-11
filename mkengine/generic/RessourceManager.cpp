@@ -10,6 +10,7 @@
 #include "ExtendedSpriteRessource.h"
 #include "lowSystem.h"
 #include "Shader.h"
+#include "ParticleGeneratorRessource.h"
 
 namespace mk
 {
@@ -31,6 +32,8 @@ namespace mk
 		mArchive = NULL;
 
 		shaderDebug = false;
+
+		isCache = true;
     }
 
     RessourceManager::~RessourceManager()
@@ -158,6 +161,8 @@ namespace mk
 				tmpRes = new ExtendedSpriteRessource();
 			else if(ext == "fx")
 				tmpRes = new Shader();
+			else if(ext == "gen")
+				tmpRes = new ParticleGeneratorRessource();
 
 			tmpRes->LoadFromFile(mFilePointer, mFileSize);
 			tmpRes->mFromRessourceManager = true;
@@ -168,11 +173,13 @@ namespace mk
 				{
 					Shader * shaderPtr = dynamic_cast<Shader*>(tmpRes);
 					if(!shaderPtr)
-						resList[hash] = tmpRes;
+						if(isCache)
+							resList[hash] = tmpRes;
 				}
 				else
 				{
-					resList[hash] = tmpRes;
+					if(isCache)
+						resList[hash] = tmpRes;
 				}
 				std::cout << "[Load] : " << hash << " | " << filename << std::endl;
 			}

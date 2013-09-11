@@ -109,6 +109,7 @@
     <ClInclude Include="..\..\..\..\..\mkengine\generic\MeshBoneAnim.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\mkengine.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\ModelBone.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\ParticleGeneratorRessource.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\Point.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\PostFX.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\Ressource.h" />
@@ -249,6 +250,7 @@
     <ClCompile Include="..\..\..\..\..\mkengine\generic\MeshBone.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\generic\MeshBoneAnim.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\generic\ModelBone.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\generic\ParticleGeneratorRessource.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\generic\PostFX.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\generic\RessourceManager.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\generic\Scene.cpp" />

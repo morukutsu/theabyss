@@ -33,7 +33,10 @@ void PlayerInputComponent::Update()
 		PushCommand(CMD_ACCEL_RIGHT);
 
 	// Tir
-	if(input->buttons[mk::ButtonNames::RT].pressed)
+	/*if(input->buttons[mk::ButtonNames::RT].pressed)
+		PushCommand(CMD_SHOOT);*/
+
+	if(input->buttons[mk::ButtonNames::LeftClick].held)
 		PushCommand(CMD_SHOOT);
 
 	// Orientation du canon

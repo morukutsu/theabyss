@@ -62,6 +62,8 @@ namespace mk
 
 		void SetShaderDebug(bool v) { shaderDebug = v; };
 
+		void SetCache(bool v) { isCache = v; };
+
 		std::list<string> mLoadJobs;
 		std::list<Ressource*> mFreeJobs;
 
@@ -81,7 +83,7 @@ namespace mk
 		FILE* mArchive;
 
 		std::vector<Ressource*> recording;
-		bool isRecording;
+		bool isRecording, isCache;
     };
 };
 

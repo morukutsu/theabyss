@@ -7,7 +7,7 @@
 #include "Component.h"
 #include "mkengine.h"
 
-#define PULSE_LASER_VELOCITY		40.0F
+#define PULSE_LASER_VELOCITY		60.0F
 
 struct PartPositionInfo {
 	float x, y, rx, ry;
