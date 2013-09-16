@@ -63,9 +63,11 @@ void BulletManager::AllocateBullets()
 		// Initialisation des paramètres de la bullet
 		entityManager->GetScene()->Add(&bullets[i].spr);
 		bullets[i].spr.Hide();
-		
+		bullets[i].spr.ignoreLightPipeline = true;
+
 		entityManager->GetGameMap()->AddBody(bullets[i].body);
 		bullets[i].body->isSleeping = false;
+		bullets[i].entMan = entityManager;
 
 		// Linking
 		if(i == MAX_BULLETS-1)

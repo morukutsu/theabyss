@@ -98,6 +98,8 @@ namespace mk
 			float areaW, areaH;
 			float areaZ_min, areaZ_max;
 
+			int limitParticles, emitAmount;
+
 			// Fonctions
 			RangeFunc* rangeFuncs[MAX_PARAMETERS];
 

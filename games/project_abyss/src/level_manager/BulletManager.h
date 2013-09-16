@@ -12,6 +12,8 @@
 
 #define MAX_BULLETS			64
 
+class EntityManager;
+
 class Bullet
 {
 	public:
@@ -34,11 +36,13 @@ class Bullet
 		NVector* vertices;
 		mk::Sprite spr;
 
+		EntityManager* entMan;
+
 		// Quand la bullet est inactive
 		Bullet *next;	
 };
 
-class EntityManager;
+
 class BulletManager 
 {
 	public:

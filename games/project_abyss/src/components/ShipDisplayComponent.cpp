@@ -106,24 +106,24 @@ void ShipDisplayComponent::PositionSprites(bool v)
 
 	parts_positions[SHIP_PART_TORCHE] = NVector(partsPositionsXML[SHIP_PART_TORCHE].x * -mx, partsPositionsXML[SHIP_PART_TORCHE].y);
 
-	generators[GEN_REACT_A_FRONT]->offsetX = 66 * mx/32.0f + parent->mPos.x/32.0f;
-	generators[GEN_REACT_A_FRONT]->offsetY = 38/32.0f + parent->mPos.y/32.0f;
-	generators[GEN_REACT_A_FRONT]->offsetZ = parent->mDepth;
+	generators[GEN_REACT_A_FRONT]->gen->offsetX = 66 * mx/32.0f + parent->mPos.x/32.0f;
+	generators[GEN_REACT_A_FRONT]->gen->offsetY = 38/32.0f + parent->mPos.y/32.0f;
+	generators[GEN_REACT_A_FRONT]->gen->offsetZ = parent->mDepth;
 
-	generators[GEN_REACT_B_FRONT]->offsetX = 66 * mx/32.0f + parent->mPos.x/32.0f;
-	generators[GEN_REACT_B_FRONT]->offsetY = 38/32.0f + parent->mPos.y/32.0f;
-	generators[GEN_REACT_B_FRONT]->offsetZ = parent->mDepth;
+	generators[GEN_REACT_B_FRONT]->gen->offsetX = 66 * mx/32.0f + parent->mPos.x/32.0f;
+	generators[GEN_REACT_B_FRONT]->gen->offsetY = 38/32.0f + parent->mPos.y/32.0f;
+	generators[GEN_REACT_B_FRONT]->gen->offsetZ = parent->mDepth;
 
-	generators[GEN_REACT_A_BACK]->offsetX = 62 * mx/32.0f + parent->mPos.x/32.0f;
-	generators[GEN_REACT_A_BACK]->offsetY = 25/32.0f + parent->mPos.y/32.0f;
-	generators[GEN_REACT_A_BACK]->offsetZ = parent->mDepth;
+	generators[GEN_REACT_A_BACK]->gen->offsetX = 62 * mx/32.0f + parent->mPos.x/32.0f;
+	generators[GEN_REACT_A_BACK]->gen->offsetY = 25/32.0f + parent->mPos.y/32.0f;
+	generators[GEN_REACT_A_BACK]->gen->offsetZ = parent->mDepth;
 
-	generators[GEN_REACT_B_BACK]->offsetX = 62 * mx/32.0f + parent->mPos.x/32.0f;
-	generators[GEN_REACT_B_BACK]->offsetY = 25/32.0f + parent->mPos.y/32.0f;
-	generators[GEN_REACT_B_BACK]->offsetZ = parent->mDepth;
+	generators[GEN_REACT_B_BACK]->gen->offsetX = 62 * mx/32.0f + parent->mPos.x/32.0f;
+	generators[GEN_REACT_B_BACK]->gen->offsetY = 25/32.0f + parent->mPos.y/32.0f;
+	generators[GEN_REACT_B_BACK]->gen->offsetZ = parent->mDepth;
 
-	generators[GEN_BUBBLES]->offsetX = (anchorBubbleGen.GetTransformedPoint().x - parent->mPos.x)*mx;
-	generators[GEN_BUBBLES]->offsetY = anchorBubbleGen.GetTransformedPoint().y - parent->mPos.y;
+	generators[GEN_BUBBLES]->gen->offsetX = (anchorBubbleGen.GetTransformedPoint().x - parent->mPos.x)*mx;
+	generators[GEN_BUBBLES]->gen->offsetY = anchorBubbleGen.GetTransformedPoint().y - parent->mPos.y;
 
 	for(int k = 0; k < SHIP_PARTS_COUNT; k++)
 	{
@@ -138,12 +138,12 @@ void ShipDisplayComponent::Receive(int message, void* data)
 	if(message == MSG_HERO_KILL)
 	{
 		// On désactive les générateurs de particules
-		generators[GEN_REACT_A_BACK]->isActive = false;
-		generators[GEN_REACT_B_BACK]->isActive = false;
-		generators[GEN_REACT_A_FRONT]->isActive = false;
-		generators[GEN_REACT_B_FRONT]->isActive = false;
+		generators[GEN_REACT_A_BACK]->gen->isActive = false;
+		generators[GEN_REACT_B_BACK]->gen->isActive = false;
+		generators[GEN_REACT_A_FRONT]->gen->isActive = false;
+		generators[GEN_REACT_B_FRONT]->gen->isActive = false;
 		//generators[GEN_BUBBLES]->isActive = false;
-		generators[GEN_SMOKE]->isActive = true;
+		generators[GEN_SMOKE]->gen->isActive = true;
 
 		parts_sprites[SHIP_FX_FLASHLIGHT].Hide();
 		parts_sprites[SHIP_PART_TORCHE].Hide();
@@ -326,23 +326,23 @@ void ShipDisplayComponent::Init()
 	generators[GEN_REACT_B_BACK] = new ParticleGeneratorComponent("particles/001_ship_reactor_B_back.gen");
 	generators[GEN_SMOKE] = new ParticleGeneratorComponent("particles/smoke.gen");
 	generators[GEN_BUBBLES] = new ParticleGeneratorComponent("particles/002_ship_bubbles.gen");
-	generators[GEN_SMOKE]->isActive = false;
+	generators[GEN_SMOKE]->gen->isActive = false;
 
 	for(int k = 0; k < GEN_COUNT; k++)
 	{
 		parent->AddComponent(generators[k]);
-		generators[k]->ignoreLightPipeline = true;
+		generators[k]->gen->ignoreLightPipeline = true;
 	}
 
-	generators[GEN_REACT_A_FRONT]->priority = 3 + prioShift;
-	generators[GEN_REACT_B_FRONT]->priority = 3 + prioShift;
-	generators[GEN_REACT_A_BACK]->priority = 5 + prioShift;
-	generators[GEN_REACT_B_BACK]->priority = 5 + prioShift;
-	generators[GEN_SMOKE]->priority = -3 + prioShift;
-	generators[GEN_BUBBLES]->priority = 0 + prioShift;
+	generators[GEN_REACT_A_FRONT]->gen->priority = 3 + prioShift;
+	generators[GEN_REACT_B_FRONT]->gen->priority = 3 + prioShift;
+	generators[GEN_REACT_A_BACK]->gen->priority = 5 + prioShift;
+	generators[GEN_REACT_B_BACK]->gen->priority = 5 + prioShift;
+	generators[GEN_SMOKE]->gen->priority = -3 + prioShift;
+	generators[GEN_BUBBLES]->gen->priority = 0 + prioShift;
 
-	reactorVelOrig[0] = NVector(generators[GEN_REACT_A_FRONT]->vx, generators[GEN_REACT_A_FRONT]->vy);
-	reactorVelOrig[1] = NVector(generators[GEN_REACT_B_FRONT]->vx, generators[GEN_REACT_B_FRONT]->vy);
+	reactorVelOrig[0] = NVector(generators[GEN_REACT_A_FRONT]->gen->vx, generators[GEN_REACT_A_FRONT]->gen->vy);
+	reactorVelOrig[1] = NVector(generators[GEN_REACT_B_FRONT]->gen->vx, generators[GEN_REACT_B_FRONT]->gen->vy);
 
 	anchorBubbleGen.SetAnchor(&(parent->mPos));
 	anchorBubbleGen.SetRotationOffset(NVector(25/32.0f, 30/32.0f));
@@ -521,20 +521,20 @@ void ShipDisplayComponent::UpdateReactorsPower()
 	reactorVel[1].x = reactorVelOrig[1].x + normalisedShipVelocity.Length() * 3.0f;
 	reactorVel[1].y = reactorVelOrig[1].y; 
 
-	generators[GEN_REACT_A_FRONT]->vx = reactorVel[0].x;
-	generators[GEN_REACT_A_FRONT]->vy = reactorVel[0].y;
+	generators[GEN_REACT_A_FRONT]->gen->vx = reactorVel[0].x;
+	generators[GEN_REACT_A_FRONT]->gen->vy = reactorVel[0].y;
 
-	generators[GEN_REACT_A_BACK]->vx = reactorVel[0].x;
-	generators[GEN_REACT_A_BACK]->vy = reactorVel[0].y;
+	generators[GEN_REACT_A_BACK]->gen->vx = reactorVel[0].x;
+	generators[GEN_REACT_A_BACK]->gen->vy = reactorVel[0].y;
 
-	generators[GEN_REACT_B_FRONT]->vx = reactorVel[1].x;
-	generators[GEN_REACT_B_FRONT]->vy = reactorVel[1].y;
+	generators[GEN_REACT_B_FRONT]->gen->vx = reactorVel[1].x;
+	generators[GEN_REACT_B_FRONT]->gen->vy = reactorVel[1].y;
 
-	generators[GEN_REACT_B_BACK]->vx = reactorVel[1].x;
-	generators[GEN_REACT_B_BACK]->vy = reactorVel[1].y;
+	generators[GEN_REACT_B_BACK]->gen->vx = reactorVel[1].x;
+	generators[GEN_REACT_B_BACK]->gen->vy = reactorVel[1].y;
 
-	generators[GEN_BUBBLES]->vx = normalisedShipVelocity.x;
-	generators[GEN_BUBBLES]->vy = normalisedShipVelocity.y;
+	generators[GEN_BUBBLES]->gen->vx = normalisedShipVelocity.x;
+	generators[GEN_BUBBLES]->gen->vy = normalisedShipVelocity.y;
 }
 
 mk::Sprite& ShipDisplayComponent::getSprite(int constant, bool shadow)

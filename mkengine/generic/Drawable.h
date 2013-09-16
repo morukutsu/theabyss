@@ -63,6 +63,8 @@ namespace mk
 
 				currentShader = 0;
 				isShader = false;
+				
+				toRemove = false;
 
 				InitState(prevPos);
 				InitState(curPos);
@@ -121,6 +123,8 @@ namespace mk
 			bool isOpaque;
 			Shader* currentShader;
 			bool isShader;
+
+			bool toRemove; // element à supprimer de la scène
 	};
 };
 

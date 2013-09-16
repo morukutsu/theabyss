@@ -30,9 +30,6 @@
     <Filter Include="Fichiers d%27en-tête\game\gamestates">
       <UniqueIdentifier>{edb916f3-28e5-41d4-bd23-77bdbee657fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers sources\game\gamestates">
-      <UniqueIdentifier>{d96bfe66-b12c-4855-93e8-cd10df05a689}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Fichiers sources\game\xml">
       <UniqueIdentifier>{883b9aef-8a7d-4469-aa37-74f35625c978}</UniqueIdentifier>
     </Filter>
@@ -66,9 +63,6 @@
     <Filter Include="Fichiers sources\game\physics">
       <UniqueIdentifier>{a2b5f8eb-6176-4754-9608-a9fbbbee2d69}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers d%27en-tête\game\components">
-      <UniqueIdentifier>{0b48c00d-cf93-47ba-b12f-4954cd908ff6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Fichiers sources\game\components">
       <UniqueIdentifier>{be6e2b6c-7d9d-4cec-b397-5479d659fb31}</UniqueIdentifier>
     </Filter>
@@ -101,6 +95,12 @@
     </Filter>
     <Filter Include="Fichiers d%27en-tête\game\xml">
       <UniqueIdentifier>{2ec09902-17f1-4432-9b4e-84f6fcc81a0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\gamestates">
+      <UniqueIdentifier>{d96bfe66-b12c-4855-93e8-cd10df05a689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\components">
+      <UniqueIdentifier>{0b48c00d-cf93-47ba-b12f-4954cd908ff6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -530,6 +530,15 @@
     <ClInclude Include="..\..\..\..\..\mkengine\generic\ParticleGeneratorRessource.h">
       <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\ObjectPool.h">
+      <Filter>Fichiers d%27en-tête\mkengine\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\level_manager\ParticleEnginesManager.h">
+      <Filter>Fichiers d%27en-tête\game\level_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\effects\ParticleGenerator.h">
+      <Filter>Fichiers d%27en-tête\game\effects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\AsciiFile.cpp">
@@ -942,6 +951,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\ParticleGeneratorRessource.cpp">
       <Filter>Fichiers sources\mkengine\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\level_manager\ParticleEnginesManager.cpp">
+      <Filter>Fichiers sources\game\level_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\effects\ParticleGenerator.cpp">
+      <Filter>Fichiers sources\game\effects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

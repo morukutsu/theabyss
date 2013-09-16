@@ -124,6 +124,9 @@ void LevelManager::Update()
 	// Update entités
 	gameMap->GetEntityManager()->Update();
 
+	// Update particles
+	gameMap->particleManager->Update();
+
 	// Debug
 	//gameCamera.DebugMove();
 

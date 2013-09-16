@@ -104,11 +104,13 @@ namespace mk
 		elem->Show();
 		elem->ignoreLightPipeline = false;
 		elements.push_back(elem);
+		elem->toRemove = false;
 	}
 	
 	void Scene::Remove(Drawable* elem)
 	{
-		elements.remove(elem);
+		//elements.remove(elem);
+		elem->toRemove = true;
 	}
 	
 	void Scene::AddLight(Drawable* elem)
@@ -117,18 +119,25 @@ namespace mk
 		elem->SetType(DRAWABLE_TYPE_LIGHT);
 		elem->SetBlending(MK_BLEND_ADD);
 		elements.push_back(elem);
+		elem->toRemove = false;
 	}
 
 	void Scene::RemoveLight(Drawable* elem)
 	{
-		elements.remove(elem);
+		//elements.remove(elem);
+		elem->toRemove = true;
 	}
 	
 	void Scene::SplitElementsList(std::list<Drawable*>& opaques, std::list<Drawable*>& transparents)
 	{
-		for(std::list<Drawable*>::iterator it = elements.begin(); it != elements.end(); it++)
+		for(std::list<Drawable*>::iterator it = elements.begin(); it != elements.end();)
 		{
-			if((*it)->isVisible && !(*it)->isCulled) {
+			if((*it)->toRemove)
+			{
+				elements.erase(it++);
+			}
+			else if((*it)->isVisible && !(*it)->isCulled) 
+			{
 				if((*it)->isOpaque)
 				{
 					opaques.push_back((*it));
@@ -137,7 +146,14 @@ namespace mk
 				{
 					transparents.push_back((*it));
 				}
+
+				it++;
 			}
+			else
+			{
+				it++;
+			}
+
 		}
 
 		// Tri des elements de la scene

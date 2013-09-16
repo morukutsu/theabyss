@@ -5,6 +5,9 @@
 #include "BulletManager.h"
 #include "BulletFactory.h"
 #include "../SimpleMaths.h"
+#include "../entities/EntityManager.h"
+#include "../level_manager/ParticleEnginesManager.h"
+#include "../level_manager/GameMap.h"
 
 void BulletUpdater::Update(Bullet* bullet)
 {
@@ -35,6 +38,8 @@ void BulletUpdater::Update(Bullet* bullet)
 					if(cbodies[i]->bodytype == BODY_WORLD_BOUNDS || cbodies[i]->bodytype == BODY_ENNEMY)
 					{
 						bullet->toDelete = true;
+						bullet->entMan->GetGameMap()->GetParticleManager()
+							->ShowGenerator("particles/wpn_laser_expl.gen", mPos.x, mPos.y, 0.0f);
 					}
 				}
 			}

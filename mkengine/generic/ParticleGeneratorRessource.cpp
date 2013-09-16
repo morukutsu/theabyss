@@ -25,6 +25,8 @@ namespace mk
 		initialAngle = 0.0f;
 		isAreaGenerator = false;
 		areaZ_min = areaZ_max = 0.0f;
+		limitParticles = 0;				// Unlimited
+		emitAmount = 1;					// 1 particle per tick
 
 		// Initialisations range funcs
 		for(int i = 0; i < MAX_PARAMETERS; i++)
@@ -242,7 +244,18 @@ namespace mk
 			{
 				elem->QueryFloatAttribute("value", &areaZ_max);
 			}
-
+			else if(parameterName == "LimitParticles")
+			{
+				int v;
+				elem->QueryIntAttribute("value", &v);
+				limitParticles = v;
+			}
+			else if(parameterName == "EmitAmount")
+			{
+				int v;
+				elem->QueryIntAttribute("value", &v);
+				emitAmount = v;
+			}
 			elem = elem->NextSiblingElement();
 		}
 	}
@@ -267,6 +280,7 @@ namespace mk
 			// Libération
 			free(buffer);
 
+			mLoaded = true;
 			return 0;
 		}
 		else
@@ -292,6 +306,7 @@ namespace mk
 			// Libération
 			free(buffer);
 
+			mLoaded = true;
 			return 0;
 		}
 		else

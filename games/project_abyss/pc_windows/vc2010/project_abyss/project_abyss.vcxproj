@@ -109,6 +109,7 @@
     <ClInclude Include="..\..\..\..\..\mkengine\generic\MeshBoneAnim.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\mkengine.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\ModelBone.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\generic\ObjectPool.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\ParticleGeneratorRessource.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\Point.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\generic\PostFX.h" />
@@ -193,6 +194,7 @@
     <ClInclude Include="..\..\..\src\debug_tools\FileLister.h" />
     <ClInclude Include="..\..\..\src\effects\Effect.h" />
     <ClInclude Include="..\..\..\src\effects\GlobalShaders.h" />
+    <ClInclude Include="..\..\..\src\effects\ParticleGenerator.h" />
     <ClInclude Include="..\..\..\src\effects\ScrollFadeEffect.h" />
     <ClInclude Include="..\..\..\src\entities\EntitiesIncludes.h" />
     <ClInclude Include="..\..\..\src\entities\Entity.h" />
@@ -216,6 +218,7 @@
     <ClInclude Include="..\..\..\src\level_manager\GameMap.h" />
     <ClInclude Include="..\..\..\src\level_manager\GameMapLayer.h" />
     <ClInclude Include="..\..\..\src\level_manager\LevelManager.h" />
+    <ClInclude Include="..\..\..\src\level_manager\ParticleEnginesManager.h" />
     <ClInclude Include="..\..\..\src\loc_header.h" />
     <ClInclude Include="..\..\..\src\MenuState.h" />
     <ClInclude Include="..\..\..\src\physics\Anchor.h" />
@@ -393,6 +396,7 @@
     <ClCompile Include="..\..\..\src\debug_tools\DebugMenu.cpp" />
     <ClCompile Include="..\..\..\src\debug_tools\FileLister.cpp" />
     <ClCompile Include="..\..\..\src\effects\GlobalShaders.cpp" />
+    <ClCompile Include="..\..\..\src\effects\ParticleGenerator.cpp" />
     <ClCompile Include="..\..\..\src\effects\ScrollFadeEffect.cpp" />
     <ClCompile Include="..\..\..\src\entities\Entity.cpp" />
     <ClCompile Include="..\..\..\src\entities\EntityFactory.cpp" />
@@ -411,6 +415,7 @@
     <ClCompile Include="..\..\..\src\level_manager\GameMap.cpp" />
     <ClCompile Include="..\..\..\src\level_manager\GameMapLayer.cpp" />
     <ClCompile Include="..\..\..\src\level_manager\LevelManager.cpp" />
+    <ClCompile Include="..\..\..\src\level_manager\ParticleEnginesManager.cpp" />
     <ClCompile Include="..\..\..\src\main.cpp" />
     <ClCompile Include="..\..\..\src\MenuState.cpp" />
     <ClCompile Include="..\..\..\src\physics\Anchor.cpp" />

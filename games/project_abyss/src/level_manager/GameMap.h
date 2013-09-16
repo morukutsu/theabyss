@@ -10,6 +10,7 @@
 #include "mkengine.h"
 #include <list>
 #include "../physics/Vector.h"
+#include "ParticleEnginesManager.h"
 
 class Entity;
 class EntityManager;
@@ -40,6 +41,8 @@ public:
 	
 	LevelManager* GetLevelManager() { return lvlMan; };
 
+	ParticleEnginesManager* GetParticleManager() { return particleManager; };
+
 public:
 	// Entités
 	EntityManager* entityManager;
@@ -61,6 +64,9 @@ public:
 
 	// Script
 	std::string scriptFilename;
+
+	// Particules
+	ParticleEnginesManager * particleManager;
 
 	// LevelManager
 	LevelManager* lvlMan;

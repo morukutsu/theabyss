@@ -19,6 +19,7 @@ GameMap::GameMap(LevelManager* lvl)
 	entityManager = new EntityManager();
 	scriptFilename = "";
 	lvlMan = lvl;
+	
 }
 
 GameMap::~GameMap()
@@ -36,6 +37,8 @@ GameMap::~GameMap()
 	{
 		delete (*it);
 	}
+
+	delete particleManager;
 }
 
 void GameMap::Init()
@@ -188,6 +191,9 @@ void GameMap::LoadGameMap(mk::Scene* scene)
 	if(scriptStr != "No such property!") {
 		scriptFilename = scriptStr;
 	}
+
+	// Particle engine
+	particleManager = new ParticleEnginesManager(scene);
 }
 
 void GameMap::AddMapLayersToScene(mk::Scene* scene)
