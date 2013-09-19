@@ -21,7 +21,7 @@ struct Particle
 	float size, sizeVariation;
 	float r, g, b;
 
-	mk::Sprite spr;
+	mk::Sprite spr, light;
 };
 
 class ParticleGenerator

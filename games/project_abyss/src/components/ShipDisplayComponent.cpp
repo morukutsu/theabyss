@@ -533,7 +533,7 @@ void ShipDisplayComponent::UpdateReactorsPower()
 	generators[GEN_REACT_B_BACK]->gen->vx = reactorVel[1].x;
 	generators[GEN_REACT_B_BACK]->gen->vy = reactorVel[1].y;
 
-	generators[GEN_BUBBLES]->gen->vx = normalisedShipVelocity.x;
+	generators[GEN_BUBBLES]->gen->vx = std::max(normalisedShipVelocity.x, 3.0f);
 	generators[GEN_BUBBLES]->gen->vy = normalisedShipVelocity.y;
 }
 

@@ -81,18 +81,25 @@ void ParticleGenerator::Init(mk::Scene* sc)
 		for(int k = numAdded; k < params->maxParticles; k++) 
 		{
 			particles[k].active = false;
-			//particles[k].spr.Assign(img);
+			
+			// Sprite (Particle)
 			particles[k].spr.Set3DMode(true);
 			particles[k].spr.isCullingIgnored = true;
-
-			// Ajout des sprites au Scene Node
 			scene->Add(&particles[k].spr);
-
 			particles[k].spr.Hide();
 			particles[k].spr.SetPriority(priority);
 			particles[k].spr.ignoreLightPipeline = ignoreLightPipeline;
 
-			//parent->GetScene()->AddLight(&particles[k].spr);
+			// Sprite (Light)
+			if(params->lightGenerator)
+			{
+				particles[k].light.Assign(params->lightGeneratorImg);
+				particles[k].light.Set3DMode(true);
+				particles[k].light.isCullingIgnored = true;
+				scene->AddLight(&particles[k].light);
+				particles[k].light.Hide();
+				particles[k].light.SetPriority(priority);
+			}
 
 			numAdded++;
 		}
@@ -112,6 +119,8 @@ void ParticleGenerator::ChangePriority(int prio)
 	for(int k = 0; k < params->maxParticles; k++) 
 	{
 		particles[k].spr.SetPriority(prio);
+		if(params->lightGenerator)
+			particles[k].light.SetPriority(prio);
 	}
 	priority = prio;
 }
@@ -140,8 +149,9 @@ void ParticleGenerator::Update()
 			if (particles[k].life <= 0.0f)
 			{
 				particles[k].active = false;
-				//parent->GetScene()->Remove(&particles[k].spr);
 				particles[k].spr.Hide();
+				if(params->lightGenerator)
+					particles[k].light.Hide();
 			}
 
 			if(particles[k].size < 0.0f)
@@ -150,6 +160,12 @@ void ParticleGenerator::Update()
 			// Déplacement du sprite dans le scene node
 			particles[k].spr.SetSize((particles[k].spr.image->getImageWidth() / 32.0f) * particles[k].size, 
 					(particles[k].spr.image->getImageHeight() / 32.0f) * particles[k].size);
+
+			if(params->lightGenerator)
+			{
+				particles[k].light.SetSize((particles[k].light.image->getImageWidth() / 32.0f) * particles[k].size, 
+						(particles[k].light.image->getImageHeight() / 32.0f) * particles[k].size);
+			}
 
 			if(!params->referencial)
 			{
@@ -161,10 +177,14 @@ void ParticleGenerator::Update()
 				float my = mirrorH ? -1.0f: 1.0f;
 
 				particles[k].spr.MoveTo(targetPoint.x*mx + offsetX, targetPoint.y*my + offsetY);
+				if(params->lightGenerator)
+					particles[k].light.MoveTo(targetPoint.x*mx + offsetX, targetPoint.y*my + offsetY);
 			}
 			else
 			{
 				particles[k].spr.MoveTo(particles[k].x/32.0f + offsetX, particles[k].y/32.0f + offsetY);
+				if(params->lightGenerator)
+					particles[k].light.MoveTo(particles[k].x/32.0f + offsetX, particles[k].y/32.0f + offsetY);
 			}
 
 			// Changement de couleur
@@ -182,9 +202,21 @@ void ParticleGenerator::Update()
 			particles[k].spr.Tint((unsigned char)(particles[k].r*255), (unsigned char)(particles[k].g*255), (unsigned char)(particles[k].b*255));
 			particles[k].spr.SavePositions();
 
+			if(params->lightGenerator)
+			{
+				particles[k].light.SetDepth(particles[k].z + offsetZ);
+				particles[k].light.Rotate(particles[k].angle);
+				particles[k].light.Tint((unsigned char)(particles[k].alpha*255), (unsigned char)(particles[k].alpha*255), (unsigned char)(particles[k].alpha*255));
+				particles[k].light.SavePositions();
+			}
+
 			// On empêche l'interpolation durant cette frame
 			if(oldMirrorV != mirrorV || oldMirrorH != mirrorH)
+			{
 				particles[k].spr.SavePositions();
+				if(params->lightGenerator)
+					particles[k].light.SavePositions();
+			}
 		}
 		else
 		{
@@ -203,9 +235,14 @@ void ParticleGenerator::Update()
 				if(particleCount < params->limitParticles)
 					stillAlive = true;
 
-				//parent->GetScene()->Add(&particles[k].spr);
 				particles[k].spr.Show();
 				particles[k].spr.SetPriority(priority);
+
+				if(params->lightGenerator)
+				{
+					particles[k].light.Show();
+					particles[k].light.SetPriority(priority);
+				}
 
 				particles[k].life = params->initialLife;
 				particles[k].fade = params->fade + SimpleMaths::Rand(params->fade_rmin, params->fade_rmax);
@@ -261,6 +298,9 @@ void ParticleGenerator::Update()
 
 				particles[k].spr.SetSize((particles[k].spr.image->getImageWidth() / 32.0f) * particles[k].size, 
 					(particles[k].spr.image->getImageHeight() / 32.0f) * particles[k].size);
+				if(params->lightGenerator)
+					particles[k].light.SetSize((particles[k].light.image->getImageWidth() / 32.0f) * particles[k].size, 
+						(particles[k].light.image->getImageHeight() / 32.0f) * particles[k].size);
 
 				if(!params->referencial)
 				{
@@ -272,18 +312,31 @@ void ParticleGenerator::Update()
 					float my = mirrorH ? -1.0f: 1.0f;
 
 					particles[k].spr.MoveTo(targetPoint.x*mx + offsetX, targetPoint.y*my + offsetY);
+					if(params->lightGenerator)
+						particles[k].light.MoveTo(targetPoint.x*mx + offsetX, targetPoint.y*my + offsetY);
 				}
 				else
 				{
 					particles[k].spr.MoveTo(particles[k].x/32.0f + offsetX, particles[k].y/32.0f + offsetY);
+					if(params->lightGenerator)
+						particles[k].light.MoveTo(particles[k].x/32.0f + offsetX, particles[k].y/32.0f + offsetY);
 				}
 				particles[k].spr.SetDepth(particles[k].z + offsetZ);
 				particles[k].spr.Alpha(particles[k].alpha);
 				particles[k].spr.Rotate(particles[k].angle);
 				particles[k].spr.SavePositions();
 
+				if(params->lightGenerator)
+				{
+					particles[k].light.SetDepth(particles[k].z + offsetZ);
+					particles[k].light.Alpha(particles[k].alpha);
+					particles[k].light.Rotate(particles[k].angle);
+					particles[k].light.SavePositions();
+				}
+
 				// On empêche l'interpolation durant cette frame
 				particles[k].spr.SavePositions();
+				particles[k].light.SavePositions();
 			}
 		}
 	}
