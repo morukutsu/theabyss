@@ -34,7 +34,7 @@ class Bullet
 		float originX, originY, originVx, originVy;
 		CBody* body;
 		NVector* vertices;
-		mk::Sprite spr;
+		mk::Sprite spr, light;
 
 		EntityManager* entMan;
 

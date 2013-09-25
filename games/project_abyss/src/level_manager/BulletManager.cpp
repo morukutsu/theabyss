@@ -61,9 +61,14 @@ void BulletManager::AllocateBullets()
 	for(int i = 0; i < MAX_BULLETS; i++)
 	{
 		// Initialisation des paramètres de la bullet
+		// Sprite
 		entityManager->GetScene()->Add(&bullets[i].spr);
 		bullets[i].spr.Hide();
 		bullets[i].spr.ignoreLightPipeline = true;
+
+		// Light
+		entityManager->GetScene()->AddLight(&bullets[i].light);
+		bullets[i].light.Hide();
 
 		entityManager->GetGameMap()->AddBody(bullets[i].body);
 		bullets[i].body->isSleeping = false;
@@ -153,6 +158,7 @@ void BulletManager::HandleBulletDelete(Bullet* b)
 	b->isActive = false;
 	b->toDelete = false;
 	b->spr.Hide();
+	b->light.Hide();
 	b->body->isSleeping = true;
 	b->next = firstAvailable;
 	firstAvailable = b;

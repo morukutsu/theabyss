@@ -17,6 +17,9 @@ PlayerWeaponComponent::PlayerWeaponComponent(PlayerInputComponent* _in)
 	ReadWeaponsFromXML();
 
 	mCannonMode = C_MODE_FREE;
+
+	reloadTime = 0.0f;
+	allowShoot = true;
 }
 
 void PlayerWeaponComponent::Receive(int message, void* data)
@@ -33,6 +36,17 @@ void PlayerWeaponComponent::Update()
 
 	if(mCannonMode == C_MODE_FREE)
 		OrientMouse(input->pointer.x, input->pointer.y);
+
+	// Update autofire
+	if(reloadTime > 0)
+	{
+		reloadTime -= 1.0f / 30.0f;
+	}
+	else
+	{
+		reloadTime = 0.0f;
+		allowShoot = true;
+	}
 
 	// Traite toutes les commandes reçues depuis l'input à cette frame
 	for(std::list<int>::iterator it = in->commands.begin(); it != in->commands.end(); it++)
@@ -62,6 +76,13 @@ void PlayerWeaponComponent::Init()
 
 void PlayerWeaponComponent::Shoot()
 {
+	// Autofire
+	if(!allowShoot)
+		return;
+
+	reloadTime = 1.0f / wpns[0].autofire.rate;
+	allowShoot = false;
+
 	// Récupération du mirroring du héros
 	bool mirrorH = parent->GetEntityManager()->GetCommonStateVariables()[C_STATE_PLAYER_MIRROR] == 1;
 
@@ -222,8 +243,11 @@ void PlayerWeaponComponent::ReadWeaponsFromXML()
 		w.shootX = sx;
 		w.shootY = sy;
 
+		// Autofire
+		tag = elem->FirstChildElement("Autofire");
+		tag->QueryFloatAttribute("rate", &w.autofire.rate);
+		
 		wpns.push_back(w);
-
 		elem = elem->NextSiblingElement();
 	}
 }

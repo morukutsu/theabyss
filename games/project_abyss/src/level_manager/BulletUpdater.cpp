@@ -29,6 +29,11 @@ void BulletUpdater::Update(Bullet* bullet)
 			bullet->spr.SetSize(bullet->spr.image->getImageWidth() / 32.0f, bullet->spr.image->getImageHeight() / 32.0f);
 			bullet->spr.SavePositions();
 			
+			// Light
+			bullet->light.MoveTo(mPos.x / 32.0f, mPos.y / 32.0f);
+			bullet->light.SetSize(bullet->light.image->getImageWidth() / 32.0f, bullet->light.image->getImageHeight() / 32.0f);
+			bullet->light.SavePositions();
+
 			// Collisions
 			if(bullet->body->isCollision)
 			{

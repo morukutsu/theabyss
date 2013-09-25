@@ -12,7 +12,9 @@ void BulletFactory::Init(int bullet_type, Bullet* bullet)
 	{
 		case BULLET_PULSE_LASER:
 			// TODO : a optimiser
-			bullet->spr.Assign((mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("sprites/vaisseau/projectiles/tir_sans_trainee.png") );
+			bullet->spr.Assign((mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("sprites/vaisseau/projectiles/tir_avec_trainee.png") );
+			bullet->light.Assign((mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("sprites/lights/light32x32.png") );
+			
 			int numV = 4;
 			bullet->body->Initialise(NVector(bullet->originX, bullet->originY), 1.0f, bullet->vertices, numV);
 			bullet->body->isSensor = true;
@@ -28,6 +30,14 @@ void BulletFactory::Init(int bullet_type, Bullet* bullet)
 			bullet->spr.Show();
 			bullet->spr.Set3DMode(true);
 			bullet->spr.SavePositions();
+
+			// Light
+			bullet->light.MoveTo(bullet->originX / 32.0f, bullet->originY / 32.0f);
+			bullet->light.SetSize(bullet->light.image->getImageWidth() / 32.0f, bullet->light.image->getImageHeight() / 32.0f);
+			bullet->light.Show();
+			bullet->light.Set3DMode(true);
+			bullet->light.SavePositions();
+
 			break;
 	};
 }

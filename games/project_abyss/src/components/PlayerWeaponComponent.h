@@ -13,12 +13,18 @@ struct PartPositionInfo {
 	float x, y, rx, ry;
 };
 
+struct WpnAutofire
+{
+	float rate;		// number of shoots per sec
+};
+
 struct WpnInfo {
 	std::string wpn_name;
 	float shootX, shootY;
 	std::string img_arm, img_cannon;
 	PartPositionInfo arm_position, cannon_position;
 	bool isArmRotationFixed, isCannonRotationFixed;
+	WpnAutofire autofire;
 };
 
 enum {
@@ -58,6 +64,10 @@ class PlayerWeaponComponent : public Component
 		int mCannonOrientation;
 
 		int mCannonMode; // fixed / free mode
+
+		// Autofire
+		float reloadTime;
+		bool allowShoot;
 };
 
 #endif

@@ -251,7 +251,7 @@ void ShipDisplayComponent::UpdateWeapon()
 		cannon_position.Rotate(parts_positions[SHIP_PART_VIS], 0.0f);
 
 		// On récupére l'orientation depuis le playerwpn
-		float cannonAngle = -playerWeaponComponent->mWpnAngle + PI;
+		float cannonAngle = -playerWeaponComponent->mWpnAngle;
 
 		wpns[currentWeapon].spr_cannon->Rotate(RadiansToDegrees(cannonAngle)*mx );
 	}
