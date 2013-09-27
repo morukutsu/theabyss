@@ -38,6 +38,8 @@ private:
 	DebugMenu *debugMenu, *statesSubMenu, *mapsSubMenu, *chaptersSubMenu;
 	bool isFirstLoad;
 
+	mk::Music bgm;
+
 };
 
 #endif

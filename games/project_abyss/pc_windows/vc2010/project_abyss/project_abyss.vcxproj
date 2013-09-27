@@ -45,8 +45,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\..\..\..\..\mkengine\generic\tmxparser\zlib;..\..\..\..\..\mkengine\generic\tmxparser\base64;..\..\..\..\..\mkengine\generic\xml;..\..\..\..\..\mkengine\SFML\lib\include;..\..\..\..\..\mkengine\glew-1.9.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\extlibs\angelscript_2.26.2\sdk\angelscript\lib;..\..\..\..\..\mkengine\SFML\lib\lib;..\..\..\..\..\mkengine\glew-1.9.0\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\..\mkengine\generic\tmxparser\zlib;..\..\..\..\..\mkengine\generic\tmxparser\base64;..\..\..\..\..\mkengine\generic\xml;..\..\..\..\..\mkengine\SFML\include;..\..\..\..\..\mkengine\glew-1.9.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\extlibs\angelscript_2.26.2\sdk\angelscript\lib;..\..\..\..\..\mkengine\SFML\lib;..\..\..\..\..\mkengine\glew-1.9.0\lib;$(LibraryPath)</LibraryPath>
     <OutDir>..\..\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -165,7 +165,9 @@
     <ClInclude Include="..\..\..\..\..\mkengine\pc\Input.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\pc\lowDisplay.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\pc\lowSystem.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\Music.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\pc\pstdint.h" />
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\RessourceFileStream.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\pc\Shader.h" />
     <ClInclude Include="..\..\..\..\..\mkengine\pc\Sound.h" />
     <ClInclude Include="..\..\..\src\ChapterState.h" />
@@ -371,6 +373,8 @@
     <ClCompile Include="..\..\..\..\..\mkengine\pc\Input.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\pc\lowDisplay.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\pc\lowSystem.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\Music.cpp" />
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\RessourceFileStream.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\pc\Shader.cpp" />
     <ClCompile Include="..\..\..\..\..\mkengine\pc\Sound.cpp" />
     <ClCompile Include="..\..\..\src\ChapterState.cpp" />

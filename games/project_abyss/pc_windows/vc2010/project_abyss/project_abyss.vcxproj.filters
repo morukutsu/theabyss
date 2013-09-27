@@ -539,6 +539,12 @@
     <ClInclude Include="..\..\..\src\effects\ParticleGenerator.h">
       <Filter>Fichiers d%27en-tête\game\effects</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\RessourceFileStream.h">
+      <Filter>Fichiers d%27en-tête\mkengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\mkengine\pc\Music.h">
+      <Filter>Fichiers d%27en-tête\mkengine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\AsciiFile.cpp">
@@ -957,6 +963,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\effects\ParticleGenerator.cpp">
       <Filter>Fichiers sources\game\effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\RessourceFileStream.cpp">
+      <Filter>Fichiers sources\mkengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\mkengine\pc\Music.cpp">
+      <Filter>Fichiers sources\mkengine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

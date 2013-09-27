@@ -34,5 +34,7 @@
 #include "SpineModel.h"
 #include "ParticleGeneratorRessource.h"
 #include "ObjectPool.h"
+#include "RessourceFileStream.h"
+#include "Music.h"
 
 #endif

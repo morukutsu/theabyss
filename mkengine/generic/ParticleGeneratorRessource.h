@@ -100,6 +100,9 @@ namespace mk
 
 			int limitParticles, emitAmount;
 
+			bool lightGenerator;
+			mk::Image* lightGeneratorImg;
+
 			// Fonctions
 			RangeFunc* rangeFuncs[MAX_PARAMETERS];
 

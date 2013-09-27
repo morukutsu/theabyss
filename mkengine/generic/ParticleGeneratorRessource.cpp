@@ -27,6 +27,7 @@ namespace mk
 		areaZ_min = areaZ_max = 0.0f;
 		limitParticles = 0;				// Unlimited
 		emitAmount = 1;					// 1 particle per tick
+		lightGenerator = false;
 
 		// Initialisations range funcs
 		for(int i = 0; i < MAX_PARAMETERS; i++)
@@ -46,6 +47,8 @@ namespace mk
 	{
 		TiXmlDocument doc;
 		doc.Parse(buffer);
+
+		lightGenerator = false;
 
 		TiXmlElement * root = doc.FirstChildElement("Generator");
 
@@ -255,6 +258,12 @@ namespace mk
 				int v;
 				elem->QueryIntAttribute("value", &v);
 				emitAmount = v;
+			}
+			else if(parameterName == "LightGenerator")
+			{
+				lightGenerator = true;
+				std::string light_filename = elem->Attribute("value");
+				lightGeneratorImg = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource(light_filename);
 			}
 			elem = elem->NextSiblingElement();
 		}

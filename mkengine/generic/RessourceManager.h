@@ -47,6 +47,8 @@ namespace mk
 		void LoadTableOfContents(string filename);   //Charge le fichier archive
 		long GetCurrentPosition();
 		void SetCurrentPosition(long p);
+		
+		sArchiveFile* GetRessourceInfos(string filename);
 
         Ressource* LoadRessource(string filename);	 //Fonction de chargement de ressource
 		void DeleteRessource(Ressource* res);		 //Suppression de ressource  
@@ -74,14 +76,14 @@ namespace mk
 		// Statistiques
 		long mVramUsage;							// Vram occupée en octets
 		
+		FILE* mArchive;
+
 	private:
 		std::map<unsigned int, sArchiveFile> mToc;	
 		std::string mFileLoadingPrefix;
 
         RessourceList resList;
 		
-		FILE* mArchive;
-
 		std::vector<Ressource*> recording;
 		bool isRecording, isCache;
     };

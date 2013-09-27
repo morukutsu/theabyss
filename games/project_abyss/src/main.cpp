@@ -49,7 +49,7 @@ int main(int argc, char **argv )
 	if(isVsync == "true")
 		mk::Core::ToggleVSync();
 
-	//mk::RessourceManager::getInstance()->LoadTableOfContents("ressource.bin");
+	mk::RessourceManager::getInstance()->LoadTableOfContents("ressource.bin");
 	std::string isCache = ConfigurationManager::getInstance()->GetAttributeString("Cache_Ressources");
 	if(isCache == "false")
 		mk::RessourceManager::getInstance()->SetCache(false);

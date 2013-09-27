@@ -88,6 +88,19 @@ namespace mk
 		}
 	}
 
+	sArchiveFile* RessourceManager::GetRessourceInfos(string filename)
+	{
+		unsigned int hash = chksum_crc32((unsigned char*)filename.c_str(), strlen(filename.c_str()));
+		std::map<unsigned int, sArchiveFile>::iterator i = mToc.find(hash);
+		if(i != mToc.end() )
+		{
+			std::cout << "[Toc] Request for " << filename << std::endl;
+			return &(i->second);
+		}
+		else
+			return NULL;
+	}
+
 	Ressource* RessourceManager::LoadRessource(string filename)
 	{
 		//Hashing du filename
@@ -97,14 +110,18 @@ namespace mk
 
         //Verification de l'existance possible de la ressource
         //Iterateur
-        for(RessourceList::iterator i = resList.begin(); i!=resList.end(); ++i)
+        /*for(RessourceList::iterator i = resList.begin(); i!=resList.end(); ++i)
         {
             if(i->first == hash)
             {
                 //printf("[Notif] Image deja chargée (%s)\n	", filename.c_str() );
                 return i->second;
             }
-        }
+        }*/
+
+		RessourceList::iterator i = resList.find(hash);
+		if(i != resList.end() )
+			return i->second;
 
 		//Chargement depuis le fichier ou depuis l'archive
 		FILE* mFilePointer;
