@@ -65,7 +65,7 @@ void IABaseEnnemyComponent::Automate()
 	else if(currentState == S_HIT) 
 	{
 		if(stateTime > 0.5f)
-			ChangeState(S_MOVE);
+			ChangeState(S_ATTACK);
 		else if(life <= 0)
 			ChangeState(S_DEAD);
 	}

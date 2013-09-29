@@ -21,7 +21,7 @@ EnnemyFishComponent::EnnemyFishComponent()
 	cmp->SetPlayerTouched(false);
 	cmp->SetPlayerSpotted(false);
 
-	life = 30;
+	life = 300;
 	cmp->SetLife(life);
 
 	deadTime = 0.0f;
@@ -59,7 +59,8 @@ void EnnemyFishComponent::Update()
 	state = cmp->GetState();
 
 	NVector heroPos = parent->GetEntityManager()->GetHeroPosition();
-
+	lockMirror = false;
+	gfx->alpha = 1.0f;
 	switch(state)
 	{
 		case IABaseEnnemyComponent::S_WAIT:
@@ -97,13 +98,15 @@ void EnnemyFishComponent::Update()
 			break;
 
 		case IABaseEnnemyComponent::S_HIT:
+			lockMirror = true;
 			if(prevState != IABaseEnnemyComponent::S_HIT)
 			{
-				body->body->SetLinearVelocity(body->body->GetDisplacement() * 0.95f);
-				
+				HitFeedback(feedbackVec );
 				life -= 10;
 				cmp->SetLife(life);
 			}
+			body->body->SetLinearVelocity(body->body->GetDisplacement() * 0.90f);
+			gfx->alpha = 0.5f;
 			gfx->model.PlayAnim(ANIM_LOOP, "idle");
 			break;
 
@@ -129,18 +132,20 @@ void EnnemyFishComponent::Update()
 		progressiveSpeed += 0.5f;
 	}
 
+	// Déplacements simples
+	parent->mPos = body->body->GetPosition();
+	parent->mVel = body->body->GetDisplacement();
+
 	// Mirroring
 	float mx = 1.0f;
-	if(((parent->mVel.x < 0.25f) || (parent->mVel.x > 0.25f)) )
+	if(!lockMirror)
 		mirrorH = parent->mVel.x < 0;
 	if(mirrorH)
 		mx = -1.0f;
 
 	gfx->mirrorX = !mirrorH;
 
-	// Déplacements simples
-	parent->mPos = body->body->GetPosition();
-	parent->mVel = body->body->GetDisplacement();
+	
 }
 
 void EnnemyFishComponent::LookForPlayer()
@@ -169,6 +174,8 @@ void EnnemyFishComponent::CheckCollisionsWithBullets()
 			if(cbodies[i]->bodytype == BODY_BULLET && cmp->GetState() != IABaseEnnemyComponent::S_HIT)
 			{
 				cmp->SetPlayerTouched(true);
+				feedbackVec = cbodies[i]->GetDisplacement();
+				break;
 			}
 		}
 	}
@@ -176,4 +183,11 @@ void EnnemyFishComponent::CheckCollisionsWithBullets()
 	{
 		cmp->SetPlayerTouched(false);
 	}
+}
+
+void EnnemyFishComponent::HitFeedback(NVector disp)
+{
+	disp.Normalise();
+	body->body->SetLinearVelocity(NVector(0, 0) );
+	body->body->AddImpulse(disp * 7500.f, 1.0f/30.0f);
 }

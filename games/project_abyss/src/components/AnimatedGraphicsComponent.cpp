@@ -31,6 +31,8 @@ AnimatedGraphicsComponent::AnimatedGraphicsComponent(std::string modelf, float _
 	no_shadow = _no_shadow;
 
 	offsetX = offsetY = 0;
+
+	alpha = 1.0f;
 }
 
 AnimatedGraphicsComponent::~AnimatedGraphicsComponent() 
@@ -49,8 +51,8 @@ void AnimatedGraphicsComponent::Update()
 {
 	model.SetDepth(parent->mDepth);
 	model.MoveTo((parent->mPos.x + offsetX)/32, (parent->mPos.y  + offsetY)/32);
-	model.Alpha(1.0f);
 	model.Rotate(angle);
+	model.Alpha(alpha);
 	model.Mirror(mirrorX, mirrorY);
 	model.Scale(scale, scale);
 	model.SetPriority(prio);

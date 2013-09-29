@@ -300,7 +300,6 @@ namespace mk
 				{
 					elements.erase(it++);
 					deleted = true;
-					std::cout << "deleted" << std::endl;
 					break;
 				}
 			}
@@ -308,6 +307,7 @@ namespace mk
 			if(deleted)
 				continue;
 
+			// Culling
 			if((*it)->isCullingIgnored)
 			{
 				(*it)->isCulled = false;

@@ -9,7 +9,7 @@
 #include <list>
 #include "../physics/Vector.h"
 
-#define ENNEMY_FISH_ATTACK_RADIUS	400.0f
+#define ENNEMY_FISH_ATTACK_RADIUS	600.0f
 
 class AnimatedGraphicsComponent;
 class IABaseEnnemyComponent;
@@ -31,6 +31,8 @@ class EnnemyFishComponent : public Component
 		void LookForPlayer();
 		void CheckCollisionsWithBullets();
 
+		void HitFeedback(NVector disp);
+
 	public:
 		IABaseEnnemyComponent* cmp;
 		AnimatedGraphicsComponent *gfx;
@@ -48,6 +50,10 @@ class EnnemyFishComponent : public Component
 		NVector moveVel;
 
 		bool mirrorH;
+
+		// Hit
+		NVector feedbackVec;
+		bool lockMirror;
 };
 
 #endif

@@ -32,6 +32,7 @@ class AnimatedGraphicsComponent : public Component
 		int anim_offset;
 		bool no_shadow;
 		float offsetX, offsetY;
+		float alpha;
 };
 
 #endif
