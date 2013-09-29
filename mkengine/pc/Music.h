@@ -17,6 +17,7 @@ namespace mk
 			void Open(std::string filename);
 			void Play();
 			void Stop();
+			void SetLoop(bool value);
 
 		public:
 			sf::Music bgm;

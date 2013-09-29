@@ -110,7 +110,8 @@ namespace mk
 	void Scene::Remove(Drawable* elem)
 	{
 		//elements.remove(elem);
-		elem->toRemove = true;
+		//elem->toRemove = true;
+		toDeleteElements.push_back(elem);
 	}
 	
 	void Scene::AddLight(Drawable* elem)
@@ -125,18 +126,16 @@ namespace mk
 	void Scene::RemoveLight(Drawable* elem)
 	{
 		//elements.remove(elem);
-		elem->toRemove = true;
+		//elem->toRemove = true;
+		toDeleteElements.push_back(elem);
 	}
 	
 	void Scene::SplitElementsList(std::list<Drawable*>& opaques, std::list<Drawable*>& transparents)
 	{
-		for(std::list<Drawable*>::iterator it = elements.begin(); it != elements.end();)
+		for(std::list<Drawable*>::iterator it = elements.begin(); it != elements.end(); it++)
 		{
-			if((*it)->toRemove)
-			{
-				elements.erase(it++);
-			}
-			else if((*it)->isVisible && !(*it)->isCulled) 
+			// Split
+			if((*it)->isVisible && !(*it)->isCulled) 
 			{
 				if((*it)->isOpaque)
 				{
@@ -146,14 +145,7 @@ namespace mk
 				{
 					transparents.push_back((*it));
 				}
-
-				it++;
 			}
-			else
-			{
-				it++;
-			}
-
 		}
 
 		// Tri des elements de la scene
@@ -166,14 +158,15 @@ namespace mk
 		std::list<Drawable*> opaques;
 		std::list<Drawable*> transparents;
 
-		SplitElementsList(opaques, transparents);
-
 		// Frustum culling
 		mDisplayedElements = 0;
 		FrustumCulling();
 
+		SplitElementsList(opaques, transparents);
+
 		// Interpolation de la scene
-		Interpolation(dt);
+		Interpolation(opaques, dt);
+		Interpolation(transparents, dt);
 
 		// Light Pass : Ecrit les lumières dans un FBO
 		if(isLighting)
@@ -297,11 +290,28 @@ namespace mk
 
 	void Scene::FrustumCulling()
 	{
-		for(std::list<Drawable*>::iterator it = elements.begin(); it != elements.end(); it++)
+		for(std::list<Drawable*>::iterator it = elements.begin(); it != elements.end();)
 		{
+			// Check if we have to delete this pointer
+			bool deleted = false;
+			for(std::list<Drawable*>::iterator itDel = toDeleteElements.begin(); itDel != toDeleteElements.end(); itDel++)
+			{
+				if((*it) == (*itDel)) 
+				{
+					elements.erase(it++);
+					deleted = true;
+					std::cout << "deleted" << std::endl;
+					break;
+				}
+			}
+
+			if(deleted)
+				continue;
+
 			if((*it)->isCullingIgnored)
 			{
 				(*it)->isCulled = false;
+				it++;
 			}
 			else 
 			{
@@ -314,13 +324,16 @@ namespace mk
 				{
 					(*it)->isCulled = true;
 				}
+				it++;
 			}
 		}
+
+		toDeleteElements.clear();
 	}
 
-	void Scene::Interpolation(float dt)
+	void Scene::Interpolation(std::list<Drawable*>& list, float dt)
 	{
-		for(std::list<Drawable*>::iterator it = elements.begin(); it != elements.end(); it++)
+		for(std::list<Drawable*>::iterator it = list.begin(); it != list.end(); it++)
 		{
 			if((*it)->isVisible && !(*it)->isCulled) {
 				(*it)->Interpolate(dt);

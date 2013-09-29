@@ -26,7 +26,7 @@ namespace mk
 			void FinalDraw();
 
 			void FrustumCulling();
-			void Interpolation(float dt);
+			void Interpolation(std::list<Drawable*>& list, float dt);
 			void UpdateTimedEffets(float dt);
 			void LightPass(std::list<Drawable*>& list);
 			void DiffusePass(std::list<Drawable*>& list);
@@ -81,6 +81,7 @@ namespace mk
 		public:
 			// Liste générale
 			std::list<Drawable*> elements;
+			std::list<Drawable*> toDeleteElements;
 
 			// Pipeline de rendu
 			bool isLighting, isPostFXShader;

@@ -39,6 +39,9 @@ private:
 	float alpha;
 	float elapsedTime;
 
+	// Musique
+	mk::Music bgm;
+
 };
 
 #endif

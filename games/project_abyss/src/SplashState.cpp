@@ -21,6 +21,9 @@ void SplashState::Init()
 	littlespace_splash->posY = mk::Core::getBaseHeight()/2.0f;
 
 	mk::Core::SetLoadingFrame(true);
+
+	bgm.Open("sound/music/00_littlespace_jingle.ogg");
+	bgm.Play();
 }
 
 void SplashState::Cleanup()
@@ -54,6 +57,7 @@ void SplashState::Update(StateManager* game)
 
 	if(elapsedTime > 6)
 	{
+		bgm.Stop();
 		game->ChangeState(DebugState::Instance() );
 		return;
 	}

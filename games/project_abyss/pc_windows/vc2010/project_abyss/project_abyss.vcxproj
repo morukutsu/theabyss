@@ -40,7 +40,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>..\..\..\..\..\mkengine\generic\tmxparser\zlib;..\..\..\..\..\mkengine\generic\tmxparser\base64;..\..\..\..\..\mkengine\generic\xml;..\..\..\..\..\mkengine\SFML\include;..\..\..\..\..\mkengine\glew-1.9.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\extlibs\angelscript_2.26.2\sdk\angelscript\lib;..\..\..\..\..\mkengine\SFML\lib\lib;..\..\..\..\..\mkengine\glew-1.9.0\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\..\..\extlibs\angelscript_2.26.2\sdk\angelscript\lib;..\..\..\..\..\mkengine\SFML\lib;..\..\..\..\..\mkengine\glew-1.9.0\lib;$(LibraryPath)</LibraryPath>
     <OutDir>..\..\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

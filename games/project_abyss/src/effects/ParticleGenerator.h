@@ -7,6 +7,7 @@
 #include "mkengine.h"
 
 #include <vector>
+#include <deque>
 #include <math.h>
 #include "../SimpleMaths.h"
 
@@ -62,7 +63,7 @@ private:
 		float x, y, z;
 
 		// Gestion des particules
-		std::vector<Particle> particles;
+		std::deque<Particle> particles;
 		float particleBootTime, genTime;
 		bool isActive, stillAlive;
 		float movingParent_vx, movingParent_vy, movingParent_vz;

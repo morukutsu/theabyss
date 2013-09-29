@@ -246,8 +246,8 @@ void lowDisplayQuadTex3DPartial(mk::Image* img, float texWidth, float texHeight,
 	float my1 = my ? cy2 : cy1;
 	float my2 = my ? cy1 : cy2;
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	/*glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);*/
 
 	/*glTexCoord2f(mx1,  my1);    
 	glVertex2f(x -quadWidth/2, y -quadHeight/2);
@@ -261,6 +261,7 @@ void lowDisplayQuadTex3DPartial(mk::Image* img, float texWidth, float texHeight,
     glTexCoord2f(mx2, my1);    
 	glVertex2f(x + quadWidth/2, y -quadHeight/2) ;*/
 
+	//glBegin(GL_QUADS);
 	glTexCoord2f(mx1,  my1);    
 	glVertex2f(x, y);
 
@@ -272,6 +273,7 @@ void lowDisplayQuadTex3DPartial(mk::Image* img, float texWidth, float texHeight,
 
     glTexCoord2f(mx2, my1);    
 	glVertex2f(x + quadWidth, y) ;
+	//glEnd();
 }
 
 void lowDisplayQuadTex(mk::Image* img)

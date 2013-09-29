@@ -4,6 +4,9 @@
 #include "BulletFactory.h"
 #include "BulletManager.h"
 #include "../SimpleMaths.h"
+#include "../entities/EntityManager.h"
+#include "../level_manager/ParticleEnginesManager.h"
+#include "../level_manager/GameMap.h"
 
 void BulletFactory::Init(int bullet_type, Bullet* bullet)
 {
@@ -38,6 +41,16 @@ void BulletFactory::Init(int bullet_type, Bullet* bullet)
 			bullet->light.Set3DMode(true);
 			bullet->light.SavePositions();
 
+
+			// Random bullet angle
+			NVector bulletVel = NVector(bullet->originVx, bullet->originVy);
+			float randomAngle = SimpleMaths::Rand(-PI/32.0f, PI/32.0f);
+			bulletVel.Rotate(NVector(0, 0), randomAngle);
+			bullet->originVx = bulletVel.x;
+			bullet->originVy = bulletVel.y;
+
+			bullet->entMan->GetGameMap()->GetParticleManager()
+							->ShowGenerator("particles/wpn_laser_shoot.gen", bullet->originX, bullet->originY, 0.0f);
 			break;
 	};
 }

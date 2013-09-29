@@ -49,8 +49,8 @@ void DebugState::Init()
 	mk::Core::SetPointer((mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("gui/MousePointer.png") );
 	mk::Core::TogglePointer(true);
 
-	bgm.Open("sound/music/01_the_big_sea_ambiance.ogg");
-	bgm.Play();
+	//bgm.Open("sound/music/01_the_big_sea_ambiance.ogg");
+	//bgm.Play();
 }
 
 void DebugState::Cleanup()

@@ -24,11 +24,16 @@ namespace mk
 	void Music::Play()
 	{
 		bgm.play();
-		bgm.setLoop(true);
+		bgm.setLoop(false);
 	}
 
 	void Music::Stop()
 	{
 		bgm.stop();
+	}
+
+	void Music::SetLoop(bool value)
+	{
+		bgm.setLoop(value);
 	}
 };
