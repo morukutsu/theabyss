@@ -11,6 +11,7 @@
 #include "debug_tools\DebugMenu.h"
 #include "debug_tools\FileLister.h"
 #include "Cutscene.h"
+#include "../physics/Vector.h"
 
 #define DYNAMIC_SCROLLING_SPEED 0.15F
 
@@ -50,6 +51,10 @@ public:
 	// Cutscenes
 	void LaunchCutscene(std::string path);
 
+	// Effets
+	void AccumulateMousePositions();
+	void DrawMouseTrainee();
+
 private:
 	void ShowDebug();
 
@@ -83,6 +88,10 @@ public:
 	bool toChangeMap, toFinishChangeMap;
 	float mMapChangeTimer;
 	ScrollFadeEffect* scrollFadeEffect;
+
+	// Effet pointeur
+	std::list<NVector> mousePositions;
+	float mMousePositionTimer;
 
 	// Debug
 	DebugMenu *debugMenuTitle, *debugMenuFull, *debugMenuShader;

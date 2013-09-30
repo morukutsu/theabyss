@@ -62,6 +62,7 @@ void EnnemyFishComponent::Update()
 	lockMirror = false;
 	gfx->alpha = 1.0f;
 	body->body->ignoreCollisions = false;
+	gfx->scale = 2.0f;
 	switch(state)
 	{
 		case IABaseEnnemyComponent::S_WAIT:
@@ -110,6 +111,7 @@ void EnnemyFishComponent::Update()
 			body->body->SetLinearVelocity(body->body->GetDisplacement() * 0.90f);
 			gfx->alpha = 0.5f;
 			gfx->model.PlayAnim(ANIM_LOOP, "idle");
+			gfx->scale = 2.2f;
 			break;
 
 		case IABaseEnnemyComponent::S_DEAD:
@@ -119,10 +121,11 @@ void EnnemyFishComponent::Update()
 			{
 				HitFeedback(feedbackVec);
 			}
+			gfx->scale = 2.2f + sin(deadTime*10)*0.2f;
 
 			// Changement de couleur
 			float r, g, b;
-			ParticleGenerator::ColorInterpolation(deadTime, 1, 1, 1, 27/255.0f, 15/255.0f, 54/255.0f, &r, &g, &b);
+			ParticleGenerator::ColorInterpolation(deadTime, 1, 1, 1, 27/255.0f, 15/255.0f, 45/255.0f, &r, &g, &b);
 			gfx->model.Tint(r*255.0f, g*255.0f, b*255.0f);
 
 			body->body->ignoreCollisions = true;

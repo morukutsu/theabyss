@@ -124,7 +124,7 @@ int main(int argc, char **argv )
 		float currentTime = lowGetTime();
 
 		lowPreUpdate();
-
+		
 		while (currentTime > nextGameUpdateTime && loops < FIXED_FRAMERATE)
 		{
 			mk::InputManager::Update();

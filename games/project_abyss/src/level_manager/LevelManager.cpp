@@ -100,6 +100,9 @@ void LevelManager::Init()
 	mk::Core::SetPointer((mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("gui/aim_cursor.png") );
 	mk::Core::TogglePointer(true);
 
+	// Effets
+	mMousePositionTimer = 0.0f;
+
 	// Scripts
 	ScriptManager::getInstance()->Init();
 }
@@ -166,6 +169,10 @@ void LevelManager::Draw(int mode, float interpolation)
 	} 
 	else if(mode == mk::MODE_2D) 
 	{
+		// Effet souris
+		AccumulateMousePositions();
+		DrawMouseTrainee();
+
 		// Transition
 		if(scrollFadeEffect)
 			scrollFadeEffect->Draw(interpolation);
@@ -184,6 +191,82 @@ void LevelManager::Draw(int mode, float interpolation)
 			scene->DrawBackground();
 		}
 	}
+}
+
+
+// Effets
+void LevelManager::AccumulateMousePositions()
+{
+	mMousePositionTimer += lowGetFrameTime();
+	if(mMousePositionTimer >= 1.0f/60.0f)
+	{
+		// Récupération de la position de la souris
+		mk::Input *input = mk::InputManager::GetInput(0, CNT_KEYBOARD);
+		NVector mousePos = NVector(input->pointer.x, input->pointer.y);
+
+		// Ajout à la liste
+		mousePositions.push_front(mousePos);
+
+		if(mousePositions.size() > 6)
+			mousePositions.pop_back();
+		mMousePositionTimer = 0.0f;
+	}
+}
+
+void LevelManager::DrawMouseTrainee()
+{
+	NVector prev1, prev_pa;
+	int count = 0;
+	bool first = true;
+
+	glEnable(GL_BLEND);
+	glBegin(GL_TRIANGLE_STRIP);
+	glColor4f(80/255.0f, 190/255.0f, 213/255.0f, 1.0f);
+	for(std::list<NVector>::iterator it = mousePositions.begin(); it != mousePositions.end(); it++)
+	{
+		// On calcule l'angle des deux points suivants
+		NVector pa, pb;
+		if(count > 0)
+		{
+			pa = (*it);
+			pa.Normalise();
+			pa *= 4.0f;
+			pa.Rotate(NVector(0, 0), PI/2.0f);
+			pa += (*it);
+
+			pb = (*it);
+			pb.Normalise();
+			pb *= 4.0f;
+			pb.Rotate(NVector(0, 0), -PI/2.0f);
+			pb += (*it);
+		}
+
+		// Cas ou on a les deux premiers points
+		if(count == 1)
+		{
+			glVertex2f(prev1.x, prev1.y);
+			glVertex2f(pa.x, pa.y);
+			glVertex2f(pb.x, pb.y);
+		}
+		else if(count > 1)
+		{
+			glVertex2f(pa.x, pa.y);
+			glVertex2f(pb.x, pb.y);
+
+			float alpha = 1.0f - ((float)count / (float)mousePositions.size());
+			glColor4f(80/255.0f, 190/255.0f, 213/255.0f, alpha);
+		}
+
+		// Iteration suivante
+		first = false;
+		prev_pa = pb;
+		prev1 = (*it);
+		count++;
+	}
+
+	glEnd();
+	glDisable(GL_BLEND);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 // Charge une map
