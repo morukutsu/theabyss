@@ -54,7 +54,8 @@ private:
 	public:
 		static void HSL2RGB(float h, float sl, float l, float *r, float *g, float *b);
 		static void RGB2HSL(float r, float g, float b, float *h, float *s, float *l);
-
+		static void ColorInterpolation(float t, float r1, float g1, float b1, float r2, float g2, float b2, float* tr, float* tg, float* tb);
+	
 	public:
 		// Scene
 		mk::Scene* scene;

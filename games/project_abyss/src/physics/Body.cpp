@@ -45,7 +45,7 @@ CBody::CBody()
 	NVector* axVertices = PolyColl::BuildBlob(iNumVertices, fSize);
 
 	Initialise(xPos, fMass, axVertices, iNumVertices);
-	isCollision = isSensor = toDelete = isSleeping = isGravity = false;
+	isCollision = isSensor = toDelete = isSleeping = isGravity = ignoreCollisions = false;
 }
 
 void CBody::Shutdown()
@@ -76,7 +76,7 @@ void CBody::Initialise(const NVector& xPosition, float fMass, NVector* axVertice
 	m_fAngVelocity = 0;
 	m_xOrientation = Matrix(m_fAngle);
 
-	isCollision = isSensor = toDelete = isSleeping = isGravity = false;
+	isCollision = isSensor = toDelete = isSleeping = isGravity = ignoreCollisions = false;
 }
 
 CBody::CBody(const NVector& xPosition, float fMass, float width, float height)
@@ -87,7 +87,7 @@ CBody::CBody(const NVector& xPosition, float fMass, float width, float height)
 	int iNumVertices = rand() % 8 + 3;
 	NVector* axVertices = PolyColl::BuildBox(iNumVertices, width, height);
 	Initialise(xPosition, fMass, axVertices, iNumVertices);
-	isCollision = isSensor = toDelete = isSleeping = isGravity = false;
+	isCollision = isSensor = toDelete = isSleeping = isGravity = ignoreCollisions = false;
 }
 
 CBody::~CBody()
@@ -138,6 +138,9 @@ void CBody::Render() const
 
 bool CBody::Collide(CBody& xBody)
 {
+	if(ignoreCollisions || xBody.ignoreCollisions)
+		return false;
+
 	if(isSensor == false && xBody.isSensor == false)
 	{
 		if (IsUnmovable() && xBody.IsUnmovable())	

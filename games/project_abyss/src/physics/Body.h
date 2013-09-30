@@ -87,7 +87,7 @@ public:
 	void ClearCollisionBodies();
 	std::vector<CBody*>& GetCollisionsBodies() { return cbodies; } ;
 
-	bool toDelete, isCollision, isSensor, isGravity;
+	bool toDelete, isCollision, isSensor, isGravity, ignoreCollisions;
 	int w, h;
 
 	// Pour identifier un body

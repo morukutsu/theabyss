@@ -21,7 +21,7 @@ EnnemyFishComponent::EnnemyFishComponent()
 	cmp->SetPlayerTouched(false);
 	cmp->SetPlayerSpotted(false);
 
-	life = 300;
+	life = 30;
 	cmp->SetLife(life);
 
 	deadTime = 0.0f;
@@ -61,6 +61,7 @@ void EnnemyFishComponent::Update()
 	NVector heroPos = parent->GetEntityManager()->GetHeroPosition();
 	lockMirror = false;
 	gfx->alpha = 1.0f;
+	body->body->ignoreCollisions = false;
 	switch(state)
 	{
 		case IABaseEnnemyComponent::S_WAIT:
@@ -99,6 +100,7 @@ void EnnemyFishComponent::Update()
 
 		case IABaseEnnemyComponent::S_HIT:
 			lockMirror = true;
+			//body->body->ignoreCollisions = true;
 			if(prevState != IABaseEnnemyComponent::S_HIT)
 			{
 				HitFeedback(feedbackVec );
@@ -111,10 +113,27 @@ void EnnemyFishComponent::Update()
 			break;
 
 		case IABaseEnnemyComponent::S_DEAD:
-			body->body->SetLinearVelocity(NVector(0, 0) );
-			deadTime += 1.0f/30.0f;
-			if(deadTime > 2.0f)
+			// Feedback
+			lockMirror = true;
+			if(prevState != IABaseEnnemyComponent::S_HIT)
 			{
+				HitFeedback(feedbackVec);
+			}
+
+			// Changement de couleur
+			float r, g, b;
+			ParticleGenerator::ColorInterpolation(deadTime, 1, 1, 1, 27/255.0f, 15/255.0f, 54/255.0f, &r, &g, &b);
+			gfx->model.Tint(r*255.0f, g*255.0f, b*255.0f);
+
+			body->body->ignoreCollisions = true;
+			body->body->SetLinearVelocity(body->body->GetDisplacement() * 0.50f);
+			deadTime += 1.0f/30.0f;
+
+			// Animation de destruction
+			if(deadTime > 1.0f)
+			{
+				parent->GetEntityManager()->GetGameMap()->GetParticleManager()
+								->ShowGenerator("particles/cartoon_smoke_expl.gen", parent->mPos.x, parent->mPos.y, 0.0f);
 				parent->toDelete = true;
 				body->body->toDelete = true;
 			}
@@ -144,8 +163,6 @@ void EnnemyFishComponent::Update()
 		mx = -1.0f;
 
 	gfx->mirrorX = !mirrorH;
-
-	
 }
 
 void EnnemyFishComponent::LookForPlayer()

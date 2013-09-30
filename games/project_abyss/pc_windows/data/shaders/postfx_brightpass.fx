@@ -1,5 +1,5 @@
 uniform sampler2D texture;
-uniform float brightPassThreshold = 0.4;
+uniform float brightPassThreshold = 0.3;
 
 void main()
 {

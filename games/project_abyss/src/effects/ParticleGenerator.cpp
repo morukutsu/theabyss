@@ -416,6 +416,25 @@ void ParticleGenerator::GetColorInterp(float life, float *r, float *g, float *b)
 	//std::cout << "LIFE " << life << "(" << prevFrame << ") h1 : " << h1 << ", (" << nextFrame << ") h2 : " << h2 << ", interp : " << ith << std::endl;
 }
 
+void ParticleGenerator::ColorInterpolation(float life, float r1, float g1, float b1, float r2, float g2, float b2, float* tr, float* tg, float* tb)
+{
+	// On réalise l'interpolation des deux couleurs
+	// Convertion des deux couleurs en HSL
+	float h1, s1, l1, h2, s2, l2;
+	RGB2HSL(r1, g1, b1, &h1, &s1, &l1);
+	RGB2HSL(r2, g2, b2, &h2, &s2, &l2);
+
+	// Interpolation
+	float ith, its, itl;
+
+	ith = wrapf(Slerp2D(life, 0.0f, 1.0f, h1*PI*2, h2*PI*2)/(PI*2), 0, 1);
+	its = Lerp(life, 0.0f, 1.0f, s1, s2);
+	itl = Lerp(life, 0.0f, 1.0f, l1, l2);
+
+	// ReConversion en RGB
+	HSL2RGB(ith, its, itl, tr, tg, tb);
+}
+	
 mk::Image* ParticleGenerator::PickSprite()
 {
 	int idOfImg = 0;

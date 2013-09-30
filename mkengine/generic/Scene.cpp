@@ -78,7 +78,7 @@ namespace mk
 
 		InitBloom();
 		isEffectBloom = true;
-		bloom_intensity = 1.0f;
+		bloom_intensity = 0.75f;
 
 		// Compilation de certains shaders
 		mk::RessourceManager::getInstance()->LoadRessource("shaders/postfx_blur_h.fx");

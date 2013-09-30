@@ -18,7 +18,7 @@ PlayerMovementComponent::PlayerMovementComponent(PlayerInputComponent* in, Playe
 	MAX_VELOCITY = 15.0f;
 	ACCELERATION = 2000.0f;
 	DECELERATION = 0.9f;
-	KNOCKBACK = 100.0f;
+	KNOCKBACK = 200.0f;
 	KNOCKBACK_TIME = 0.25f;
 
 	isGoingThroughDoor = false;
@@ -231,6 +231,7 @@ void PlayerMovementComponent::HandleCollisionwithEnnemies()
 		NVector knockbackVel = (body->cockpit->GetPosition() - ennemyPos)*KNOCKBACK;
 		body->cockpit->AddImpulse(knockbackVel, 1.0f/30.0f);
 		mKnockbackTime = KNOCKBACK_TIME;
+		parent->GetScene()->ShakeScreen(10.0f, 0.10f);
 		isKnockback = true;
 	}
 
