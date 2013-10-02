@@ -201,8 +201,7 @@ void LevelManager::AccumulateMousePositions()
 	if(mMousePositionTimer >= 1.0f/60.0f)
 	{
 		// Récupération de la position de la souris
-		mk::Input *input = mk::InputManager::GetInput(0, CNT_KEYBOARD);
-		NVector mousePos = NVector(input->pointer.x, input->pointer.y);
+		NVector mousePos = NVector(mk::Core::interpPointerX, mk::Core::interpPointerY);
 
 		// Ajout à la liste
 		mousePositions.push_front(mousePos);
