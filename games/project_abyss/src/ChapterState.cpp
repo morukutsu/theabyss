@@ -13,7 +13,7 @@ ChapterState ChapterState::m_ChapterState;
 
 void ChapterState::Init()
 {
-	bigTitle = (mk::Font*)mk::RessourceManager::getInstance()->LoadRessource("fonts/big_title.fnt");
+	bigTitle = (mk::Font*)mk::RessourceManager::getInstance()->LoadRessource("fonts/squarefont_96.fnt");
 	subtitle = (mk::Font*)mk::RessourceManager::getInstance()->LoadRessource("fonts/arial_medium_bold.fnt");
 
 	chapterString = LanguageManager::GetCString(LOC_CHAPITRE);

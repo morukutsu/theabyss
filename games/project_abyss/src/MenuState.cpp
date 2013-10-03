@@ -33,7 +33,7 @@ void MenuState::Init()
 	origCamZ = lvlMan->gameCamera.GetDepth();
 
 	// Police
-	fnt = (mk::Font*)mk::RessourceManager::getInstance()->LoadRessource("fonts/calibri_96.fnt");
+	fnt = (mk::Font*)mk::RessourceManager::getInstance()->LoadRessource("fonts/squarefont_96.fnt");
 
 	// etat menu
 	state = STATE_PRESS_BTN;
@@ -222,7 +222,8 @@ void MenuState::Draw(StateManager* game, int mode, float interpolation)
 			float txtPosX = mk::Core::getBaseWidth() / 2.0f - mk::Text::GetStringWidth(fnt, strPressStart, 0.75f) / 2.0f;
 			float txtPosY = mk::Core::getBaseHeight() - 200;
 
-			lowDisplayText(fnt, txtPosX, txtPosY, strPressStart, MK_MAKE_RGBA(255, 255, 255, 255), 0.75f);
+			mk::Text::DrawShadowedText(fnt, txtPosX, txtPosY, strPressStart, 
+				MK_MAKE_RGBA(255, 255, 255, 255), MK_MAKE_RGBA(128, 128, 128, 255), 4.0f, 0.75f);
 		}
 		else if(state == STATE_MENU)
 		{
@@ -243,7 +244,8 @@ void MenuState::Draw(StateManager* game, int mode, float interpolation)
 				//lowDisplayText(fnt, txtPosX -1, txtPosY -1, s, MK_MAKE_RGBA(255, 0, 0, 255), 1.05f);
 
 				// Blanc
-				lowDisplayText(fnt, txtPosX, txtPosY, s, MK_MAKE_RGBA(255, 255, 255, 255), 1.0f);
+				mk::Text::DrawShadowedText(fnt, txtPosX, txtPosY, s, 
+					MK_MAKE_RGBA(255, 255, 255, 255), MK_MAKE_RGBA(128, 128, 128, 255), 4.0f, 0.75f);
 			}
 		}
 	}

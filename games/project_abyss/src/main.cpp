@@ -35,9 +35,9 @@ int main(int argc, char **argv )
 	mk::FBO::getInstance()->CreateTexture(0, mk::Core::getWindowWidth(), mk::Core::getWindowHeight());
 	mk::FBO::getInstance()->CreateTexture(1, mk::Core::getWindowWidth(), mk::Core::getWindowHeight());
 
-	// 1/4 res FBO
-	mk::FBO::getInstance()->CreateTexture(2, mk::Core::getWindowWidth() / 4.0f, mk::Core::getWindowHeight() / 4.0f);
-	mk::FBO::getInstance()->CreateTexture(3, mk::Core::getWindowWidth() / 4.0f, mk::Core::getWindowHeight() / 4.0f);
+	// 1/2 res FBO
+	mk::FBO::getInstance()->CreateTexture(2, mk::Core::getWindowWidth() / 2.0f, mk::Core::getWindowHeight() / 2.0f);
+	mk::FBO::getInstance()->CreateTexture(3, mk::Core::getWindowWidth() / 2.0f, mk::Core::getWindowHeight() / 2.0f);
 
 	// Acivation du fullscreen
 	std::string isFullscreen = ConfigurationManager::getInstance()->GetAttributeString("Graphics_Fullscreen");
