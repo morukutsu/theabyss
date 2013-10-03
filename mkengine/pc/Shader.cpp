@@ -23,11 +23,19 @@ namespace mk
 		std::cout << "shader unloaded" << std::endl;
 	}
 
-	void Shader::Load(std::string text)
+	void Shader::Load(std::string text, bool vertex)
 	{
 		std::cout << "Compiling shader..." << std::endl;
-		if(shader.loadFromMemory(text, sf::Shader::Type::Fragment) )
-			mLoaded = true;
+		if(!vertex)
+		{
+			if(shader.loadFromMemory(text, sf::Shader::Type::Fragment) )
+				mLoaded = true;
+		}
+		else
+		{
+			if(shader.loadFromMemory(text, sf::Shader::Type::Vertex) )
+				mLoaded = true;
+		}
 	}
 
 	void Shader::Bind()

@@ -22,7 +22,7 @@ namespace mk
 			int LoadFromFile(FILE* fp, long size);		
 			int LoadFromMemory(char* mem, int size);
 
-			void Load(std::string text);
+			void Load(std::string text, bool vertex = false);
 			void Bind();
 			void Unbind();
 

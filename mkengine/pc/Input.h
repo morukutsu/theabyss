@@ -127,6 +127,7 @@ namespace mk
 		public:
 			static void Init();
 			static void Update();
+			static void UpdateMousePosition();
 			static Input* GetInput(int player, int device);
 
 			// String to key conversion

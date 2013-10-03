@@ -26,6 +26,8 @@ namespace mk
 	float Core::pointerX;
 	float Core::pointerY;
 	bool Core::isVSync;
+	float Core::interpPointerX;
+	float Core::interpPointerY;
 
 	Core::Core(int width, int height, const char* name, int renderflags)
 	{
@@ -163,8 +165,9 @@ namespace mk
 			mMousePointer.SetCenter(-mMousePointer.image->getImageWidth() / 2, 
 				-mMousePointer.image->getImageHeight() / 2);
 
-			mMousePointer.MoveTo(Lerp(interpolation, 0.0f, 1.0f, oldPointerX, pointerX), 
-				Lerp(interpolation, 0.0f, 1.0f, oldPointerY, pointerY));
+			interpPointerX = Lerp(interpolation, 0.0f, 1.0f, oldPointerX, pointerX);
+			interpPointerY = Lerp(interpolation, 0.0f, 1.0f, oldPointerY, pointerY);
+			mMousePointer.MoveTo(interpPointerX, interpPointerY);
 
 			mMousePointer.Draw();
 		}

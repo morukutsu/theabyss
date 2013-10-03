@@ -56,4 +56,13 @@ namespace mk
 
 		return mXPos;
 	}
+
+	void Text::DrawShadowedText(mk::Font* fnt, float x, float y, const char* text, u32 color, u32 shadow_color, float shadow_distance, float scale)
+	{
+		// Shadow
+		lowDisplayText(fnt, x + shadow_distance, y + shadow_distance, text, shadow_color, scale);
+
+		// Text
+		lowDisplayText(fnt, x, y, text, color, scale);
+	}
 };

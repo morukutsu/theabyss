@@ -83,7 +83,9 @@ namespace mk
 			static mk::Sprite mMousePointer;
 
 			static bool isPointerVisible;
-			static float oldPointerX, oldPointerY, pointerX, pointerY;
+
+		public:
+			static float oldPointerX, oldPointerY, pointerX, pointerY, interpPointerX, interpPointerY;
 	};
 };
 

@@ -22,6 +22,11 @@ namespace mk
 		}
 	}
 
+	void InputManager::UpdateMousePosition()
+	{
+
+	}
+
 	void InputManager::Update()
 	{
 		//Sur PC, soit une utilise une vraie wiimote... soit le clavier/gamepad

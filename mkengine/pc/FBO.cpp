@@ -30,8 +30,11 @@ namespace mk
 		fbotex.w = _w;
 		fbotex.h = _h;
 
-		fbotex.texw = roundUpToNextPowerOfTwo(_w);
-		fbotex.texh = roundUpToNextPowerOfTwo(_h);
+		//fbotex.texw = roundUpToNextPowerOfTwo(_w);
+		//fbotex.texh = roundUpToNextPowerOfTwo(_h);
+
+		fbotex.texw = (_w);
+		fbotex.texh = (_h);
 
 		// Creation de la texture
 		glEnable(GL_TEXTURE_2D);

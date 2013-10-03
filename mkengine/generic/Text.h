@@ -19,6 +19,7 @@ namespace mk
 	{
 		public:
 			static float GetStringWidth(mk::Font* font, const char* text, float scale);
+			static void  DrawShadowedText(mk::Font* fnt, float x, float y, const char* text, u32 color, u32 shadow_color, float shadow_distance, float scale = 1.0f);
 
 		public:
 

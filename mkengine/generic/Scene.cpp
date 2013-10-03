@@ -549,7 +549,7 @@ namespace mk
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		lowDisplayFBO(mWorkFBO, 1, 0, 0, 0.25f, 0.25f);
+		lowDisplayFBO(mWorkFBO, 1, 0, 0, 0.50f, 0.50f);
 		mWorkFBO->EndDrawing();
 
 		// Clear FBO3 (TODO : à ne faire qu'une seule fois)
@@ -592,7 +592,7 @@ namespace mk
 		// Upscale scene in FBO2 to FBO 1
 		mk::Core::ConfigureViewportFBO(mWorkFBO->texs[1]);
 		mWorkFBO->StartDrawing(1);
-		lowDisplayFBO(mWorkFBO, 2, 0, 0, 4.0f, 4.0f, intensity);
+		lowDisplayFBO(mWorkFBO, 2, 0, 0, 2.0f, 2.0f, intensity);
 		mWorkFBO->EndDrawing();
 
 		mk::Core::ConfigureViewport();
@@ -608,13 +608,23 @@ namespace mk
 	}
 
 	void Scene::RenderBloom(float intensity)
-	{
-		// Copy FBO1 to FBO2 downsampled + brightpass
+	{		
 		glPushMatrix();
 
 		// Cas avec seulement un postfx d'activé
 		lowSetBlendMode(MK_BLEND_ALPHA);
 
+		// On FBO0 : Write Brightpass from FBO1
+		mk::Core::ConfigureViewportFBO(mWorkFBO->texs[0]);
+		mWorkFBO->StartDrawing(0);
+
+		mWorkFBO->Bind(1);
+		brightpass->Bind();
+		lowDisplayFBO(mWorkFBO, 1, 0, 0, 1.0f, 1.0f);
+		brightpass->Unbind();
+		mWorkFBO->EndDrawing();
+
+		// Copy FBO0 to FBO2 downsampled
 		mk::Core::ConfigureViewportFBO(mWorkFBO->texs[2]);
 		mWorkFBO->StartDrawing(2);
 		glClearDepth(1.0f);
@@ -622,9 +632,7 @@ namespace mk
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		mWorkFBO->Bind(1);
-		brightpass->Bind();
-		lowDisplayFBO(mWorkFBO, 1, 0, 0, 0.25f, 0.25f);
-		brightpass->Unbind();
+		lowDisplayFBO(mWorkFBO, 0, 0, 0, 0.50f, 0.50f);
 
 		mWorkFBO->EndDrawing();
 
@@ -664,12 +672,13 @@ namespace mk
 		shader_blurV->Unbind();
 
 		// Display on FBO1, additive
+		// Changer le blending ici peut créer un effet sympa
 		lowSetBlendMode(MK_BLEND_ADD);
 
 		// Upscale scene in FBO2 to FBO 1
 		mk::Core::ConfigureViewportFBO(mWorkFBO->texs[1]);
 		mWorkFBO->StartDrawing(1);
-		lowDisplayFBO(mWorkFBO, 2, 0, 0, 4.0f, 4.0f, intensity);
+		lowDisplayFBO(mWorkFBO, 2, 0, 0, 2.0f, 2.0f, intensity);
 		mWorkFBO->EndDrawing();
 
 		mk::Core::ConfigureViewport();
