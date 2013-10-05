@@ -129,6 +129,11 @@ namespace mk
 			static void Update();
 			static void UpdateMousePosition();
 			static Input* GetInput(int player, int device);
+			static bool   GetKeyboardKeyPressed(std::string str)
+			{
+				sf::Keyboard::Key key = toKeyboardKey(str);
+				return sf::Keyboard::isKeyPressed(key);
+			}
 
 			// String to key conversion
 			static std::string toString(sf::Keyboard::Key key)

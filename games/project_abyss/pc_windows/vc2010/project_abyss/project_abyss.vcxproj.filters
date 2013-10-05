@@ -102,6 +102,18 @@
     <Filter Include="Fichiers d%27en-tête\game\components">
       <UniqueIdentifier>{0b48c00d-cf93-47ba-b12f-4954cd908ff6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\pennereasing">
+      <UniqueIdentifier>{095e20d2-661b-4669-921c-91e26083bf54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\pennereasing">
+      <UniqueIdentifier>{9e12c417-bab6-4b72-bd13-d82dea1e3aac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\gamestates\main_menu_tools">
+      <UniqueIdentifier>{91204d9c-8904-47c9-a898-ac5432e39bc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\gamestates\main_menu_tools">
+      <UniqueIdentifier>{b126049c-edfb-4dd5-ab40-c8dc6bb9a7af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\mkengine\generic\AsciiFile.h">
@@ -545,6 +557,48 @@
     <ClInclude Include="..\..\..\..\..\mkengine\pc\Music.h">
       <Filter>Fichiers d%27en-tête\mkengine</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\pennereasing\Back.h">
+      <Filter>Fichiers d%27en-tête\game\pennereasing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\pennereasing\Bounce.h">
+      <Filter>Fichiers d%27en-tête\game\pennereasing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\pennereasing\Circ.h">
+      <Filter>Fichiers d%27en-tête\game\pennereasing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\pennereasing\Cubic.h">
+      <Filter>Fichiers d%27en-tête\game\pennereasing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\pennereasing\Elastic.h">
+      <Filter>Fichiers d%27en-tête\game\pennereasing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\pennereasing\Expo.h">
+      <Filter>Fichiers d%27en-tête\game\pennereasing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\pennereasing\Linear.h">
+      <Filter>Fichiers d%27en-tête\game\pennereasing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\pennereasing\Quad.h">
+      <Filter>Fichiers d%27en-tête\game\pennereasing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\pennereasing\Quart.h">
+      <Filter>Fichiers d%27en-tête\game\pennereasing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\pennereasing\Quint.h">
+      <Filter>Fichiers d%27en-tête\game\pennereasing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\pennereasing\Sine.h">
+      <Filter>Fichiers d%27en-tête\game\pennereasing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\main_menu_tools\MainMenu.h">
+      <Filter>Fichiers d%27en-tête\game\gamestates\main_menu_tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\main_menu_tools\MainMenuElement.h">
+      <Filter>Fichiers d%27en-tête\game\gamestates\main_menu_tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\main_menu_tools\MainMenuTextElement.h">
+      <Filter>Fichiers d%27en-tête\game\gamestates\main_menu_tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\AsciiFile.cpp">
@@ -969,6 +1023,45 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\mkengine\pc\Music.cpp">
       <Filter>Fichiers sources\mkengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\pennereasing\Back.cpp">
+      <Filter>Fichiers sources\game\pennereasing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\pennereasing\Bounce.cpp">
+      <Filter>Fichiers sources\game\pennereasing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\pennereasing\Circ.cpp">
+      <Filter>Fichiers sources\game\pennereasing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\pennereasing\Cubic.cpp">
+      <Filter>Fichiers sources\game\pennereasing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\pennereasing\Elastic.cpp">
+      <Filter>Fichiers sources\game\pennereasing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\pennereasing\Expo.cpp">
+      <Filter>Fichiers sources\game\pennereasing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\pennereasing\Linear.cpp">
+      <Filter>Fichiers sources\game\pennereasing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\pennereasing\Quad.cpp">
+      <Filter>Fichiers sources\game\pennereasing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\pennereasing\Quart.cpp">
+      <Filter>Fichiers sources\game\pennereasing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\pennereasing\Quint.cpp">
+      <Filter>Fichiers sources\game\pennereasing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\pennereasing\Sine.cpp">
+      <Filter>Fichiers sources\game\pennereasing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\main_menu_tools\MainMenu.cpp">
+      <Filter>Fichiers sources\game\gamestates\main_menu_tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\main_menu_tools\MainMenuTextElement.cpp">
+      <Filter>Fichiers sources\game\gamestates\main_menu_tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

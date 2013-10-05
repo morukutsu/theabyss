@@ -8,6 +8,10 @@
 #include "LanguageManager.h"
 #include "DebugState.h"
 #include "SimpleMaths.h"
+#include "physics\Vector.h"
+#include "pennereasing\Back.h"
+#include "main_menu_tools\MainMenu.h"
+#include "main_menu_tools\MainMenuTextElement.h"
 
 //GFX
 MenuState MenuState::m_MenuState;
@@ -16,6 +20,7 @@ void MenuState::Init()
 {
 	alpha = 0.0f;
 	elapsedTime = 0.0f;
+	pressButtonTime = 0.0f;
 
 	mk::Core::SetPointer((mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("gui/MousePointer.png") );
 	mk::Core::TogglePointer(true);
@@ -44,14 +49,37 @@ void MenuState::Init()
 	mainMenuStrings[2] = LanguageManager::GetCString(LOC_MENU_OPTIONS);
 	mainMenuStrings[3] = LanguageManager::GetCString(LOC_MENU_QUITTER);
 
-	mk::Core::SetLoadingFrame(true);
+	// Menu configuration
+	mainMenu = new MainMenu(fnt);
+	MainMenuTextElement* el = new MainMenuTextElement(mainMenuStrings[0], 0.75f, 90, 0xFFFFFFFF, MK_MAKE_RGBA(128, 128, 128, 255));
+	el->Animate(0.0f, - 600.0f);
+	mainMenu->AddItem(el);
+
+	el = new MainMenuTextElement(mainMenuStrings[1], 0.75f, 90, 0xFFFFFFFF, MK_MAKE_RGBA(128, 128, 128, 255));
+	el->Animate(0.1f, - 600.0f);
+	mainMenu->AddItem(el);
+
+	el = new MainMenuTextElement(mainMenuStrings[2], 0.75f, 90, 0xFFFFFFFF, MK_MAKE_RGBA(128, 128, 128, 255));
+	el->Animate(0.2f, - 600.0f);
+	mainMenu->AddItem(el);
+
+	el = new MainMenuTextElement(mainMenuStrings[3], 0.75f, 90, 0xFFFFFFFF, MK_MAKE_RGBA(128, 128, 128, 255));
+	el->Animate(0.3f, - 600.0f);
+	mainMenu->AddItem(el);
+
+	mainMenu->ToggleFocus(false);
+	mainMenu->Hide();
 
 	// Effet particules
 	InitParticles();
+
+	mk::Core::SetLoadingFrame(true);
+	firstFrame = true;
 }
 
 void MenuState::Cleanup()
 {
+	delete mainMenu;
 	delete lvlMan;
 }
 
@@ -166,6 +194,9 @@ void MenuState::Update(StateManager* game)
 	lvlMan->Update();
 	UpdateCam();
 
+	// Update menu
+	mainMenu->Update();
+
 	// Gestion input
 	mk::Input *input = mk::InputManager::GetInput(0, CNT_KEYBOARD);
 
@@ -174,11 +205,19 @@ void MenuState::Update(StateManager* game)
 	// Logique menus
 	if(state == STATE_PRESS_BTN) 
 	{
+		pressButtonTime += 1.0f/30.0f;
+
+		if(pressButtonTime >= 1.0f)
+			pressButtonTime = 1.0f;
+
 		if(input->btnPressed)
 		{
 			state = STATE_MENU;
 			changedState = true;
+			pressButtonTime = 0.0f;
 		}
+
+		mainMenu->Hide();
 	} 
 	else if(state == STATE_MENU) 
 	{
@@ -188,10 +227,26 @@ void MenuState::Update(StateManager* game)
 			lvlMan->LaunchCutscene("cutscenes/menu_press_btn.xml");
 			changedState = false;
 		}
+
+		mainMenu->ToggleFocus(true);
+		mainMenu->Show();
+		mainMenu->MoveTo(100.0f, mk::Core::getBaseHeight() - 600);
+
+		// Retour
+		if(mk::InputManager::GetKeyboardKeyPressed("Escape"))
+		{
+			state = STATE_PRESS_BTN;
+			mainMenu->ToggleFocus(false);
+			mainMenu->Hide();
+			lvlMan->LaunchCutscene("cutscenes/menu_back_main.xml");
+			changedState = true;
+		}
 	}
 
 	// effets
 	UpdateParticles();
+
+	firstFrame = false;
 }
 
 void MenuState::UpdateCam()
@@ -220,33 +275,22 @@ void MenuState::Draw(StateManager* game, int mode, float interpolation)
 			// Affichage des textes
 			const char* strPressStart = LanguageManager::GetCString(LOC_MENU_APPUYEZ_TOUCHE);
 			float txtPosX = mk::Core::getBaseWidth() / 2.0f - mk::Text::GetStringWidth(fnt, strPressStart, 0.75f) / 2.0f;
-			float txtPosY = mk::Core::getBaseHeight() - 200;
+			float interptime = pressButtonTime + 1.0f/30.0f*interpolation;
+			if(interptime > 1.0f)
+				interptime = 1.0f;
+			
+			//float txtPosY = SimpleMaths::InterpolateCosinus(mk::Core::getBaseHeight()+64, mk::Core::getBaseHeight() - 200, 
+			//	interptime);
+			float txtPosY = Back::easeOut(interptime, mk::Core::getBaseHeight()+64, -264, 1.0f);
 
+			float alphaText = abs(sin(elapsedTime + 1.0f/30.0f*interpolation));
 			mk::Text::DrawShadowedText(fnt, txtPosX, txtPosY, strPressStart, 
-				MK_MAKE_RGBA(255, 255, 255, 255), MK_MAKE_RGBA(128, 128, 128, 255), 4.0f, 0.75f);
+				MK_MAKE_RGBA(255, 255, 255, 255 - 128.0f*alphaText), 
+				MK_MAKE_RGBA(128, 128, 128, 255 - 128.0f*alphaText), 4.0f, 0.75f);
 		}
 		else if(state == STATE_MENU)
 		{
-			// Affichage des menus
-			for(int i = 0; i < 4; i++)
-			{
-				const char* s = mainMenuStrings[i];
-				float txtPosX = 100.0f;
-				float txtPosY = mk::Core::getBaseHeight() - 600 + 96*i;
-				
-				// Vert
-				//lowDisplayText(fnt, txtPosX, txtPosY - 3, s, MK_MAKE_RGBA(0, 255, 0, 255), 1.0f);
-
-				// Bleu clair
-				//lowDisplayText(fnt, txtPosX - 5, txtPosY, s, MK_MAKE_RGBA(0, 255, 255, 255), 1.0f);
-
-				// Rouge
-				//lowDisplayText(fnt, txtPosX -1, txtPosY -1, s, MK_MAKE_RGBA(255, 0, 0, 255), 1.05f);
-
-				// Blanc
-				mk::Text::DrawShadowedText(fnt, txtPosX, txtPosY, s, 
-					MK_MAKE_RGBA(255, 255, 255, 255), MK_MAKE_RGBA(128, 128, 128, 255), 4.0f, 0.75f);
-			}
+			mainMenu->UpdateAndDraw(interpolation);
 		}
 	}
 }

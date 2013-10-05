@@ -9,6 +9,7 @@
 #include "mkengine.h"
 
 class LevelManager;
+class MainMenu;
 class MenuState : public CGameState
 {
 	enum {
@@ -62,15 +63,20 @@ private:
 	float alpha;
 	float elapsedTime;
 	float origCamZ, camZ;
+	float pressButtonTime;
 
 	// Etat menu
 	int oldState, state;
 	bool changedState;
+	bool firstFrame;
 
 	// Strings du menu
 	const char* mainMenuStrings[4];
 
 	sParticle particles[64];
+
+	// Menus
+	MainMenu* mainMenu;
 };
 
 #endif
