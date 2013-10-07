@@ -31,6 +31,8 @@ void MainMenu::UpdateAndDraw(float interp)
 
 	// Selection par defaut
 	selectedItem = NULL;
+	for(std::list<MainMenuElement*>::iterator it = items.begin(); it != items.end(); it++) 
+		(*it)->selected = false;
 
 	// Selection à l'aide du pointeur de souris
 	float currentItemPositionY = posY;
@@ -45,10 +47,11 @@ void MainMenu::UpdateAndDraw(float interp)
 			if(input->pointer.x >= a && input->pointer.x <= c && input->pointer.y >= b && input->pointer.y <= d)
 			{
 				selectedItem = (*it);
+				(*it)->selected = true;
 				break;
 			}
 		
-			currentItemPositionY += (*it)->getItemHeight(); 
+			currentItemPositionY += (*it)->getItemHeight() + (*it)->getItemMarginBottom(); 
 		}
 	}
 
@@ -58,18 +61,11 @@ void MainMenu::UpdateAndDraw(float interp)
 		currentItemPositionY = posY;
 		for(std::list<MainMenuElement*>::iterator it = items.begin(); it != items.end(); it++) 
 		{
-			// Affichage du selecteur
-			if((*it) == selectedItem) {
-				lowDisplayFillRect(posX - 2, currentItemPositionY - 2, 
-					posX + (*it)->getItemWidth() + 2, currentItemPositionY + (*it)->getItemHeight() + 2, 
-					MK_MAKE_RGBA(0, 0, 255, 64));
-			}
-
 			// Affichage de l'item
 			(*it)->MoveTo(posX, currentItemPositionY);
 			(*it)->Draw(interp);
 
-			currentItemPositionY += (*it)->getItemHeight(); 
+			currentItemPositionY += (*it)->getItemHeight() + (*it)->getItemMarginBottom(); 
 		}
 	}
 }

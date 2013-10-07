@@ -24,11 +24,17 @@ class MainMenuElement {
 		void SetMenu(MainMenu * m) { menu = m; };
 		void SetItemId(int id) { itemId = id; };
 		int GetItemId() { return itemId; };
+		int getItemMarginBottom() { return itemMarginBottom; };
 
 	protected:
 		int itemHeight, itemId;
+		int itemMarginBottom;
+
 		float posX, posY;
 		MainMenu* menu;
+	
+	public:
+		bool selected, oldSelected;
 };
 
 #endif

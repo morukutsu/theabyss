@@ -57,7 +57,7 @@ private:
 	LevelManager* lvlMan;
 
 	//Sprites & Images
-	mk::Font* fnt;
+	mk::Font* fnt, *fnt_text;
 
 	// Effets
 	float alpha;

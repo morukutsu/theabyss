@@ -39,7 +39,8 @@ void MenuState::Init()
 
 	// Police
 	fnt = (mk::Font*)mk::RessourceManager::getInstance()->LoadRessource("fonts/squarefont_96.fnt");
-
+	fnt_text = (mk::Font*)mk::RessourceManager::getInstance()->LoadRessource("fonts/fontface.fnt");
+	
 	// etat menu
 	state = STATE_PRESS_BTN;
 
@@ -51,19 +52,25 @@ void MenuState::Init()
 
 	// Menu configuration
 	mainMenu = new MainMenu(fnt);
-	MainMenuTextElement* el = new MainMenuTextElement(mainMenuStrings[0], 0.75f, 90, 0xFFFFFFFF, MK_MAKE_RGBA(128, 128, 128, 255));
+	MainMenuTextElement* el;
+
+	el = new MainMenuTextElement(mainMenuStrings[0], LanguageManager::GetCString(LOC_MENU_NEW_GAME_HINT),
+		0.75f, 64, 26, 0xFFFFFFFF, MK_MAKE_RGBA(128, 128, 128, 255));
 	el->Animate(0.0f, - 600.0f);
 	mainMenu->AddItem(el);
 
-	el = new MainMenuTextElement(mainMenuStrings[1], 0.75f, 90, 0xFFFFFFFF, MK_MAKE_RGBA(128, 128, 128, 255));
+	el = new MainMenuTextElement(mainMenuStrings[1], LanguageManager::GetCString(LOC_MENU_CONTINUER_HINT),
+		0.75f, 64, 26, 0xFFFFFFFF, MK_MAKE_RGBA(128, 128, 128, 255));
 	el->Animate(0.1f, - 600.0f);
 	mainMenu->AddItem(el);
 
-	el = new MainMenuTextElement(mainMenuStrings[2], 0.75f, 90, 0xFFFFFFFF, MK_MAKE_RGBA(128, 128, 128, 255));
+	el = new MainMenuTextElement(mainMenuStrings[2], LanguageManager::GetCString(LOC_MENU_OPTIONS_HINT),
+		0.75f, 64, 26, 0xFFFFFFFF, MK_MAKE_RGBA(128, 128, 128, 255));
 	el->Animate(0.2f, - 600.0f);
 	mainMenu->AddItem(el);
 
-	el = new MainMenuTextElement(mainMenuStrings[3], 0.75f, 90, 0xFFFFFFFF, MK_MAKE_RGBA(128, 128, 128, 255));
+	el = new MainMenuTextElement(mainMenuStrings[3], LanguageManager::GetCString(LOC_MENU_QUITTER_HINT),
+		0.75f, 64, 26, 0xFFFFFFFF, MK_MAKE_RGBA(128, 128, 128, 255));
 	el->Animate(0.3f, - 600.0f);
 	mainMenu->AddItem(el);
 
@@ -291,6 +298,15 @@ void MenuState::Draw(StateManager* game, int mode, float interpolation)
 		else if(state == STATE_MENU)
 		{
 			mainMenu->UpdateAndDraw(interpolation);
+
+			// Affichage du hint
+			MainMenuElement* el = mainMenu->GetSelectedItem();
+			if(el != NULL)
+			{
+				MainMenuTextElement *txt_el = dynamic_cast<MainMenuTextElement*>(el);
+				float centered_x = mk::Core::getBaseWidth() / 2 - mk::Text::GetStringWidth(fnt_text, txt_el->GetHint().c_str(), 1.0f) / 2;
+				mk::Text::DrawShadowedText(fnt_text, centered_x, mk::Core::getBaseHeight() - 196, txt_el->GetHint().c_str(), 0xFFFFFFFF, 0x666666FF, 1.0f);
+			}
 		}
 	}
 }
