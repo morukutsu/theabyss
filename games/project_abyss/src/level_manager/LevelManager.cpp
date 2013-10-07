@@ -102,6 +102,7 @@ void LevelManager::Init()
 
 	// Effets
 	mMousePositionTimer = 0.0f;
+	isEffetTrainee = true;
 
 	// Scripts
 	ScriptManager::getInstance()->Init();
@@ -214,6 +215,9 @@ void LevelManager::AccumulateMousePositions()
 
 void LevelManager::DrawMouseTrainee()
 {
+	if(!isEffetTrainee)
+		return;
+
 	NVector prev1, prev_pa;
 	int count = 0;
 	bool first = true;

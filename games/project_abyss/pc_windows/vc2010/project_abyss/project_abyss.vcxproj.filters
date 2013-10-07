@@ -599,6 +599,9 @@
     <ClInclude Include="..\..\..\src\main_menu_tools\MainMenuTextElement.h">
       <Filter>Fichiers d%27en-tête\game\gamestates\main_menu_tools</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\CutsceneState.h">
+      <Filter>Fichiers d%27en-tête\game\gamestates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\AsciiFile.cpp">
@@ -1062,6 +1065,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\main_menu_tools\MainMenuTextElement.cpp">
       <Filter>Fichiers sources\game\gamestates\main_menu_tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\CutsceneState.cpp">
+      <Filter>Fichiers sources\game\gamestates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

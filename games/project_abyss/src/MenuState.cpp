@@ -12,6 +12,7 @@
 #include "pennereasing\Back.h"
 #include "main_menu_tools\MainMenu.h"
 #include "main_menu_tools\MainMenuTextElement.h"
+#include "CutsceneState.h"
 
 //GFX
 MenuState MenuState::m_MenuState;
@@ -238,6 +239,16 @@ void MenuState::Update(StateManager* game)
 		mainMenu->ToggleFocus(true);
 		mainMenu->Show();
 		mainMenu->MoveTo(100.0f, mk::Core::getBaseHeight() - 600);
+
+		// Actions menu
+		int id = mainMenu->GetPressedItemId();
+		if(id != -1)
+		{
+			if(id == 0) 
+			{
+				game->ChangeState(CutsceneState::Instance() );
+			}
+		}
 
 		// Retour
 		if(mk::InputManager::GetKeyboardKeyPressed("Escape"))

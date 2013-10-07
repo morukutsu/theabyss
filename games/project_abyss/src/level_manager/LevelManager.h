@@ -92,6 +92,7 @@ public:
 	// Effet pointeur
 	std::list<NVector> mousePositions;
 	float mMousePositionTimer;
+	bool isEffetTrainee;
 
 	// Debug
 	DebugMenu *debugMenuTitle, *debugMenuFull, *debugMenuShader;
