@@ -25,6 +25,18 @@ CutsceneEventFx::CutsceneEventFx(LevelManager* lvlMan, CutsceneEventType eventTy
 			else
 				toggle = false;
 		}
+		else if((*it).first == "color_r")
+		{
+			sscanf((*it).second.c_str(), "%d", &r);
+		}
+		else if((*it).first == "color_g")
+		{
+			sscanf((*it).second.c_str(), "%d", &g);
+		}
+		else if((*it).first == "color_b")
+		{
+			sscanf((*it).second.c_str(), "%d", &b);
+		}
 	}
 }
 
@@ -46,6 +58,45 @@ void CutsceneEventFx::Start()
 	{
 		levelManager->scene->InitBlackBands();
 		levelManager->scene->ActivateBlackBands(toggle);
+	}
+	else if(fx_type == "plane")
+	{
+		// Plan pour fadein fade out
+		levelManager->scene->InitPlane(toggle, r, g, b, intensity_start);
+	}
+	else if(fx_type.find("shader") != std::string::npos)
+	{
+		if(toggle)
+		{
+			// Un shader est detecté
+			std::string prefix = "shader_";
+			std::string shaderName = fx_type.substr(prefix.length() );
+
+			if(shaderName == "filterA")
+				levelManager->scene->LoadPostFXShader("shaders/postfx_filterA_lookup.fx");
+			else if(shaderName == "filterB")
+				levelManager->scene->LoadPostFXShader("shaders/postfx_filterB_lookup.fx");
+			else if(shaderName == "filterC")
+				levelManager->scene->LoadPostFXShader("shaders/postfx_filterC_lookup.fx");
+			else if(shaderName == "filterD")
+				levelManager->scene->LoadPostFXShader("shaders/postfx_filterD_lookup.fx");
+			else if(shaderName == "filterE")
+				levelManager->scene->LoadPostFXShader("shaders/postfx_filterE_lookup.fx");
+			else if(shaderName == "grayscale")
+				levelManager->scene->LoadPostFXShader("shaders/postfx_grayscale.fx");
+			else if(shaderName == "saturation")
+				levelManager->scene->LoadPostFXShader("shaders/postfx_saturation.fx");
+			else if(shaderName == "scanline")
+				levelManager->scene->LoadPostFXShader("shaders/postfx_scanline.fx");
+			else if(shaderName == "sepia")
+				levelManager->scene->LoadPostFXShader("shaders/postfx_sepia.fx");
+
+			levelManager->scene->SetEffectIntensity(intensity_start);
+		}
+		else
+		{
+			levelManager->scene->isPostFXShader = false;
+		}
 	}
 }
 

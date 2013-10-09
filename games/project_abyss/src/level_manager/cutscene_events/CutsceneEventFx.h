@@ -19,6 +19,7 @@ class CutsceneEventFx : public CutsceneEvent
 		std::string fx_type;
 		float intensity_start; 
 		bool toggle;
+		int r, g, b;
 };
 
 #endif

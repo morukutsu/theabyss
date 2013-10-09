@@ -80,6 +80,12 @@ namespace mk
 		isEffectBloom = true;
 		bloom_intensity = 0.75f;
 
+		isPlane = false;
+		planeR = 0;
+		planeG = 0;
+		planeB = 0;
+		planeOpacity = 1.0f;
+
 		// Compilation de certains shaders
 		mk::RessourceManager::getInstance()->LoadRessource("shaders/postfx_blur_h.fx");
 		mk::RessourceManager::getInstance()->LoadRessource("shaders/postfx_blur_v.fx");
@@ -262,6 +268,8 @@ namespace mk
 
 		if(isPostFXShader)
 			postfx->Unbind();
+
+		RenderPlane();
 
 		RenderBlackBands(0.0f);
 
@@ -686,6 +694,21 @@ namespace mk
 		lowSetBlendMode(MK_BLEND_ALPHA);
 
 		glPopMatrix();
+	}
+
+	void Scene::InitPlane(bool toggle, int r, int g, int b, float opacity)
+	{
+		isPlane = toggle;
+		planeR = r;
+		planeG = g;
+		planeB = b;
+		planeOpacity = opacity;
+	}
+
+	void Scene::RenderPlane()
+	{
+		if(isPlane)
+			lowDisplayFillRect(0, 0, mk::Core::getBaseWidth(), mk::Core::getBaseHeight(), MK_MAKE_RGBA(planeR, planeG, planeB, 255*planeOpacity) );
 	}
 
 	void Scene::InitBlackBands()

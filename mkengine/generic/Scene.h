@@ -74,6 +74,9 @@ namespace mk
 			void InitBloom();
 			void RenderBloom(float intensity);
 
+			void InitPlane(bool toggle, int r, int g, int b, float opacity);
+			void RenderPlane();
+
 			// Debug rendering pipeline
 			void DebugShowLightMask(bool v) { isShowLightMask = v; };
 			void DebugShowAABB(bool v) { isShowAABB = v; };
@@ -108,7 +111,9 @@ namespace mk
 			bool isScreenShaking;
 			float screenShakeIntensity, screenShakeTime, shakeBounceTime, shakeOffsetX, shakeOffsetY;
 			float oldTime, curTime;
-			bool isEffectBloom;
+			bool isEffectBloom, isPlane;
+			int planeR, planeG, planeB;
+			float planeOpacity;
 
 			// Debug
 			bool isShowLightMask, isShowAABB;

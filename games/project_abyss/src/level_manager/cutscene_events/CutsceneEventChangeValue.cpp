@@ -34,6 +34,15 @@ void CutsceneEventChangeValue::Start()
 	{
 		value_addr = &levelManager->scene->effectIntensity;
 	}
+	else if(value_changed == "plane_opacity")
+	{
+		value_addr = &levelManager->scene->planeOpacity;
+	}
+	else
+	{
+		std::cout << "[ERR. Cutscene] parametre non connu" << value_changed << std::endl;
+		lowError("Quit");
+	}
 }
 
 void CutsceneEventChangeValue::Run(float time) 
