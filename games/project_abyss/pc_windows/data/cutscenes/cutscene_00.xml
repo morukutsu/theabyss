@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Game intro teasing cutscene -->
+<Cutscene>
+	<Events>
+		<!-- Barres noires -->
+		<Event time="0" duration="0" type="fx">
+			<Parameter name="fx_type" value="black_bands"/>
+			<Parameter name="toggle" value="on"/>
+		</Event>
+		
+		<!-- Activate recoloring on map -->
+		<Event time="0" duration="0" type="fx">
+			<Parameter name="fx_type" value="shader_filterE"/>
+			<Parameter name="toggle" value="on"/>
+			<Parameter name="intensity" value="1.0"/>
+		</Event>
+		
+		<!-- Plan bleu sombre devant l'écran -->
+		<Event time="0" duration="0" type="fx">
+			<Parameter name="fx_type" value="plane"/>
+			<Parameter name="toggle" value="on"/>
+			<Parameter name="intensity" value="1.0"/>
+			<Parameter name="color_r" value="0"/>
+			<Parameter name="color_g" value="6"/>
+			<Parameter name="color_b" value="12"/>
+		</Event>
+		
+		<!-- Texte little space -->
+		<Event time="2" duration="8.0" type="display_text">
+			<Parameter name="string" value="A Littlespace Game"/>
+			<Parameter name="font" value="fonts/squarefont_96.fnt"/>
+			<Parameter name="x" value="1150"/>
+			<Parameter name="y" value="860"/>
+			<Parameter name="color_r" value="255"/>
+			<Parameter name="color_g" value="255"/>
+			<Parameter name="color_b" value="255"/>
+			<Parameter name="scale" value="0.75"/>
+		</Event>
+		
+		<!-- Fade out -->
+		<Event time="4" duration="2.0" type="change_value">
+			<Parameter name="value_changed" value="plane_opacity"/>
+			<Parameter name="start_value" value="1.0"/>
+			<Parameter name="end_value" value="0.0"/>
+		</Event>
+		
+		
+	</Events>
+</Cutscene>

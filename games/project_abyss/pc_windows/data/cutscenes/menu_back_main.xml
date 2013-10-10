@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Menu cutscene: quand le joueur appuie sur un bouton au debut -->
+<Cutscene>
+	<Events>
+		<!-- Retirer Barres noires -->
+		<Event time="0" duration="0" type="fx">
+			<Parameter name="fx_type" value="black_bands"/>
+			<Parameter name="toggle" value="off"/>
+		</Event>
+		
+		<!-- Demarrage du blur -->
+		<Event time="0" duration="0" type="fx">
+			<Parameter name="fx_type" value="blur"/>
+			<Parameter name="intensity" value="0.0"/>
+			<Parameter name="toggle" value="on"/>
+		</Event>
+		
+		<!-- Opacité progressive du blur -->
+		<Event time="0" duration="2.0" type="change_value">
+			<Parameter name="value_changed" value="blur_intensity"/>
+			<Parameter name="start_value" value="1.0"/>
+			<Parameter name="end_value" value="0.0"/>
+		</Event>
+		
+		<!-- Fin -->
+		<Event time="2" duration="0" type="fx">
+			<Parameter name="fx_type" value="blur"/>
+			<Parameter name="intensity" value="0.0"/>
+			<Parameter name="toggle" value="off"/>
+		</Event>
+	</Events>
+</Cutscene>

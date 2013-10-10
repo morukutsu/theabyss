@@ -16,9 +16,6 @@ void CutsceneState::Init()
 
 	// For debug
 	lvlMan->LoadMap("maps/cutscene_00.tmx");
-	lvlMan->scene->ActivateBlackBands(true);
-
-	lvlMan->LaunchCutscene("cutscenes/cutscene_00.xml");
 }
 
 void CutsceneState::Cleanup()

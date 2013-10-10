@@ -181,6 +181,10 @@ void LevelManager::Draw(int mode, float interpolation)
 		// Affichage du GUI
 		if(mk::Core::GetDebugVisible() )
 			ShowDebug();
+
+		// Cutscene draw
+		if(cutscene)
+			cutscene->Draw(interpolation);
 	}
 	else if(mode == mk::MODE_2D_BACKGROUND) 
 	{
@@ -309,9 +313,9 @@ void LevelManager::LoadMap(std::string filename)
 	// Debug
 	std::cout << "Map " << filename << " loaded." << std::endl;
 
-	// TEMP, TODO
-	//cutscene = new Cutscene(this);
-	//cutscene->Load("cutscenes/intro_chapitre_2.xml");
+	// Launch cutscene
+	if(gameMap->cutsceneFilename != "")
+		LaunchCutscene(gameMap->cutsceneFilename);
 
 	mk::Core::SetLoadingFrame(true);
 }

@@ -65,6 +65,9 @@ public:
 	// Script
 	std::string scriptFilename;
 
+	// Cutscene
+	std::string cutsceneFilename;
+
 	// Particules
 	ParticleEnginesManager * particleManager;
 

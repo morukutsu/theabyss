@@ -18,8 +18,8 @@ GameMap::GameMap(LevelManager* lvl)
 	SetTextureQuality(ConfigurationManager::getInstance()->GetAttributeInt("Graphics_TextureQuality"));
 	entityManager = new EntityManager();
 	scriptFilename = "";
+	cutsceneFilename = "";
 	lvlMan = lvl;
-	
 }
 
 GameMap::~GameMap()
@@ -190,6 +190,11 @@ void GameMap::LoadGameMap(mk::Scene* scene)
 	std::string scriptStr = map.GetProperties().GetLiteralProperty("script");
 	if(scriptStr != "No such property!") {
 		scriptFilename = scriptStr;
+	}
+
+	std::string cutStr = map.GetProperties().GetLiteralProperty("cutscene");
+	if(cutStr != "No such property!") {
+		cutsceneFilename = cutStr;
 	}
 
 	// Particle engine

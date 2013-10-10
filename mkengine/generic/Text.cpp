@@ -65,4 +65,51 @@ namespace mk
 		// Text
 		lowDisplayText(fnt, x, y, text, color, scale);
 	}
+
+	// ========================
+	TextDynamicLetters::TextDynamicLetters(std::string _text, float _delay, mk::Font* _fnt, float _scale, u32 _color)
+	{
+		text = _text;
+		scale = _scale;
+		delay = _delay;
+		color = _color;
+		fnt = _fnt;
+
+		lettersAlpha.resize(text.length() );
+		for(int i = 0; i < lettersAlpha.size(); i++) {
+			lettersAlpha[i] = 0.0f;
+		}
+		
+		currentCounter = 0.0f;
+		currentLetter = 0;
+	}
+
+	void TextDynamicLetters::Update()
+	{
+		currentCounter =+ 1.0f/30.0f;
+		if(currentCounter >= delay)
+		{
+			currentCounter = 0.0f;
+			currentLetter++;
+		}
+
+		if(currentLetter > text.length() - 1)
+			currentLetter = text.length() - 1;
+	}
+
+	void TextDynamicLetters::Draw()
+	{
+		int mLength = text.length();
+		float mXPos = posX;
+
+		for(int i = 0; i < currentLetter; i++)
+		{
+			unsigned char c = text[i];
+			sCharacter& mGfxChar = fnt->mChars[c];
+			lowDisplayImg(fnt->mTex, mXPos + (float)mGfxChar.xoff*scale, posY + (float)mGfxChar.yoff*scale, (float)mGfxChar.x, (float)mGfxChar.y, 
+				(float)mGfxChar.w, (float)mGfxChar.h, (float)mGfxChar.w/(float)fnt->mTex->getImageWidth()*scale, (float)mGfxChar.h/(float)fnt->mTex->getImageHeight()*scale, 0.0f, color);
+			mXPos += (float)mGfxChar.xAdvance*scale;
+		}
+	}
+
 };

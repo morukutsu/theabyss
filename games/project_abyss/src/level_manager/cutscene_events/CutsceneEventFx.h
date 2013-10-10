@@ -14,6 +14,7 @@ class CutsceneEventFx : public CutsceneEvent
 		void Start();
 		void Run(float time);
 		void End();
+		void Draw(float interp) { };
 
 	public:
 		std::string fx_type;

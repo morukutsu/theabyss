@@ -5,6 +5,8 @@
 #include "cutscene_events\CutsceneEvent.h"
 #include "cutscene_events\CutsceneEventFx.h"
 #include "cutscene_events\CutsceneEventChangeValue.h"
+#include "cutscene_events\CutsceneEventText.h"
+
 #include "mkengine.h"
 #include "xml/tinyxml.h"
 #include <iostream>
@@ -67,11 +69,18 @@ void Cutscene::Load(std::string filename)
 			e_event_type = EVENT_CHANGE_VALUE;
 			cutsceneEvent = new CutsceneEventChangeValue(levelManager, e_event_type, e_time_start, e_duration, parameters);
 		}
+		else if(e_type == "display_text")
+		{
+			e_event_type = EVENT_TEXT;
+			cutsceneEvent = new CutsceneEventText(levelManager, e_event_type, e_time_start, e_duration, parameters);
+		}
 
 		events.push_back(cutsceneEvent);
 
 		elem = elem->NextSiblingElement();
 	}
+
+	mk::RessourceManager::getInstance()->DeleteRessource(cutsceneFile);
 }
 
 void Cutscene::Update()
@@ -114,4 +123,12 @@ void Cutscene::Update()
 
 	// Incrémentation du temps
 	mCurrentTime += 1.0f/30.0f;
+}
+
+void Cutscene::Draw(float interp)
+{
+	for(std::list<CutsceneEvent*>::iterator it = events.begin(); it != events.end(); it++ )
+	{
+		(*it)->Draw(interp);
+	}
 }

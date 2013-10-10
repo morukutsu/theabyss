@@ -18,6 +18,7 @@ class Cutscene
 
 		void Load(std::string filename);
 		void Update();
+		void Draw(float interp);
 
 	public:
 		float mCurrentTime;

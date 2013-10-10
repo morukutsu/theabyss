@@ -9,7 +9,7 @@
 
 enum CutsceneEventType 
 {
-	EVENT_FX, EVENT_CHANGE_VALUE
+	EVENT_FX, EVENT_CHANGE_VALUE, EVENT_TEXT
 };
 
 class LevelManager;
@@ -19,7 +19,8 @@ class CutsceneEvent
 		virtual void Start() = 0;
 		virtual void Run(float time) = 0;
 		virtual void End() = 0;
-		
+		virtual void Draw(float interp) = 0;
+
 		CutsceneEvent(LevelManager* lvlMan, CutsceneEventType eventType, float time, float duration) {
 			mEventType = eventType;
 			mTimeStart = time;

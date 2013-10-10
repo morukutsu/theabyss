@@ -215,6 +215,7 @@
     <ClInclude Include="..\..\..\src\level_manager\cutscene_events\CutsceneEvent.h" />
     <ClInclude Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventChangeValue.h" />
     <ClInclude Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventFx.h" />
+    <ClInclude Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventText.h" />
     <ClInclude Include="..\..\..\src\level_manager\GameCamera.h" />
     <ClInclude Include="..\..\..\src\level_manager\GameMap.h" />
     <ClInclude Include="..\..\..\src\level_manager\GameMapLayer.h" />
@@ -429,6 +430,7 @@
     <ClCompile Include="..\..\..\src\level_manager\Cutscene.cpp" />
     <ClCompile Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventChangeValue.cpp" />
     <ClCompile Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventFx.cpp" />
+    <ClCompile Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventText.cpp" />
     <ClCompile Include="..\..\..\src\level_manager\GameCamera.cpp" />
     <ClCompile Include="..\..\..\src\level_manager\GameMap.cpp" />
     <ClCompile Include="..\..\..\src\level_manager\GameMapLayer.cpp" />

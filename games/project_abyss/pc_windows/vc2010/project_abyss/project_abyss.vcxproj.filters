@@ -602,6 +602,9 @@
     <ClInclude Include="..\..\..\src\CutsceneState.h">
       <Filter>Fichiers d%27en-tête\game\gamestates</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventText.h">
+      <Filter>Fichiers d%27en-tête\game\level_manager\cutscene_events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\mkengine\generic\AsciiFile.cpp">
@@ -1068,6 +1071,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\CutsceneState.cpp">
       <Filter>Fichiers sources\game\gamestates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\level_manager\cutscene_events\CutsceneEventText.cpp">
+      <Filter>Fichiers sources\game\level_manager\cutscene_events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
