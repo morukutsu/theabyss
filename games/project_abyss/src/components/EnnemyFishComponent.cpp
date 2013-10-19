@@ -28,6 +28,19 @@ EnnemyFishComponent::EnnemyFishComponent()
 
 	progressiveSpeed = 1.0f;
 	targetSpeed = 1.0f;
+
+	// A RETIRER
+	mk::RessourceManager::getInstance()->shaderDebug = true;
+
+	// TODO : rendre ça portable
+	mk::Shader* shader = (mk::Shader*)mk::RessourceManager::getInstance()->LoadRessource("shaders/tex/mask_texture.fx");
+	shader->shader.setParameter("texture", sf::Shader::CurrentTexture);
+
+	mk::Image* cracks = (mk::Image*)mk::RessourceManager::getInstance()->LoadRessource("sprites/patterns/cracks.png");
+	shader->shader.setParameter("mask", cracks->img);
+
+	gfx->model.SetShader(shader, true);
+	
 }
 
 EnnemyFishComponent::~EnnemyFishComponent()

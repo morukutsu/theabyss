@@ -447,8 +447,21 @@ namespace mk
 			{
 				if((*it)->isVisible && !(*it)->isCulled)
 				{
+					// Blending
 					lowSetBlendMode((*it)->blending);
+
+					// Shader
+					if((*it)->isShader)
+						(*it)->currentShader->Bind();
+
+					// Draw
 					(*it)->Draw();
+					
+					// Shader
+					if((*it)->isShader)
+						(*it)->currentShader->Unbind();
+
+					// Debug Draw
 					if(isShowAABB)
 						(*it)->DrawBoundingBox();
 				}
