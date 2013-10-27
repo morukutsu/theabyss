@@ -4,9 +4,10 @@
 #include "CutsceneEventFx.h"
 #include <iostream>
 #include "level_manager\LevelManager.h"
+#include "../Cutscene.h"
 
-CutsceneEventFx::CutsceneEventFx(LevelManager* lvlMan, CutsceneEventType eventType, float time, float duration, std::map<std::string, std::string> parameters) 
-	: CutsceneEvent(lvlMan, eventType, time, duration) 
+CutsceneEventFx::CutsceneEventFx(LevelManager* lvlMan, Cutscene* cs, CutsceneEventType eventType, float time, float duration, std::map<std::string, std::string> parameters) 
+	: CutsceneEvent(lvlMan, cs, eventType, time, duration) 
 {
 	for(std::map<std::string, std::string>::iterator it = parameters.begin(); it != parameters.end(); it++)
 	{

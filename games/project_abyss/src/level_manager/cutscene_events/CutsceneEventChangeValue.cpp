@@ -3,10 +3,13 @@
 
 #include "CutsceneEventChangeValue.h"
 #include "level_manager\LevelManager.h"
+#include "../Cutscene.h"
+#include "CutsceneEventText.h"
 
-CutsceneEventChangeValue::CutsceneEventChangeValue(LevelManager* lvlMan, CutsceneEventType eventType, float time, float duration, std::map<std::string, std::string> parameters) 
-	: CutsceneEvent(lvlMan,eventType, time, duration)
+CutsceneEventChangeValue::CutsceneEventChangeValue(LevelManager* lvlMan, Cutscene* cs, CutsceneEventType eventType, float time, float duration, std::map<std::string, std::string> parameters) 
+	: CutsceneEvent(lvlMan, cs, eventType, time, duration)
 {
+	value_addr = NULL;
 	for(std::map<std::string, std::string>::iterator it = parameters.begin(); it != parameters.end(); it++)
 	{
 		if((*it).first == "value_changed")
@@ -20,6 +23,10 @@ CutsceneEventChangeValue::CutsceneEventChangeValue(LevelManager* lvlMan, Cutscen
 		else if((*it).first == "end_value")
 		{
 			sscanf((*it).second.c_str(), "%f", &end_value);
+		}
+		else if((*it).first == "target_object")
+		{
+			target_object = (*it).second;
 		}
 	}
 }
@@ -38,6 +45,15 @@ void CutsceneEventChangeValue::Start()
 	{
 		value_addr = &levelManager->scene->planeOpacity;
 	}
+	else if(value_changed == "text_alpha")
+	{
+		CutsceneEvent* ev = cutscene->GetEventByName(target_object);
+		if(ev != NULL)
+		{
+			CutsceneEventText* ev_t = dynamic_cast<CutsceneEventText*>(ev);
+			value_addr = &ev_t->alpha;
+		}
+	}
 	else
 	{
 		std::cout << "[ERR. Cutscene] parametre non connu" << value_changed << std::endl;
@@ -49,7 +65,8 @@ void CutsceneEventChangeValue::Run(float time)
 {
 	float interpTime = time - mTimeStart;
 
-	*value_addr = Lerp(interpTime, 0.0f, mDuration, start_value, end_value);
+	if(value_addr != NULL)
+		*value_addr = Lerp(interpTime, 0.0f, mDuration, start_value, end_value);
 }
 
 void CutsceneEventChangeValue::End() 

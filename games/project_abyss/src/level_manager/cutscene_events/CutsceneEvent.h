@@ -12,6 +12,7 @@ enum CutsceneEventType
 	EVENT_FX, EVENT_CHANGE_VALUE, EVENT_TEXT
 };
 
+class Cutscene;
 class LevelManager;
 class CutsceneEvent
 {
@@ -21,12 +22,13 @@ class CutsceneEvent
 		virtual void End() = 0;
 		virtual void Draw(float interp) = 0;
 
-		CutsceneEvent(LevelManager* lvlMan, CutsceneEventType eventType, float time, float duration) {
+		CutsceneEvent(LevelManager* lvlMan, Cutscene* cs, CutsceneEventType eventType, float time, float duration) {
 			mEventType = eventType;
 			mTimeStart = time;
 			mDuration = duration;
 			isRunning = false;
 			levelManager = lvlMan;
+			cutscene = cs;
 		}
 
 	public:
@@ -34,6 +36,8 @@ class CutsceneEvent
 		float mTimeStart, mDuration;
 		CutsceneEventType mEventType;
 		LevelManager* levelManager;
+		std::string name;
+		Cutscene* cutscene;
 };
 
 #endif

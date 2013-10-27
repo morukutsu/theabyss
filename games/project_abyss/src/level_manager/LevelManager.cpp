@@ -28,6 +28,8 @@ LevelManager::LevelManager()
 	debugMenuFull->AddItem(new DebugItemButton("Afficher Light Mask", 0xFFFFFFFF));
 	debugMenuFull->AddItem(new DebugItemButton("Afficher AABBs Renderer", 0xFFFFFFFF));
 	debugMenuFull->AddItem(new DebugItemButton("Afficher Debug Collisions", 0xFFFFFFFF));
+	debugMenuFull->AddItem(new DebugItemButton("Activer Glow", 0xFFFFFFFF));
+	debugMenuFull->AddItem(new DebugItemButton("Activer Lighting", 0xFFFFFFFF));
 	debugMenuFull->AddItem(new DebugItemButton("PostFX Shader", 0xFFFFFFFF));
 	debugMenuFull->AddItem(new DebugItemButton("Retour DebugState", 0xFFFFFFFF));
 	debugMenuFull->AddItem(new DebugItemButton("Retour", 0xFFFFFFFF));
@@ -834,6 +836,24 @@ void LevelManager::ShowDebug()
 			debugMenuTitle->ToggleFocus(true);
 		}
 		else if(id == 6) 
+		{
+			scene->isEffectBloom = !scene->isEffectBloom;
+
+			// Retour
+			debugMenuFull->ToggleFocus(false);
+			debugMenuFull->Hide();
+			debugMenuTitle->ToggleFocus(true);
+		}
+		else if(id == 7) 
+		{
+			scene->isLighting = !scene->isLighting;
+			
+			// Retour
+			debugMenuFull->ToggleFocus(false);
+			debugMenuFull->Hide();
+			debugMenuTitle->ToggleFocus(true);
+		}
+		else if(id == debugMenuFull->GetItemCount() - 3)  
 		{
 			debugMenuFull->ToggleFocus(false);
 			debugMenuShader->ToggleFocus(true);

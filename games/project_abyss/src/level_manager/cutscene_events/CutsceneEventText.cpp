@@ -2,9 +2,10 @@
 // by morukutsu (morukutsu@hotmail.com)
 
 #include "CutsceneEventText.h"
+#include "../Cutscene.h"
 
-CutsceneEventText::CutsceneEventText(LevelManager* lvlMan, CutsceneEventType eventType, float time, float duration, std::map<std::string, std::string> parameters) 
-	: CutsceneEvent(lvlMan, eventType, time, duration)
+CutsceneEventText::CutsceneEventText(LevelManager* lvlMan, Cutscene* cs, CutsceneEventType eventType, float time, float duration, std::map<std::string, std::string> parameters) 
+	: CutsceneEvent(lvlMan, cs, eventType, time, duration)
 {
 	alpha = 1.0f;
 

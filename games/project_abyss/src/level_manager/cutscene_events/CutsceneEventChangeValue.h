@@ -7,17 +7,18 @@
 #include <string>
 #include "CutsceneEvent.h"
 
+class Cutscene;
 class CutsceneEventChangeValue : public CutsceneEvent 
 {
 	public:
-		CutsceneEventChangeValue(LevelManager* lvlMan, CutsceneEventType eventType, float time, float duration, std::map<std::string, std::string> parameters);
+		CutsceneEventChangeValue(LevelManager* lvlMan, Cutscene* cs, CutsceneEventType eventType, float time, float duration, std::map<std::string, std::string> parameters);
 		void Start();
 		void Run(float time);
 		void End();
 		void Draw(float interp) { };
 
 	public:
-		 std::string value_changed;
+		 std::string value_changed, target_object;
 		 float start_value; 
 		 float end_value;
 

@@ -20,6 +20,8 @@ class Cutscene
 		void Update();
 		void Draw(float interp);
 
+		CutsceneEvent* GetEventByName(std::string name);
+
 	public:
 		float mCurrentTime;
 		std::list<CutsceneEvent*> events;

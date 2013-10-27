@@ -8,10 +8,11 @@
 #include "CutsceneEvent.h"
 #include "mkengine.h"
 
+class Cutscene;
 class CutsceneEventText : public CutsceneEvent 
 {
 	public:
-		CutsceneEventText(LevelManager* lvlMan, CutsceneEventType eventType, float time, float duration, std::map<std::string, std::string> parameters);
+		CutsceneEventText(LevelManager* lvlMan, Cutscene* cs, CutsceneEventType eventType, float time, float duration, std::map<std::string, std::string> parameters);
 		void Start();
 		void Run(float time);
 		void End();

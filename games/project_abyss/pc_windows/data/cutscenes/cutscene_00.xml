@@ -26,7 +26,7 @@
 		</Event>
 		
 		<!-- Texte little space -->
-		<Event time="2" duration="8.0" type="display_text">
+		<Event time="2" duration="8.0" type="display_text" name="txt_littlespace">
 			<Parameter name="string" value="A Littlespace Game"/>
 			<Parameter name="font" value="fonts/squarefont_96.fnt"/>
 			<Parameter name="x" value="1150"/>
@@ -35,6 +35,18 @@
 			<Parameter name="color_g" value="255"/>
 			<Parameter name="color_b" value="255"/>
 			<Parameter name="scale" value="0.75"/>
+		</Event>
+		<Event time="2" duration="1.0" type="change_value">
+			<Parameter name="target_object" value="txt_littlespace"/>
+			<Parameter name="value_changed" value="text_alpha"/>
+			<Parameter name="start_value" value="0.0"/>
+			<Parameter name="end_value" value="1.0"/>
+		</Event>
+		<Event time="7" duration="1.0" type="change_value">
+			<Parameter name="target_object" value="txt_littlespace"/>
+			<Parameter name="value_changed" value="text_alpha"/>
+			<Parameter name="start_value" value="1.0"/>
+			<Parameter name="end_value" value="0.0"/>
 		</Event>
 		
 		<!-- Fade out -->

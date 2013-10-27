@@ -41,10 +41,13 @@ void Cutscene::Load(std::string filename)
 	while(elem)
 	{
 		double e_time_start, e_duration;
-		std::string e_type;
+		std::string e_type, ev_name;
 
 		elem->Attribute("time", &e_time_start);
 		elem->Attribute("duration", &e_duration);
+		if(elem->Attribute("name") != NULL)
+			ev_name = elem->Attribute("name");
+
 		e_type = elem->Attribute("type");
 
 		// Chargement des parametres
@@ -62,18 +65,20 @@ void Cutscene::Load(std::string filename)
 		if(e_type == "fx")
 		{
 			e_event_type = EVENT_FX;
-			cutsceneEvent = new CutsceneEventFx(levelManager, e_event_type, e_time_start, e_duration, parameters);
+			cutsceneEvent = new CutsceneEventFx(levelManager, this, e_event_type, e_time_start, e_duration, parameters);
 		}
 		else if(e_type == "change_value")
 		{
 			e_event_type = EVENT_CHANGE_VALUE;
-			cutsceneEvent = new CutsceneEventChangeValue(levelManager, e_event_type, e_time_start, e_duration, parameters);
+			cutsceneEvent = new CutsceneEventChangeValue(levelManager, this, e_event_type, e_time_start, e_duration, parameters);
 		}
 		else if(e_type == "display_text")
 		{
 			e_event_type = EVENT_TEXT;
-			cutsceneEvent = new CutsceneEventText(levelManager, e_event_type, e_time_start, e_duration, parameters);
+			cutsceneEvent = new CutsceneEventText(levelManager, this, e_event_type, e_time_start, e_duration, parameters);
 		}
+
+		cutsceneEvent->name = ev_name;
 
 		events.push_back(cutsceneEvent);
 
@@ -131,4 +136,17 @@ void Cutscene::Draw(float interp)
 	{
 		(*it)->Draw(interp);
 	}
+}
+
+CutsceneEvent* Cutscene::GetEventByName(std::string name)
+{
+	for(std::list<CutsceneEvent*>::iterator it = events.begin(); it != events.end(); it++ )
+	{
+		if((*it)->name == name)
+		{
+			return (*it);
+		}
+	}
+
+	return NULL;
 }

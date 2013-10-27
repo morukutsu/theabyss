@@ -7,10 +7,11 @@
 #include <string>
 #include "CutsceneEvent.h"
 
+class Cutscene;
 class CutsceneEventFx : public CutsceneEvent 
 {
 	public:
-		CutsceneEventFx(LevelManager* lvlMan, CutsceneEventType eventType, float time, float duration, std::map<std::string, std::string> parameters);
+		CutsceneEventFx(LevelManager* lvlMan, Cutscene* cs, CutsceneEventType eventType, float time, float duration, std::map<std::string, std::string> parameters);
 		void Start();
 		void Run(float time);
 		void End();
